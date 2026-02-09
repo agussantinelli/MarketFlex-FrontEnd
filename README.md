@@ -20,7 +20,7 @@
 
 <hr>
 
-<h2>🌈 El Factor Flex: Adaptabilidad Sin Límites</h2>
+<h2>🌀 El Factor Flex: Adaptabilidad Sin Límites</h2>
 <p align="center">
   <i>"Un solo núcleo, infinitas posibilidades."</i>
 </p>
