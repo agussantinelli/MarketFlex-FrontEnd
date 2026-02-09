@@ -20,26 +20,31 @@
 
 <hr>
 
-<h2>🌟 Propósito del Proyecto</h2>
+<h2>🌈 El Factor Flex: Adaptabilidad Sin Límites</h2>
+<p align="center">
+  <i>"Un solo núcleo, infinitas posibilidades."</i>
+</p>
 <p>
-  <b>MarketFlex-FrontEnd</b> es la implementación del cliente para el ecosistema MarketFlex. A diferencia de los marketplaces rígidos, esta interfaz ha sido construida bajo el principio de <b>adaptabilidad modular</b>. Utilizando <b>Astro</b> y <b>TypeScript</b>, logramos un rendimiento excepcional con un código seguro y fácil de mantener.
+  Lo más importante de <b>MarketFlex</b> es su capacidad de metamorfosis. La arquitectura está diseñada para que la interfaz pueda ser adaptada a <b>marketplaces con orientaciones completamente distintas</b> sin reescribir la lógica base. 
+  <br><br>
+  Desde un retail de moda hasta una plataforma de servicios profesionales o un mercado de coleccionables digitales; la UI se amolda a la naturaleza del producto.
 </p>
 
 <h2>🛠️ Tecnologías Core</h2>
 <ul>
-  <li><b>Astro:</b> Framework principal para una entrega de contenido optimizada y arquitectura de islas.</li>
-  <li><b>TypeScript:</b> Tipado estático para asegurar la consistencia de los datos en la interfaz.</li>
-  <li><b>Componentes Modulares:</b> Estructura diseñada para cambiar el "look & feel" sin tocar la lógica.</li>
+  <li><b>Astro:</b> Entrega de contenido ultra-rápido y arquitectura de islas.</li>
+  <li><b>TypeScript:</b> Tipado estático para asegurar la consistencia en el flujo de datos.</li>
+  <li><b>Componentes Polimórficos:</b> Diseñados para cambiar su comportamiento y estética según el contexto comercial.</li>
 </ul>
 
 <h2>📦 Características Principales</h2>
 <ul>
-  <li>✨ <b>Tematización Dinámica:</b> Capacidad de re-branding rápido para diferentes nichos.</li>
-  <li>📱 <b>Diseño Adaptativo:</b> Experiencia fluida en cualquier dispositivo.</li>
-  <li>⚡ <b>Performance Extrema:</b> Tiempos de carga mínimos para una mejor experiencia de usuario.</li>
+  <li>✨ <b>Re-branding Instantáneo:</b> Estructura preparada para cambios visuales profundos.</li>
+  <li>📱 <b>UX Agnóstica:</b> Flujos de usuario optimizados para cualquier tipo de transaccionalidad.</li>
+  <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
 </ul>
 
-<h2>🚀 Instalación y Uso</h2>
+<h2>🚀 Instalación</h2>
 <pre>
 git clone https://github.com/agussantinelli/MarketFlex-FrontEnd.git
 cd MarketFlex-FrontEnd
