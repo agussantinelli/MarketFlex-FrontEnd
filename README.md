@@ -104,13 +104,17 @@
 ├── .astro/                                         # Archivos generados por Astro
 ├── node_modules/                                   # Dependencias del proyecto
 ├── public/                                         # Archivos estáticos
+│   └── background/                                 # Galería de fondos y texturas
 ├── src/
 │   ├── layouts/                                    # Componentes de diseño base
 │   │   └── Layout.astro                            # Layout principal
+│   ├── lib/                                        # Lógica de negocio y utilidades
+│   │   └── api.ts                                  # Cliente HTTP (Ky) para consumo de API
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   └── index.astro                             # Página de inicio
 │   ├── styles/                                     # Estilos globales y utilidades
-│   │   └── index.css                               # CSS principal
+│   │   ├── globals.css                             # Variables CSS y temas
+│   │   └── index.css                               # Estilos específicos / reset
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
 ├── .env                                            # Variables de entorno (API URL)
 ├── .gitignore                                      # Archivos ignorados por Git
