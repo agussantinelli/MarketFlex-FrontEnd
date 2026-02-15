@@ -47,7 +47,7 @@
 
 <hr>
 
-<h2>📦 Estructura del Proyecto</h2>
+<h2>📁 Estructura del Proyecto</h2>
 
 <pre><code>MarketFlex-FrontEnd/
 ├── .agent/                                         # Configuración del agente (skills)
