@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="MarketFlex | Premium Marketplace">
@@ -23,14 +24,17 @@ import Layout from "../layouts/Layout.astro";
 
 	<section class="features">
 		<div class="feature-card premium-card">
+			<Icon name="lucide:crown" class="feature-icon" />
 			<h3>Premium</h3>
 			<p>Diseño exclusivo y experiencia de usuario de primer nivel.</p>
 		</div>
 		<div class="feature-card premium-card">
+			<Icon name="lucide:shield-check" class="feature-icon" />
 			<h3>Seguro</h3>
 			<p>Protección avanzada para todas tus transacciones.</p>
 		</div>
 		<div class="feature-card premium-card">
+			<Icon name="lucide:zap" class="feature-icon" />
 			<h3>Veloz</h3>
 			<p>Optimizado para un rendimiento instantáneo.</p>
 		</div>
@@ -117,6 +121,13 @@ import Layout from "../layouts/Layout.astro";
 		.features {
 			grid-template-columns: repeat(3, 1fr);
 		}
+	}
+
+	.feature-icon {
+		color: var(--green-primary);
+		width: 48px;
+		height: 48px;
+		margin-bottom: 1rem;
 	}
 
 	.feature-card h3 {
