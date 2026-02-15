@@ -17,6 +17,7 @@
     <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
+    <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
 </div>
 
 <hr>
@@ -80,6 +81,12 @@
             <td>Ky</td>
             <td><strong>^1.14.3</strong></td>
             <td>Consumo de la API Backend (ligero y moderno).</td>
+        </tr>
+        <tr>
+            <td><strong>Iconos</strong></td>
+            <td>astro-icon & Lucide</td>
+            <td><strong>Latest</strong></td>
+            <td>Iconografía SVG optimizada y animaciones.</td>
         </tr>
     </tbody>
 </table>
