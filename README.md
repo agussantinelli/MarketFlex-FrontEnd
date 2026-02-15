@@ -15,7 +15,7 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
-  <img src="https://img.shields.io/badge/Versatilidad-Total-green?style=for-the-badge" alt="Versatility Badge">
+  <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
 </div>
 
 <hr>
@@ -35,6 +35,7 @@
   <li><b>Astro:</b> Entrega de contenido ultra-rápido y arquitectura de islas.</li>
   <li><b>TypeScript:</b> Tipado estático para asegurar la consistencia en el flujo de datos.</li>
   <li><b>Componentes Polimórficos:</b> Diseñados para cambiar su comportamiento y estética según el contexto comercial.</li>
+  <li><b>pnpm:</b> Gestión de paquetes eficiente y veloz.</li>
 </ul>
 
 <h2>📦 Características Principales</h2>
