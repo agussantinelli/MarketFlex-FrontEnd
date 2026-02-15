@@ -1,3 +1,7 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
 <nav class="navbar">
     <div class="nav-container">
         <a href="/" class="nav-logo">
@@ -14,9 +18,18 @@
         </button>
 
         <div class="nav-links">
-            <a href="/" class="nav-link">Inicio</a>
-            <a href="/coming-soon" class="nav-link">Explorar</a>
-            <a href="/coming-soon" class="btn btn-primary btn-sm">Conectar</a>
+            <a href="/" class="nav-link">
+                <Icon name="lucide:home" class="link-icon" />
+                Inicio
+            </a>
+            <a href="/coming-soon" class="nav-link">
+                <Icon name="lucide:compass" class="link-icon" />
+                Explorar
+            </a>
+            <a href="/coming-soon" class="btn btn-primary btn-sm">
+                <Icon name="lucide:user" class="btn-icon" />
+                Conectar
+            </a>
         </div>
     </div>
 </nav>
@@ -171,10 +184,26 @@
         font-weight: 600;
         font-size: 0.9rem;
         transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .nav-link:hover {
         opacity: 1;
         transform: translateY(-1px);
+    }
+
+    .link-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .btn-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 0.5rem;
+        display: inline-block;
+        vertical-align: middle;
     }
 </style>
