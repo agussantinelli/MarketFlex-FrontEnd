@@ -30,13 +30,60 @@
   Desde un retail de moda hasta una plataforma de servicios profesionales o un mercado de coleccionables digitales; la UI se amolda a la naturaleza del producto.
 </p>
 
-<h2>🛠️ Tecnologías Core</h2>
-<ul>
-  <li><b>Astro:</b> Entrega de contenido ultra-rápido y arquitectura de islas.</li>
-  <li><b>TypeScript:</b> Tipado estático para asegurar la consistencia en el flujo de datos.</li>
-  <li><b>Componentes Polimórficos:</b> Diseñados para cambiar su comportamiento y estética según el contexto comercial.</li>
-  <li><b>pnpm:</b> Gestión de paquetes eficiente y veloz.</li>
-</ul>
+
+<hr>
+
+<h2>🛠️ Stack Tecnológico</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Componente</th>
+            <th>Tecnología</th>
+            <th>Versión / Detalle</th>
+            <th>Uso Principal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Framework</strong></td>
+            <td>Astro</td>
+            <td><strong>^5.17.1</strong></td>
+            <td>Arquitectura de islas, rendimiento y routing.</td>
+        </tr>
+        <tr>
+            <td><strong>Lenguaje</strong></td>
+            <td>TypeScript</td>
+            <td><strong>5.x</strong></td>
+            <td>Tipado estricto para componentes y lógica de negocio.</td>
+        </tr>
+        <tr>
+            <td><strong>Estilos</strong></td>
+            <td>CSS Modules / Scope</td>
+            <td>Nativo</td>
+            <td>Estilizado modular y optimizado por componente.</td>
+        </tr>
+        <tr>
+            <td><strong>Paquetes</strong></td>
+            <td>pnpm</td>
+            <td><strong>Latest</strong></td>
+            <td>Gestión de dependencias eficiente y veloz.</td>
+        </tr>
+        <tr>
+            <td><strong>Componentes</strong></td>
+            <td>Astro Components</td>
+            <td>.astro</td>
+            <td>Componentes de servidor (SSR/SSG) por defecto.</td>
+        </tr>
+        <tr>
+            <td><strong>Integración</strong></td>
+            <td>Fetch API</td>
+            <td>Nativo</td>
+            <td>Consumo de la API Backend tipada.</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
 
 <h2>📦 Características Principales</h2>
 <ul>
