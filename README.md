@@ -45,6 +45,13 @@
   <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
 </ul>
 
+<h2>🔐 Variables de Entorno</h2>
+<p>Crea un archivo <code>.env</code> en la raíz del proyecto con las siguientes variables:</p>
+<pre>
+PORT=2611
+PUBLIC_API_URL=http://localhost:5979/api
+</pre>
+
 <h2>🚀 Instalación</h2>
 <pre>
 git clone https://github.com/agussantinelli/MarketFlex-FrontEnd.git
