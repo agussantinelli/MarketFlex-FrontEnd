@@ -88,6 +88,12 @@
             <td><strong>Latest</strong></td>
             <td>Iconografía SVG optimizada y animaciones.</td>
         </tr>
+        <tr>
+            <td><strong>Tipografía</strong></td>
+            <td>@fontsource/inter</td>
+            <td><strong>Latest</strong></td>
+            <td>Gestión de fuentes local (sin llamadas externas).</td>
+        </tr>
     </tbody>
 </table>
 
