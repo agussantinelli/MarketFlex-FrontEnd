@@ -1,10 +1,14 @@
 :root {
-    /* Paleta Verde Premium (MarketFlex Green) */
-    --green-900: hsl(150, 40%, 4%);
-    --green-800: hsl(150, 40%, 8%);
-    --green-700: hsl(150, 40%, 12%);
+    /* Paleta Verde Premium */
+    --green-900: hsl(149, 37%, 15%);
+    --green-800: hsl(148, 41%, 24%);
+    --green-700: hsl(151, 38%, 28%);
     --green-primary: hsl(142, 70%, 45%);
     --green-accent: hsl(142, 59%, 27%);
+
+    /* Navbar Verde Crema */
+    --green-cream: hwb(141 52% 13%);
+    --nav-text: hsl(150, 40%, 8%);
 
     /* Sistema de Diseño */
     --background: var(--green-900);
@@ -17,10 +21,9 @@
     --border-radius: 12px;
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
-    /* Gradiente para el Detalle del Fondo */
-    --bg-gradient: radial-gradient(circle at 50% -20%,
-            hsla(142, 70%, 15%, 0.4) 0%,
-            hsla(150, 40%, 4%, 0) 70%);
+    /* Textura de Tachas (Puntos) */
+    --dot-color: hsla(142, 70%, 45%, 0.08);
+    --bg-texture: radial-gradient(var(--green-cream) 1px, transparent 1px);
 }
 
 /* Reset y Base */
@@ -40,8 +43,8 @@ body {
     font-family: var(--font-family);
     color: var(--foreground);
     background-color: var(--background);
-    /* Detalle: Gradiente radial sutil para profundidad */
-    background-image: var(--bg-gradient);
+    background-image: var(--bg-texture);
+    background-size: 24px 24px;
     background-attachment: fixed;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -56,19 +59,19 @@ main {
     flex-direction: column;
 }
 
-/* Navbar Primitivo */
+/* Navbar Verde Crema */
 .navbar {
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: 1rem 2rem;
-    background: hsla(150, 40%, 4%, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid hsla(142, 70%, 45%, 0.1);
+    padding: 0.75rem 2rem;
+    background: var(--green-cream);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -80,35 +83,36 @@ main {
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
-    color: var(--foreground);
+    color: var(--nav-text);
     font-weight: 800;
     font-size: 1.25rem;
     letter-spacing: -0.02em;
 }
 
 .logo-img {
-    width: 32px;
-    height: 32px;
+    height: 38px;
+    width: auto;
     object-fit: contain;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-link {
     text-decoration: none;
-    color: var(--foreground);
-    opacity: 0.7;
-    font-weight: 500;
+    color: var(--nav-text);
+    opacity: 0.8;
+    font-weight: 600;
     font-size: 0.9rem;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .nav-link:hover {
     opacity: 1;
+    transform: translateY(-1px);
 }
 
 /* Landing Page Utilities */
