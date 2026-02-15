@@ -13,18 +13,17 @@
 </p>
 
 <div align="center">
-    <a href="https://drive.google.com/drive/folders/1qDvPJkxC14DdE-JEqHtvR_LL-ULDbvRL" target="_blank">
-        <img src="https://img.shields.io/badge/📂%20Drive%20Documentación-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Drive Docs Badge"/>
-    </a>
-</div>
-
-
-<div align="center">
     <img src="https://img.shields.io/badge/Astro-5.17.1-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
     <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
     <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
+</div>
+
+<div align="center">
+    <a href="https://drive.google.com/drive/folders/1qDvPJkxC14DdE-JEqHtvR_LL-ULDbvRL" target="_blank">
+        <img src="https://img.shields.io/badge/📂%20Drive%20Documentación-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Drive Docs Badge"/>
+    </a>
 </div>
 
 <hr>
