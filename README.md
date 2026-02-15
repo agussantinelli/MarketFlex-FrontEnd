@@ -45,6 +45,34 @@
   <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
 </ul>
 
+<hr>
+
+<h2>📦 Estructura del Proyecto</h2>
+
+<pre><code>MarketFlex-FrontEnd/
+├── .agent/                                         # Configuración del agente (skills)
+├── .astro/                                         # Archivos generados por Astro
+├── node_modules/                                   # Dependencias del proyecto
+├── public/                                         # Archivos estáticos
+├── src/
+│   ├── layouts/                                    # Componentes de diseño base
+│   │   └── Layout.astro                            # Layout principal
+│   ├── pages/                                      # Rutas y páginas de la aplicación
+│   │   └── index.astro                             # Página de inicio
+│   ├── styles/                                     # Estilos globales y utilidades
+│   │   └── index.css                               # CSS principal
+│   └── env.d.ts                                    # Definiciones de tipos para env vars
+├── .env                                            # Variables de entorno (API URL)
+├── .gitignore                                      # Archivos ignorados por Git
+├── astro.config.mjs                                # Configuración de Astro (Puerto, plugins)
+├── package.json                                    # Metadatos y scripts del proyecto
+├── pnpm-lock.yaml                                  # Árbol de dependencias exacto (pnpm)
+├── README.md                                       # Documentación del proyecto
+└── tsconfig.json                                   # Configuración de TypeScript
+</code></pre>
+
+<hr>
+
 <h2>🔐 Variables de Entorno</h2>
 <p>Crea un archivo <code>.env</code> en la raíz del proyecto con las siguientes variables:</p>
 <pre>
