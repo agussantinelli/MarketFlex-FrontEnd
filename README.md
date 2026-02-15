@@ -48,8 +48,8 @@
 <pre>
 git clone https://github.com/agussantinelli/MarketFlex-FrontEnd.git
 cd MarketFlex-FrontEnd
-npm install
-npm run dev
+pnpm install
+pnpm dev
 </pre>
 
 <hr>
