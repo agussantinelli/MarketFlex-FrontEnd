@@ -1,12 +1,13 @@
 ---
-import '../styles/index.css';
+import "../styles/index.css";
 
 interface Props {
 	title: string;
 	description?: string;
 }
 
-const { title, description = "MarketFlex - Your premium marketplace" } = Astro.props;
+const { title, description = "MarketFlex - Your premium marketplace" } =
+	Astro.props;
 ---
 
 <!doctype html>
@@ -18,9 +19,12 @@ const { title, description = "MarketFlex - Your premium marketplace" } = Astro.p
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
 		<main>
@@ -28,17 +32,3 @@ const { title, description = "MarketFlex - Your premium marketplace" } = Astro.p
 		</main>
 	</body>
 </html>
-
-<style is:global>
-	:root {
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		background-color: #000;
-	}
-</style>

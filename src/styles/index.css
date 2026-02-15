@@ -1,27 +1,4 @@
-:root {
-  --primary: #0070f3;
-  --secondary: #ff0080;
-  --accent: #7928ca;
-  --background: #000000;
-  --foreground: #ffffff;
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --border-radius: 12px;
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--font-family);
-  background: var(--background);
-  color: var(--foreground);
-  min-height: 100vh;
-  line-height: 1.5;
-}
+@import './globals.css';
 
 .premium-card {
   background: var(--card-bg);
@@ -39,6 +16,7 @@ body {
 
 .gradient-text {
   background: linear-gradient(to right, var(--primary), var(--secondary));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;

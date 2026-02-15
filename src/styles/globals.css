@@ -1,0 +1,66 @@
+:root {
+    /* Paleta Verde Premium (MarketFlex Green) */
+    --green-900: hsl(150, 40%, 4%);
+    --green-800: hsl(150, 40%, 8%);
+    --green-700: hsl(150, 40%, 12%);
+    --green-primary: hsl(142, 70%, 45%);
+    --green-accent: hsl(142, 59%, 27%);
+
+    /* Sistema de Diseño */
+    --background: var(--green-900);
+    --foreground: hsl(0, 0%, 98%);
+    --primary: var(--green-primary);
+    --secondary: hsl(150, 30%, 20%);
+    --accent: var(--green-accent);
+
+    --card-bg: hsla(150, 40%, 8%, 0.7);
+    --border-radius: 12px;
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Gradiente para el Detalle del Fondo */
+    --bg-gradient: radial-gradient(circle at 50% -20%,
+            hsla(142, 70%, 15%, 0.4) 0%,
+            hsla(150, 40%, 4%, 0) 70%);
+}
+
+/* Reset y Base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--foreground);
+    background-color: var(--background);
+    /* Detalle: Gradiente radial sutil para profundidad */
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizada para el tema verde */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--green-900);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--green-800);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--green-700);
+}
