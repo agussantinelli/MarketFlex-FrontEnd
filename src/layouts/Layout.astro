@@ -1,5 +1,6 @@
 ---
 import "../styles/index.css";
+import Navbar from "./Navbar.astro";
 
 interface Props {
 	title: string;
@@ -31,44 +32,9 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 		/>
 	</head>
 	<body>
-		<nav class="navbar">
-			<div class="nav-container">
-				<a href="/" class="nav-logo">
-					<img
-						src="/logo-marketflex-letters.png"
-						alt="MarketFlex Logo"
-						class="logo-img"
-					/>
-					<span class="logo-text">MarketFlex</span>
-				</a>
-
-				<button class="mobile-menu-btn" aria-label="Toggle menu">
-					<span class="hamburger"></span>
-				</button>
-
-				<div class="nav-links">
-					<a href="/" class="nav-link">Inicio</a>
-					<a href="/coming-soon" class="nav-link">Explorar</a>
-					<a href="/coming-soon" class="btn btn-primary btn-sm"
-						>Conectar</a
-					>
-				</div>
-			</div>
-		</nav>
+		<Navbar />
 		<main>
 			<slot />
 		</main>
-
-		<script>
-			const mobileBtn = document.querySelector(".mobile-menu-btn");
-			const navLinks = document.querySelector(".nav-links");
-
-			if (mobileBtn && navLinks) {
-				mobileBtn.addEventListener("click", () => {
-					navLinks.classList.toggle("active");
-					mobileBtn.classList.toggle("active");
-				});
-			}
-		</script>
 	</body>
 </html>
