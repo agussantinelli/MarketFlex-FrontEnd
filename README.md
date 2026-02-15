@@ -118,13 +118,19 @@
 ├── .astro/                                         # Archivos generados por Astro
 ├── node_modules/                                   # Dependencias del proyecto
 ├── public/                                         # Archivos estáticos
-│   └── background/                                 # Galería de fondos y texturas
+│   ├── background/                                 # Galería de fondos y texturas
+│   ├── logo-marketflex-circle.png                  # Isotipo circular
+│   ├── logo-marketflex-letters.png                 # Logotipo
+│   └── logo-marketflex-no-circle.png               # Isotipo sin círculo
 ├── src/
 │   ├── layouts/                                    # Componentes de diseño base
-│   │   └── Layout.astro                            # Layout principal
+│   │   ├── Footer.astro                            # Pie de página responsivo
+│   │   ├── Layout.astro                            # Layout principal
+│   │   └── Navbar.astro                            # Barra de navegación principal
 │   ├── lib/                                        # Lógica de negocio y utilidades
 │   │   └── api.ts                                  # Cliente HTTP (Ky) para consumo de API
 │   ├── pages/                                      # Rutas y páginas de la aplicación
+│   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   └── index.astro                             # Página de inicio
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
