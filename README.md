@@ -5,7 +5,7 @@
         <img src="https://img.shields.io/badge/🚀%20Repo%20Frontend%20(Estás%20Aquí)-Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Frontend Repo Badge"/>
     </a>
     <a href="https://github.com/agussantinelli/MarketFlex-BackEnd" target="_blank">
-        <img src="https://img.shields.io/badge/⚙️%20Repo%20Backend-Node.js%20%26%20Express-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Backend Repo Badge"/>
+        <img src="https://img.shields.io/badge/⚙️%20Repo%20Backend-Node.js%20%26%20Hono-E0234E?style=for-the-badge&logo=hono&logoColor=white" alt="Backend Repo Badge"/>
     </a>
     <a href="https://github.com/agussantinelli" target="_blank">
         <img src="https://img.shields.io/badge/👤%20Contacto-agussantinelli-000000?style=for-the-badge&logo=github&logoColor=white" alt="Contact Badge"/>
