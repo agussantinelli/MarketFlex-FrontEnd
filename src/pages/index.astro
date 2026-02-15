@@ -99,16 +99,23 @@ import Layout from "../layouts/Layout.astro";
 
 	.features {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 		gap: 2rem;
 		max-width: 1200px;
 		margin: 0 auto 4rem;
 		padding: 0 1rem;
+		width: 100%;
 	}
 
 	@media (min-width: 768px) {
 		.features {
 			padding: 0 2rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.features {
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
