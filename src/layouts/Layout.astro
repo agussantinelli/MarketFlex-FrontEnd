@@ -1,6 +1,7 @@
 ---
 import "../styles/index.css";
 import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
 
 interface Props {
 	title: string;
@@ -36,5 +37,6 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 		<main>
 			<slot />
 		</main>
+		<Footer />
 	</body>
 </html>
