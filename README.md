@@ -89,7 +89,8 @@
 <h2>📦 Características Principales</h2>
 <ul>
   <li>✨ <b>Re-branding Instantáneo:</b> Estructura preparada para cambios visuales profundos.</li>
-  <li>📱 <b>UX Agnóstica:</b> Flujos de usuario optimizados para cualquier tipo de transaccionalidad.</li>
+  <li>📱 <b>Mobile First:</b> Diseño nacido para dispositivos móviles, escalable a grandes pantallas.</li>
+  <li>🪙 <b>UX Agnóstica:</b> Flujos de usuario optimizados para cualquier tipo de transaccionalidad.</li>
   <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
   <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
