@@ -5,17 +5,17 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="MarketFlex | Premium Marketplace">
 	<div class="hero">
 		<div class="hero-content">
-			<span class="badge">Nuevo Estándar</span>
 			<h1>
 				El Futuro del <br />
 				<span class="gradient-text">Comercio Digital</span>
 			</h1>
 			<p class="hero-desc">
-				Una plataforma de próxima generación diseñada para experiencias de compra y
-				venta premium. Segura, rápida y elegante.
+				Una plataforma de próxima generación diseñada para experiencias
+				de compra y venta premium. Segura, rápida y elegante.
 			</p>
 			<div class="cta-group">
-				<a href="/coming-soon" class="btn btn-primary">Comenzar Ahora</a>
+				<a href="/coming-soon" class="btn btn-primary">Comenzar Ahora</a
+				>
 				<a href="/coming-soon" class="btn btn-secondary">Saber Más</a>
 			</div>
 		</div>
@@ -44,7 +44,13 @@ import Layout from "../layouts/Layout.astro";
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		padding: 2rem;
+		padding: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.hero {
+			padding: 2rem;
+		}
 	}
 
 	.badge {
@@ -93,11 +99,17 @@ import Layout from "../layouts/Layout.astro";
 
 	.features {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		gap: 2rem;
 		max-width: 1200px;
 		margin: 0 auto 4rem;
-		padding: 0 2rem;
+		padding: 0 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.features {
+			padding: 0 2rem;
+		}
 	}
 
 	.feature-card h3 {

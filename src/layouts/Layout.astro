@@ -41,6 +41,11 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 					/>
 					<span class="logo-text">MarketFlex</span>
 				</a>
+
+				<button class="mobile-menu-btn" aria-label="Toggle menu">
+					<span class="hamburger"></span>
+				</button>
+
 				<div class="nav-links">
 					<a href="/" class="nav-link">Inicio</a>
 					<a href="/coming-soon" class="nav-link">Explorar</a>
@@ -53,5 +58,17 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 		<main>
 			<slot />
 		</main>
+
+		<script>
+			const mobileBtn = document.querySelector(".mobile-menu-btn");
+			const navLinks = document.querySelector(".nav-links");
+
+			if (mobileBtn && navLinks) {
+				mobileBtn.addEventListener("click", () => {
+					navLinks.classList.toggle("active");
+					mobileBtn.classList.toggle("active");
+				});
+			}
+		</script>
 	</body>
 </html>
