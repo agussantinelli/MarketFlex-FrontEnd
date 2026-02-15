@@ -16,6 +16,7 @@
   <img src="https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
   <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
+  <img src="https://img.shields.io/badge/Ky-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
 </div>
 
 <hr>
@@ -76,9 +77,9 @@
         </tr>
         <tr>
             <td><strong>Integración</strong></td>
-            <td>Fetch API</td>
-            <td>Nativo</td>
-            <td>Consumo de la API Backend tipada.</td>
+            <td>Ky</td>
+            <td><strong>^1.14.3</strong></td>
+            <td>Consumo de la API Backend (ligero y moderno).</td>
         </tr>
     </tbody>
 </table>
