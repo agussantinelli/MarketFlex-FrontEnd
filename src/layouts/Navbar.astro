@@ -132,20 +132,30 @@ import { Icon } from "astro-icon/components";
     }
 
     /* Navigation Links - Mobile First */
+    /* Navigation Links - Mobile First (Side Drawer) */
     .nav-links {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 100%;
+        width: 75%;
+        max-width: 300px;
         height: 100vh;
         background: var(--foreground);
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 6rem 2rem 2rem;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+
+        /* Animation */
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 101;
+
+        /* Ensure visibility is managed by 'right' property, not opacity/visibility for the drawer effect */
+        opacity: 1;
+        visibility: visible;
     }
 
     .nav-links.active {
@@ -162,9 +172,18 @@ import { Icon } from "astro-icon/components";
             position: static;
             height: auto;
             width: auto;
-            flex-direction: row;
+            max-width: none;
+            padding: 0;
             background: transparent;
-            gap: 2.5rem;
+            box-shadow: none;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 2rem;
+
+            /* Reset mobile positioning */
+            right: auto;
+            top: auto;
         }
     }
 
