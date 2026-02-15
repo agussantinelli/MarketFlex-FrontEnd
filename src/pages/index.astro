@@ -3,27 +3,110 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="MarketFlex | Premium Marketplace">
-	<div class="hero-center">
-		<h1>MarketFlex</h1>
-		<p class="coming-soon">Próximamente</p>
+	<div class="hero">
+		<div class="hero-content">
+			<span class="badge">Nuevo Estándar</span>
+			<h1>
+				El Futuro del <br />
+				<span class="gradient-text">Comercio Digital</span>
+			</h1>
+			<p class="hero-desc">
+				Una plataforma de próxima generación diseñada para experiencias de compra y
+				venta premium. Segura, rápida y elegante.
+			</p>
+			<div class="cta-group">
+				<a href="/coming-soon" class="btn btn-primary">Comenzar Ahora</a>
+				<a href="/coming-soon" class="btn btn-secondary">Saber Más</a>
+			</div>
+		</div>
 	</div>
+
+	<section class="features">
+		<div class="feature-card premium-card">
+			<h3>Premium</h3>
+			<p>Diseño exclusivo y experiencia de usuario de primer nivel.</p>
+		</div>
+		<div class="feature-card premium-card">
+			<h3>Seguro</h3>
+			<p>Protección avanzada para todas tus transacciones.</p>
+		</div>
+		<div class="feature-card premium-card">
+			<h3>Veloz</h3>
+			<p>Optimizado para un rendimiento instantáneo.</p>
+		</div>
+	</section>
 </Layout>
 
 <style>
-	h1 {
-		font-size: clamp(3rem, 10vw, 6rem);
-		margin-bottom: 1rem;
-		letter-spacing: -0.04em;
-		color: var(--green-cream);
+	.hero {
+		min-height: 80vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 2rem;
 	}
 
-	.coming-soon {
+	.badge {
+		background: rgba(var(--green-primary), 0.1);
+		color: var(--green-primary);
+		padding: 0.5rem 1rem;
+		border-radius: 2rem;
+		border: 1px solid rgba(var(--green-primary), 0.2);
+		font-size: 0.875rem;
+		font-weight: 600;
+		margin-bottom: 1.5rem;
+		display: inline-block;
+	}
+
+	h1 {
+		font-size: clamp(3rem, 8vw, 5rem);
+		line-height: 1.1;
+		margin-bottom: 1.5rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-desc {
 		font-size: 1.25rem;
-		font-weight: 500;
-		color: var(--green-cream);
-		text-transform: uppercase;
-		letter-spacing: 0.5em;
-		opacity: 0.6;
-		margin-top: -1rem;
+		color: #a0a0a0;
+		max-width: 600px;
+		margin: 0 auto 2.5rem;
+		line-height: 1.6;
+	}
+
+	.cta-group {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	.btn-secondary {
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+		backdrop-filter: blur(10px);
+	}
+
+	.btn-secondary:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.features {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		max-width: 1200px;
+		margin: 0 auto 4rem;
+		padding: 0 2rem;
+	}
+
+	.feature-card h3 {
+		color: var(--green-primary);
+		font-size: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.feature-card p {
+		color: #a0a0a0;
 	}
 </style>
