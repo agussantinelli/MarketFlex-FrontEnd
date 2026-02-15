@@ -141,5 +141,5 @@ pnpm dev
 <hr>
 
 <p align="center">
-  Desarrollado con ❤️ por <a href="https://github.com/agussantinelli">Agus Santinelli</a>
+  Desarrollado con mucho ❤️ y 🧉 por <a href="https://github.com/agussantinelli">Agus Santinelli</a>
 </p>
