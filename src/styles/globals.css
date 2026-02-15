@@ -22,7 +22,7 @@
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
     /* Textura de Iconos (Market & Tech) */
-    --bg-texture: url("/background/market-diagonal-hq.png");
+    --bg-texture: url("/background/principal-background.png");
 }
 
 /* Reset y Base */
