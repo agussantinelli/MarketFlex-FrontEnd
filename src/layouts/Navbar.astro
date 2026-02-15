@@ -14,7 +14,8 @@ import { Icon } from "astro-icon/components";
         </a>
 
         <button class="mobile-menu-btn" aria-label="Toggle menu">
-            <span class="hamburger"></span>
+            <Icon name="lucide:menu" class="icon-menu" />
+            <Icon name="lucide:x" class="icon-close" />
         </button>
 
         <div class="nav-links">
@@ -92,7 +93,6 @@ import { Icon } from "astro-icon/components";
     /* Mobile Menu Button */
     .mobile-menu-btn {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 32px;
@@ -102,42 +102,33 @@ import { Icon } from "astro-icon/components";
         cursor: pointer;
         z-index: 102; /* Above nav-links */
         padding: 0;
-    }
-
-    .hamburger {
-        width: 24px;
-        height: 2px;
-        background: var(--nav-text);
+        color: var(--nav-text);
         position: relative;
-        transition: all 0.3s ease-in-out;
     }
 
-    .hamburger::before,
-    .hamburger::after {
-        content: "";
+    .mobile-menu-btn .icon-menu,
+    .mobile-menu-btn .icon-close {
+        width: 28px;
+        height: 28px;
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
         position: absolute;
-        width: 24px;
-        height: 2px;
-        background: var(--nav-text);
-        transition: all 0.3s ease-in-out;
     }
 
-    .hamburger::before {
-        transform: translateY(-8px);
-    }
-    .hamburger::after {
-        transform: translateY(8px);
+    .mobile-menu-btn .icon-close {
+        opacity: 0;
+        transform: rotate(-90deg);
     }
 
-    /* Active State for Hamburger */
-    .mobile-menu-btn.active .hamburger {
-        background: transparent;
+    .mobile-menu-btn.active .icon-menu {
+        opacity: 0;
+        transform: rotate(90deg);
     }
-    .mobile-menu-btn.active .hamburger::before {
-        transform: rotate(45deg);
-    }
-    .mobile-menu-btn.active .hamburger::after {
-        transform: rotate(-45deg);
+
+    .mobile-menu-btn.active .icon-close {
+        opacity: 1;
+        transform: rotate(0);
     }
 
     /* Navigation Links - Mobile First */
