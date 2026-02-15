@@ -21,9 +21,8 @@
     --border-radius: 12px;
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
-    /* Textura de Tachas (Puntos) */
-    --dot-color: hsla(142, 70%, 45%, 0.08);
-    --bg-texture: radial-gradient(var(--green-cream) 1px, transparent 1px);
+    /* Textura de Iconos (Market & Tech) */
+    --bg-texture: url("/background/market-diagonal-hq.png");
 }
 
 /* Reset y Base */
@@ -44,7 +43,7 @@ body {
     color: var(--foreground);
     background-color: var(--background);
     background-image: var(--bg-texture);
-    background-size: 24px 24px;
+    background-size: 400px;
     background-attachment: fixed;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -65,7 +64,7 @@ main {
     top: 0;
     z-index: 100;
     padding: 0.75rem 2rem;
-    background: var(--green-cream);
+    background: var(--foreground);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
 }
