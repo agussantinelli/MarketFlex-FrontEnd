@@ -14,6 +14,8 @@
 
 <div align="center">
     <img src="https://img.shields.io/badge/Astro-5.17.1-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
+    <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge">
+    <img src="https://img.shields.io/badge/Sileo-Notifications-FFD700?style=for-the-badge&logo=vlc&logoColor=black" alt="Sileo Badge">
     <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
@@ -105,6 +107,18 @@
             <td><strong>Latest</strong></td>
             <td>Gestión de fuentes local (sin llamadas externas).</td>
         </tr>
+        <tr>
+            <td><strong>Notificaciones</strong></td>
+            <td>Sileo</td>
+            <td><strong>Latest</strong></td>
+            <td>Sistema de avisos visuales con efectos "gooey".</td>
+        </tr>
+        <tr>
+            <td><strong>UI Framework</strong></td>
+            <td>React</td>
+            <td><strong>^19.x</strong></td>
+            <td>Soporte para componentes interactivos y librerías externas.</td>
+        </tr>
     </tbody>
 </table>
 
@@ -143,6 +157,8 @@
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   └── index.astro                             # Página de inicio
+│   ├── components/                                 # Componentes reutilizables
+│   │   └── NotificationTest.astro                  # Test para verificar Sileo
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
 │   │   └── index.css                               # Estilos específicos / reset
