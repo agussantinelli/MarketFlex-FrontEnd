@@ -1,22 +1,19 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import UnifiedNotificationSystem from "../components/UnifiedNotificationSystem";
 ---
 
-<Layout title="MarketFlex | Próximamente">
+<Layout title="MarketFlex | Próximamente" showToaster={false}>
+    <UnifiedNotificationSystem
+        client:only="react"
+        message="Has accedido correctamente"
+        delay={500}
+    />
     <div class="hero-center">
         <h1>MarketFlex</h1>
         <p class="coming-soon">Próximamente</p>
     </div>
 </Layout>
-
-<script>
-    import { sileo } from "sileo";
-
-    // Trigger notification on page load
-    sileo.success({
-        title: "Has accedido correctamente",
-    });
-</script>
 
 <style>
     h1 {
