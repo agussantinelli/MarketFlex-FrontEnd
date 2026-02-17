@@ -2,6 +2,7 @@
 import "../styles/index.css";
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
+import { Toaster } from "sileo";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/800.css";
@@ -30,6 +31,7 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 		<meta name="description" content={description} />
 	</head>
 	<body>
+		<Toaster client:load />
 		<Navbar />
 		<main>
 			<slot />
