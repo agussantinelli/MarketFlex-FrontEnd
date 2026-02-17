@@ -42,24 +42,5 @@ const {
 			<slot />
 		</main>
 		<Footer />
-		<script>
-			console.log("Layout script version 2 executing...");
-
-			// Watch for changes in the DOM to see when the Toaster appears
-			const observer = new MutationObserver(() => {
-				const toaster = document.querySelector("[data-sileo-viewport]");
-				if (toaster) {
-					console.log("Sileo Toaster found in DOM via Observer!");
-					observer.disconnect();
-				}
-			});
-
-			observer.observe(document.body, { childList: true, subtree: true });
-
-			window.addEventListener("load", () => {
-				const toaster = document.querySelector("[data-sileo-viewport]");
-				console.log("Sileo Toaster in DOM at load:", !!toaster);
-			});
-		</script>
 	</body>
 </html>

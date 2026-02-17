@@ -5,20 +5,26 @@ interface Props {
     message?: string;
     type?: "success" | "error" | "info" | "warning";
     delay?: number;
+    position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
+    offset?: number | { top?: number; right?: number; bottom?: number; left?: number };
 }
 
-export default function UnifiedNotificationSystem({ message, type = "success", delay = 100 }: Props) {
-    console.log("[UnifiedNotificationSystem] Component Rendering...");
-
+export default function UnifiedNotificationSystem({
+    message,
+    type = "success",
+    delay = 100,
+    position = "top-right",
+    offset
+}: Props) {
     useEffect(() => {
-        console.log("[UnifiedNotificationSystem] Component Mounted");
         if (!message) return;
 
         const timeout = setTimeout(() => {
-            console.log(`[UnifiedNotificationSystem] Triggering ${type} notification: ${message}`);
             try {
-                sileo.success({ title: message });
-                console.log("[UnifiedNotificationSystem] sileo.success called");
+                if (type === "success") sileo.success({ title: message });
+                else if (type === "error") sileo.error({ title: message });
+                else if (type === "info") sileo.info({ title: message });
+                else if (type === "warning") sileo.warning({ title: message });
             } catch (err) {
                 console.error("[UnifiedNotificationSystem] Error triggering notification:", err);
             }
@@ -28,8 +34,6 @@ export default function UnifiedNotificationSystem({ message, type = "success", d
     }, [message, type, delay]);
 
     return (
-        <div style={{ position: 'relative', zIndex: 9999 }}>
-            <Toaster />
-        </div>
+        <Toaster position={position} offset={offset} />
     );
 }
