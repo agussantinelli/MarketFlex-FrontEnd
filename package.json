@@ -10,10 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.2",
     "@fontsource/inter": "^5.2.8",
     "@iconify-json/lucide": "^1.2.90",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
-    "ky": "^1.14.3"
+    "ky": "^1.14.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sileo": "^0.1.1"
   }
 }
