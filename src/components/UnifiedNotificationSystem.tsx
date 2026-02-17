@@ -7,6 +7,7 @@ interface Props {
     delay?: number;
     position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
     offset?: number | { top?: number; right?: number; bottom?: number; left?: number };
+    requiredQueryParam?: string; // e.g. "success"
 }
 
 export default function UnifiedNotificationSystem({
@@ -14,10 +15,19 @@ export default function UnifiedNotificationSystem({
     type = "success",
     delay = 100,
     position = "top-right",
-    offset
+    offset,
+    requiredQueryParam
 }: Props) {
     useEffect(() => {
         if (!message) return;
+
+        // Client-side check for query parameter
+        if (requiredQueryParam) {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get(requiredQueryParam) !== "true") {
+                return;
+            }
+        }
 
         const timeout = setTimeout(() => {
             try {
@@ -31,7 +41,7 @@ export default function UnifiedNotificationSystem({
         }, delay);
 
         return () => clearTimeout(timeout);
-    }, [message, type, delay]);
+    }, [message, type, delay, requiredQueryParam]);
 
     return (
         <Toaster position={position} offset={offset} />
