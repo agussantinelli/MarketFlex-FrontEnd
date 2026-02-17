@@ -31,7 +31,7 @@ const { title, description = "MarketFlex - Your premium marketplace" } =
 		<meta name="description" content={description} />
 	</head>
 	<body>
-		<Toaster client:load />
+		<Toaster client:only="react" />
 		<Navbar />
 		<main>
 			<slot />

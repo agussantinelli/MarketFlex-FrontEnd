@@ -9,6 +9,15 @@ import Layout from "../layouts/Layout.astro";
     </div>
 </Layout>
 
+<script>
+    import { sileo } from "sileo";
+
+    // Trigger notification on page load
+    sileo.success({
+        title: "Has accedido correctamente",
+    });
+</script>
+
 <style>
     h1 {
         font-size: clamp(3rem, 10vw, 6rem);

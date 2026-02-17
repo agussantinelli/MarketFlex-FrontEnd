@@ -10,11 +10,12 @@
 </button>
 
 <script>
-    import { toast } from "sileo";
+    import { sileo } from "sileo";
 
     const btn = document.getElementById("notify-btn");
     btn?.addEventListener("click", () => {
-        toast.success("Sileo is working!", {
+        sileo.success({
+            title: "Sileo is working!",
             description: "The goo effect is awesome!",
         });
     });
