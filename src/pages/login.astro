@@ -1,0 +1,295 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout title="MarketFlex | Iniciar Sesión">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <a href="/" class="logo">
+                    <span class="logo-text">MarketFlex</span>
+                </a>
+                <h1>Bienvenido de nuevo</h1>
+                <p>Ingresa a tu cuenta para continuar</p>
+            </div>
+
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-wrapper">
+                        <Icon name="lucide:mail" class="input-icon" />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="nombre@ejemplo.com"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrapper">
+                        <Icon name="lucide:lock" class="input-icon" />
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember" />
+                        <span>Recordarme</span>
+                    </label>
+                    <a href="#" class="forgot-password"
+                        >¿Olvidaste tu contraseña?</a
+                    >
+                </div>
+
+                <button type="submit" class="btn-login">
+                    Iniciar Sesión
+                    <Icon name="lucide:arrow-right" class="btn-icon" />
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { login } from "../services/auth.service";
+
+    const loginForm = document.querySelector(".login-form") as HTMLFormElement;
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const rememberCheckbox = document.querySelector(
+        "input[name='remember']",
+    ) as HTMLInputElement;
+
+    // Load remembered email
+    const rememberedEmail = localStorage.getItem("rememberedEmail");
+    if (rememberedEmail) {
+        emailInput.value = rememberedEmail;
+        rememberCheckbox.checked = true;
+    }
+
+    loginForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData);
+        const submitBtn = loginForm.querySelector(
+            ".btn-login",
+        ) as HTMLButtonElement;
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Iniciando...";
+
+            const response = await login({
+                email: data.email,
+                password: data.password,
+            });
+
+            // Handle Remember Me
+            if (rememberCheckbox.checked) {
+                localStorage.setItem("rememberedEmail", data.email as string);
+            } else {
+                localStorage.removeItem("rememberedEmail");
+            }
+
+            // Save session
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
+
+            // Redirect
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Login error:", error);
+            alert(
+                "Error al iniciar sesión. Por favor verifica tus credenciales.",
+            );
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `Iniciar Sesión <span class="btn-icon">➜</span>`; // Restore icon manually if needed, or just text
+        }
+    });
+</script>
+
+<style>
+    .login-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .login-card {
+        background: rgba(var(--green-900), 0.3);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 2.5rem;
+        border-radius: 24px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .logo {
+        display: inline-block;
+        text-decoration: none;
+        color: var(--foreground);
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .login-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--foreground);
+    }
+
+    .login-header p {
+        color: #a0a0a0;
+        font-size: 0.95rem;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--foreground);
+        margin-left: 0.25rem;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+        transition: color 0.3s ease;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: var(--foreground);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--green-primary);
+        background: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 4px rgba(var(--green-primary), 0.1);
+    }
+
+    input:focus + .input-icon {
+        color: var(--green-primary);
+    }
+
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        color: #a0a0a0;
+    }
+
+    .forgot-password {
+        color: var(--green-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s ease;
+    }
+
+    .forgot-password:hover {
+        opacity: 0.8;
+    }
+
+    .btn-login {
+        background: var(--green-primary);
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+    }
+
+    .btn-login:hover {
+        background: var(--green-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--green-primary), 0.3);
+    }
+
+    .login-footer {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #a0a0a0;
+    }
+
+    .login-footer a {
+        color: var(--foreground);
+        text-decoration: none;
+        font-weight: 600;
+        margin-left: 0.25rem;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
