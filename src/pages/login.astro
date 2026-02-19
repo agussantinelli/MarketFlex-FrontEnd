@@ -386,6 +386,8 @@ import Notifications from "../components/common/Notifications";
         justify-content: space-between;
         align-items: center;
         font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
     .checkbox-label {
@@ -447,5 +449,13 @@ import Notifications from "../components/common/Notifications";
 
     .login-footer a:hover {
         text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+        .form-options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
     }
 </style>
