@@ -130,6 +130,7 @@
   <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
   <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
+  <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
 </ul>
 
 <hr>
@@ -168,12 +169,15 @@
 │   │   └── api.ts                                  # Interceptor de API y configuración global
 │   ├── services/                                   # Servicios de negocio (API calls)
 │   │   ├── api.ts                                  # Instancia base de Ky
+│   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
 │   │   └── product.service.ts                      # Servicio de productos
 │   ├── types/                                      # Definiciones de tipos TypeScript
+│   │   ├── auth.types.ts                           # Tipos de Autenticación
 │   │   └── product.types.ts                        # Interfaces de dominio (Producto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
-│   │   └── index.astro                             # Página de inicio
+│   │   ├── index.astro                             # Página de inicio
+│   │   └── login.astro                             # Página de inicio de sesión
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales (UI, Notificaciones)
 │   │   │   └── Notifications.tsx                   # Sistema de notificaciones unificado
