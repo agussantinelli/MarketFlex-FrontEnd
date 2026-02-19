@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import ProductCard from "../components/products/ProductCard.astro";
+import { searchProducts } from "../services/product.service";
+
+const searchQuery = Astro.url.searchParams.get("q")?.trim() || "";
+const products = searchQuery ? await searchProducts(searchQuery) : [];
+---
+
+<Layout title={`MarketFlex | Buscar: ${searchQuery || "..."}`}>
+    <section class="search-section">
+        <h2 class="section-title">
+            {
+                searchQuery ? (
+                    <>
+                        Resultados para "
+                        <span class="gradient-text">{searchQuery}</span>"
+                        <span class="result-count">({products.length})</span>
+                    </>
+                ) : (
+                    <>
+                        Buscá tu próximo{" "}
+                        <span class="gradient-text">producto</span>
+                    </>
+                )
+            }
+        </h2>
+
+        {
+            products.length > 0 ? (
+                <div class="products-grid">
+                    {products.map((product) => (
+                        <ProductCard product={product} />
+                    ))}
+                </div>
+            ) : searchQuery ? (
+                <div class="empty-results">
+                    <Icon name="lucide:search-x" class="empty-icon" />
+                    <p>
+                        No se encontraron productos para "
+                        <strong>{searchQuery}</strong>"
+                    </p>
+                    <a href="/" class="btn btn-primary btn-sm">
+                        Ver Destacados
+                    </a>
+                </div>
+            ) : (
+                <div class="empty-results">
+                    <Icon name="lucide:search" class="empty-icon" />
+                    <p>
+                        Usá el buscador del menú para encontrar libros por
+                        nombre o palabra clave.
+                    </p>
+                </div>
+            )
+        }
+    </section>
+</Layout>
+
+<style>
+    .search-section {
+        padding: 4rem 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        min-height: 60vh;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        margin-bottom: 3rem;
+        color: var(--foreground);
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .result-count {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #9ca3af;
+        margin-left: 0.25rem;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+        .products-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .empty-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #6b7280;
+    }
+
+    .empty-icon {
+        width: 64px;
+        height: 64px;
+        color: #d1d5db;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-results p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+</style>
