@@ -5,4 +5,5 @@ export interface Product {
     foto: string;
     categorias: string[];
     precioActual: string | null;
+    esDestacado: boolean;
 }

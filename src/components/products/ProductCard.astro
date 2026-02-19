@@ -18,6 +18,7 @@ const { product } = Astro.props;
             loading="lazy"
         />
         <div class="price-tag">${product.precioActual}</div>
+        {product.esDestacado && <div class="featured-badge">Destacado</div>}
     </div>
     <div class="product-info">
         <div class="categories">
@@ -90,6 +91,22 @@ const { product } = Astro.props;
         font-size: 1.1rem;
         border: 1px solid rgba(var(--green-primary), 0.3);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+        color: #000;
+        padding: 0.25rem 0.75rem;
+        border-radius: 2rem;
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
         z-index: 10;
     }
 
