@@ -9,8 +9,8 @@ export const api = ky.create({
     hooks: {
         beforeRequest: [
             (request) => {
-                const token = localStorage.getItem('token');
-                if (token) {
+                if (typeof window !== 'undefined' && localStorage.getItem('token')) {
+                    const token = localStorage.getItem('token');
                     request.headers.set('Authorization', `Bearer ${token}`);
                 }
             },
