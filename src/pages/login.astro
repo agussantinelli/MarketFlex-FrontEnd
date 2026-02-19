@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import Notifications from "../components/common/Notifications";
 ---
 
 <Layout title="MarketFlex | Iniciar Sesión">
@@ -64,6 +65,14 @@ import { Icon } from "astro-icon/components";
             </div>
         </div>
     </div>
+    <Notifications
+        client:only="react"
+        message="Credenciales incorrectas"
+        type="error"
+        delay={100}
+        position="top-center"
+        requiredQueryParam="error"
+    />
 </Layout>
 
 <script>
@@ -111,14 +120,17 @@ import { Icon } from "astro-icon/components";
             localStorage.setItem("user", JSON.stringify(response.user));
 
             // Redirect
-            window.location.href = "/";
+            // Redirect
+            // Redirect
+            // Use window.location.replace to prevent back button from returning to login
+            const userName = response.user.nombre || "Usuario";
+            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
         } catch (error) {
             console.error("Login error:", error);
-            alert(
-                "Error al iniciar sesión. Por favor verifica tus credenciales.",
-            );
+            // Reload with error param to trigger notification
+            window.location.href = "/login?error=true";
+
             submitBtn.disabled = false;
-            submitBtn.innerHTML = `Iniciar Sesión <span class="btn-icon">➜</span>`; // Restore icon manually if needed, or just text
         }
     });
 </script>

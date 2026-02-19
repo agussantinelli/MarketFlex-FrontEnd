@@ -1,15 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getFeaturedProducts } from "../services/product.service";
-import type { Product } from "../types/product.types";
 import { Icon } from "astro-icon/components";
-
+import Notifications from "../components/common/Notifications";
 import ProductCard from "../components/products/ProductCard.astro";
+import { getFeaturedProducts } from "../services/product.service";
 
 const products = await getFeaturedProducts();
+const user = Astro.url.searchParams.get("user") || "Usuario";
+const welcomeMessage = `Bienvenido de nuevo, ${user}`;
 ---
 
 <Layout title="MarketFlex | Premium Marketplace">
+	<Notifications
+		client:only="react"
+		message={welcomeMessage}
+		type="success"
+		delay={200}
+		position="top-center"
+		requiredQueryParam="login_success"
+	/>
 	<section class="products-section">
 		<h2 class="section-title">
 			Productos <span class="gradient-text">Destacados</span>
