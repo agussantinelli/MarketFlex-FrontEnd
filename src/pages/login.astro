@@ -7,6 +7,83 @@ import Notifications from "../components/common/Notifications";
 <Layout title="MarketFlex | Iniciar Sesión" simple={true}>
     <div class="login-container">
         <div class="login-card">
+            <!-- Decorative Crosses Pattern -->
+            <div
+                class="decorative-cross decorative-dark"
+                style="top: 15px; left: 15px;"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-dark"
+                style="top: 15px; right: 15px;"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-dark"
+                style="bottom: 15px; left: 15px;"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-dark"
+                style="bottom: 15px; right: 15px;"
+            >
+            </div>
+
+            <div
+                class="decorative-cross decorative-x"
+                style="top: 50%; left: 15px; opacity: 0.3"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-x"
+                style="top: 50%; right: 15px; opacity: 0.3"
+            >
+            </div>
+
+            <div
+                class="decorative-cross decorative-darker"
+                style="top: 15%; left: 50%; opacity: 0.2"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-darker"
+                style="bottom: 15%; left: 50%; opacity: 0.2"
+            >
+            </div>
+
+            <div
+                class="decorative-cross decorative-x decorative-dark"
+                style="top: 25%; left: 10%; opacity: 0.15"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-x decorative-dark"
+                style="bottom: 25%; right: 10%; opacity: 0.15"
+            >
+            </div>
+
+            <!-- Specific X shapes -->
+            <div
+                class="decorative-cross decorative-x decorative-darker"
+                style="top: 10%; right: 40%; opacity: 0.15"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-x decorative-darker"
+                style="bottom: 10%; left: 40%; opacity: 0.15"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-x"
+                style="bottom: 40%; right: 5%; opacity: 0.1"
+            >
+            </div>
+            <div
+                class="decorative-cross decorative-x"
+                style="top: 40%; left: 5%; opacity: 0.1"
+            >
+            </div>
+
             <div class="login-header">
                 <a href="/" class="logo">
                     <img
@@ -149,19 +226,79 @@ import Notifications from "../components/common/Notifications";
     }
 
     .login-card {
-        background: rgba(var(--green-900), 0.3);
-        backdrop-filter: blur(20px);
+        background: var(--foreground);
+        backdrop-filter: blur(30px);
         border: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 4px solid var(--green-primary);
         padding: 2.5rem;
         border-radius: 24px;
         width: 100%;
         max-width: 420px;
-        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+        box-shadow:
+            0 20px 40px -10px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(74, 222, 128, 0.1);
+        position: relative;
+        overflow: hidden;
     }
 
     .login-header {
         text-align: center;
         margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .login-header::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 3px;
+        background: var(--green-primary);
+        margin: 1.5rem auto 0;
+        border-radius: 2px;
+    }
+
+    /* Decorative Crosses */
+    .decorative-cross {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        opacity: 0.4;
+    }
+
+    .decorative-cross::before,
+    .decorative-cross::after {
+        content: "";
+        position: absolute;
+        background: var(--green-primary);
+        border-radius: 1px;
+    }
+
+    .decorative-cross::before {
+        top: 5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+    }
+
+    .decorative-cross::after {
+        top: 0;
+        left: 5px;
+        height: 100%;
+        width: 2px;
+    }
+
+    .decorative-cross.decorative-x {
+        transform: rotate(45deg);
+    }
+
+    .decorative-cross.decorative-dark::before,
+    .decorative-cross.decorative-dark::after {
+        background: var(--green-accent);
+    }
+
+    .decorative-cross.decorative-darker::before,
+    .decorative-cross.decorative-darker::after {
+        background: var(--green-800);
     }
 
     .logo {
@@ -179,11 +316,11 @@ import Notifications from "../components/common/Notifications";
         font-size: 1.75rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
-        color: var(--foreground);
+        color: #1a1a1a;
     }
 
     .login-header p {
-        color: #a0a0a0;
+        color: #666;
         font-size: 0.95rem;
     }
 
@@ -202,7 +339,7 @@ import Notifications from "../components/common/Notifications";
     .form-group label {
         font-size: 0.9rem;
         font-weight: 500;
-        color: var(--foreground);
+        color: #1a1a1a;
         margin-left: 0.25rem;
     }
 
@@ -225,10 +362,10 @@ import Notifications from "../components/common/Notifications";
     input {
         width: 100%;
         padding: 0.8rem 1rem 0.8rem 2.8rem;
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #f5f7fa;
+        border: 1px solid #e1e4e8;
         border-radius: 12px;
-        color: var(--foreground);
+        color: #1a1a1a;
         font-size: 1rem;
         transition: all 0.3s ease;
     }
@@ -236,8 +373,8 @@ import Notifications from "../components/common/Notifications";
     input:focus {
         outline: none;
         border-color: var(--green-primary);
-        background: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 0 0 4px rgba(var(--green-primary), 0.1);
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
     }
 
     input:focus + .input-icon {
@@ -256,7 +393,7 @@ import Notifications from "../components/common/Notifications";
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
-        color: #a0a0a0;
+        color: #666;
     }
 
     .forgot-password {
@@ -268,6 +405,7 @@ import Notifications from "../components/common/Notifications";
 
     .forgot-password:hover {
         opacity: 0.8;
+        text-decoration: underline;
     }
 
     .btn-login {
@@ -297,11 +435,11 @@ import Notifications from "../components/common/Notifications";
         margin-top: 2rem;
         text-align: center;
         font-size: 0.9rem;
-        color: #a0a0a0;
+        color: #666;
     }
 
     .login-footer a {
-        color: var(--foreground);
+        color: var(--green-primary);
         text-decoration: none;
         font-weight: 600;
         margin-left: 0.25rem;
