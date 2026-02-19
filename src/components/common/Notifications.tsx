@@ -10,7 +10,7 @@ interface Props {
     requiredQueryParam?: string; // e.g. "success"
 }
 
-export default function UnifiedNotificationSystem({
+export default function Notifications({
     message,
     type = "success",
     delay = 100,
