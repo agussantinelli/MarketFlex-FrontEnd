@@ -176,7 +176,7 @@
 │   │   └── index.astro                             # Página de inicio
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales (UI, Notificaciones)
-│   │   │   └── UnifiedNotificationSystem.tsx       # Sistema de notificaciones unificado
+│   │   │   └── Notifications.tsx                   # Sistema de notificaciones unificado
 │   │   └── products/                               # Componentes de dominio (Productos)
 │   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
