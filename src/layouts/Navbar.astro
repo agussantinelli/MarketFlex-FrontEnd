@@ -13,6 +13,19 @@ import { Icon } from "astro-icon/components";
             <span class="logo-text">MarketFlex</span>
         </a>
 
+        <form action="/search" method="GET" class="nav-search-form">
+            <div class="search-input-wrapper">
+                <Icon name="lucide:search" class="search-icon" />
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Buscar productos..."
+                    class="search-input"
+                    autocomplete="off"
+                />
+            </div>
+        </form>
+
         <button class="mobile-menu-btn" aria-label="Toggle menu">
             <Icon name="lucide:menu" class="icon-menu" />
             <Icon name="lucide:x" class="icon-close" />
@@ -31,18 +44,7 @@ import { Icon } from "astro-icon/components";
                 <Icon name="lucide:compass" class="link-icon" />
                 Explorar
             </a>
-            <form action="/search" method="GET" class="nav-search-form">
-                <div class="search-input-wrapper">
-                    <Icon name="lucide:search" class="search-icon" />
-                    <input
-                        type="text"
-                        name="q"
-                        placeholder="Buscar productos..."
-                        class="search-input"
-                        autocomplete="off"
-                    />
-                </div>
-            </form>
+
             <div class="nav-auth-guest">
                 <a href="/login" class="btn btn-primary btn-sm">
                     <Icon name="lucide:user" class="btn-icon" />
@@ -467,6 +469,61 @@ import { Icon } from "astro-icon/components";
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    /* Search Bar */
+    .nav-search-form {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        max-width: 280px;
+        margin: 0 1rem;
+    }
+
+    .search-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        width: 16px;
+        height: 16px;
+        color: #9ca3af;
+        pointer-events: none;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        font-size: 0.85rem;
+        background: rgba(0, 0, 0, 0.03);
+        color: var(--nav-text);
+        transition: all 0.3s ease;
+        outline: none;
+        font-family: inherit;
+    }
+
+    .search-input:focus {
+        border-color: var(--primary, #22c55e);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        background: white;
+    }
+
+    .search-input::placeholder {
+        color: #9ca3af;
+    }
+
+    @media (max-width: 767px) {
+        .nav-search-form {
+            max-width: 160px;
+            margin: 0 0.5rem;
         }
     }
 </style>
