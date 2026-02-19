@@ -181,7 +181,7 @@
 │   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
-│   │   └── index.css                               # Estilos específicos / reset
+│   │   └── main.css                                # Estilos específicos / reset
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
 ├── .env                                            # Variables de entorno (API URL)
 ├── .gitignore                                      # Archivos ignorados por Git
