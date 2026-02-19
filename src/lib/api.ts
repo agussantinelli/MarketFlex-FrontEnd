@@ -8,11 +8,10 @@ export const api = ky.create({
     hooks: {
         beforeRequest: [
             (request) => {
-                // Aquí podrías inyectar el token JWT si estuviera guardado en localStorage
-                // const token = localStorage.getItem('token');
-                // if (token) {
-                // 	request.headers.set('Authorization', `Bearer ${token}`);
-                // }
+                const token = localStorage.getItem('token');
+                if (token) {
+                    request.headers.set('Authorization', `Bearer ${token}`);
+                }
             },
         ],
     },
