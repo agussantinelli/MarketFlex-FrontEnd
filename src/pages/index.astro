@@ -1,19 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getProducts } from "../services/product.service";
+import { getFeaturedProducts } from "../services/product.service";
 import type { Product } from "../types/product.types";
 
 import ProductCard from "../components/products/ProductCard.astro";
 
-const products = await getProducts();
+const products = await getFeaturedProducts();
 ---
 
 <Layout title="MarketFlex | Premium Marketplace">
 	<section class="products-section">
 		<h2 class="section-title">
-			Explora nuestra <span class="gradient-text"
-				>Colección de productos</span
-			>
+			Productos <span class="gradient-text">Destacados</span>
 		</h2>
 
 		<div class="products-grid">
