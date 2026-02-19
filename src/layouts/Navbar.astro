@@ -230,6 +230,16 @@ import { Icon } from "astro-icon/components";
         object-fit: contain;
     }
 
+    .logo-text {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .logo-text {
+            display: inline;
+        }
+    }
+
     /* Mobile Menu Button */
     .mobile-menu-btn {
         display: flex;
@@ -477,7 +487,7 @@ import { Icon } from "astro-icon/components";
         display: flex;
         align-items: center;
         flex: 1;
-        max-width: 280px;
+        max-width: 340px;
         margin: 0 1rem;
     }
 
@@ -522,7 +532,7 @@ import { Icon } from "astro-icon/components";
 
     @media (max-width: 767px) {
         .nav-search-form {
-            max-width: 160px;
+            max-width: 200px;
             margin: 0 0.5rem;
         }
     }
