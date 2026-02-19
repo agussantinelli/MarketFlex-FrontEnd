@@ -134,6 +134,20 @@
 
 <hr>
 
+<h2>🔐 Seguridad y Autenticación</h2>
+<p>
+  El sistema implementa un manejo seguro de sesiones mediante <b>JWT (Json Web Tokens)</b>.
+</p>
+<ul>
+  <li>
+    <b>Interceptor Inteligente:</b> Todas las peticiones HTTP salientes son interceptadas por <code>src/lib/api.ts</code>. Si existe un token válido en <code>localStorage</code>, este se inyecta automáticamente en los headers (<code>Authorization: Bearer ...</code>).
+  </li>
+  <li>
+    <b>Protección de Rutas:</b> El backend valida estos tokens para permitir acciones de escritura (crear/editar productos).
+  </li>
+
+<hr>
+
 <h2>📁 Estructura del Proyecto</h2>
 
 <pre><code>MarketFlex-FrontEnd/
@@ -161,7 +175,10 @@
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   └── index.astro                             # Página de inicio
 │   ├── components/                                 # Componentes reutilizables
-│   │   └── NotificationTest.astro                  # Test para verificar Sileo
+│   │   ├── common/                                 # Componentes transversales (UI, Notificaciones)
+│   │   │   └── UnifiedNotificationSystem.tsx       # Sistema de notificaciones unificado
+│   │   └── products/                               # Componentes de dominio (Productos)
+│   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
 │   │   └── index.css                               # Estilos específicos / reset
