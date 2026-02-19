@@ -1,14 +1,5 @@
 import { api } from '../lib/api';
-
-export interface LoginResponse {
-    user: {
-        id: number;
-        email: string;
-        nombre: string;
-        rol: string;
-    };
-    token: string;
-}
+import type { LoginResponse } from '../types/auth.types';
 
 export const login = async (credentials: any): Promise<LoginResponse> => {
     return await api.post('auth/login', { json: credentials }).json();
