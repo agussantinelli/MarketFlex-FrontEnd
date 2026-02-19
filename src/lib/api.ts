@@ -1,3 +1,4 @@
+/// <reference path="../env.d.ts" />
 import ky from 'ky';
 
 const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:5979/api';
