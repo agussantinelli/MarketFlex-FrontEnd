@@ -31,6 +31,18 @@ import { Icon } from "astro-icon/components";
                 <Icon name="lucide:compass" class="link-icon" />
                 Explorar
             </a>
+            <form action="/search" method="GET" class="nav-search-form">
+                <div class="search-input-wrapper">
+                    <Icon name="lucide:search" class="search-icon" />
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Buscar productos..."
+                        class="search-input"
+                        autocomplete="off"
+                    />
+                </div>
+            </form>
             <div class="nav-auth-guest">
                 <a href="/login" class="btn btn-primary btn-sm">
                     <Icon name="lucide:user" class="btn-icon" />
