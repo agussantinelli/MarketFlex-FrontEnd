@@ -150,8 +150,13 @@
 │   │   ├── Footer.astro                            # Pie de página responsivo
 │   │   ├── Layout.astro                            # Layout principal
 │   │   └── Navbar.astro                            # Barra de navegación principal
-│   ├── lib/                                        # Lógica de negocio y utilidades
-│   │   └── api.ts                                  # Cliente HTTP (Ky) para consumo de API
+│   ├── lib/                                        # Utilidades y configuración
+│   │   └── api.ts                                  # Interceptor de API y configuración global
+│   ├── services/                                   # Servicios de negocio (API calls)
+│   │   ├── api.ts                                  # Instancia base de Ky
+│   │   └── product.service.ts                      # Servicio de productos
+│   ├── types/                                      # Definiciones de tipos TypeScript
+│   │   └── product.types.ts                        # Interfaces de dominio (Producto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   └── index.astro                             # Página de inicio
