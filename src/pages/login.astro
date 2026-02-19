@@ -7,12 +7,13 @@ import Notifications from "../components/common/Notifications";
 <Layout title="MarketFlex | Iniciar Sesión" simple={true}>
     <div class="login-container">
         <div class="login-card">
+            <!-- Back Button -->
+            <a href="/" class="back-link" aria-label="Volver al inicio">
+                <Icon name="lucide:arrow-right" class="back-icon" />
+            </a>
+
             <!-- Decorative Crosses Pattern -->
-            <div
-                class="decorative-cross decorative-dark"
-                style="top: 15px; left: 15px;"
-            >
-            </div>
+            <!-- Removed top-left cross to avoid overlap with back button -->
             <div
                 class="decorative-cross decorative-dark"
                 style="top: 15px; right: 15px;"
@@ -503,5 +504,37 @@ import Notifications from "../components/common/Notifications";
             align-items: flex-start;
             gap: 1rem;
         }
+    }
+    .back-link {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f7fa;
+        border-radius: 50%;
+        color: #666;
+        transition: all 0.2s ease;
+        z-index: 10;
+        border: 1px solid transparent;
+    }
+
+    .back-link:hover {
+        background: white;
+        color: var(--green-primary);
+        border-color: var(--green-primary);
+        transform: rotate(
+            -45deg
+        ); /* Cool effect for arrow-right used as 'corner return' */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .back-icon {
+        width: 20px;
+        height: 20px;
+        transform: rotate(180deg); /* Point left using arrow-right icon */
     }
 </style>
