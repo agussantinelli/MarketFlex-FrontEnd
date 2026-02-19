@@ -4,12 +4,16 @@ import { Icon } from "astro-icon/components";
 import Notifications from "../components/common/Notifications";
 ---
 
-<Layout title="MarketFlex | Iniciar Sesión">
+<Layout title="MarketFlex | Iniciar Sesión" simple={true}>
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
                 <a href="/" class="logo">
-                    <span class="logo-text">MarketFlex</span>
+                    <img
+                        src="/logo-marketflex-no-circle.png"
+                        alt="MarketFlex Logo"
+                        class="logo-img"
+                    />
                 </a>
                 <h1>Bienvenido de nuevo</h1>
                 <p>Ingresa a tu cuenta para continuar</p>
@@ -163,10 +167,12 @@ import Notifications from "../components/common/Notifications";
     .logo {
         display: inline-block;
         text-decoration: none;
-        color: var(--foreground);
-        font-weight: 800;
-        font-size: 1.5rem;
         margin-bottom: 1.5rem;
+    }
+
+    .logo-img {
+        height: 100px;
+        width: auto;
     }
 
     .login-header h1 {
