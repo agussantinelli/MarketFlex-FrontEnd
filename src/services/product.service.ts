@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api } from '../lib/api';
 import type { Product } from '../types/product.types';
 
 export const getProducts = async (): Promise<Product[]> => {
