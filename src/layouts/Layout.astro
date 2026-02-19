@@ -12,12 +12,14 @@ interface Props {
 	title: string;
 	description?: string;
 	showToaster?: boolean;
+	simple?: boolean;
 }
 
 const {
 	title,
 	description = "MarketFlex - Your premium marketplace",
 	showToaster = true,
+	simple = false,
 } = Astro.props;
 ---
 
@@ -37,10 +39,10 @@ const {
 	</head>
 	<body>
 		{showToaster && <Toaster client:only="react" />}
-		<Navbar />
+		{!simple && <Navbar />}
 		<main>
 			<slot />
 		</main>
-		<Footer />
+		{!simple && <Footer />}
 	</body>
 </html>
