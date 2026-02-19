@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { getFeaturedProducts } from "../services/product.service";
 import type { Product } from "../types/product.types";
+import { Icon } from "astro-icon/components";
 
 import ProductCard from "../components/products/ProductCard.astro";
 
@@ -34,6 +35,17 @@ const products = await getFeaturedProducts();
 		margin-bottom: 3rem;
 		color: var(--foreground);
 		font-weight: 800;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.feature-icon {
+		width: 1em;
+		height: 1em;
+		vertical-align: middle;
+		margin-left: 0.2rem;
 	}
 
 	.products-grid {
