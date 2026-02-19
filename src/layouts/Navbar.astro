@@ -136,7 +136,7 @@ import { Icon } from "astro-icon/components";
                 userNameSpan.textContent = user.nombre || "Usuario";
 
             // Role Based Visibility
-            if (user.rol === "ADMIN") {
+            if (user.rol === "admin") {
                 adminLinks.forEach(
                     (el) => ((el as HTMLElement).style.display = "flex"),
                 );

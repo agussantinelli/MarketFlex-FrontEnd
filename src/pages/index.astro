@@ -10,7 +10,7 @@ const user = Astro.url.searchParams.get("user") || "Usuario";
 const welcomeMessage = `Bienvenido de nuevo, ${user}`;
 ---
 
-<Layout title="MarketFlex | Premium Marketplace">
+<Layout title="MarketFlex | Premium Marketplace" showToaster={false}>
 	<Notifications
 		client:only="react"
 		message={welcomeMessage}
