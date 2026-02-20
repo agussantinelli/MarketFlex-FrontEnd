@@ -43,15 +43,68 @@ import { Icon } from "astro-icon/components";
                 <Icon name="lucide:home" class="link-icon" />
                 Inicio
             </a>
-            <a href="/about" class="nav-link">
-                <Icon name="lucide:info" class="link-icon" />
-                Nosotros
-            </a>
-            <a href="/coming-soon?success=true" class="nav-link">
+
+            <!-- Explorar -->
+            <a href="/search" class="nav-link">
                 <Icon name="lucide:compass" class="link-icon" />
                 Explorar
             </a>
 
+            <!-- Tipos Dropdown -->
+            <div class="nav-item-dropdown">
+                <button class="nav-link dropdown-btn">
+                    <Icon name="lucide:book" class="link-icon" />
+                    Tipos
+                    <Icon name="lucide:chevron-down" class="chevron-icon" />
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="/search?type=Libro" class="dropdown-link">Libros</a
+                    >
+                    <a href="/search?type=Revista" class="dropdown-link"
+                        >Revistas</a
+                    >
+                    <a href="/search?type=E-book" class="dropdown-link"
+                        >E-books</a
+                    >
+                    <a href="/search?type=Papelería" class="dropdown-link"
+                        >Papelería</a
+                    >
+                </div>
+            </div>
+
+            <!-- Categorías Dropdown -->
+            <div class="nav-item-dropdown">
+                <button class="nav-link dropdown-btn">
+                    <Icon name="lucide:layers" class="link-icon" />
+                    Categorías
+                    <Icon name="lucide:chevron-down" class="chevron-icon" />
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="/search?category=Ficción" class="dropdown-link"
+                        >Ficción</a
+                    >
+                    <a href="/search?category=Tecnología" class="dropdown-link"
+                        >Tecnología</a
+                    >
+                    <a href="/search?category=Psicología" class="dropdown-link"
+                        >Psicología</a
+                    >
+                    <a href="/search?category=Fantasía" class="dropdown-link"
+                        >Fantasía</a
+                    >
+                    <a href="/search?category=Negocios" class="dropdown-link"
+                        >Negocios</a
+                    >
+                </div>
+            </div>
+
+            <!-- Ofertas -->
+            <a href="/search?offers=true" class="nav-link">
+                <Icon name="lucide:tag" class="link-icon" />
+                Ofertas
+            </a>
+
+            <!-- Auth Section -->
             <div class="nav-auth-guest">
                 <a href="/login" class="btn btn-primary btn-sm">
                     <Icon name="lucide:user" class="btn-icon" />
@@ -75,7 +128,6 @@ import { Icon } from "astro-icon/components";
                             <Icon name="lucide:user" class="item-icon" />
                             Mi Perfil
                         </a>
-                        <!-- Admin Only -->
                         <a
                             href="/admin/dashboard"
                             class="dropdown-item admin-only"
@@ -87,7 +139,6 @@ import { Icon } from "astro-icon/components";
                             />
                             Panel Admin
                         </a>
-                        <!-- Customer Only -->
                         <a href="/orders" class="dropdown-item customer-only">
                             <Icon
                                 name="lucide:shopping-bag"
@@ -119,25 +170,55 @@ import { Icon } from "astro-icon/components";
         });
     }
 
-    // Dropdown Logic
-    const dropdownTrigger = document.querySelector(".dropdown-trigger");
-    const dropdownMenu = document.querySelector(".dropdown-menu");
+    // Generic Dropdown Logic (User & Nav Items)
+    const dropdowns = document.querySelectorAll(
+        ".nav-item-dropdown, .user-dropdown",
+    );
 
-    if (dropdownTrigger && dropdownMenu) {
-        dropdownTrigger.addEventListener("click", (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle("active");
-        });
+    document.addEventListener("click", (e) => {
+        let isDropdownClick = false;
 
-        document.addEventListener("click", (e) => {
-            if (
-                !dropdownMenu.contains(e.target as Node) &&
-                !dropdownTrigger.contains(e.target as Node)
-            ) {
-                dropdownMenu.classList.remove("active");
+        dropdowns.forEach((dropdown) => {
+            const btn = dropdown.querySelector(
+                ".dropdown-btn, .dropdown-trigger",
+            );
+            const menu = dropdown.querySelector(
+                ".nav-dropdown-menu, .dropdown-menu",
+            );
+
+            if (btn && menu) {
+                if (btn.contains(e.target as Node)) {
+                    isDropdownClick = true;
+                    // Close others
+                    dropdowns.forEach((d) => {
+                        if (d !== dropdown) {
+                            d.querySelector(
+                                ".nav-dropdown-menu, .dropdown-menu",
+                            )?.classList.remove("active");
+                        }
+                    });
+                    menu.classList.toggle("active");
+                    e.stopPropagation();
+                } else if (menu.contains(e.target as Node)) {
+                    // Click inside menu, usually let it be or close if it's a link?
+                    // If link, it navigates, so fine.
+                    isDropdownClick = true;
+                } else {
+                    // Click outside this specific dropdown
+                }
             }
         });
-    }
+
+        if (!isDropdownClick) {
+            document
+                .querySelectorAll(
+                    ".nav-dropdown-menu.active, .dropdown-menu.active",
+                )
+                .forEach((menu) => {
+                    menu.classList.remove("active");
+                });
+        }
+    });
 
     // Auth Logic
     const authGuest = document.querySelector(".nav-auth-guest") as HTMLElement;
@@ -408,6 +489,97 @@ import { Icon } from "astro-icon/components";
         margin-right: 0.5rem;
         display: inline-block;
         vertical-align: middle;
+    }
+
+    /* Nav Item Dropdowns */
+    .nav-item-dropdown {
+        position: relative;
+    }
+
+    .dropdown-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .chevron-icon {
+        width: 14px;
+        height: 14px;
+        opacity: 0.5;
+        transition: transform 0.2s;
+    }
+
+    .nav-item-dropdown:hover .chevron-icon {
+        opacity: 1;
+        transform: rotate(180deg);
+    }
+
+    /* Reuse fading animation */
+    .nav-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 0.5rem;
+        background: var(--foreground);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        min-width: 180px;
+        padding: 0.5rem;
+        display: none;
+        flex-direction: column;
+        z-index: 1000;
+    }
+
+    .nav-dropdown-menu.active {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .dropdown-link {
+        padding: 0.6rem 1rem;
+        text-decoration: none;
+        color: #4b5563;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+
+    .dropdown-link:hover {
+        background: #f3f4f6;
+        color: var(--green-primary);
+    }
+
+    /* Adjust for mobile: Dropdowns should probably be static/indented blocks or just visible */
+    @media (max-width: 767px) {
+        .nav-item-dropdown {
+            width: 100%;
+        }
+
+        .nav-dropdown-menu {
+            position: static;
+            box-shadow: none;
+            border: none;
+            padding-left: 2rem;
+            margin-top: 0;
+            display: none; /* Hidden by default, toggled via JS */
+            background: transparent;
+        }
+
+        .nav-dropdown-menu.active {
+            display: flex;
+        }
+
+        .dropdown-btn {
+            width: 100%;
+            justify-content: space-between;
+        }
     }
 
     /* Auth Styles */
