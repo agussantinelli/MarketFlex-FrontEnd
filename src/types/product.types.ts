@@ -6,4 +6,6 @@ export type Product = {
     categorias: string[];
     precioActual: string | null;
     esDestacado: boolean;
+    stock: number;
+    envioGratis: boolean;
 };
