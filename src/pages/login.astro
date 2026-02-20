@@ -146,33 +146,23 @@ import Notifications from "../components/common/Notifications";
                 <span>o continuar con</span>
             </div>
 
-            <div id="google-signin-container">
-                <div
-                    id="g_id_onload"
-                    data-client_id="697852573228-jl7nemqo3paglicuba0sdr68gshe1kta.apps.googleusercontent.com"
-                    data-callback="handleGoogleCredentialResponse"
-                    data-auto_prompt="false"
-                >
-                </div>
-                <div
-                    class="g_id_signin"
-                    data-type="standard"
-                    data-shape="rectangular"
-                    data-theme="outline"
-                    data-text="signin_with"
-                    data-size="large"
-                    data-logo_alignment="left"
-                    data-width="100%"
-                >
-                </div>
-            </div>
+            <button id="google-login-btn" class="btn-google" type="button">
+                <img
+                    src="/logos/google.svg"
+                    alt="Google"
+                    width="20"
+                    height="20"
+                />
+                Iniciar sesión con Google
+            </button>
 
             <button id="fb-login-btn" class="btn-facebook" type="button">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
-                    <path
-                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-                    ></path>
-                </svg>
+                <img
+                    src="/logos/facebook.svg"
+                    alt="Facebook"
+                    width="20"
+                    height="20"
+                />
                 Iniciar sesión con Facebook
             </button>
 
@@ -250,10 +240,10 @@ import Notifications from "../components/common/Notifications";
         }
     });
 
-    // Google Sign-In callback
-    (window as any).handleGoogleCredentialResponse = async (response: any) => {
+    // Google Sign-In
+    const handleGoogleLogin = async (credentialResponse: any) => {
         try {
-            const result = await loginWithGoogle(response.credential);
+            const result = await loginWithGoogle(credentialResponse.credential);
 
             localStorage.setItem("token", result.token);
             localStorage.setItem("user", JSON.stringify(result.user));
@@ -265,6 +255,25 @@ import Notifications from "../components/common/Notifications";
             window.location.href = "/login?error=true";
         }
     };
+
+    (window as any).handleGoogleCredentialResponse = handleGoogleLogin;
+
+    const googleBtn = document.getElementById("google-login-btn");
+    googleBtn?.addEventListener("click", () => {
+        const google = (window as any).google;
+        if (!google) {
+            console.error("Google SDK not loaded");
+            return;
+        }
+
+        google.accounts.id.initialize({
+            client_id:
+                "697852573228-jl7nemqo3paglicuba0sdr68gshe1kta.apps.googleusercontent.com",
+            callback: handleGoogleLogin,
+            auto_select: false,
+        });
+        google.accounts.id.prompt();
+    });
 
     // Facebook Login
     const fbAppId = "2098383814330615";
@@ -608,13 +617,27 @@ import Notifications from "../components/common/Notifications";
         white-space: nowrap;
     }
 
-    #google-signin-container {
+    .btn-google {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: white;
+        color: #444;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
         display: flex;
+        align-items: center;
         justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.2s ease;
     }
 
-    #google-signin-container .g_id_signin {
-        width: 100%;
+    .btn-google:hover {
+        background: #f7f8f8;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .btn-facebook {
