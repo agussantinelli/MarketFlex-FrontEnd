@@ -142,6 +142,31 @@ import Notifications from "../components/common/Notifications";
                 </button>
             </form>
 
+            <div class="divider">
+                <span>o continuar con</span>
+            </div>
+
+            <div id="google-signin-container">
+                <div
+                    id="g_id_onload"
+                    data-client_id="697852573228-jl7nemqo3paglicuba0sdr68gshe1kta.apps.googleusercontent.com"
+                    data-callback="handleGoogleCredentialResponse"
+                    data-auto_prompt="false"
+                >
+                </div>
+                <div
+                    class="g_id_signin"
+                    data-type="standard"
+                    data-shape="rectangular"
+                    data-theme="outline"
+                    data-text="signin_with"
+                    data-size="large"
+                    data-logo_alignment="left"
+                    data-width="100%"
+                >
+                </div>
+            </div>
+
             <div class="login-footer">
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
             </div>
@@ -157,8 +182,10 @@ import Notifications from "../components/common/Notifications";
     />
 </Layout>
 
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 <script>
-    import { login } from "../services/auth.service";
+    import { login, loginWithGoogle } from "../services/auth.service";
 
     const loginForm = document.querySelector(".login-form") as HTMLFormElement;
     const emailInput = document.getElementById("email") as HTMLInputElement;
@@ -201,20 +228,30 @@ import Notifications from "../components/common/Notifications";
             localStorage.setItem("token", response.token);
             localStorage.setItem("user", JSON.stringify(response.user));
 
-            // Redirect
-            // Redirect
-            // Redirect
-            // Use window.location.replace to prevent back button from returning to login
             const userName = response.user.nombre || "Usuario";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
         } catch (error) {
             console.error("Login error:", error);
-            // Reload with error param to trigger notification
             window.location.href = "/login?error=true";
-
             submitBtn.disabled = false;
         }
     });
+
+    // Google Sign-In callback
+    (window as any).handleGoogleCredentialResponse = async (response: any) => {
+        try {
+            const result = await loginWithGoogle(response.credential);
+
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("user", JSON.stringify(result.user));
+
+            const userName = result.user.nombre || "Usuario";
+            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+        } catch (error) {
+            console.error("Google login error:", error);
+            window.location.href = "/login?error=true";
+        }
+    };
 </script>
 
 <style>
@@ -478,6 +515,36 @@ import Notifications from "../components/common/Notifications";
         background: var(--green-accent);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(var(--green-primary), 0.3);
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #e1e4e8;
+    }
+
+    .divider span {
+        color: #999;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    #google-signin-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    #google-signin-container .g_id_signin {
+        width: 100%;
     }
 
     .login-footer {
