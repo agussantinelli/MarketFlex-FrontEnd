@@ -24,6 +24,15 @@ const { product, showFeatured = true } = Astro.props;
 
         <div class="badges-container">
             {
+                product.descuentoActivo && (
+                    <div class="badge discount">
+                        {product.descuentoActivo.porcentaje
+                            ? `-${product.descuentoActivo.porcentaje}%`
+                            : "OFERTA"}
+                    </div>
+                )
+            }
+            {
                 product.esDestacado && showFeatured && (
                     <div class="badge featured" title="Producto Destacado">
                         <Icon name="lucide:star" size={16} />
@@ -46,6 +55,25 @@ const { product, showFeatured = true } = Astro.props;
                 </div>
             )
         }
+
+        <div class="price-container">
+            {
+                product.precioConDescuento ? (
+                    <>
+                        <span class="original-price">
+                            ${product.precioActual}
+                        </span>
+                        <span class="current-price discount-text">
+                            ${product.precioConDescuento}
+                        </span>
+                    </>
+                ) : (
+                    <span class="current-price">
+                        ${product.precioActual || "0.00"}
+                    </span>
+                )
+            }
+        </div>
     </div>
     <div class="product-info">
         <div class="categories">
@@ -111,21 +139,38 @@ const { product, showFeatured = true } = Astro.props;
         transform: scale(1.05);
     }
 
-    .price-tag {
+    .price-container {
         position: absolute;
-        bottom: 1rem; /* Moved to bottom right to avoid badge conflict */
+        bottom: 1rem;
         right: 1rem;
         background: rgba(10, 10, 10, 0.8);
         backdrop-filter: blur(4px);
-        color: var(--green-primary);
         padding: 0.5rem 1rem;
         border-radius: 2rem;
-        font-weight: 700;
-        font-size: 1.1rem;
         border: 1px solid rgba(var(--green-primary), 0.3);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         z-index: 10;
-        top: auto; /* Reset top */
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .current-price {
+        color: var(--green-primary);
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .discount-text {
+        color: #ef4444; /* Red for discount price? Or keep green? Let's use green for consistency or a special color */
+        color: var(--green-cream);
+    }
+
+    .original-price {
+        color: #aaa;
+        text-decoration: line-through;
+        font-size: 0.9rem;
+        font-weight: 500;
     }
 
     .badges-container {
@@ -147,6 +192,12 @@ const { product, showFeatured = true } = Astro.props;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         font-weight: 700;
         font-size: 0.8rem;
+    }
+
+    .discount {
+        background: #ef4444;
+        color: white;
+        padding: 0.4rem 0.8rem;
     }
 
     .free-shipping {
