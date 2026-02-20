@@ -9,6 +9,10 @@ export const loginWithGoogle = async (idToken: string): Promise<GoogleLoginRespo
     return await api.post('auth/google', { json: { idToken } }).json();
 };
 
+export const loginWithFacebook = async (accessToken: string): Promise<GoogleLoginResponse> => {
+    return await api.post('auth/facebook', { json: { accessToken } }).json();
+};
+
 export const logout = () => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('token');
