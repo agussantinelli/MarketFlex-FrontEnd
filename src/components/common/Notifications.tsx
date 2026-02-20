@@ -18,6 +18,7 @@ export default function Notifications({
     offset,
     requiredQueryParam
 }: Props) {
+    // Effect for triggering notification from props (on mount/update)
     useEffect(() => {
         if (!message) return;
 
@@ -42,6 +43,43 @@ export default function Notifications({
 
         return () => clearTimeout(timeout);
     }, [message, type, delay, requiredQueryParam]);
+
+    // Expose global function for vanilla JS usage
+    useEffect(() => {
+        // Inject styles dynamically to ensure visibility
+        const style = document.createElement('style');
+        style.innerHTML = `
+            [data-sileo-viewport] {
+                z-index: 99999 !important;
+                position: fixed !important;
+            }
+            [data-sileo-viewport][data-position^="top"] {
+                top: 80px !important; 
+            }
+        `;
+        document.head.appendChild(style);
+
+        window.triggerSileo = (type: string, message: string) => {
+            try {
+                // @ts-ignore
+                if (sileo[type]) {
+                    // @ts-ignore
+                    sileo[type]({ title: message });
+                    return true;
+                }
+                return false;
+            } catch (err) {
+                console.error("[UnifiedNotificationSystem] Error triggering notification:", err);
+                return false;
+            }
+        };
+
+        return () => {
+            // @ts-ignore
+            delete window.triggerSileo;
+            document.head.removeChild(style);
+        };
+    }, []);
 
     return (
         <Toaster position={position} offset={offset} />

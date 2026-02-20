@@ -2,7 +2,7 @@
 import "../styles/main.css";
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
-import { Toaster } from "sileo";
+import Notifications from "../components/common/Notifications";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/800.css";
@@ -38,7 +38,7 @@ const {
 		<meta name="description" content={description} />
 	</head>
 	<body>
-		{showToaster && <Toaster client:only="react" />}
+		{showToaster && <Notifications client:only="react" />}
 		{!simple && <Navbar />}
 		<main>
 			<slot />

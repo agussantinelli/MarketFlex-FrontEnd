@@ -268,13 +268,40 @@ const categories = await getCategories();
         });
     }
 
-    // Search Clear Logic
+    // Search Logic (Validation & Clear)
+    const searchForm = document.querySelector(
+        ".nav-search-form",
+    ) as HTMLFormElement;
     const searchInput = document.querySelector(
         ".search-input",
     ) as HTMLInputElement;
     const searchClearBtn = document.querySelector(
         ".search-clear-btn",
     ) as HTMLButtonElement;
+
+    if (searchForm) {
+        searchForm.addEventListener("submit", (e) => {
+            if (searchInput) {
+                const query = searchInput.value.trim();
+                // Validate at least 2 characters (excluding spaces)
+                if (query.length < 2) {
+                    e.preventDefault();
+                    let handled = false;
+                    if (window.triggerSileo) {
+                        handled = window.triggerSileo(
+                            "error",
+                            "Ingresa al menos 2 caracteres para buscar.",
+                        );
+                    }
+
+                    if (!handled) {
+                        console.warn("Sileo fallback triggered");
+                        alert("Ingresa al menos 2 caracteres para buscar.");
+                    }
+                }
+            }
+        });
+    }
 
     if (searchInput && searchClearBtn) {
         const updateClearBtn = () => {
