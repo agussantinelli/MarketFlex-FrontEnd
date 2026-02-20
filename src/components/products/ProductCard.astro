@@ -4,9 +4,10 @@ import type { Product } from "../../types/product.types";
 
 interface Props {
     product: Product;
+    showFeatured?: boolean;
 }
 
-const { product } = Astro.props;
+const { product, showFeatured = true } = Astro.props;
 ---
 
 <article class="product-card">
@@ -21,7 +22,7 @@ const { product } = Astro.props;
         />
         <div class="price-tag">${product.precioActual || "0.00"}</div>
         {
-            product.esDestacado && (
+            product.esDestacado && showFeatured && (
                 <div class="featured-badge" title="Producto Destacado">
                     <Icon name="lucide:star" />
                 </div>
