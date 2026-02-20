@@ -322,3 +322,27 @@ const { product, showFeatured = true } = Astro.props;
         opacity: 0.8;
     }
 </style>
+
+<script>
+    const addButtons = document.querySelectorAll(".btn-add");
+
+    addButtons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                e.preventDefault();
+                window.location.href = "/login";
+                return;
+            }
+
+            // TODO: Implement Add to Cart logic here
+            console.log("Add to cart clicked - User logged in");
+            // trigger Sileo notification if available?
+            if (window.triggerSileo) {
+                window.triggerSileo("success", "Producto agregado (simulado)");
+            } else {
+                alert("Producto agregado (simulado)");
+            }
+        });
+    });
+</script>
