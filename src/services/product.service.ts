@@ -11,13 +11,24 @@ export const getProducts = async (): Promise<Product[]> => {
     }
 };
 
-export const searchProducts = async (query: string, sort?: string): Promise<Product[]> => {
+interface SearchOptions {
+    query?: string;
+    sort?: string;
+    type?: string;
+    category?: string;
+    offers?: string;
+}
+
+export const searchProducts = async (options: SearchOptions): Promise<Product[]> => {
     try {
-        let url = `products/search?q=${encodeURIComponent(query)}`;
-        if (sort) {
-            url += `&sort=${sort}`;
-        }
-        const response: { data: Product[] } = await api.get(url).json();
+        const params = new URLSearchParams();
+        if (options.query) params.append("q", options.query);
+        if (options.sort) params.append("sort", options.sort);
+        if (options.type) params.append("type", options.type);
+        if (options.category) params.append("category", options.category);
+        if (options.offers) params.append("offers", options.offers);
+
+        const response: { data: Product[] } = await api.get(`products/search?${params.toString()}`).json();
         return response.data;
     } catch (error) {
         console.error("Error searching products:", error);

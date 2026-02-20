@@ -7,7 +7,17 @@ import { searchProducts } from "../services/product.service";
 
 const searchQuery = Astro.url.searchParams.get("q")?.trim() || "";
 const sort = Astro.url.searchParams.get("sort") || "";
-const products = await searchProducts(searchQuery, sort);
+const typeParam = Astro.url.searchParams.get("type") || "";
+const categoryParam = Astro.url.searchParams.get("category") || "";
+const offersParam = Astro.url.searchParams.get("offers") || "";
+
+const products = await searchProducts({
+    query: searchQuery,
+    sort,
+    type: typeParam,
+    category: categoryParam,
+    offers: offersParam,
+});
 ---
 
 <Layout
@@ -29,6 +39,19 @@ const products = await searchProducts(searchQuery, sort);
                         <>
                             Explorando{" "}
                             <span class="gradient-text">Productos</span>
+                            {typeParam && (
+                                <span class="filter-tag">
+                                    Tipo: {typeParam}
+                                </span>
+                            )}
+                            {categoryParam && (
+                                <span class="filter-tag">
+                                    Categoría: {categoryParam}
+                                </span>
+                            )}
+                            {offersParam && (
+                                <span class="filter-tag">Ofertas</span>
+                            )}
                             <span class="result-count">
                                 ({products.length})
                             </span>
@@ -36,6 +59,19 @@ const products = await searchProducts(searchQuery, sort);
                     )
                 }
             </h2>
+
+            <style>
+                .filter-tag {
+                    display: inline-block;
+                    background: rgba(34, 197, 94, 0.1);
+                    color: var(--primary);
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 1rem;
+                    font-size: 0.9rem;
+                    margin: 0 0.5rem;
+                    border: 1px solid rgba(34, 197, 94, 0.2);
+                }
+            </style>
 
             {
                 /* Always show controls if we have products, OR if we are just exploring (to allow sorting/filtering of all items) */
