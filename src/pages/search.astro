@@ -6,27 +6,81 @@ import ProductCard from "../components/products/ProductCard.astro";
 import { searchProducts } from "../services/product.service";
 
 const searchQuery = Astro.url.searchParams.get("q")?.trim() || "";
-const products = searchQuery ? await searchProducts(searchQuery) : [];
+const sort = Astro.url.searchParams.get("sort") || "";
+const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
 ---
 
 <Layout title={`MarketFlex | Buscar: ${searchQuery || "..."}`}>
     <section class="search-section">
-        <h2 class="section-title">
+        <div class="search-header">
+            <h2 class="section-title">
+                {
+                    searchQuery ? (
+                        <>
+                            Resultados para "
+                            <span class="gradient-text">{searchQuery}</span>"
+                            <span class="result-count">
+                                ({products.length})
+                            </span>
+                        </>
+                    ) : (
+                        <>
+                            Buscá tu próximo{" "}
+                            <span class="gradient-text">producto</span>
+                        </>
+                    )
+                }
+            </h2>
+
             {
-                searchQuery ? (
-                    <>
-                        Resultados para "
-                        <span class="gradient-text">{searchQuery}</span>"
-                        <span class="result-count">({products.length})</span>
-                    </>
-                ) : (
-                    <>
-                        Buscá tu próximo{" "}
-                        <span class="gradient-text">producto</span>
-                    </>
+                products.length > 0 && (
+                    <div class="sort-wrapper">
+                        <select
+                            class="sort-select"
+                            onchange="window.location.href = this.value"
+                        >
+                            <option
+                                value={`/search?q=${searchQuery}`}
+                                selected={sort === ""}
+                            >
+                                Relevancia
+                            </option>
+                            <option
+                                value={`/search?q=${searchQuery}&sort=price_asc`}
+                                selected={sort === "price_asc"}
+                            >
+                                Menor Precio
+                            </option>
+                            <option
+                                value={`/search?q=${searchQuery}&sort=price_desc`}
+                                selected={sort === "price_desc"}
+                            >
+                                Mayor Precio
+                            </option>
+                            <option
+                                value={`/search?q=${searchQuery}&sort=name_asc`}
+                                selected={sort === "name_asc"}
+                            >
+                                A - Z
+                            </option>
+                            <option
+                                value={`/search?q=${searchQuery}&sort=name_desc`}
+                                selected={sort === "name_desc"}
+                            >
+                                Z - A
+                            </option>
+                            <option
+                                value={`/search?q=${searchQuery}&sort=bestselling`}
+                                selected={sort === "bestselling"}
+                            >
+                                Más Vendidos
+                            </option>
+                        </select>
+                        <Icon name="lucide:chevron-down" class="sort-icon" />
+                    </div>
                 )
             }
-        </h2>
+        </div>
 
         {
             products.length > 0 ? (
@@ -81,10 +135,17 @@ const products = searchQuery ? await searchProducts(searchQuery) : [];
         min-height: 60vh;
     }
 
+    .search-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
     .section-title {
         text-align: center;
         font-size: clamp(1.5rem, 4vw, 2.5rem);
-        margin-bottom: 3rem;
         color: var(--foreground);
         font-weight: 800;
         display: flex;
@@ -92,6 +153,58 @@ const products = searchQuery ? await searchProducts(searchQuery) : [];
         justify-content: center;
         gap: 0.5rem;
         flex-wrap: wrap;
+        margin-bottom: 0;
+    }
+
+    .sort-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-width: 200px;
+    }
+
+    .sort-select {
+        appearance: none;
+        background: rgba(20, 20, 20, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        padding-right: 2.5rem;
+        color: var(--foreground);
+        font-family: inherit;
+        font-size: 0.9rem;
+        width: 100%;
+        cursor: pointer;
+        backdrop-filter: blur(12px);
+        transition: all 0.2s ease;
+    }
+
+    .sort-select:hover,
+    .sort-select:focus {
+        border-color: var(--primary);
+        outline: none;
+        background: rgba(20, 20, 20, 0.8);
+    }
+
+    .sort-icon {
+        position: absolute;
+        right: 1rem;
+        color: #9ca3af;
+        pointer-events: none;
+        width: 16px;
+        height: 16px;
+    }
+
+    @media (min-width: 768px) {
+        .search-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            margin-bottom: 0;
+        }
     }
 
     .result-count {
