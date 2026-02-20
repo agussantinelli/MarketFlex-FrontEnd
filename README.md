@@ -20,6 +20,8 @@
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
     <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
+    <img src="https://img.shields.io/badge/Google_Sign--In-GSI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Sign-In Badge">
+    <img src="https://img.shields.io/badge/Facebook_Login-SDK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Login Badge">
 </div>
 
 <div align="center">
@@ -210,6 +212,8 @@
 <pre>
 PORT=2611
 PUBLIC_API_URL=http://localhost:5979/api
+PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+PUBLIC_FACEBOOK_APP_ID=your_facebook_app_id
 </pre>
 
 <h2>🚀 Instalación</h2>
