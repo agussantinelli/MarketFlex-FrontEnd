@@ -1,8 +1,12 @@
 import { api } from '../lib/api';
-import type { LoginResponse } from '../types/auth.types';
+import type { LoginResponse, GoogleLoginResponse } from '../types/auth.types';
 
 export const login = async (credentials: any): Promise<LoginResponse> => {
     return await api.post('auth/login', { json: credentials }).json();
+};
+
+export const loginWithGoogle = async (idToken: string): Promise<GoogleLoginResponse> => {
+    return await api.post('auth/google', { json: { idToken } }).json();
 };
 
 export const logout = () => {
