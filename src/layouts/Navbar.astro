@@ -23,6 +23,13 @@ import { Icon } from "astro-icon/components";
                     class="search-input"
                     autocomplete="off"
                 />
+                <button
+                    type="button"
+                    class="search-clear-btn"
+                    aria-label="Clear search"
+                >
+                    <Icon name="lucide:x" class="clear-icon" />
+                </button>
             </div>
         </form>
 
@@ -183,6 +190,42 @@ import { Icon } from "astro-icon/components";
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             window.location.href = "/login";
+        });
+    }
+
+    // Search Clear Logic
+    const searchInput = document.querySelector(
+        ".search-input",
+    ) as HTMLInputElement;
+    const searchClearBtn = document.querySelector(
+        ".search-clear-btn",
+    ) as HTMLButtonElement;
+
+    if (searchInput && searchClearBtn) {
+        const updateClearBtn = () => {
+            if (searchInput.value.length > 0) {
+                searchClearBtn.classList.add("visible");
+            } else {
+                searchClearBtn.classList.remove("visible");
+            }
+        };
+
+        searchInput.addEventListener("input", updateClearBtn);
+
+        // Check on load if there's a value (e.g. from URL param if we were to populate it, preventing issues)
+        const urlParams = new URLSearchParams(window.location.search);
+        const q = urlParams.get("q");
+        if (q) {
+            searchInput.value = q;
+            updateClearBtn();
+        }
+
+        searchClearBtn.addEventListener("click", () => {
+            searchInput.value = "";
+            searchInput.focus();
+            updateClearBtn();
+            // If on search page, maybe we want to redirect to home or just clear?
+            // For now just clear input.
         });
     }
 </script>
@@ -509,7 +552,7 @@ import { Icon } from "astro-icon/components";
 
     .search-input {
         width: 100%;
-        padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+        padding: 0.5rem 2.25rem 0.5rem 2.25rem; /* Added padding right for clear button */
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         font-size: 0.85rem;
@@ -528,6 +571,38 @@ import { Icon } from "astro-icon/components";
 
     .search-input::placeholder {
         color: #9ca3af;
+    }
+
+    .search-clear-btn {
+        position: absolute;
+        right: 0.5rem;
+        background: transparent;
+        border: none;
+        color: #9ca3af;
+        cursor: pointer;
+        padding: 4px;
+        display: flex; /* keep it flex but hide via opacity/visibility */
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s;
+        border-radius: 50%;
+    }
+
+    .search-clear-btn:hover {
+        background: rgba(0, 0, 0, 0.1);
+        color: #4b5563;
+    }
+
+    .search-clear-btn.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .clear-icon {
+        width: 14px;
+        height: 14px;
     }
 
     @media (max-width: 767px) {

@@ -12,12 +12,14 @@ const { product } = Astro.props;
 <article class="product-card">
     <div class="image-container">
         <img
-            src={`http://localhost:5979/${product.foto}`}
+            src={product.foto
+                ? `http://localhost:5979/${product.foto}`
+                : "/placeholder.png"}
             alt={product.nombre}
             class="product-image"
             loading="lazy"
         />
-        <div class="price-tag">${product.precioActual}</div>
+        <div class="price-tag">${product.precioActual || "0.00"}</div>
         {
             product.esDestacado && (
                 <div class="featured-badge" title="Producto Destacado">
@@ -29,14 +31,19 @@ const { product } = Astro.props;
     <div class="product-info">
         <div class="categories">
             {
-                product.categorias.map((cat) => (
+                product.categorias?.map((cat) => (
                     <span class="category-badge">{cat}</span>
                 ))
             }
         </div>
         <h3>{product.nombre}</h3>
         <p class="description">
-            {product.caracteristicas.substring(0, 100)}...
+            {
+                product.caracteristicas
+                    ? product.caracteristicas.substring(0, 100) +
+                      (product.caracteristicas.length > 100 ? "..." : "")
+                    : "Sin descripción disponible."
+            }
         </p>
         <button class="btn-add">
             <Icon name="lucide:shopping-cart" /> Agregar
