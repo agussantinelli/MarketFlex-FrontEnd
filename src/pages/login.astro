@@ -167,6 +167,15 @@ import Notifications from "../components/common/Notifications";
                 </div>
             </div>
 
+            <button id="fb-login-btn" class="btn-facebook" type="button">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                    ></path>
+                </svg>
+                Iniciar sesión con Facebook
+            </button>
+
             <div class="login-footer">
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
             </div>
@@ -185,7 +194,11 @@ import Notifications from "../components/common/Notifications";
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
-    import { login, loginWithGoogle } from "../services/auth.service";
+    import {
+        login,
+        loginWithGoogle,
+        loginWithFacebook,
+    } from "../services/auth.service";
 
     const loginForm = document.querySelector(".login-form") as HTMLFormElement;
     const emailInput = document.getElementById("email") as HTMLInputElement;
@@ -252,6 +265,63 @@ import Notifications from "../components/common/Notifications";
             window.location.href = "/login?error=true";
         }
     };
+
+    // Facebook Login
+    const fbAppId = "2098383814330615";
+
+    // Load Facebook SDK
+    (window as any).fbAsyncInit = function () {
+        (window as any).FB.init({
+            appId: fbAppId,
+            cookie: true,
+            xfbml: true,
+            version: "v21.0",
+        });
+    };
+
+    // Inject FB SDK script
+    (function (d, s, id) {
+        const fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        const js = d.createElement(s) as HTMLScriptElement;
+        js.id = id;
+        js.src = "https://connect.facebook.net/es_LA/sdk.js";
+        fjs.parentNode?.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+
+    const fbBtn = document.getElementById("fb-login-btn");
+    fbBtn?.addEventListener("click", () => {
+        const FB = (window as any).FB;
+        if (!FB) {
+            console.error("Facebook SDK not loaded");
+            return;
+        }
+
+        FB.login(
+            async (response: any) => {
+                if (response.authResponse) {
+                    try {
+                        const result = await loginWithFacebook(
+                            response.authResponse.accessToken,
+                        );
+
+                        localStorage.setItem("token", result.token);
+                        localStorage.setItem(
+                            "user",
+                            JSON.stringify(result.user),
+                        );
+
+                        const userName = result.user.nombre || "Usuario";
+                        window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+                    } catch (error) {
+                        console.error("Facebook login error:", error);
+                        window.location.href = "/login?error=true";
+                    }
+                }
+            },
+            { scope: "email,public_profile" },
+        );
+    });
 </script>
 
 <style>
@@ -545,6 +615,30 @@ import Notifications from "../components/common/Notifications";
 
     #google-signin-container .g_id_signin {
         width: 100%;
+    }
+
+    .btn-facebook {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: #1877f2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.2s ease;
+        margin-top: 0.75rem;
+    }
+
+    .btn-facebook:hover {
+        background: #166fe5;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
     }
 
     .login-footer {
