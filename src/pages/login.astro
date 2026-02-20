@@ -307,25 +307,23 @@ import Notifications from "../components/common/Notifications";
         }
 
         FB.login(
-            async (response: any) => {
+            (response: any) => {
                 if (response.authResponse) {
-                    try {
-                        const result = await loginWithFacebook(
-                            response.authResponse.accessToken,
-                        );
+                    loginWithFacebook(response.authResponse.accessToken)
+                        .then((result) => {
+                            localStorage.setItem("token", result.token);
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify(result.user),
+                            );
 
-                        localStorage.setItem("token", result.token);
-                        localStorage.setItem(
-                            "user",
-                            JSON.stringify(result.user),
-                        );
-
-                        const userName = result.user.nombre || "Usuario";
-                        window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
-                    } catch (error) {
-                        console.error("Facebook login error:", error);
-                        window.location.href = "/login?error=true";
-                    }
+                            const userName = result.user.nombre || "Usuario";
+                            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+                        })
+                        .catch((error) => {
+                            console.error("Facebook login error:", error);
+                            window.location.href = "/login?error=true";
+                        });
                 }
             },
             { scope: "email,public_profile" },
