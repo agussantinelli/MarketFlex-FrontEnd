@@ -1,5 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
+import { getProductTypes } from "../services/product-type.service";
+import { getCategories } from "../services/category.service";
+
+const productTypes = await getProductTypes();
+const categories = await getCategories();
 ---
 
 <nav class="navbar">
@@ -39,11 +44,6 @@ import { Icon } from "astro-icon/components";
         </button>
 
         <div class="nav-links">
-            <a href="/" class="nav-link">
-                <Icon name="lucide:home" class="link-icon" />
-                Inicio
-            </a>
-
             <!-- Explorar -->
             <a href="/search" class="nav-link">
                 <Icon name="lucide:compass" class="link-icon" />
@@ -58,17 +58,16 @@ import { Icon } from "astro-icon/components";
                     <Icon name="lucide:chevron-down" class="chevron-icon" />
                 </button>
                 <div class="nav-dropdown-menu">
-                    <a href="/search?type=Libro" class="dropdown-link">Libros</a
-                    >
-                    <a href="/search?type=Revista" class="dropdown-link"
-                        >Revistas</a
-                    >
-                    <a href="/search?type=E-book" class="dropdown-link"
-                        >E-books</a
-                    >
-                    <a href="/search?type=Papelería" class="dropdown-link"
-                        >Papelería</a
-                    >
+                    {
+                        productTypes.map((type) => (
+                            <a
+                                href={`/search?type=${type.nombre}`}
+                                class="dropdown-link"
+                            >
+                                {type.nombre}
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
@@ -80,21 +79,16 @@ import { Icon } from "astro-icon/components";
                     <Icon name="lucide:chevron-down" class="chevron-icon" />
                 </button>
                 <div class="nav-dropdown-menu">
-                    <a href="/search?category=Ficción" class="dropdown-link"
-                        >Ficción</a
-                    >
-                    <a href="/search?category=Tecnología" class="dropdown-link"
-                        >Tecnología</a
-                    >
-                    <a href="/search?category=Psicología" class="dropdown-link"
-                        >Psicología</a
-                    >
-                    <a href="/search?category=Fantasía" class="dropdown-link"
-                        >Fantasía</a
-                    >
-                    <a href="/search?category=Negocios" class="dropdown-link"
-                        >Negocios</a
-                    >
+                    {
+                        categories.map((cat) => (
+                            <a
+                                href={`/search?category=${cat.nombre}`}
+                                class="dropdown-link"
+                            >
+                                {cat.nombre}
+                            </a>
+                        ))
+                    }
                 </div>
             </div>
 
