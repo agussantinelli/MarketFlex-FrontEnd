@@ -7,10 +7,12 @@ import { searchProducts } from "../services/product.service";
 
 const searchQuery = Astro.url.searchParams.get("q")?.trim() || "";
 const sort = Astro.url.searchParams.get("sort") || "";
-const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
+const products = await searchProducts(searchQuery, sort);
 ---
 
-<Layout title={`MarketFlex | Buscar: ${searchQuery || "..."}`}>
+<Layout
+    title={`MarketFlex | ${searchQuery ? `Resultados: ${searchQuery}` : "Explorar Productos"}`}
+>
     <section class="search-section">
         <div class="search-header">
             <h2 class="section-title">
@@ -25,15 +27,21 @@ const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
                         </>
                     ) : (
                         <>
-                            Buscá tu próximo{" "}
-                            <span class="gradient-text">producto</span>
+                            Explorando{" "}
+                            <span class="gradient-text">Productos</span>
+                            <span class="result-count">
+                                ({products.length})
+                            </span>
                         </>
                     )
                 }
             </h2>
 
             {
-                products.length > 0 && (
+                /* Always show controls if we have products, OR if we are just exploring (to allow sorting/filtering of all items) */
+            }
+            {
+                (products.length > 0 || !searchQuery) && (
                     <div class="search-controls">
                         <div class="sort-wrapper">
                             <select
@@ -41,8 +49,10 @@ const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
                                 onchange="window.location.href = this.value"
                             >
                                 <option
-                                    value={`/search?q=${searchQuery}`}
-                                    selected={sort === ""}
+                                    value={`/search?q=${searchQuery}&sort=`}
+                                    selected={
+                                        sort === "" || sort === "relevance"
+                                    }
                                 >
                                     Relevancia
                                 </option>
@@ -94,7 +104,7 @@ const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
             }
         </div>
 
-        {/* Modal Coming Soon */}
+        {/* Modal Coming Soon - Keep existing */}
         <div id="filter-modal" class="modal-backdrop">
             <div class="modal-content">
                 <button id="close-modal" class="modal-close">
@@ -149,38 +159,36 @@ const products = searchQuery ? await searchProducts(searchQuery, sort) : [];
                         <ProductCard product={product} showFeatured={false} />
                     ))}
                 </div>
-            ) : searchQuery ? (
+            ) : (
                 <div class="empty-results">
                     <div class="empty-icon-wrapper">
                         <Icon name="lucide:search-x" class="empty-icon" />
                     </div>
-                    <h3 class="empty-title">Sin resultados</h3>
+                    <h3 class="empty-title">
+                        {searchQuery ? "Sin resultados" : "Catálogo vacío"}
+                    </h3>
                     <p>
-                        No encontramos productos que coincidan con "
-                        <strong>{searchQuery}</strong>".
-                        <br />
-                        Intentá con otras palabras clave o navegá por
-                        categorías.
+                        {searchQuery ? (
+                            <>
+                                No encontramos productos que coincidan con "
+                                <strong>{searchQuery}</strong>".
+                                <br />
+                                Intentá con otras palabras clave.
+                            </>
+                        ) : (
+                            "No hay productos disponibles en este momento."
+                        )}
                     </p>
                     <div class="actions">
                         <a href="/" class="btn btn-secondary btn-sm">
                             Volver al Inicio
                         </a>
-                        <a href="/search" class="btn btn-primary btn-sm">
-                            Ver Todos los Productos
-                        </a>
+                        {searchQuery && (
+                            <a href="/search" class="btn btn-primary btn-sm">
+                                Ver Todos los Productos
+                            </a>
+                        )}
                     </div>
-                </div>
-            ) : (
-                <div class="empty-results">
-                    <div class="empty-icon-wrapper">
-                        <Icon name="lucide:search" class="empty-icon" />
-                    </div>
-                    <h3 class="empty-title">¿Qué estás buscando?</h3>
-                    <p>
-                        Usá el buscador del menú para encontrar tu próximo
-                        producto favorito.
-                    </p>
                 </div>
             )
         }
