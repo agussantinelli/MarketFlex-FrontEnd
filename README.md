@@ -168,11 +168,14 @@
 │   ├── lib/                                        # Utilidades y configuración
 │   │   └── api.ts                                  # Interceptor de API y configuración global
 │   ├── services/                                   # Servicios de negocio (API calls)
-│   │   ├── api.ts                                  # Instancia base de Ky
 │   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
+│   │   ├── category.service.ts                     # Servicio de categorías
+│   │   ├── product-type.service.ts                 # Servicio de tipos de producto
 │   │   └── product.service.ts                      # Servicio de productos
 │   ├── types/                                      # Definiciones de tipos TypeScript
 │   │   ├── auth.types.ts                           # Tipos de Autenticación
+│   │   ├── category.types.ts                       # Tipos de Categorías
+│   │   ├── product-type.types.ts                   # Tipos de Tipos de Producto
 │   │   └── product.types.ts                        # Interfaces de dominio (Producto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
