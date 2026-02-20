@@ -4,7 +4,13 @@ export type Product = {
     caracteristicas: string | null;
     foto: string | null;
     categorias: string[];
-    precioActual: string | null;
+    precioActual: number | null;
+    precioConDescuento: number | null;
+    descuentoActivo: {
+        nombre: string;
+        porcentaje: number | null;
+        montoFijo: number | null;
+    } | null;
     esDestacado: boolean;
     stock: number;
     envioGratis: boolean;
