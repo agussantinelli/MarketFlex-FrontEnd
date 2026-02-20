@@ -178,13 +178,17 @@
 │   │   ├── product-type.types.ts                   # Tipos de Tipos de Producto
 │   │   └── product.types.ts                        # Interfaces de dominio (Producto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
+│   │   ├── admin/                                  # Panel de administración
+│   │   │   └── dashboard.astro                     # Dashboard principal
+│   │   ├── about.astro                             # Página "Sobre Nosotros"
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   ├── index.astro                             # Página de inicio
-│   │   └── login.astro                             # Página de inicio de sesión
+│   │   ├── login.astro                             # Página de inicio de sesión
+│   │   └── search.astro                            # Página de búsqueda y filtrado
 │   ├── components/                                 # Componentes reutilizables
-│   │   ├── common/                                 # Componentes transversales (UI, Notificaciones)
-│   │   │   └── Notifications.tsx                   # Sistema de notificaciones unificado
-│   │   └── products/                               # Componentes de dominio (Productos)
+│   │   ├── common/                                 # Componentes transversales
+│   │   │   └── Notifications.tsx                   # Sistema de notificaciones (React)
+│   │   └── products/                               # Componentes de dominio
 │   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
