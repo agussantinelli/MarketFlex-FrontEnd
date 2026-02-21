@@ -77,9 +77,9 @@
         </tr>
         <tr>
             <td><strong>Estilos</strong></td>
-            <td>CSS Modules / Scope</td>
-            <td>Nativo</td>
-            <td>Estilizado modular y optimizado por componente.</td>
+            <td>CSS Modules (Scoped)</td>
+            <td>.module.css</td>
+            <td>Estilizado modular con aislamiento automático por componente.</td>
         </tr>
         <tr>
             <td><strong>Paquetes</strong></td>
@@ -166,7 +166,7 @@
   <li>⚡ <b>Performance:</b> Carga asíncrona optimizada para catálogos de cualquier escala.</li>
   <li>🔢 <b>Paginación Tradicional:</b> Navegación basada en URL para una mejor indexación (SEO) y accesibilidad.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
-  <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
+  <li>🎡 <b>CSS Modules:</b> Aislamiento total de estilos mediante archivos <code>.module.css</code> localizados por componente/página.</li>
   <li>🎠 <b>Carruseles Premium:</b> Componente reutilizable de carrusel con estados interactivos (flechas que cambian de color al límite del scroll) y efectos premium.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
@@ -179,6 +179,7 @@
 <h2>🏝️ Arquitectura de Componentes (Astro Islands)</h2>
 <p>Este proyecto se enorgullece de ser súper rápido y eficiente al renderizar gracias a la implementación nativa de la <b>Arquitectura de Islas de Astro</b>. El patrón de diseño sigue estos principios rectores:</p>
 <ul>
+  <li><b>Modularización de Estilos (CSS Modules):</b> Siguiendo las directrices de la skill <code>css-modules</code>, todos los estilos complejos se extraen a archivos <code>.module.css</code> dentro de subdirectorios <code>styles/</code> locales al componente o página. Esto elimina colisiones de nombres y asegura que cada archivo de estilo solo afecte a su dueño.</li>
   <li><b>Esqueleto y Contenidos Estáticos (Astro Puro):</b> La inmensa mayoría de la UI (Barra de Navegación, Pie de Página, Tarjetas de Producto, e incluso la lógica pesada de <code>login.astro</code>) es renderizada en el servidor empleando exclusivamente componentes <code>.astro</code>. Esto expone un HTML súper ligero sin un gramo innecesario de JavaScript al cliente.</li>
   <li><b>Islas Interactivas (React):</b> Únicamente los micro-componentes que de verdad demandan reactividad o gestión de estado compleja en el cliente se escriben en React. El mejor ejemplo en este ecosistema es el sistema de notificaciones Sileo (<code>&lt;Notifications client:only="react" /&gt;</code>), que se hidrata de forma aislada sin afectar el rendimiento global del sitio restante.</li>
   <li><b>Cero Dependencias Obesas:</b> Separar de manera tan quirúrgica el contenido inerte del interactivo permite que el marketplace escale para manejar catálogos enormes sin comprometer jamás las métricas de carga del navegador o el TTI (<i>Time To Interactive</i>).</li>
@@ -263,6 +264,9 @@
 │   └── logo-marketflex-no-circle.png               # Isotipo sin círculo
 ├── src/
 │   ├── layouts/                                    # Componentes de diseño base
+│   │   ├── styles/                                 # Estilos modulares de layouts
+│   │   │   ├── Navbar.module.css                   
+│   │   │   └── Footer.module.css
 │   │   ├── Footer.astro                            # Pie de página responsivo
 │   │   ├── Layout.astro                            # Layout principal
 │   │   └── Navbar.astro                            # Barra de navegación principal
@@ -288,7 +292,12 @@
 │   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── admin/                                  # Panel de administración
+│   │   │   ├── styles/                             # Estilos del admin
 │   │   │   └── dashboard.astro                     # Dashboard principal
+│   │   ├── styles/                                 # Estilos modulares de páginas
+│   │   │   ├── index.module.css
+│   │   │   ├── about.module.css
+│   │   │   └── ...
 │   │   ├── about.astro                             # Página "Sobre Nosotros"
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
 │   │   ├── contacto.astro                          # Página de Contacto y soporte
@@ -299,9 +308,11 @@
 │   │   └── search.astro                            # Página de búsqueda y filtrado
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales
+│   │   │   ├── styles/                             # Estilos (ej. PageCard.module.css)
 │   │   │   ├── Notifications.tsx                   # Sistema de notificaciones (React)
 │   │   │   └── PageCard.astro                      # Tarjeta blanca central genérica
 │   │   └── products/                               # Componentes de dominio
+│   │       ├── styles/                             # Estilos (ej. ProductCard.module.css)
 │   │       ├── FeaturedProducts.astro              # Grilla de productos destacados
 │   │       ├── ProductCard.astro                   # Tarjeta de producto individual
 │   │       └── ProductCarousel.astro               # Carrusel interactivo reutilizable
@@ -317,6 +328,20 @@
 ├── README.md                                       # Documentación del proyecto
 └── tsconfig.json                                   # Configuración de TypeScript
 </code></pre>
+
+<hr>
+
+<h2>📚 Skills y Directrices</h2>
+<p>Este proyecto se rige por un conjunto de reglas arquitectónicas y de calidad de código denominadas <b>Skills</b>. Podés consultar el catálogo completo en:</p>
+<ul>
+    <li><b><a href=".agent/skills/global-skills/SKILL.md">Global Skills Catalog (Frontend)</a></b></li>
+</ul>
+<p>Las directrices más críticas incluyen:</p>
+<ul>
+    <li><code>css-modules</code>: Todo CSS complejo debe vivir en su propio archivo modular.</li>
+    <li><code>astro-scripts</code>: La lógica compleja de scripts debe extraerse de los archivos Astro.</li>
+    <li><code>modular-architecture</code>: Mantener la separación de servicios, tipos y componentes.</li>
+</ul>
 
 <hr>
 
