@@ -67,3 +67,13 @@ export const getFeaturedProducts = async (): Promise<Product[]> => {
         return [];
     }
 };
+
+export const getNewArrivals = async (): Promise<Product[]> => {
+    try {
+        const response: { data: Product[] } = await api.get('products/new-arrivals').json();
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching new arrivals:", error);
+        return [];
+    }
+};
