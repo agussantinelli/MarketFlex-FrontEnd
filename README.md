@@ -133,6 +133,18 @@
             <td>Inicio de sesión con cuenta de Facebook (JS SDK).</td>
         </tr>
         <tr>
+            <td><strong>Seguridad</strong></td>
+            <td>JWT (JSON Web Tokens)</td>
+            <td><strong>Nativo</strong></td>
+            <td>Manejo de sesiones interceptadas vía Ky.</td>
+        </tr>
+        <tr>
+            <td><strong>Herramientas</strong></td>
+            <td>vite-plugin-mkcert</td>
+            <td><strong>^1.17.9</strong></td>
+            <td>Generación de certificados SSL (HTTPS Local) para OAuth.</td>
+        </tr>
+        <tr>
             <td><strong>Estado Global</strong></td>
             <td>Zustand</td>
             <td><strong>Latest</strong></td>
