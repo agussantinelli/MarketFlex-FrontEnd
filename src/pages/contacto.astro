@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import PageCard from "../components/common/PageCard.astro";
 import { Icon } from "astro-icon/components";
+import Notifications from "../components/common/Notifications";
 ---
 
 <Layout
@@ -22,24 +23,21 @@ import { Icon } from "astro-icon/components";
                 <div class="info-card">
                     <Icon name="lucide:mail" class="info-icon" />
                     <h3>Email</h3>
-                    <p>soporte@marketflex.com</p>
+                    <p>marketflex10@gmail.com</p>
                 </div>
                 <div class="info-card">
                     <Icon name="lucide:map-pin" class="info-icon" />
                     <h3>Oficinas</h3>
-                    <p>Buenos Aires, Argentina</p>
+                    <p>Rosario, Santa Fe, Argentina</p>
                 </div>
                 <div class="info-card">
                     <Icon name="lucide:clock" class="info-icon" />
                     <h3>Horario</h3>
-                    <p>Lunes a Viernes, 9:00 - 18:00 (GMT-3)</p>
+                    <p>Lunes a Viernes, 9:00 - 18:00</p>
                 </div>
             </div>
 
-            <form
-                class="contact-form"
-                onsubmit="event.preventDefault(); window.location.href='/?login_success=true&user=Mensaje%20Enviado'"
-            >
+            <form id="support-form" class="contact-form">
                 <div class="form-group">
                     <label for="name">Nombre Completo</label>
                     <input
@@ -83,7 +81,88 @@ import { Icon } from "astro-icon/components";
             </form>
         </div>
     </PageCard>
+
+    <Notifications
+        client:only="react"
+        message="¡Mensaje enviado correctamente! Te contactaremos pronto."
+        type="success"
+        delay={100}
+        position="top-center"
+        requiredQueryParam="support_success"
+    />
+    <Notifications
+        client:only="react"
+        message="Error al enviar el mensaje. Inténtalo de nuevo."
+        type="error"
+        delay={100}
+        position="top-center"
+        requiredQueryParam="support_error"
+    />
 </Layout>
+
+<script>
+    import { sendSupportMessage } from "../services/support.service";
+
+    // Auto-fill and disable if logged in
+    const userStr = localStorage.getItem("user");
+    const nameInput = document.getElementById("name") as HTMLInputElement;
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+
+    if (userStr && nameInput && emailInput) {
+        try {
+            const user = JSON.parse(userStr);
+            if (user.nombre || user.apellido) {
+                nameInput.value =
+                    `${user.nombre || ""} ${user.apellido || ""}`.trim();
+                nameInput.readOnly = true;
+                nameInput.classList.add("readonly-input");
+            }
+            if (user.email) {
+                emailInput.value = user.email;
+                emailInput.readOnly = true;
+                emailInput.classList.add("readonly-input");
+            }
+        } catch (e) {
+            console.error("Error parsing user from localStorage:", e);
+        }
+    }
+
+    const supportForm = document.getElementById(
+        "support-form",
+    ) as HTMLFormElement;
+    if (supportForm) {
+        supportForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const submitBtn = supportForm.querySelector(
+                ".submit-btn",
+            ) as HTMLButtonElement;
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Enviando...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(supportForm);
+
+            try {
+                await sendSupportMessage({
+                    nombre: formData.get("name") as string,
+                    email: formData.get("email") as string,
+                    asunto: formData.get("subject") as string,
+                    mensaje: formData.get("message") as string,
+                });
+
+                // Redirect with success query param for notification
+                window.location.href = "/contacto?support_success=true";
+            } catch (error) {
+                console.error("Error submitting support message:", error);
+                window.location.href = "/contacto?support_error=true";
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+</script>
 
 <style>
     .page-header {
@@ -200,11 +279,18 @@ import { Icon } from "astro-icon/components";
             box-shadow 0.2s;
     }
 
-    .form-group input:focus,
+    .form-group input:focus:not(.readonly-input),
     .form-group textarea:focus {
         outline: none;
         border-color: var(--green-primary);
         box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+    }
+
+    .readonly-input {
+        background: #f1f3f5 !important;
+        color: #888 !important;
+        cursor: not-allowed;
+        border-color: #e1e4e8 !important;
     }
 
     .submit-btn {
