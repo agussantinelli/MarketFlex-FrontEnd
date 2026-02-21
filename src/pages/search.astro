@@ -33,6 +33,9 @@ const getPageUrl = (page: number) => {
     params.set("page", page.toString());
     return `/search?${params.toString()}`;
 };
+
+const startRange = (currentPage - 1) * limit + 1;
+const endRange = Math.min(currentPage * limit, pagination.total);
 ---
 
 <Layout
@@ -256,6 +259,12 @@ const getPageUrl = (page: number) => {
                                 <Icon name="lucide:chevron-right" />
                             </a>
                         </nav>
+                        <div class="pagination-info">
+                            Página <strong>{currentPage}</strong> de{" "}
+                            <strong>{pagination.totalPages}</strong>, viendo los
+                            productos <strong>{startRange}-{endRange}</strong> de{" "}
+                            <strong>{pagination.total}</strong>
+                        </div>
                     )}
                 </>
             ) : (
@@ -681,5 +690,25 @@ const getPageUrl = (page: number) => {
             width: 100%;
             justify-content: center;
         }
+    }
+
+    .pagination-info {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+        letter-spacing: 0.01em;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        width: fit-content;
+    }
+
+    .pagination-info strong {
+        color: white;
+        font-weight: 600;
     }
 </style>
