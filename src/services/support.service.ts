@@ -1,11 +1,5 @@
 import { api } from '../lib/api';
-
-export interface SupportMessageData {
-    nombre: string;
-    email: string;
-    asunto: string;
-    mensaje: string;
-}
+import type { SupportMessageData } from '../types/support.types';
 
 export const sendSupportMessage = async (data: SupportMessageData) => {
     try {
