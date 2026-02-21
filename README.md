@@ -1,4 +1,4 @@
-<h1 align="center">🚀 MarketFlex - FrontEnd</h1>
+﻿<h1 align="center">🚀 MarketFlex - FrontEnd</h1>
 
 <p align="center">
     <a href="https://github.com/agussantinelli/MarketFlex-FrontEnd" target="_blank">
@@ -163,7 +163,8 @@
   <li>✨ <b>Re-branding Instantáneo:</b> Estructura preparada para cambios visuales profundos.</li>
   <li>📱 <b>Mobile First:</b> Diseño nacido para dispositivos móviles, escalable a grandes pantallas.</li>
   <li>🪙 <b>UX Agnóstica:</b> Flujos de usuario optimizados para cualquier tipo de transaccionalidad.</li>
-  <li>⚡ <b>Performance:</b> Carga asíncrona para catálogos de cualquier escala.</li>
+  <li>⚡ <b>Performance:</b> Carga asíncrona optimizada para catálogos de cualquier escala.</li>
+  <li>🔢 <b>Paginación Tradicional:</b> Navegación basada en URL para una mejor indexación (SEO) y accesibilidad.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
   <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
@@ -198,6 +199,21 @@
 <ul>
   <li><b>Query Parameters como Estado:</b> La aplicación aprovecha activamente los parámetros de la URL (ej. <code>?error=true</code> o <code>?login_success=true&user=...</code>) para pasar contexto a la siguiente vista sin saturar el almacenamiento local o requerir librerías de estado complejas como Redux o Zustand.</li>
   <li><b>Notificaciones Reactivas (Sileo):</b> El componente de React <code>&lt;Notifications /&gt;</code> se inicializa verificando estos <i>query params</i>. Si detecta el parámetro requerido (ej. <code>requiredQueryParam="error"</code>), monta de inmediato el <i>toast notification</i> con animaciones "gooey" hermosas de la librería Sileo, proporcionando una experiencia reactiva instantánea sobre un esqueleto pre-renderizado.</li>
+</ul>
+
+<hr>
+
+<h2>📑 Sistema de Paginación</h2>
+<p>El marketplace utiliza un sistema de paginación tradicional basado en URL para el catálogo y resultados de búsqueda, lo que garantiza que los usuarios no pierdan su posición y puedan compartir enlaces a páginas específicas.</p>
+<ul>
+    <li><b>Navegación Persistente:</b> Los filtros de búsqueda, categorías y ordenamiento se preservan automáticamente al cambiar de página.</li>
+    <li><b>Metadatos de Navegación:</b> Los usuarios reciben feedback claro sobre su ubicación (ej: <i>"Página 2 de 10, viendo 21-40 de 200 productos"</i>).</li>
+    <li><b>UI Premium:</b> Componente de navegación con efecto <i>glassmorphism</i> y optimización responsive:
+        <ul>
+            <li><b>Desktop:</b> Barra horizontal completa con números y navegación directa.</li>
+            <li><b>Mobile:</b> Diseño compacto con botones de navegación adyacentes ("Anterior/Siguiente") para una mejor usabilidad táctil.</li>
+        </ul>
+    </li>
 </ul>
 
 <hr>
