@@ -154,49 +154,31 @@
 
 <h2>🔐 Seguridad y Autenticación</h2>
 <p>
-  El sistema implementa un manejo seguro de sesiones mediante <b>JWT (Json Web Tokens)</b>.
+  El sistema implementa múltiples capas de seguridad para proteger el acceso y los datos de los usuarios.
 </p>
 <ul>
   <li>
-    <b>Interceptor Inteligente:</b> Todas las peticiones HTTP salientes son interceptadas por <code>src/lib/api.ts</code>. Si existe un token válido en <code>localStorage</code>, este se inyecta automáticamente en los headers (<code>Authorization: Bearer ...</code>).
+    <b>JWT (Json Web Tokens):</b> Manejo seguro de sesiones. El token se almacena en <code>localStorage</code> y se inyecta automáticamente en cada petición HTTP saliente vía <code>src/lib/api.ts</code> (<code>Authorization: Bearer ...</code>).
   </li>
   <li>
-    <b>Protección de Rutas:</b> El backend valida estos tokens para permitir acciones de escritura (crear/editar productos).
+    <b>Login Tradicional:</b> Formulario de email/contraseña con validación en el backend (bcryptjs + JWT).
+  </li>
+  <li>
+    <b>Login Social — Google:</b> Integración con <b>Google Identity Services (GSI)</b>. El usuario hace click → popup de Google → se obtiene un <code>ID Token</code> → se verifica en el backend con <code>google-auth-library</code>.
+  </li>
+  <li>
+    <b>Login Social — Facebook:</b> Integración con <b>Facebook JS SDK (v21.0)</b>. El usuario hace click → ventana de Facebook → se obtiene un <code>Access Token</code> → se verifica en el backend vía <code>Graph API</code>.
+  </li>
+  <li>
+    <b>Creación automática de cuenta:</b> Si el usuario social no existe, se crea automáticamente. Si ya existe, se vincula. Se diferencia con mensajes: <b>"¡Bienvenido!"</b> vs <b>"Bienvenido de nuevo"</b>.
+  </li>
+  <li>
+    <b>HTTPS en Desarrollo:</b> Certificado SSL auto-generado (<code>@vitejs/plugin-basic-ssl</code>) requerido por el SDK de Facebook para <code>FB.login()</code>.
+  </li>
+  <li>
+    <b>Logos locales:</b> Los logos de Google y Facebook se sirven desde <code>public/logos/</code> para evitar dependencias externas.
   </li>
 </ul>
-
-<hr>
-<h3>🌐 Login Social (Google & Facebook)</h3>
-<p>
-  El sistema soporta inicio de sesión mediante proveedores externos, además del login tradicional con email y contraseña.
-</p>
-
-<table>
-    <thead>
-        <tr>
-            <th>Proveedor</th>
-            <th>SDK / Librería</th>
-            <th>Flujo</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Google</strong></td>
-            <td>Google Identity Services (GSI)</td>
-            <td>El usuario hace click → se muestra el popup de Google → se obtiene un <code>ID Token</code> → se envía al backend para verificar y crear/vincular la cuenta.</td>
-        </tr>
-        <tr>
-            <td><strong>Facebook</strong></td>
-            <td>Facebook JS SDK (v21.0)</td>
-            <td>El usuario hace click → se abre la ventana de Facebook → se obtiene un <code>Access Token</code> → se envía al backend para verificar vía Graph API y crear/vincular la cuenta.</td>
-        </tr>
-    </tbody>
-</table>
-
-<p>
-  Los logos de ambos proveedores se sirven localmente desde <code>public/logos/</code> para evitar dependencias externas en la UI.
-  Si el usuario es nuevo, se muestra <b>"¡Bienvenido!"</b>; si ya tiene cuenta, se muestra <b>"Bienvenido de nuevo"</b>.
-</p>
 
 <hr>
 
