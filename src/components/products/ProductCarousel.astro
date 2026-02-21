@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import ProductCard from "./ProductCard.astro";
 import type { Product } from "../../types/product.types";
+import styles from "./styles/ProductCarousel.module.css";
 
 interface Props {
     title: string;
@@ -26,27 +27,27 @@ const {
 const displayProducts = products.slice(0, limit);
 ---
 
-<section class="products-section carousel-section" id={id}>
-    <h2 class="section-title">
+<section class={`${styles.productsSection} ${styles.carouselSection}`} id={id}>
+    <h2 class={styles.sectionTitle}>
         {title}
         {titleHighlight && <span class="gradient-text">{titleHighlight}</span>}
-        {icon && <Icon name={icon} class="title-icon" />}
+        {icon && <Icon name={icon} class={styles.titleIcon} />}
     </h2>
 
-    <div class="carousel-wrapper">
+    <div class={styles.carouselWrapper}>
         <button
-            class="carousel-btn prev"
+            class={`${styles.carouselBtn} ${styles.prev}`}
             aria-label="Anterior"
             data-carousel-prev
         >
             <Icon name="lucide:chevron-left" size={24} />
         </button>
 
-        <div class="carousel-container" data-carousel-container>
-            <div class="carousel-track">
+        <div class={styles.carouselContainer} data-carousel-container>
+            <div class={styles.carouselTrack}>
                 {
                     displayProducts.map((product) => (
-                        <div class="carousel-item">
+                        <div class={styles.carouselItem}>
                             <ProductCard
                                 product={product}
                                 showFeatured={false}
@@ -55,9 +56,9 @@ const displayProducts = products.slice(0, limit);
                     ))
                 }
 
-                <div class="carousel-item view-more-card">
-                    <a href={viewMoreHref} class="view-more-btn">
-                        <div class="icon-wrapper">
+                <div class={`${styles.carouselItem} ${styles.viewMoreCard}`}>
+                    <a href={viewMoreHref} class={styles.viewMoreBtn}>
+                        <div class={styles.iconWrapper}>
                             <Icon name="lucide:arrow-right" size={32} />
                         </div>
                         <span>Ver más</span>
@@ -67,7 +68,7 @@ const displayProducts = products.slice(0, limit);
         </div>
 
         <button
-            class="carousel-btn next"
+            class={`${styles.carouselBtn} ${styles.next}`}
             aria-label="Siguiente"
             data-carousel-next
         >
@@ -75,200 +76,6 @@ const displayProducts = products.slice(0, limit);
         </button>
     </div>
 </section>
-
-<style>
-    .products-section {
-        padding: 4rem 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        --card-gap: 1.5rem;
-    }
-
-    .carousel-section {
-        padding-top: 2rem;
-    }
-
-    .section-title {
-        text-align: center;
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin-bottom: 3rem;
-        color: var(--foreground);
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .title-icon {
-        color: rgba(var(--green-primary), 1);
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%,
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-        50% {
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
-    }
-
-    /* Carousel Styles */
-    .carousel-wrapper {
-        position: relative;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: 0;
-    }
-
-    .carousel-container {
-        width: 100%;
-        overflow-x: auto;
-        padding: 1rem 0;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        scroll-behavior: smooth;
-    }
-
-    .carousel-container::-webkit-scrollbar {
-        display: none;
-    }
-
-    .carousel-track {
-        display: flex;
-        align-items: stretch;
-        gap: var(--card-gap);
-        padding: 1rem 0;
-        width: max-content;
-    }
-
-    .carousel-item {
-        width: 220px;
-        flex-shrink: 0;
-    }
-
-    @media (min-width: 1024px) {
-        .carousel-item {
-            width: calc(
-                (min(1200px, 100vw) - 2rem - (3 * var(--card-gap))) / 4
-            );
-        }
-    }
-
-    /* Carousel Buttons */
-    .carousel-btn {
-        display: none;
-        position: absolute;
-        top: calc(50% - 20px);
-        z-index: 20;
-        background: rgba(var(--green-950, 5, 20, 10), 0.8);
-        border: 1px solid rgba(var(--green-primary), 0.5);
-        color: rgba(var(--green-primary), 1);
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        cursor: pointer;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(16px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .carousel-btn:hover {
-        background: rgba(var(--green-primary), 0.9);
-        border-color: #fff;
-        color: #000;
-        transform: scale(1.1);
-        box-shadow: 0 0 25px rgba(var(--green-primary), 0.6);
-    }
-
-    .carousel-btn.prev {
-        left: -24px;
-    }
-
-    .carousel-btn.next {
-        right: -24px;
-    }
-
-    .carousel-btn.disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-        background: rgba(var(--foreground-rgb), 0.1);
-        border-color: rgba(var(--foreground-rgb), 0.2);
-        color: var(--foreground);
-        pointer-events: none;
-    }
-
-    .carousel-btn.disabled:hover {
-        transform: scale(1);
-        box-shadow: none;
-    }
-
-    @media (min-width: 768px) {
-        .carousel-btn {
-            display: flex;
-        }
-    }
-
-    /* View More Card */
-    .view-more-card {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .view-more-btn {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        width: 100%;
-        height: 100%;
-        background: rgba(var(--green-900), 0.2);
-        border: 1px dashed rgba(var(--green-primary), 0.5);
-        border-radius: 16px;
-        color: var(--foreground);
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .view-more-btn:hover {
-        background: rgba(var(--green-900), 0.4);
-        border-style: solid;
-        transform: translateY(-4px);
-        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
-    }
-
-    .icon-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: rgba(var(--green-primary), 0.2);
-        color: rgba(var(--green-primary), 1);
-        transition: transform 0.3s ease;
-    }
-
-    .view-more-btn:hover .icon-wrapper {
-        transform: translateX(5px);
-        background: rgba(var(--green-primary), 0.4);
-    }
-
-    .view-more-btn span {
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: rgba(var(--green-primary), 1);
-    }
-</style>
 
 <script>
     import { setupAllProductCarousels } from "../../scripts/carousel";

@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import ProductCard from "./ProductCard.astro";
 import type { Product } from "../../types/product.types";
+import styles from "./styles/FeaturedProducts.module.css";
 
 interface Props {
     products: Product[];
@@ -10,64 +11,13 @@ interface Props {
 const { products } = Astro.props;
 ---
 
-<section class="products-section">
-    <h2 class="section-title">
+<section class={styles.productsSection}>
+    <h2 class={styles.sectionTitle}>
         Productos <span class="gradient-text">Destacados</span>
-        <Icon name="lucide:star" class="title-icon" />
+        <Icon name="lucide:star" class={styles.titleIcon} />
     </h2>
 
-    <div class="products-grid">
+    <div class={styles.productsGrid}>
         {products.map((product) => <ProductCard product={product} />)}
     </div>
 </section>
-
-<style>
-    .products-section {
-        padding: 4rem 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        --card-gap: 1.5rem;
-    }
-
-    .section-title {
-        text-align: center;
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin-bottom: 3rem;
-        color: var(--foreground);
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    .title-icon {
-        color: rgba(var(--green-primary), 1);
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%,
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-        50% {
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
-    }
-
-    .products-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: var(--card-gap);
-        padding: 1rem 0;
-    }
-
-    @media (min-width: 1024px) {
-        .products-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-</style>

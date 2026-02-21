@@ -1,0 +1,244 @@
+/* Product Card */
+.productCard {
+    background: rgba(var(--green-900), 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.productCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.3);
+    border-color: rgba(var(--green-primary), 0.3);
+}
+
+/* Image Container */
+.imageContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+}
+
+.productImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.productCard:hover .productImage {
+    transform: scale(1.05);
+}
+
+.priceContainer {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(var(--green-primary), 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.currentPrice {
+    color: var(--green-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.discountText {
+    color: var(--green-cream);
+}
+
+.originalPrice {
+    color: #aaa;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.badgesContainer {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 10;
+    align-items: flex-start;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.discount {
+    background: #ef4444;
+    color: white;
+    padding: 0.4rem 0.8rem;
+}
+
+.freeShipping {
+    background: var(--green-primary);
+    color: #000;
+    padding: 0.4rem 0.8rem;
+    gap: 0.3rem;
+}
+
+.featured {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+    color: #000;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.featured:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+.noStockOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: grayscale(100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.noStockOverlay span {
+    background: #ef4444;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    transform: rotate(-10deg);
+    border: 2px solid white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Product Info */
+.productInfo {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.75rem;
+}
+
+.productCategories {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.categoryName {
+    color: var(--green-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.8;
+}
+
+.separator {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.6rem;
+}
+
+.title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--foreground);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.productMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.75rem;
+}
+
+.brandEditorial {
+    color: var(--green-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.authorLabel {
+    color: #ddd;
+    font-style: italic;
+}
+
+.description {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+    margin: 0;
+}
+
+/* Add Button */
+.btnAdd {
+    width: 100%;
+    background: var(--green-primary);
+    color: white;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.btnAdd:hover:not(:disabled) {
+    background: var(--green-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--green-primary), 0.3);
+}
+
+.btnAdd:disabled {
+    background: #555;
+    color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
