@@ -268,6 +268,12 @@
 │   │   └── Navbar.astro                            # Barra de navegación principal
 │   ├── lib/                                        # Utilidades y configuración
 │   │   └── api.ts                                  # Interceptor de API y configuración global
+│   ├── scripts/                                    # Lógica interactiva extraída de componentes
+│   │   ├── auth-login.ts                           # Lógica de Google/FB/Login
+│   │   ├── navbar.ts                               # Lógica de menús y buscador
+│   │   ├── contact.ts                              # Lógica de formulario de soporte
+│   │   ├── search-filters.ts                       # Lógica de modal de búsqueda
+│   │   └── carousel.ts                             # Lógica de carruseles premium
 │   ├── services/                                   # Servicios de negocio (API calls)
 │   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
 │   │   ├── category.service.ts                     # Servicio de categorías
