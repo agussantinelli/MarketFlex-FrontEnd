@@ -258,6 +258,16 @@ pnpm dev
 
 <hr>
 
+<h2>📜 Scripts Disponibles</h2>
+<p>En el directorio del proyecto, puedes ejecutar los siguientes comandos:</p>
+<ul>
+    <li><code>pnpm dev</code>: Inicia el servidor de desarrollo en <code>localhost:2611</code> (incluye HTTPS local con <code>mkcert</code>).</li>
+    <li><code>pnpm build</code>: Compila la aplicación para producción. Optimiza todos los recursos y finaliza la construcción SSR (Server-Side Rendering).</li>
+    <li><code>pnpm preview</code>: Levanta un servidor Node local para visualizar la versión compilada de producción antes de desplegarla.</li>
+</ul>
+
+<hr>
+
 <h2 align="left">⚖️ Licencia y Propiedad Intelectual</h2>
 
 <p align="left">
