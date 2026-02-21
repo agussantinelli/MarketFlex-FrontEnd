@@ -171,6 +171,15 @@
 
 <hr>
 
+<h2>🔔 Manejo de Estados y Notificaciones</h2>
+<p>Dada la naturaleza estática principal de Astro, la comunicación de estados entre distintas páginas (por ejemplo, informar si un Login fue exitoso o falló tras una redirección) se resuelve de un modo limpio y sin estado global pesado:</p>
+<ul>
+  <li><b>Query Parameters como Estado:</b> La aplicación aprovecha activamente los parámetros de la URL (ej. <code>?error=true</code> o <code>?login_success=true&user=...</code>) para pasar contexto a la siguiente vista sin saturar el almacenamiento local o requerir librerías de estado complejas como Redux o Zustand.</li>
+  <li><b>Notificaciones Reactivas (Sileo):</b> El componente de React <code>&lt;Notifications /&gt;</code> se inicializa verificando estos <i>query params</i>. Si detecta el parámetro requerido (ej. <code>requiredQueryParam="error"</code>), monta de inmediato el <i>toast notification</i> con animaciones "gooey" hermosas de la librería Sileo, proporcionando una experiencia reactiva instantánea sobre un esqueleto pre-renderizado.</li>
+</ul>
+
+<hr>
+
 <h2>🔐 Seguridad y Autenticación</h2>
 <p>
   El sistema implementa múltiples capas de seguridad para proteger el acceso y los datos de los usuarios.
