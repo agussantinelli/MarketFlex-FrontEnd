@@ -160,6 +160,40 @@
   <li>
     <b>Protección de Rutas:</b> El backend valida estos tokens para permitir acciones de escritura (crear/editar productos).
   </li>
+</ul>
+
+<hr>
+<h3>🌐 Login Social (Google & Facebook)</h3>
+<p>
+  El sistema soporta inicio de sesión mediante proveedores externos, además del login tradicional con email y contraseña.
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Proveedor</th>
+            <th>SDK / Librería</th>
+            <th>Flujo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Google</strong></td>
+            <td>Google Identity Services (GSI)</td>
+            <td>El usuario hace click → se muestra el popup de Google → se obtiene un <code>ID Token</code> → se envía al backend para verificar y crear/vincular la cuenta.</td>
+        </tr>
+        <tr>
+            <td><strong>Facebook</strong></td>
+            <td>Facebook JS SDK (v21.0)</td>
+            <td>El usuario hace click → se abre la ventana de Facebook → se obtiene un <code>Access Token</code> → se envía al backend para verificar vía Graph API y crear/vincular la cuenta.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+  Los logos de ambos proveedores se sirven localmente desde <code>public/logos/</code> para evitar dependencias externas en la UI.
+  Si el usuario es nuevo, se muestra <b>"¡Bienvenido!"</b>; si ya tiene cuenta, se muestra <b>"Bienvenido de nuevo"</b>.
+</p>
 
 <hr>
 
