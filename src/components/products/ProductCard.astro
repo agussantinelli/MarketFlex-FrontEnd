@@ -84,6 +84,14 @@ const { product, showFeatured = true } = Astro.props;
             }
         </div>
         <h3>{product.nombre}</h3>
+        <div class="product-meta">
+            {
+                product.marca && (
+                    <span class="brand-editorial">{product.marca}</span>
+                )
+            }
+            {product.autor && <span class="author-label">{product.autor}</span>}
+        </div>
         <p class="description">
             {
                 product.caracteristicas
@@ -276,6 +284,25 @@ const { product, showFeatured = true } = Astro.props;
         color: var(--foreground);
         line-height: 1.3;
         margin: 0;
+    }
+
+    .product-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        font-size: 0.75rem;
+    }
+
+    .brand-editorial {
+        color: var(--green-primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .author-label {
+        color: #ddd;
+        font-style: italic;
     }
 
     .description {
