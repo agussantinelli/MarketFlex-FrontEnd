@@ -1,4 +1,4 @@
-import { api } from '../lib/api';
+import { api } from "../api/client";
 import type { SupportMessageData } from '../types/support.types';
 
 export const sendSupportMessage = async (data: SupportMessageData) => {
