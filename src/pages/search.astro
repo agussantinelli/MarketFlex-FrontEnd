@@ -226,14 +226,25 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                             class="pagination"
                             aria-label="Navegación de páginas"
                         >
-                            <a
-                                href={getPageUrl(currentPage - 1)}
-                                class={`pagination-item prev ${currentPage === 1 ? "disabled" : ""}`}
-                                aria-label="Página anterior"
-                            >
-                                <Icon name="lucide:chevron-left" />
-                                <span>Anterior</span>
-                            </a>
+                            <div class="pagination-controls">
+                                <a
+                                    href={getPageUrl(currentPage - 1)}
+                                    class={`pagination-item prev ${currentPage === 1 ? "disabled" : ""}`}
+                                    aria-label="Página anterior"
+                                >
+                                    <Icon name="lucide:chevron-left" />
+                                    <span>Anterior</span>
+                                </a>
+
+                                <a
+                                    href={getPageUrl(currentPage + 1)}
+                                    class={`pagination-item next ${currentPage === pagination.totalPages ? "disabled" : ""}`}
+                                    aria-label="Página siguiente"
+                                >
+                                    <span>Siguiente</span>
+                                    <Icon name="lucide:chevron-right" />
+                                </a>
+                            </div>
 
                             <div class="pagination-pages">
                                 {Array.from(
@@ -249,15 +260,6 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                                     ),
                                 )}
                             </div>
-
-                            <a
-                                href={getPageUrl(currentPage + 1)}
-                                class={`pagination-item next ${currentPage === pagination.totalPages ? "disabled" : ""}`}
-                                aria-label="Página siguiente"
-                            >
-                                <span>Siguiente</span>
-                                <Icon name="lucide:chevron-right" />
-                            </a>
                         </nav>
                         <div class="pagination-info">
                             Página <strong>{currentPage}</strong> de{" "}
@@ -615,6 +617,10 @@ const endRange = Math.min(currentPage * limit, pagination.total);
         border-radius: 2rem;
     }
 
+    .pagination-controls {
+        display: contents;
+    }
+
     .pagination-pages {
         display: flex;
         gap: 0.5rem;
@@ -674,20 +680,27 @@ const endRange = Math.min(currentPage * limit, pagination.total);
 
     @media (max-width: 640px) {
         .pagination {
-            gap: 1rem;
+            gap: 1.5rem;
             flex-direction: column;
             border-radius: 1.5rem;
+            padding: 1.5rem 1rem;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
         }
 
         .pagination-pages {
-            order: -1;
+            order: 2;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .prev,
         .next {
-            width: 100%;
+            flex: 1;
             justify-content: center;
         }
     }
