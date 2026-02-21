@@ -4,127 +4,359 @@ import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="MarketFlex | Sobre Nosotros">
-    <div class="hero">
-        <div class="hero-content">
-            <h1>
-                El Futuro del <br />
-                <span class="gradient-text">Comercio Digital</span>
-            </h1>
-            <p class="hero-desc">
-                Una plataforma de próxima generación diseñada para experiencias
-                de compra y venta premium. Segura, rápida y elegante.
-            </p>
-            <div class="cta-group">
-                <a href="/coming-soon" class="btn btn-primary">Comenzar Ahora</a
-                >
-                <a href="/coming-soon" class="btn btn-secondary">Saber Más</a>
+    <div class="about-container">
+        <section class="hero-section">
+            <div class="container animate-in">
+                <h1>Market<span class="gradient-text">Flex</span></h1>
+                <p class="tagline">La Arquitectura de la Adaptabilidad</p>
+                <div class="flex-vision">
+                    <p>
+                        MarketFlex no es solo un marketplace; es una declaración
+                        de principios técnicos. Nacido bajo el concepto del <strong
+                            >"Factor Flex"</strong
+                        >, este ecosistema está diseñado para amoldarse a
+                        cualquier modelo de negocio sin sacrificar rendimiento
+                        ni elegancia.
+                    </p>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <section class="features">
-        <div class="feature-card premium-card">
-            <Icon name="lucide:crown" class="feature-icon" />
-            <h3>Premium</h3>
-            <p>Diseño exclusivo y experiencia de usuario de primer nivel.</p>
-        </div>
-        <div class="feature-card premium-card">
-            <Icon name="lucide:shield-check" class="feature-icon" />
-            <h3>Seguro</h3>
-            <p>Protección avanzada para todas tus transacciones.</p>
-        </div>
-        <div class="feature-card premium-card">
-            <Icon name="lucide:zap" class="feature-icon" />
-            <h3>Veloz</h3>
-            <p>Optimizado para un rendimiento instantáneo.</p>
-        </div>
-    </section>
+        <section class="motivations-section">
+            <div class="container">
+                <div class="motivations-content">
+                    <h2>Nuestras Motivaciones</h2>
+                    <div class="motivations-grid">
+                        <div class="motivation-item glass-card">
+                            <Icon
+                                name="lucide:target"
+                                class="motivation-icon"
+                            />
+                            <h4>Independencia de Modelo</h4>
+                            <p>
+                                La mayoría de las plataformas te obligan a
+                                adaptarte a ellas. MarketFlex invierte esa
+                                lógica: la arquitectura es tan flexible que
+                                puede manejar desde un retail de moda hasta un
+                                sistema de reservas profesionales, manteniendo
+                                la misma base sólida.
+                            </p>
+                        </div>
+                        <div class="motivation-item glass-card">
+                            <Icon name="lucide:heart" class="motivation-icon" />
+                            <h4>Pasión por el Detalle</h4>
+                            <p>
+                                Creemos que la potencia no debe estar peleada
+                                con la belleza. MarketFlex es un experimento de
+                                cómo el diseño premium y la ingeniería de
+                                vanguardia pueden coexistir para elevar la
+                                experiencia del usuario final.
+                            </p>
+                        </div>
+                        <div class="motivation-item glass-card">
+                            <Icon
+                                name="lucide:book-open"
+                                class="motivation-icon"
+                            />
+                            <h4>Ingeniería Profesional</h4>
+                            <p>
+                                Este proyecto nace de la necesidad de demostrar
+                                que el código "limpio" y la documentación
+                                rigurosa no son lujos, sino requisitos
+                                indispensables para un software que pretende
+                                escalar y perdurar en el tiempo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="developer-section">
+            <div class="container">
+                <div class="dev-card glass-card">
+                    <div class="dev-info">
+                        <h2>El Arquitecto</h2>
+                        <h3 class="gradient-text">Agustín Santinelli</h3>
+                        <p>
+                            Desarrollador FullStack enfocado en crear soluciones
+                            que importan. Agustín diseñó cada línea de
+                            MarketFlex (desde la base de datos hasta las
+                            micro-animaciones) con el objetivo de crear una
+                            herramienta que inspire a otros a subir la vara en
+                            el desarrollo de software en la región.
+                        </p>
+                        <div class="dev-links">
+                            <a
+                                href="https://github.com/agussantinelli"
+                                target="_blank"
+                                class="dev-link"
+                            >
+                                <Icon name="lucide:github" /> Conectar en GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="platform-values">
+            <div class="container grid-val">
+                <div class="value-card">
+                    <Icon name="lucide:zap" class="val-icon" />
+                    <h4>Rendimiento Brutal</h4>
+                    <p>
+                        Cada milisegundo cuenta. Optimización nativa en cada
+                        capa.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <Icon name="lucide:shield-check" class="val-icon" />
+                    <h4>Seguridad Total</h4>
+                    <p>
+                        Autenticación robusta y validación estricta desde el
+                        núcleo.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <Icon name="lucide:mouse-pointer-2" class="val-icon" />
+                    <h4>UX Impecable</h4>
+                    <p>
+                        Diseño que acompaña al usuario, eliminando fricciones.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 </Layout>
 
 <style>
-    .hero {
-        min-height: 80vh;
+    .about-container {
+        padding-top: 4rem;
+        background: radial-gradient(
+            circle at top right,
+            rgba(0, 255, 136, 0.05),
+            transparent 40%
+        );
+        color: #ffffff;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Glass Card Base Style */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: all 0.3s ease;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 8rem 0 6rem;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: clamp(3.5rem, 10vw, 6.5rem);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -3px;
+    }
+
+    .tagline {
+        font-size: 1.25rem;
+        color: var(--green-primary);
+        font-weight: 600;
+        margin-bottom: 3.5rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        opacity: 0.9;
+    }
+
+    .flex-vision {
+        font-size: 1.4rem;
+        line-height: 1.8;
+        color: #f0f0f0;
+        max-width: 850px;
+        margin: 0 auto;
+        font-weight: 300;
+    }
+
+    /* Motivations Section */
+    .motivations-section {
+        padding: 6rem 0;
+    }
+
+    .motivations-content h2 {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-weight: 700;
+    }
+
+    .motivations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .motivation-item {
+        padding: 3rem;
+        height: 100%;
+    }
+
+    .motivation-item:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--green-primary);
+    }
+
+    .motivation-icon {
+        width: 48px;
+        height: 48px;
+        color: var(--green-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .motivation-item h4 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
+
+    .motivation-item p {
+        line-height: 1.7;
+        color: #b0b0b0;
+    }
+
+    /* Developer Section */
+    .developer-section {
+        padding: 8rem 0;
+    }
+
+    .dev-card {
+        padding: 4rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .dev-info h2 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        color: var(--green-primary);
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+    }
+
+    .dev-info h3 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        font-weight: 800;
+    }
+
+    .dev-info p {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: #cccccc;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+    }
+
+    .dev-links {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .dev-link {
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 0.75rem;
+        color: white;
+        text-decoration: none;
+        padding: 0.8rem 2rem;
+        background: rgba(0, 255, 136, 0.1);
+        border-radius: 50px;
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .dev-link:hover {
+        background: var(--green-primary);
+        color: black;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        transform: scale(1.05);
+    }
+
+    /* Platform Values */
+    .platform-values {
+        padding: 6rem 0 12rem;
+    }
+
+    .grid-val {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 4rem;
+    }
+
+    .value-card {
         text-align: center;
         padding: 1rem;
     }
 
-    @media (min-width: 768px) {
-        .hero {
-            padding: 2rem;
-        }
-    }
-
-    h1 {
-        font-size: clamp(3rem, 8vw, 5rem);
-        line-height: 1.1;
+    .val-icon {
+        width: 32px;
+        height: 32px;
+        color: var(--green-primary);
         margin-bottom: 1.5rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
     }
 
-    .hero-desc {
-        font-size: 1.25rem;
-        color: #ffffff;
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.6;
-    }
-
-    .cta-group {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        backdrop-filter: blur(10px);
-    }
-
-    .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    .features {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        max-width: 1200px;
-        margin: 0 auto 4rem;
-        padding: 0 1rem;
-        width: 100%;
-    }
-
-    @media (min-width: 768px) {
-        .features {
-            padding: 0 2rem;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .features {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .feature-icon {
-        color: var(--green-primary);
-        width: 48px;
-        height: 48px;
-        margin-bottom: 1rem;
-    }
-
-    .feature-card h3 {
-        color: var(--green-primary);
+    .value-card h4 {
         font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
     }
 
-    .feature-card p {
-        color: #a0a0a0;
+    .value-card p {
+        color: #888;
+        font-size: 1.1rem;
+    }
+
+    /* Animations */
+    .animate-in {
+        animation: fadeInUp 1.2s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Mobile Tweaks */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 4rem 0 2rem;
+        }
+        .dev-card {
+            padding: 2.5rem 1.5rem;
+        }
     }
 </style>
