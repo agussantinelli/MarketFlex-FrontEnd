@@ -16,4 +16,5 @@ export type Product = {
     envioGratis: boolean;
     marca: string | null;
     autor: string | null;
+    fechaLlegada: string | null;
 };
