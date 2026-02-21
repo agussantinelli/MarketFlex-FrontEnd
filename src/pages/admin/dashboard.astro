@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import styles from "./styles/dashboard.module.css";
 
 // Mocked Data
 const stats = [
@@ -74,37 +75,38 @@ const recentOrders = [
 ---
 
 <Layout title="MarketFlex | Admin Dashboard">
-    <div class="dashboard-container">
-        <header class="dashboard-header">
+    <div class={styles.dashboardContainer}>
+        <header class={styles.dashboardHeader}>
             <div>
                 <h1>Panel Administrativo</h1>
                 <p>Resumen de actividad y métricas clave.</p>
             </div>
-            <div class="header-actions">
-                <button class="btn-secondary">
+            <div class={styles.headerActions}>
+                <button class={styles.btnSecondary}>
                     <Icon name="lucide:download" /> Exportar
                 </button>
-                <button class="btn-primary">
+                <button class={styles.btnPrimary}>
                     <Icon name="lucide:plus" /> Nuevo Producto
                 </button>
             </div>
         </header>
 
         <!-- Stats Grid -->
-        <div class="stats-grid">
+        <div class={styles.statsGrid}>
             {
                 stats.map((stat) => (
-                    <div class="stat-card">
+                    <div class={styles.statCard}>
                         <div
-                            class="stat-icon-wrapper"
-                            class:list={`bg-gradient-to-br ${stat.color}`}
+                            class={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}
                         >
-                            <Icon name={stat.icon} class="stat-icon" />
+                            <Icon name={stat.icon} class={styles.statIcon} />
                         </div>
-                        <div class="stat-info">
+                        <div class={styles.statInfo}>
                             <h3>{stat.title}</h3>
-                            <div class="stat-value">{stat.value}</div>
-                            <span class="stat-trend positive">
+                            <div class={styles.statValue}>{stat.value}</div>
+                            <span
+                                class={`${styles.statTrend} ${styles.positive}`}
+                            >
                                 <Icon name="lucide:arrow-up-right" />{" "}
                                 {stat.trend}
                             </span>
@@ -115,14 +117,14 @@ const recentOrders = [
         </div>
 
         <!-- Recent Activity -->
-        <div class="recent-activity">
-            <div class="section-header">
+        <div class={styles.recentActivity}>
+            <div class={styles.sectionHeader}>
                 <h2>Transacciones Recientes</h2>
-                <a href="#" class="view-all">Ver todas</a>
+                <a href="#" class={styles.viewAll}>Ver todas</a>
             </div>
 
-            <div class="table-container">
-                <table>
+            <div class={styles.tableContainer}>
+                <table class={styles.table}>
                     <thead>
                         <tr>
                             <th>ID Orden</th>
@@ -136,18 +138,24 @@ const recentOrders = [
                         {
                             recentOrders.map((order) => (
                                 <tr>
-                                    <td class="order-id">{order.id}</td>
-                                    <td class="user-cell">
-                                        <div class="user-avatar">
+                                    <td class={styles.orderId}>{order.id}</td>
+                                    <td class={styles.userCell}>
+                                        <div class={styles.userAvatar}>
                                             {order.user.charAt(0)}
                                         </div>
                                         {order.user}
                                     </td>
                                     <td>{order.date}</td>
-                                    <td class="amount">{order.amount}</td>
+                                    <td class={styles.amount}>
+                                        {order.amount}
+                                    </td>
                                     <td>
                                         <span
-                                            class={`status-badge ${order.status.toLowerCase()}`}
+                                            class={
+                                                styles[
+                                                    order.status.toLowerCase()
+                                                ]
+                                            }
                                         >
                                             {order.status}
                                         </span>
@@ -161,241 +169,3 @@ const recentOrders = [
         </div>
     </div>
 </Layout>
-
-<style>
-    .dashboard-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-    }
-
-    /* Header */
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 2.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .dashboard-header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-        background: var(--gradient-text);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .dashboard-header p {
-        color: #a0a0a0;
-    }
-
-    .header-actions {
-        display: flex;
-        gap: 1rem;
-    }
-
-    button {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.25rem;
-        border-radius: 12px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .btn-primary {
-        background: var(--green-primary);
-        color: white;
-    }
-
-    .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-    }
-
-    .stat-card {
-        background: rgba(var(--green-900), 0.3);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 1.5rem;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        transition: transform 0.3s ease;
-    }
-
-    .stat-card:hover {
-        transform: translateY(-5px);
-        background: rgba(var(--green-900), 0.5);
-    }
-
-    .stat-icon-wrapper {
-        width: 50px;
-        height: 50px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        /* Gradients defined inline or via classes if Tailwind/Utility (using style attribute here as fallback logic in template) */
-        background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.1),
-            rgba(255, 255, 255, 0.05)
-        );
-    }
-    /* Simple inline fix for dynamic colors if class:list doesn't parse specific tailwind classes fully without config */
-    /* Assuming standard CSS usage for colors */
-
-    .stat-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    .stat-info h3 {
-        font-size: 0.9rem;
-        color: #a0a0a0;
-        margin-bottom: 0.25rem;
-        font-weight: 500;
-    }
-
-    .stat-value {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--foreground);
-    }
-
-    .stat-trend {
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        margin-top: 0.25rem;
-    }
-
-    .stat-trend.positive {
-        color: #4ade80;
-    }
-    .stat-trend.negative {
-        color: #f87171;
-    }
-
-    /* Recent Activity */
-    .recent-activity {
-        background: rgba(var(--green-900), 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 24px;
-        padding: 2rem;
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-        margin: 0;
-    }
-
-    .view-all {
-        color: var(--green-primary);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    .table-container {
-        overflow-x: auto;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th {
-        text-align: left;
-        padding: 1rem;
-        color: #a0a0a0;
-        font-weight: 500;
-        font-size: 0.9rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    td {
-        padding: 1rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        color: var(--foreground);
-        font-size: 0.95rem;
-    }
-
-    .order-id {
-        font-family: monospace;
-        color: var(--green-primary);
-    }
-
-    .user-cell {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    .user-avatar {
-        width: 32px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 0.8rem;
-        color: var(--green-cream);
-    }
-
-    .amount {
-        font-weight: 600;
-    }
-
-    .status-badge {
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: capitalize;
-    }
-
-    .status-badge.completado {
-        background: rgba(74, 222, 128, 0.15);
-        color: #4ade80;
-    }
-
-    .status-badge.procesando {
-        background: rgba(250, 204, 21, 0.15);
-        color: #facc15;
-    }
-
-    .status-badge.cancelado {
-        background: rgba(248, 113, 113, 0.15);
-        color: #f87171;
-    }
-</style>
