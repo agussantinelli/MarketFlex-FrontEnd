@@ -1,13 +1,17 @@
 import { api } from '../lib/api';
 import type { Product } from '../types/product.types';
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
     try {
-        const response: { data: Product[] } = await api.get('products').json();
-        return response.data;
+        const response: PaginatedResponse<Product> = await api.get(`products?page=${page}&limit=${limit}`).json();
+        return response;
     } catch (error) {
         console.error("Error fetching products:", error);
-        return [];
+        return {
+            status: 'error',
+            data: [],
+            pagination: { total: 0, page: 1, limit: 20, totalPages: 0 }
+        };
     }
 };
 
@@ -17,9 +21,22 @@ interface SearchOptions {
     type?: string;
     category?: string;
     offers?: string;
+    page?: number;
+    limit?: number;
 }
 
-export const searchProducts = async (options: SearchOptions): Promise<Product[]> => {
+export interface PaginatedResponse<T> {
+    status: string;
+    data: T[];
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
+}
+
+export const searchProducts = async (options: SearchOptions): Promise<PaginatedResponse<Product>> => {
     try {
         const params = new URLSearchParams();
         if (options.query) params.append("q", options.query);
@@ -27,12 +44,17 @@ export const searchProducts = async (options: SearchOptions): Promise<Product[]>
         if (options.type) params.append("type", options.type);
         if (options.category) params.append("category", options.category);
         if (options.offers) params.append("offers", options.offers);
+        if (options.page) params.append("page", options.page.toString());
+        if (options.limit) params.append("limit", options.limit.toString());
 
-        const response: { data: Product[] } = await api.get(`products/search?${params.toString()}`).json();
-        return response.data;
+        return await api.get(`products/search?${params.toString()}`).json();
     } catch (error) {
         console.error("Error searching products:", error);
-        return [];
+        return {
+            status: 'error',
+            data: [],
+            pagination: { total: 0, page: 1, limit: 20, totalPages: 0 }
+        } as any;
     }
 };
 
