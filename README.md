@@ -167,6 +167,7 @@
   <li>🔢 <b>Paginación Tradicional:</b> Navegación basada en URL para una mejor indexación (SEO) y accesibilidad.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
   <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
+  <li>🎠 <b>Carruseles Premium:</b> Componente reutilizable de carrusel con estados interactivos (flechas que cambian de color al límite del scroll) y efectos premium.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
@@ -295,7 +296,9 @@
 │   │   │   ├── Notifications.tsx                   # Sistema de notificaciones (React)
 │   │   │   └── PageCard.astro                      # Tarjeta blanca central genérica
 │   │   └── products/                               # Componentes de dominio
-│   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
+│   │       ├── FeaturedProducts.astro              # Grilla de productos destacados
+│   │       ├── ProductCard.astro                   # Tarjeta de producto individual
+│   │       └── ProductCarousel.astro               # Carrusel interactivo reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
 │   │   ├── globals.css                             # Variables CSS y temas
 │   │   └── main.css                                # Estilos específicos / reset
