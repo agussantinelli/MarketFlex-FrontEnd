@@ -162,6 +162,15 @@
 
 <hr>
 
+<h2>🌐 Flujo de Datos y Consumo de API</h2>
+<p>La comunicación con el backend (Hono/Node.js) se gestiona centralizadamente utilizando <b>Ky</b>, una librería cliente HTTP moderna y ligera basada en la API Fetch nativa. El corazón de este flujo se encuentra en <code>src/lib/api.ts</code>.</p>
+<ul>
+  <li><b>Instancia Centralizada:</b> Todos los servicios (como <code>auth.service.ts</code> o <code>product.service.ts</code>) utilizan la misma instancia pre-configurada de Ky. Esto garantiza consistencia en las URLs, headers comunes y tiempos de espera (<i>timeouts</i>).</li>
+  <li><b>Intercepción Automática (JWT):</b> Mediante un <i>hook</i> <code>beforeRequest</code>, la API verifica automáticamente si existe un token JWT en el <code>localStorage</code>. De ser así, inyecta el encabezado <code>Authorization: Bearer [token]</code> en cada petición saliente sin tener que escribir este código repetitivamente en cada función de los servicios.</li>
+</ul>
+
+<hr>
+
 <h2>🔐 Seguridad y Autenticación</h2>
 <p>
   El sistema implementa múltiples capas de seguridad para proteger el acceso y los datos de los usuarios.
