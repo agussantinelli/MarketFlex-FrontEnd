@@ -152,6 +152,16 @@
 
 <hr>
 
+<h2>🏝️ Arquitectura de Componentes (Astro Islands)</h2>
+<p>Este proyecto se enorgullece de ser súper rápido y eficiente al renderizar gracias a la implementación nativa de la <b>Arquitectura de Islas de Astro</b>. El patrón de diseño sigue estos principios rectores:</p>
+<ul>
+  <li><b>Esqueleto y Contenidos Estáticos (Astro Puro):</b> La inmensa mayoría de la UI (Barra de Navegación, Pie de Página, Tarjetas de Producto, e incluso la lógica pesada de <code>login.astro</code>) es renderizada en el servidor empleando exclusivamente componentes <code>.astro</code>. Esto expone un HTML súper ligero sin un gramo innecesario de JavaScript al cliente.</li>
+  <li><b>Islas Interactivas (React):</b> Únicamente los micro-componentes que de verdad demandan reactividad o gestión de estado compleja en el cliente se escriben en React. El mejor ejemplo en este ecosistema es el sistema de notificaciones Sileo (<code>&lt;Notifications client:only="react" /&gt;</code>), que se hidrata de forma aislada sin afectar el rendimiento global del sitio restante.</li>
+  <li><b>Cero Dependencias Obesas:</b> Separar de manera tan quirúrgica el contenido inerte del interactivo permite que el marketplace escale para manejar catálogos enormes sin comprometer jamás las métricas de carga del navegador o el TTI (<i>Time To Interactive</i>).</li>
+</ul>
+
+<hr>
+
 <h2>🔐 Seguridad y Autenticación</h2>
 <p>
   El sistema implementa múltiples capas de seguridad para proteger el acceso y los datos de los usuarios.
