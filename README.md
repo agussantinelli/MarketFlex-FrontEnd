@@ -145,6 +145,9 @@
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
   <li>🎨 <b>Interfaz Polimórfica:</b> Componentes visuales que se adaptan dinámicamente según el dominio del producto.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
+  <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
+  <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
+  <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL auto-generado para cumplir requisitos de SDKs externos (Facebook).</li>
 </ul>
 
 <hr>
