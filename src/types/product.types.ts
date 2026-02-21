@@ -14,4 +14,6 @@ export type Product = {
     esDestacado: boolean;
     stock: number;
     envioGratis: boolean;
+    marca: string | null;
+    autor: string | null;
 };
