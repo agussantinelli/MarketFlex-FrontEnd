@@ -119,6 +119,18 @@
             <td><strong>^19.x</strong></td>
             <td>Soporte para componentes interactivos y librerías externas.</td>
         </tr>
+        <tr>
+            <td><strong>Auth Social</strong></td>
+            <td>Google Sign-In (GSI)</td>
+            <td><strong>Latest</strong></td>
+            <td>Inicio de sesión con cuenta de Google (Identity Services).</td>
+        </tr>
+        <tr>
+            <td><strong>Auth Social</strong></td>
+            <td>Facebook Login SDK</td>
+            <td><strong>v21.0</strong></td>
+            <td>Inicio de sesión con cuenta de Facebook (JS SDK).</td>
+        </tr>
     </tbody>
 </table>
 
