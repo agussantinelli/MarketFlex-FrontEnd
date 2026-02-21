@@ -17,6 +17,7 @@
     <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge">
     <img src="https://img.shields.io/badge/Sileo-Notifications-FFD700?style=for-the-badge&logo=vlc&logoColor=black" alt="Sileo Badge">
     <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
+    <img src="https://img.shields.io/badge/Zustand-State-764ABC?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
     <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
