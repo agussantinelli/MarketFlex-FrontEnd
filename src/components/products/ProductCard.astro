@@ -76,10 +76,15 @@ const { product, showFeatured = true } = Astro.props;
         </div>
     </div>
     <div class="product-info">
-        <div class="categories">
+        <div class="product-categories">
             {
-                product.categorias?.map((cat) => (
-                    <span class="category-badge">{cat}</span>
+                product.categorias?.map((cat, index) => (
+                    <>
+                        <span class="category-name">{cat}</span>
+                        {index < product.categorias.length - 1 && (
+                            <span class="separator">•</span>
+                        )}
+                    </>
                 ))
             }
         </div>
@@ -260,22 +265,26 @@ const { product, showFeatured = true } = Astro.props;
         gap: 0.75rem;
     }
 
-    .categories {
+    .product-categories {
         display: flex;
+        align-items: center;
         flex-wrap: wrap;
         gap: 0.4rem;
+        margin-bottom: 0.25rem;
     }
 
-    .category-badge {
-        background: rgba(var(--green-primary), 0.1);
+    .category-name {
         color: var(--green-primary);
         font-size: 0.65rem;
-        padding: 0.25rem 0.6rem;
-        border-radius: 2rem;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border: 1px solid rgba(var(--green-primary), 0.2);
+        letter-spacing: 0.8px;
+        opacity: 0.8;
+    }
+
+    .separator {
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 0.6rem;
     }
 
     .product-info h3 {
