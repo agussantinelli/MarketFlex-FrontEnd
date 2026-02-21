@@ -151,11 +151,13 @@ const { maxWidth = "800px" } = Astro.props;
 
     .decorative-cross.decorative-dark::before,
     .decorative-cross.decorative-dark::after {
-        background: var(--green-accent);
+        background: var(--green-primary);
+        filter: brightness(0.8);
     }
 
     .decorative-cross.decorative-darker::before,
     .decorative-cross.decorative-darker::after {
-        background: var(--green-800);
+        background: var(--green-primary);
+        filter: brightness(0.6);
     }
 </style>
