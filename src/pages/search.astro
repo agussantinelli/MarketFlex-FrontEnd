@@ -181,33 +181,14 @@ const endRange = Math.min(currentPage * limit, pagination.total);
         </div>
 
         <script>
-            // Filter modal logic
-            const filterBtn = document.getElementById("filter-btn");
-            const modal = document.getElementById("filter-modal");
-            const closeBtn = document.getElementById("close-modal");
-            const closeBtnAction = document.getElementById("close-modal-btn");
+    import { initSearchFilters } from "../scripts/search-filters";
 
-            if (filterBtn && modal && closeBtn && closeBtnAction) {
-                filterBtn.addEventListener("click", () => {
-                    modal.classList.add("active");
-                    document.body.style.overflow = "hidden";
-                });
+    // Initialize on load
+    initSearchFilters();
 
-                const closeModal = () => {
-                    modal.classList.remove("active");
-                    document.body.style.overflow = "";
-                };
-
-                closeBtn.addEventListener("click", closeModal);
-                closeBtnAction.addEventListener("click", closeModal);
-
-                modal.addEventListener("click", (e) => {
-                    if (e.target === modal) closeModal();
-                });
-            }
-
-            // Traditional Pagination logic is handled via SSR and URL params
-        </script>
+    // Support for View Transitions
+    document.addEventListener("astro:page-load", initSearchFilters);
+</script>
 
         {
             products.length > 0 ? (
