@@ -1,0 +1,150 @@
+.pageCardContainer {
+    width: 92%;
+    max-width: var(--cardMaxWidth);
+    margin: 4rem auto 4rem;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.pageCard {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--green-primary);
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
+    width: 100%;
+    box-shadow:
+        0 20px 40px -10px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(74, 222, 128, 0.15);
+    position: relative;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.pageCardContent {
+    position: relative;
+    z-index: 1;
+}
+
+.decorativeCross {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.decorativeCross::before,
+.decorativeCross::after {
+    content: "";
+    position: absolute;
+    background: var(--green-primary);
+    border-radius: 1px;
+}
+
+.decorativeCross::before {
+    top: 5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+}
+
+.decorativeCross::after {
+    top: 0;
+    left: 5px;
+    height: 100%;
+    width: 2px;
+}
+
+.decorativeCross.decorativeX {
+    transform: rotate(45deg);
+}
+
+.decorativeCross.decorativeDark::before,
+.decorativeCross.decorativeDark::after {
+    background: var(--green-primary);
+    filter: brightness(0.8);
+}
+
+.decorativeCross.decorativeDarker::before,
+.decorativeCross.decorativeDarker::after {
+    background: var(--green-primary);
+    filter: brightness(0.6);
+}
+
+.posTopRight {
+    top: 15px;
+    right: 15px;
+}
+
+.posBottomLeft {
+    bottom: 15px;
+    left: 15px;
+}
+
+.posBottomRight {
+    bottom: 15px;
+    right: 15px;
+}
+
+.posMidLeft {
+    top: 50%;
+    left: 15px;
+    opacity: 0.8;
+}
+
+.posMidRight {
+    top: 50%;
+    right: 15px;
+    opacity: 0.8;
+}
+
+.posTopCenter {
+    top: 15%;
+    left: 50%;
+    opacity: 0.5;
+}
+
+.posBottomCenter {
+    bottom: 15%;
+    left: 50%;
+    opacity: 0.5;
+}
+
+.posQuarterTopLeft {
+    top: 25%;
+    left: 10%;
+    opacity: 0.4;
+}
+
+.posQuarterBottomRight {
+    bottom: 25%;
+    right: 10%;
+    opacity: 0.4;
+}
+
+.posNearTopCenter {
+    top: 10%;
+    right: 40%;
+    opacity: 0.3;
+}
+
+.posNearBottomCenter {
+    bottom: 10%;
+    left: 40%;
+    opacity: 0.3;
+}
+
+.posLowRight {
+    bottom: 40%;
+    right: 5%;
+    opacity: 0.3;
+}
+
+.posHighLeft {
+    top: 40%;
+    left: 5%;
+    opacity: 0.3;
+}
