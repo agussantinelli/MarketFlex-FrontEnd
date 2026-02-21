@@ -84,6 +84,7 @@ const welcomeMessage = isNewUser
 		padding: 4rem 1rem;
 		max-width: 1200px;
 		margin: 0 auto;
+		--card-gap: 1.5rem;
 	}
 
 	.new-arrivals-section {
@@ -122,8 +123,8 @@ const welcomeMessage = isNewUser
 	.products-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-		gap: 1.5rem;
-		padding: 1rem;
+		gap: var(--card-gap);
+		padding: 1rem 0; /* Removed side padding to align with container */
 	}
 
 	@media (min-width: 1024px) {
@@ -138,15 +139,15 @@ const welcomeMessage = isNewUser
 		width: 100%;
 		display: flex;
 		align-items: center;
+		padding: 0;
 	}
 
 	.carousel-container {
 		width: 100%;
 		overflow-x: auto;
 		padding: 1rem 0;
-		/* Hide scrollbar for cleaner look but keep functionality */
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* IE/Edge */
+		scrollbar-width: none;
+		-ms-overflow-style: none;
 		scroll-behavior: smooth;
 	}
 
@@ -157,55 +158,59 @@ const welcomeMessage = isNewUser
 	.carousel-track {
 		display: flex;
 		align-items: stretch;
-		gap: 1.5rem;
-		padding: 1rem;
-		/* Ensure exact width for items */
+		gap: var(--card-gap);
+		padding: 1rem 0; /* Removed side padding to align with container */
 		width: max-content;
 	}
 
 	.carousel-item {
-		width: 280px; /* Matched typical grid item width at common breakpoints */
+		width: 220px; /* Base width */
 		flex-shrink: 0;
 	}
 
-	/* Carousel Buttons */
+	@media (min-width: 1024px) {
+		.carousel-item {
+			/* Exact calculation to match 4 columns in 1200px container */
+			width: calc(
+				(min(1200px, 100vw) - 2rem - (3 * var(--card-gap))) / 4
+			);
+		}
+	}
+
+	/* Carousel Buttons - Improved Design */
 	.carousel-btn {
-		display: none; /* Hidden on mobile by default */
+		display: none;
 		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
+		top: calc(50% - 20px);
 		z-index: 20;
-		background: rgba(var(--green-900), 0.6);
-		border: 1px solid rgba(var(--green-primary), 0.4);
+		background: rgba(var(--green-950, 5, 20, 10), 0.8);
+		border: 1px solid rgba(var(--green-primary), 0.5);
 		color: rgba(var(--green-primary), 1);
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
+		width: 48px;
+		height: 48px;
+		border-radius: 12px; /* Square with rounded corners for more modern look */
 		cursor: pointer;
 		align-items: center;
 		justify-content: center;
-		backdrop-filter: blur(12px);
-		box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		backdrop-filter: blur(16px);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	}
 
 	.carousel-btn:hover {
-		background: rgba(var(--green-primary), 0.2);
-		border-color: rgba(var(--green-primary), 1);
-		transform: translateY(-50%) scale(1.1);
-		box-shadow: 0 0 20px rgba(var(--green-primary), 0.4);
-	}
-
-	.carousel-btn:active {
-		transform: translateY(-50%) scale(0.95);
+		background: rgba(var(--green-primary), 0.9);
+		border-color: #fff;
+		color: #000;
+		transform: scale(1.1);
+		box-shadow: 0 0 25px rgba(var(--green-primary), 0.6);
 	}
 
 	.carousel-btn.prev {
-		left: -25px;
+		left: -24px;
 	}
 
 	.carousel-btn.next {
-		right: -25px;
+		right: -24px;
 	}
 
 	@media (min-width: 768px) {
@@ -276,14 +281,20 @@ const welcomeMessage = isNewUser
 
 		if (!container || !prevBtn || !nextBtn) return;
 
-		const scrollAmount = 280 + 24; // item width + gap
+		const getScrollAmount = () => {
+			const item = container.querySelector(".carousel-item");
+			return item ? item.getBoundingClientRect().width + 24 : 300;
+		};
 
 		prevBtn.addEventListener("click", () => {
-			container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+			container.scrollBy({
+				left: -getScrollAmount(),
+				behavior: "smooth",
+			});
 		});
 
 		nextBtn.addEventListener("click", () => {
-			container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+			container.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
 		});
 	}
 
