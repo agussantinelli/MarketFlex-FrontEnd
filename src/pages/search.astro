@@ -11,19 +11,28 @@ const typeParam = Astro.url.searchParams.get("type") || "";
 const categoryParam = Astro.url.searchParams.get("category") || "";
 const offersParam = Astro.url.searchParams.get("offers") || "";
 
+const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
+const limit = 20;
+
 const response = await searchProducts({
     query: searchQuery,
     sort,
     type: typeParam,
     category: categoryParam,
     offers: offersParam,
-    page: 1,
-    limit: 20,
+    page: currentPage,
+    limit,
 });
 
 const products = response.data;
 const pagination = response.pagination;
-const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:5979/api";
+
+// Helper to build pagination links
+const getPageUrl = (page: number) => {
+    const params = new URLSearchParams(Astro.url.searchParams);
+    params.set("page", page.toString());
+    return `/search?${params.toString()}`;
+};
 ---
 
 <Layout
@@ -194,166 +203,13 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:5979/api";
                 });
             }
 
-            // Lazy Loading Logic
-            let currentPage = 1;
-            const grid = document.getElementById("products-grid");
-            const sentinel = document.getElementById("load-more-sentinel");
-
-            // Get current params from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const totalPages = parseInt(grid?.dataset.totalPages || "1");
-
-            const apiUrl = grid?.dataset.apiUrl || "http://localhost:5979/api";
-
-            if (sentinel && grid) {
-                const observer = new IntersectionObserver(
-                    async (entries) => {
-                        const entry = entries[0];
-                        if (entry.isIntersecting && currentPage < totalPages) {
-                            currentPage++;
-                            sentinel.classList.add("loading");
-
-                            try {
-                                const params = new URLSearchParams(urlParams);
-                                params.set("page", currentPage.toString());
-                                params.set("limit", "20");
-
-                                const response = await fetch(
-                                    `${apiUrl}/products/search?${params.toString()}`,
-                                );
-                                const result = await response.json();
-
-                                if (
-                                    result.status === "success" &&
-                                    result.data.length > 0
-                                ) {
-                                    result.data.forEach((product: any) => {
-                                        const card =
-                                            document.createElement("article");
-                                        card.className = "product-card";
-
-                                        // Helper for formatting price
-                                        const formatPrice = (p: number) =>
-                                            p.toFixed(2);
-
-                                        const currentPrice =
-                                            product.precioActual || 0;
-                                        const hasDiscount =
-                                            !!product.precioConDescuento;
-                                        const priceHtml = hasDiscount
-                                            ? `<span class="original-price">$${formatPrice(currentPrice)}</span>
-                                           <span class="current-price discount-text">$${formatPrice(product.precioConDescuento)}</span>`
-                                            : `<span class="current-price">$${formatPrice(currentPrice)}</span>`;
-
-                                        const discountBadge =
-                                            product.descuentoActivo
-                                                ? `<div class="badge discount">${product.descuentoActivo.porcentaje ? `-${product.descuentoActivo.porcentaje}%` : "OFERTA"}</div>`
-                                                : "";
-
-                                        const freeShippingBadge =
-                                            product.envioGratis
-                                                ? `<div class="badge free-shipping"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.035-2.544A1 1 0 0 0 18.985 10H15"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg> Envío Gratis</div>`
-                                                : "";
-
-                                        const categoriesHtml =
-                                            product.categorias
-                                                ?.map(
-                                                    (
-                                                        cat: string,
-                                                        i: number,
-                                                    ) => `
-                                        <span class="category-name">${cat}</span>
-                                        ${i < product.categorias.length - 1 ? '<span class="separator">•</span>' : ""}
-                                    `,
-                                                )
-                                                .join("") || "";
-
-                                        card.innerHTML = `
-                                        <div class="image-container">
-                                            <img src="${product.foto ? `http://localhost:5979/${product.foto}` : "/placeholder.png"}" 
-                                                 alt="${product.nombre}" class="product-image" loading="lazy" />
-                                            <div class="price-tag">$${formatPrice(product.precioConDescuento || currentPrice)}</div>
-                                            <div class="badges-container">
-                                                ${discountBadge}
-                                                ${freeShippingBadge}
-                                            </div>
-                                            ${product.stock === 0 ? '<div class="no-stock-overlay"><span>Sin Stock</span></div>' : ""}
-                                            <div class="price-container">${priceHtml}</div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-categories">${categoriesHtml}</div>
-                                            <h3>${product.nombre}</h3>
-                                            <div class="product-meta">
-                                                ${product.marca ? `<span class="brand-editorial">${product.marca}</span>` : ""}
-                                                ${product.autor ? `<span class="author-label">${product.autor}</span>` : ""}
-                                            </div>
-                                            <p class="description">${product.caracteristicas ? product.caracteristicas.substring(0, 100) + (product.caracteristicas.length > 100 ? "..." : "") : "Sin descripción disponible."}</p>
-                                            <button class="btn-add" ${product.stock === 0 ? "disabled" : ""}>
-                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-                                                ${product.stock === 0 ? "Sin Stock" : "Agregar"}
-                                            </button>
-                                        </div>
-                                    `;
-
-                                        // Add event listener to the new button
-                                        const btn =
-                                            card.querySelector(".btn-add");
-                                        btn?.addEventListener("click", (e) => {
-                                            const token =
-                                                localStorage.getItem("token");
-                                            if (!token) {
-                                                window.location.href = "/login";
-                                                return;
-                                            }
-                                            if (window.triggerSileo) {
-                                                window.triggerSileo(
-                                                    "success",
-                                                    "Producto agregado (simulado)",
-                                                );
-                                            } else {
-                                                alert(
-                                                    "Producto agregado (simulado)",
-                                                );
-                                            }
-                                        });
-
-                                        grid.appendChild(card);
-                                    });
-                                }
-
-                                // If we reached the end, disconnect
-                                if (
-                                    currentPage >= result.pagination.totalPages
-                                ) {
-                                    observer.disconnect();
-                                    sentinel.remove();
-                                }
-                            } catch (err) {
-                                console.error(
-                                    "Error loading more products:",
-                                    err,
-                                );
-                            } finally {
-                                sentinel.classList.remove("loading");
-                            }
-                        }
-                    },
-                    { threshold: 0.1 },
-                );
-
-                observer.observe(sentinel);
-            }
+            // Traditional Pagination logic is handled via SSR and URL params
         </script>
 
         {
             products.length > 0 ? (
                 <>
-                    <div
-                        class="products-grid"
-                        id="products-grid"
-                        data-total-pages={pagination.totalPages}
-                        data-api-url={apiUrl}
-                    >
+                    <div class="products-grid" id="products-grid">
                         {products.map((product) => (
                             <ProductCard
                                 product={product}
@@ -361,15 +217,45 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:5979/api";
                             />
                         ))}
                     </div>
+
                     {pagination.totalPages > 1 && (
-                        <div id="load-more-sentinel" class="load-more-sentinel">
-                            <div class="loader-container">
-                                <div class="loader-spinner" />
-                                <span class="loader-text">
-                                    Cargando más productos...
-                                </span>
+                        <nav
+                            class="pagination"
+                            aria-label="Navegación de páginas"
+                        >
+                            <a
+                                href={getPageUrl(currentPage - 1)}
+                                class={`pagination-item prev ${currentPage === 1 ? "disabled" : ""}`}
+                                aria-label="Página anterior"
+                            >
+                                <Icon name="lucide:chevron-left" />
+                                <span>Anterior</span>
+                            </a>
+
+                            <div class="pagination-pages">
+                                {Array.from(
+                                    { length: pagination.totalPages },
+                                    (_, i) => (
+                                        <a
+                                            href={getPageUrl(i + 1)}
+                                            class={`pagination-item page ${currentPage === i + 1 ? "active" : ""}`}
+                                            aria-label={`Ir a página ${i + 1}`}
+                                        >
+                                            {i + 1}
+                                        </a>
+                                    ),
+                                )}
                             </div>
-                        </div>
+
+                            <a
+                                href={getPageUrl(currentPage + 1)}
+                                class={`pagination-item next ${currentPage === pagination.totalPages ? "disabled" : ""}`}
+                                aria-label="Página siguiente"
+                            >
+                                <span>Siguiente</span>
+                                <Icon name="lucide:chevron-right" />
+                            </a>
+                        </nav>
                     )}
                 </>
             ) : (
@@ -706,48 +592,94 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:5979/api";
         flex-wrap: wrap;
     }
 
-    /* Sentinel & Loader Styles */
-    .load-more-sentinel {
+    /* Pagination Styles */
+    .pagination {
         display: flex;
         justify-content: center;
-        padding: 3rem 1rem;
-        width: 100%;
-        min-height: 120px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 4rem;
+        padding: 1.5rem;
+        background: rgba(20, 20, 20, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 2rem;
+    }
+
+    .pagination-pages {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .pagination-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.25rem;
+        border-radius: 1.5rem;
+        color: #a3a3a3;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+        border: 1px solid transparent;
+    }
+
+    .pagination-item:hover:not(.disabled) {
+        color: white;
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .pagination-item.page {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .pagination-item.active {
+        background: var(--primary);
+        color: black;
+        font-weight: 700;
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .pagination-item.active:hover {
+        background: var(--primary);
+        color: black;
+        transform: none;
+    }
+
+    .pagination-item.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
         pointer-events: none;
     }
 
-    .load-more-sentinel.loading {
-        opacity: 1;
+    .pagination-item svg {
+        width: 18px;
+        height: 18px;
     }
 
-    .loader-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-    }
+    @media (max-width: 640px) {
+        .pagination {
+            gap: 1rem;
+            flex-direction: column;
+            border-radius: 1.5rem;
+        }
 
-    .loader-spinner {
-        width: 24px;
-        height: 24px;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        border-top-color: var(--primary);
-        animation: spin 0.8s linear infinite;
-    }
+        .pagination-pages {
+            order: -1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    .loader-text {
-        font-size: 0.85rem;
-        color: #9ca3af;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-    }
-
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
+        .prev,
+        .next {
+            width: 100%;
+            justify-content: center;
         }
     }
 </style>
