@@ -267,6 +267,16 @@
 
 <hr>
 
+<h2>📜 Scripts Disponibles</h2>
+<p>En el directorio del proyecto, puedes ejecutar los siguientes comandos:</p>
+<ul>
+    <li><code>pnpm dev</code>: Inicia el servidor de desarrollo en <code>localhost:2611</code> (incluye HTTPS local con <code>mkcert</code>).</li>
+    <li><code>pnpm build</code>: Compila la aplicación para producción. Optimiza todos los recursos y finaliza la construcción SSR (Server-Side Rendering).</li>
+    <li><code>pnpm preview</code>: Levanta un servidor Node local para visualizar la versión compilada de producción antes de desplegarla.</li>
+</ul>
+
+<hr>
+
 <h2>🔐 Variables de Entorno</h2>
 <p>Crea un archivo <code>.env</code> en la raíz del proyecto con las siguientes variables:</p>
 <pre>
@@ -283,16 +293,6 @@ cd MarketFlex-FrontEnd
 pnpm install
 pnpm dev
 </pre>
-
-<hr>
-
-<h2>📜 Scripts Disponibles</h2>
-<p>En el directorio del proyecto, puedes ejecutar los siguientes comandos:</p>
-<ul>
-    <li><code>pnpm dev</code>: Inicia el servidor de desarrollo en <code>localhost:2611</code> (incluye HTTPS local con <code>mkcert</code>).</li>
-    <li><code>pnpm build</code>: Compila la aplicación para producción. Optimiza todos los recursos y finaliza la construcción SSR (Server-Side Rendering).</li>
-    <li><code>pnpm preview</code>: Levanta un servidor Node local para visualizar la versión compilada de producción antes de desplegarla.</li>
-</ul>
 
 <hr>
 
