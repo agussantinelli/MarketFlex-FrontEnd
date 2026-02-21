@@ -131,6 +131,12 @@
             <td><strong>v21.0</strong></td>
             <td>Inicio de sesión con cuenta de Facebook (JS SDK).</td>
         </tr>
+        <tr>
+            <td><strong>Estado Global</strong></td>
+            <td>Zustand</td>
+            <td><strong>Latest</strong></td>
+            <td>Gestor de estado global para React Islands (ej. Carrito de Compras).</td>
+        </tr>
     </tbody>
 </table>
 
