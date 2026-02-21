@@ -1,0 +1,431 @@
+.searchSection {
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 60vh;
+}
+
+.searchHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    text-align: center;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--foreground);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+.filterTag {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    margin: 0 0.5rem;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.sortWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.sortSelect {
+    appearance: none;
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    padding: 0.75rem 1rem;
+    padding-right: 2.5rem;
+    color: var(--foreground);
+    font-family: inherit;
+    font-size: 0.9rem;
+    width: 100%;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+}
+
+.sortSelect:hover,
+.sortSelect:focus {
+    border-color: var(--primary);
+    outline: none;
+    background: rgba(20, 20, 20, 0.8);
+}
+
+.sortIcon {
+    position: absolute;
+    right: 1rem;
+    color: #9ca3af;
+    pointer-events: none;
+    width: 16px;
+    height: 16px;
+}
+
+@media (min-width: 768px) {
+    .searchHeader {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sectionTitle {
+        margin-bottom: 0;
+    }
+}
+
+.searchControls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filterBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    color: var(--foreground);
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.filterBtn:hover {
+    background: rgba(20, 20, 20, 0.8);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.filterIcon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Modal Styles */
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* .modalBackdrop.active is handled via global or we can use :global(.active) if needed, 
+   but typically it's better to use styles.active and class:list in Astro. 
+   I'll add an .active class here that will be used. */
+.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modalContent {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.active .modalContent {
+    transform: translateY(0);
+}
+
+.modalClose {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.modalClose:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modalIconWrapper {
+    width: 64px;
+    height: 64px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.modalIcon {
+    width: 32px;
+    height: 32px;
+    color: var(--primary);
+}
+
+.modalTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.modalText {
+    color: #9ca3af;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.resultCount {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--green-cream);
+    margin-left: 0.25rem;
+}
+
+.productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .productsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Empty State Styling - Premium Glassmorphism */
+.emptyResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    margin-top: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.emptyIconWrapper {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.01));
+    padding: 1.5rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+.emptyIcon {
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.emptyTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, #a3a3a3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.emptyResults p {
+    font-size: 1.125rem;
+    color: #a3a3a3;
+    margin-bottom: 2.5rem;
+    max-width: 450px;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 1.5rem;
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 2rem;
+}
+
+.paginationControls {
+    display: contents;
+}
+
+.paginationPages {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.paginationItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 1.5rem;
+    color: #a3a3a3;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.paginationItem:hover:not(.disabled) {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.paginationItem.page {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+}
+
+.paginationItem.active {
+    background: var(--primary);
+    color: black;
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.paginationItem.active:hover {
+    background: var(--primary);
+    color: black;
+    transform: none;
+}
+
+.paginationItem.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.paginationItem svg {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 640px) {
+    .pagination {
+        gap: 1.5rem;
+        flex-direction: column;
+        border-radius: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .paginationControls {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .paginationPages {
+        order: 2;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .prev,
+    .next {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+.paginationInfo {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.paginationInfo strong {
+    color: white;
+    font-weight: 600;
+}
