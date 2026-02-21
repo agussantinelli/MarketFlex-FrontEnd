@@ -240,23 +240,29 @@
 │   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
 │   │   ├── category.service.ts                     # Servicio de categorías
 │   │   ├── product-type.service.ts                 # Servicio de tipos de producto
-│   │   └── product.service.ts                      # Servicio de productos
+│   │   ├── product.service.ts                      # Servicio de productos
+│   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
 │   ├── types/                                      # Definiciones de tipos TypeScript
 │   │   ├── auth.types.ts                           # Tipos de Autenticación
 │   │   ├── category.types.ts                       # Tipos de Categorías
 │   │   ├── product-type.types.ts                   # Tipos de Tipos de Producto
-│   │   └── product.types.ts                        # Interfaces de dominio (Producto)
+│   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
+│   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── admin/                                  # Panel de administración
 │   │   │   └── dashboard.astro                     # Dashboard principal
 │   │   ├── about.astro                             # Página "Sobre Nosotros"
 │   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
+│   │   ├── contacto.astro                          # Página de Contacto y soporte
+│   │   ├── faq.astro                               # Página de Preguntas Frecuentes
+│   │   ├── terminos.astro                          # Página de Términos y Condiciones
 │   │   ├── index.astro                             # Página de inicio
 │   │   ├── login.astro                             # Página de inicio de sesión
 │   │   └── search.astro                            # Página de búsqueda y filtrado
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales
-│   │   │   └── Notifications.tsx                   # Sistema de notificaciones (React)
+│   │   │   ├── Notifications.tsx                   # Sistema de notificaciones (React)
+│   │   │   └── PageCard.astro                      # Tarjeta blanca central genérica
 │   │   └── products/                               # Componentes de dominio
 │   │       └── ProductCard.astro                   # Tarjeta de producto reutilizable
 │   ├── styles/                                     # Estilos globales y utilidades
