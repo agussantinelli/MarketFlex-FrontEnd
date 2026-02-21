@@ -2,67 +2,71 @@
 import { Icon } from "astro-icon/components";
 import { getProductTypes } from "../services/product-type.service";
 import { getCategories } from "../services/category.service";
+import styles from "./styles/Navbar.module.css";
 
 const productTypes = await getProductTypes();
 const categories = await getCategories();
 ---
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="/" class="nav-logo">
+<nav class={styles.navbar}>
+    <div class={styles.navContainer}>
+        <a href="/" class={styles.navLogo}>
             <img
                 src="/logo-marketflex-letters.png"
                 alt="MarketFlex Logo"
-                class="logo-img"
+                class={styles.logoImg}
             />
-            <span class="logo-text">MarketFlex</span>
+            <span class={styles.logoText}>MarketFlex</span>
         </a>
 
-        <form action="/search" method="GET" class="nav-search-form">
-            <div class="search-input-wrapper">
-                <Icon name="lucide:search" class="search-icon" />
+        <form action="/search" method="GET" class={styles.navSearchForm}>
+            <div class={styles.searchInputWrapper}>
+                <Icon name="lucide:search" class={styles.searchIcon} />
                 <input
                     type="text"
                     name="q"
                     placeholder="Buscar productos..."
-                    class="search-input"
+                    class={styles.searchInput}
                     autocomplete="off"
                 />
                 <button
                     type="button"
-                    class="search-clear-btn"
+                    class={styles.searchClearBtn}
                     aria-label="Clear search"
                 >
-                    <Icon name="lucide:x" class="clear-icon" />
+                    <Icon name="lucide:x" class={styles.clearIcon} />
                 </button>
             </div>
         </form>
 
-        <button class="mobile-menu-btn" aria-label="Toggle menu">
-            <Icon name="lucide:menu" class="icon-menu" />
-            <Icon name="lucide:x" class="icon-close" />
+        <button class={styles.mobileMenuBtn} aria-label="Toggle menu">
+            <Icon name="lucide:menu" class={styles.iconMenu} />
+            <Icon name="lucide:x" class={styles.iconClose} />
         </button>
 
-        <div class="nav-links">
+        <div class={styles.navLinks}>
             <!-- Explorar -->
-            <a href="/search" class="nav-link">
-                <Icon name="lucide:compass" class="link-icon" />
+            <a href="/search" class={styles.navLink}>
+                <Icon name="lucide:compass" class={styles.linkIcon} />
                 Explorar
             </a>
 
             <!-- Tipos Dropdown -->
-            <div class="nav-item-dropdown">
-                <button class="nav-link dropdown-btn">
-                    <Icon name="lucide:book" class="link-icon" />
+            <div class={styles.navItemDropdown}>
+                <button class={`${styles.navLink} ${styles.dropdownBtn}`}>
+                    <Icon name="lucide:book" class={styles.linkIcon} />
                     Tipos
-                    <Icon name="lucide:chevron-down" class="chevron-icon" />
+                    <Icon
+                        name="lucide:chevron-down"
+                        class={styles.chevronIcon}
+                    />
                 </button>
-                <div class="nav-dropdown-menu">
+                <div class={styles.navDropdownMenu}>
                     {
                         productTypes.map((type) => (
                             <a
                                 href={`/search?type=${type.nombre}`}
-                                class="dropdown-link"
+                                class={styles.dropdownLink}
                             >
                                 {type.nombre}
                             </a>
@@ -72,18 +76,21 @@ const categories = await getCategories();
             </div>
 
             <!-- Categorías Dropdown -->
-            <div class="nav-item-dropdown">
-                <button class="nav-link dropdown-btn">
-                    <Icon name="lucide:layers" class="link-icon" />
+            <div class={styles.navItemDropdown}>
+                <button class={`${styles.navLink} ${styles.dropdownBtn}`}>
+                    <Icon name="lucide:layers" class={styles.linkIcon} />
                     Categorías
-                    <Icon name="lucide:chevron-down" class="chevron-icon" />
+                    <Icon
+                        name="lucide:chevron-down"
+                        class={styles.chevronIcon}
+                    />
                 </button>
-                <div class="nav-dropdown-menu">
+                <div class={styles.navDropdownMenu}>
                     {
                         categories.map((cat) => (
                             <a
                                 href={`/search?category=${cat.nombre}`}
-                                class="dropdown-link"
+                                class={styles.dropdownLink}
                             >
                                 {cat.nombre}
                             </a>
@@ -93,56 +100,65 @@ const categories = await getCategories();
             </div>
 
             <!-- Ofertas -->
-            <a href="/search?offers=true" class="nav-link">
-                <Icon name="lucide:tag" class="link-icon" />
+            <a href="/search?offers=true" class={styles.navLink}>
+                <Icon name="lucide:tag" class={styles.linkIcon} />
                 Ofertas
             </a>
 
             <!-- Auth Section -->
             <div class="nav-auth-guest">
                 <a href="/login" class="btn btn-primary btn-sm">
-                    <Icon name="lucide:user" class="btn-icon" />
+                    <Icon name="lucide:user" class={styles.btnIcon} />
                     Ingresar
                 </a>
             </div>
 
             <div class="nav-auth-user" style="display: none;">
-                <div class="user-dropdown">
-                    <button class="dropdown-trigger">
-                        <span class="user-greeting"
+                <div class={styles.userDropdown}>
+                    <button class={styles.dropdownTrigger}>
+                        <span class={styles.userGreeting}
                             >Hola, <span id="user-name">Usuario</span></span
                         >
                         <Icon
                             name="lucide:chevron-down"
-                            class="dropdown-icon"
+                            class={styles.dropdownIcon}
                         />
                     </button>
-                    <div class="dropdown-menu">
-                        <a href="/profile" class="dropdown-item">
-                            <Icon name="lucide:user" class="item-icon" />
+                    <div class={styles.dropdownMenu}>
+                        <a href="/profile" class={styles.dropdownItem}>
+                            <Icon name="lucide:user" class={styles.itemIcon} />
                             Mi Perfil
                         </a>
                         <a
                             href="/admin/dashboard"
-                            class="dropdown-item admin-only"
+                            class={`${styles.dropdownItem} admin-only`}
                             style="display: none;"
                         >
                             <Icon
                                 name="lucide:layout-dashboard"
-                                class="item-icon"
+                                class={styles.itemIcon}
                             />
                             Panel Admin
                         </a>
-                        <a href="/orders" class="dropdown-item customer-only">
+                        <a
+                            href="/orders"
+                            class={`${styles.dropdownItem} customer-only`}
+                        >
                             <Icon
                                 name="lucide:shopping-bag"
-                                class="item-icon"
+                                class={styles.itemIcon}
                             />
                             Mis Compras
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <button id="logout-btn" class="dropdown-item text-red">
-                            <Icon name="lucide:log-out" class="item-icon" />
+                        <div class={styles.dropdownDivider}></div>
+                        <button
+                            id="logout-btn"
+                            class={`${styles.dropdownItem} ${styles.textRed}`}
+                        >
+                            <Icon
+                                name="lucide:log-out"
+                                class={styles.itemIcon}
+                            />
                             Cerrar Sesión
                         </button>
                     </div>
@@ -161,477 +177,3 @@ const categories = await getCategories();
     // Support for View Transitions
     document.addEventListener("astro:page-load", initNavbar);
 </script>
-
-<style>
-    /* Navbar Verde Crema */
-    .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 0.75rem 1rem;
-        background: var(--foreground);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (min-width: 768px) {
-        .navbar {
-            padding: 0.75rem 2rem;
-        }
-    }
-
-    .nav-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-        color: var(--nav-text);
-        font-weight: 800;
-        font-size: 1.25rem;
-        letter-spacing: -0.02em;
-    }
-
-    .logo-img {
-        height: 38px;
-        width: auto;
-        object-fit: contain;
-    }
-
-    .logo-text {
-        display: none;
-    }
-
-    @media (min-width: 768px) {
-        .logo-text {
-            display: inline;
-        }
-    }
-
-    /* Mobile Menu Button */
-    .mobile-menu-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 32px;
-        height: 32px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 102; /* Above nav-links */
-        padding: 0;
-        color: var(--nav-text);
-        position: relative;
-    }
-
-    .mobile-menu-btn .icon-menu,
-    .mobile-menu-btn .icon-close {
-        width: 28px;
-        height: 28px;
-        transition:
-            transform 0.3s ease,
-            opacity 0.3s ease;
-        position: absolute;
-    }
-
-    .mobile-menu-btn .icon-close {
-        opacity: 0;
-        transform: rotate(-90deg);
-    }
-
-    .mobile-menu-btn.active .icon-menu {
-        opacity: 0;
-        transform: rotate(90deg);
-    }
-
-    .mobile-menu-btn.active .icon-close {
-        opacity: 1;
-        transform: rotate(0);
-    }
-
-    /* Navigation Links - Mobile First */
-    /* Navigation Links - Mobile First (Side Drawer) */
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 75%;
-        max-width: 300px;
-        height: 100vh;
-        background: var(--foreground);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 1.5rem;
-        padding: 6rem 2rem 2rem;
-        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
-
-        /* Animation */
-        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 101;
-
-        /* Ensure visibility is managed by 'right' property, not opacity/visibility for the drawer effect */
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-links.active {
-        right: 0;
-    }
-
-    /* Desktop Navigation */
-    @media (min-width: 768px) {
-        .mobile-menu-btn {
-            display: none;
-        }
-
-        .nav-links {
-            position: static;
-            height: auto;
-            width: auto;
-            max-width: none;
-            padding: 0;
-            background: transparent;
-            box-shadow: none;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 2rem;
-
-            /* Reset mobile positioning */
-            right: auto;
-            top: auto;
-        }
-    }
-
-    .nav-link {
-        text-decoration: none;
-        color: var(--nav-text);
-        opacity: 0.8;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .nav-link:hover {
-        opacity: 1;
-        transform: translateY(-1px);
-    }
-
-    .link-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .btn-icon {
-        width: 16px;
-        height: 16px;
-        margin-right: 0.5rem;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    /* Nav Item Dropdowns */
-    .nav-item-dropdown {
-        position: relative;
-    }
-
-    .dropdown-btn {
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        font-family: inherit;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .chevron-icon {
-        width: 14px;
-        height: 14px;
-        opacity: 0.5;
-        transition: transform 0.2s;
-    }
-
-    .nav-item-dropdown:hover .chevron-icon {
-        opacity: 1;
-        transform: rotate(180deg);
-    }
-
-    /* Reuse fading animation */
-    .nav-dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-top: 0.5rem;
-        background: var(--foreground);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        min-width: 180px;
-        padding: 0.5rem;
-        display: none;
-        flex-direction: column;
-        z-index: 1000;
-    }
-
-    .nav-dropdown-menu.active {
-        display: flex;
-        animation: fadeIn 0.2s ease;
-    }
-
-    .dropdown-link {
-        padding: 0.6rem 1rem;
-        text-decoration: none;
-        color: #4b5563;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 8px;
-        transition: all 0.2s;
-    }
-
-    .dropdown-link:hover {
-        background: #f3f4f6;
-        color: var(--green-primary);
-    }
-
-    /* Adjust for mobile: Dropdowns should probably be static/indented blocks or just visible */
-    @media (max-width: 767px) {
-        .nav-item-dropdown {
-            width: 100%;
-        }
-
-        .nav-dropdown-menu {
-            position: static;
-            box-shadow: none;
-            border: none;
-            padding-left: 2rem;
-            margin-top: 0;
-            display: none; /* Hidden by default, toggled via JS */
-            background: transparent;
-        }
-
-        .nav-dropdown-menu.active {
-            display: flex;
-        }
-
-        .dropdown-btn {
-            width: 100%;
-            justify-content: space-between;
-        }
-    }
-
-    /* Auth Styles */
-    .nav-auth-user {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .user-dropdown {
-        position: relative;
-    }
-
-    .dropdown-trigger {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 8px;
-        transition: background 0.2s;
-    }
-
-    .dropdown-trigger:hover {
-        background: rgba(0, 0, 0, 0.05);
-    }
-
-    .user-greeting {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--nav-text);
-    }
-
-    .dropdown-icon {
-        width: 16px;
-        height: 16px;
-        color: var(--nav-text);
-        opacity: 0.6;
-    }
-
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        margin-top: 0.5rem;
-        background: var(--foreground);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        min-width: 200px;
-        padding: 0.5rem;
-        display: none;
-        flex-direction: column;
-        z-index: 1000;
-    }
-
-    .dropdown-menu.active {
-        display: flex;
-        animation: fadeIn 0.2s ease;
-    }
-
-    .dropdown-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-        text-decoration: none;
-        color: #4b5563;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border-radius: 8px;
-        transition: all 0.2s;
-        border: none;
-        background: transparent;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    .dropdown-item:hover {
-        background: #f3f4f6;
-        color: #1a1a1a;
-    }
-
-    .item-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .dropdown-divider {
-        height: 1px;
-        background: #e5e7eb;
-        margin: 0.5rem 0;
-    }
-
-    .text-red {
-        color: #ef4444;
-    }
-
-    .text-red:hover {
-        background: #fef2f2;
-        color: #dc2626;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Search Bar */
-    .nav-search-form {
-        display: flex;
-        align-items: center;
-        flex: 1;
-        max-width: 340px;
-        margin: 0 1rem;
-    }
-
-    .search-input-wrapper {
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 0.75rem;
-        width: 16px;
-        height: 16px;
-        color: #9ca3af;
-        pointer-events: none;
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 0.5rem 2.25rem 0.5rem 2.25rem; /* Added padding right for clear button */
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        font-size: 0.85rem;
-        background: rgba(0, 0, 0, 0.03);
-        color: var(--nav-text);
-        transition: all 0.3s ease;
-        outline: none;
-        font-family: inherit;
-    }
-
-    .search-input:focus {
-        border-color: var(--primary, #22c55e);
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
-        background: white;
-    }
-
-    .search-input::placeholder {
-        color: #9ca3af;
-    }
-
-    .search-clear-btn {
-        position: absolute;
-        right: 0.5rem;
-        background: transparent;
-        border: none;
-        color: #9ca3af;
-        cursor: pointer;
-        padding: 4px;
-        display: flex; /* keep it flex but hide via opacity/visibility */
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.2s;
-        border-radius: 50%;
-    }
-
-    .search-clear-btn:hover {
-        background: rgba(0, 0, 0, 0.1);
-        color: #4b5563;
-    }
-
-    .search-clear-btn.visible {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .clear-icon {
-        width: 14px;
-        height: 14px;
-    }
-
-    @media (max-width: 767px) {
-        .nav-search-form {
-            max-width: 200px;
-            margin: 0 0.5rem;
-        }
-    }
-</style>

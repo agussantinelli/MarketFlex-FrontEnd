@@ -1,0 +1,475 @@
+/* Navbar Verde Crema */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--foreground);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        padding: 0.75rem 2rem;
+    }
+}
+
+.navContainer {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navLogo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--nav-text);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+}
+
+.logoImg {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logoText {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .logoText {
+        display: inline;
+    }
+}
+
+/* Mobile Menu Button */
+.mobileMenuBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 102;
+    /* Above nav-links */
+    padding: 0;
+    color: var(--nav-text);
+    position: relative;
+}
+
+.mobileMenuBtn .iconMenu,
+.mobileMenuBtn .iconClose {
+    width: 28px;
+    height: 28px;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    position: absolute;
+}
+
+.mobileMenuBtn .iconClose {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+.mobileMenuBtn.active .iconMenu {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.mobileMenuBtn.active .iconClose {
+    opacity: 1;
+    transform: rotate(0);
+}
+
+/* Navigation Links - Mobile First */
+.navLinks {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--foreground);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 6rem 2rem 2rem;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+
+    /* Animation */
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 101;
+
+    /* Ensure visibility is managed by 'right' property, not opacity/visibility for the drawer effect */
+    opacity: 1;
+    visibility: visible;
+}
+
+.navLinks.active {
+    right: 0;
+}
+
+/* Desktop Navigation */
+@media (min-width: 768px) {
+    .mobileMenuBtn {
+        display: none;
+    }
+
+    .navLinks {
+        position: static;
+        height: auto;
+        width: auto;
+        max-width: none;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 2rem;
+
+        /* Reset mobile positioning */
+        right: auto;
+        top: auto;
+    }
+}
+
+.navLink {
+    text-decoration: none;
+    color: var(--nav-text);
+    opacity: 0.8;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navLink:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.linkIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.btnIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Nav Item Dropdowns */
+.navItemDropdown {
+    position: relative;
+}
+
+.dropdownBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chevronIcon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.5;
+    transition: transform 0.2s;
+}
+
+.navItemDropdown:hover .chevronIcon {
+    opacity: 1;
+    transform: rotate(180deg);
+}
+
+/* Reuse fading animation */
+.navDropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.5rem;
+    background: var(--foreground);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-width: 180px;
+    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.navDropdownMenu.active {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdownLink {
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.dropdownLink:hover {
+    background: #f3f4f6;
+    color: var(--green-primary);
+}
+
+/* Adjust for mobile: Dropdowns should probably be static/indented blocks or just visible */
+@media (max-width: 767px) {
+    .navItemDropdown {
+        width: 100%;
+    }
+
+    .navDropdownMenu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        padding-left: 2rem;
+        margin-top: 0;
+        display: none;
+        /* Hidden by default, toggled via JS */
+        background: transparent;
+    }
+
+    .navDropdownMenu.active {
+        display: flex;
+    }
+
+    .dropdownBtn {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Auth Styles */
+.navAuthUser {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userDropdown {
+    position: relative;
+}
+
+.dropdownTrigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.dropdownTrigger:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.userGreeting {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--nav-text);
+}
+
+.dropdownIcon {
+    width: 16px;
+    height: 16px;
+    color: var(--nav-text);
+    opacity: 0.6;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--foreground);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    padding: 0.5rem;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.dropdownMenu.active {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background: #f3f4f6;
+    color: #1a1a1a;
+}
+
+.itemIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 0.5rem 0;
+}
+
+.textRed {
+    color: #ef4444;
+}
+
+.textRed:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Search Bar */
+.navSearchForm {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 340px;
+    margin: 0 1rem;
+}
+
+.searchInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.5rem 2.25rem 0.5rem 2.25rem;
+    /* Added padding right for clear button */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--nav-text);
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.searchInput:focus {
+    border-color: var(--primary, #22c55e);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    background: white;
+}
+
+.searchInput::placeholder {
+    color: #9ca3af;
+}
+
+.searchClearBtn {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    /* keep it flex but hide via opacity/visibility */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    border-radius: 50%;
+}
+
+.searchClearBtn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #4b5563;
+}
+
+.searchClearBtn.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.clearIcon {
+    width: 14px;
+    height: 14px;
+}
+
+@media (max-width: 767px) {
+    .navSearchForm {
+        max-width: 200px;
+        margin: 0 0.5rem;
+    }
+}
