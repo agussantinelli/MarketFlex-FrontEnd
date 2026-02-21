@@ -1,0 +1,139 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageCard from "../components/common/PageCard.astro";
+---
+
+<Layout
+    title="Términos y Condiciones | MarketFlex"
+    description="Términos Legales de Uso de MarketFlex"
+>
+    <PageCard maxWidth="800px">
+        <header class="page-header">
+            <h1>Términos y Condiciones</h1>
+            <p>
+                Última actualización: {
+                    new Date().toLocaleDateString("es-ES", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })
+                }
+            </p>
+        </header>
+
+        <div class="legal-content">
+            <section>
+                <h2>1. Aceptación de los Términos</h2>
+                <p>
+                    Al acceder y utilizar MarketFlex (la "Plataforma"), usted
+                    acepta estar sujeto a los presentes Términos y Condiciones,
+                    así como a nuestra Política de Privacidad. Si no está de
+                    acuerdo con alguna parte de estos términos, no debe utilizar
+                    la Plataforma.
+                </p>
+            </section>
+
+            <section>
+                <h2>2. Propiedad Intelectual</h2>
+                <p>
+                    Todo el contenido presente en la Plataforma, incluyendo
+                    diseño, arquitectura de software (Astro Islands, Hono,
+                    Node.js), textos, gráficos, interfaces y código fuente, es
+                    propiedad exclusiva de Agustín Santinelli y está protegido
+                    por las leyes de propiedad intelectual y copyright.
+                </p>
+                <p>
+                    Queda estrictamente prohibida su copia, distribución,
+                    ingeniería inversa o uso comercial sin el consentimiento
+                    expreso y por escrito del autor. Este repositorio existe
+                    puramente como exhibición en formato de portafolio.
+                </p>
+            </section>
+
+            <section>
+                <h2>3. Cuentas de Usuario y Seguridad</h2>
+                <p>
+                    Para realizar transacciones, los usuarios pueden registrarse
+                    mediante correo electrónico o autenticación social (Google y
+                    Facebook). El usuario es responsable de mantener la
+                    confidencialidad de sus credenciales. La plataforma utiliza
+                    JWT y hash criptográfico para proteger la información de
+                    cada sesión.
+                </p>
+            </section>
+
+            <section>
+                <h2>4. Comercio y Transacciones</h2>
+                <p>
+                    MarketFlex facilita la compra y venta de bienes físicos y
+                    digitales. Los precios publicados, descuentos aplicables y
+                    promociones temporales se rigen exclusivamente por el
+                    sistema interno de la base de datos (PostgreSQL). Nos
+                    reservamos el derecho de cancelar transacciones en caso de
+                    errores manifiestos de fijación de precio.
+                </p>
+            </section>
+
+            <section>
+                <h2>5. Limitación de Responsabilidad</h2>
+                <p>
+                    La Plataforma se proporciona "tal cual" y "según
+                    disponibilidad". MarketFlex no se hace responsable de las
+                    interrupciones temporales del servicio derivadas de
+                    mantenimientos programados, actualizaciones de servidor, o
+                    causas de fuerza mayor.
+                </p>
+            </section>
+        </div>
+    </PageCard>
+</Layout>
+
+<style>
+    .page-header {
+        margin-bottom: 4rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 2rem;
+    }
+
+    .page-header h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 1rem;
+        color: #1a1a1a;
+    }
+
+    .page-header p {
+        color: var(--green-primary);
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .legal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .legal-content section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .legal-content h2 {
+        color: #1a1a1a;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .legal-content p {
+        color: #666;
+        line-height: 1.7;
+        font-size: 1.05rem;
+        margin: 0;
+    }
+</style>
