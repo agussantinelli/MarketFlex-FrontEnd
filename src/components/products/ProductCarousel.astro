@@ -196,6 +196,20 @@ const displayProducts = products.slice(0, limit);
         right: -24px;
     }
 
+    .carousel-btn.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        background: rgba(var(--foreground-rgb), 0.1);
+        border-color: rgba(var(--foreground-rgb), 0.2);
+        color: var(--foreground);
+        pointer-events: none;
+    }
+
+    .carousel-btn.disabled:hover {
+        transform: scale(1);
+        box-shadow: none;
+    }
+
     @media (min-width: 768px) {
         .carousel-btn {
             display: flex;
@@ -267,6 +281,24 @@ const displayProducts = products.slice(0, limit);
 
         if (!container || !prevBtn || !nextBtn) return;
 
+        const updateButtonStates = () => {
+            const scrollLeft = container.scrollLeft;
+            const maxScroll = container.scrollWidth - container.clientWidth;
+
+            // Use a small buffer (5px) for tolerance
+            if (scrollLeft <= 5) {
+                prevBtn.classList.add("disabled");
+            } else {
+                prevBtn.classList.remove("disabled");
+            }
+
+            if (scrollLeft >= maxScroll - 5) {
+                nextBtn.classList.add("disabled");
+            } else {
+                nextBtn.classList.remove("disabled");
+            }
+        };
+
         const getScrollAmount = () => {
             const item = container.querySelector(".carousel-item");
             return item ? item.getBoundingClientRect().width + 24 : 300;
@@ -282,6 +314,15 @@ const displayProducts = products.slice(0, limit);
         nextBtn.addEventListener("click", () => {
             container.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
         });
+
+        // Add scroll listener for state updates
+        container.addEventListener("scroll", updateButtonStates);
+
+        // Initial check
+        updateButtonStates();
+
+        // Final check after a short delay to ensure rendering is complete
+        setTimeout(updateButtonStates, 100);
     }
 
     function setupAllCarousels() {
