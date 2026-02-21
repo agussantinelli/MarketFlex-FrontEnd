@@ -1,4 +1,4 @@
-import { api } from "../api/client";
+import { api } from "../lib/api";
 import type { Product } from '../types/product.types';
 
 export const getProducts = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {

@@ -1,4 +1,4 @@
-import { api } from "../api/client";
+import { api } from "../lib/api";
 import type { LoginResponse, GoogleLoginResponse } from '../types/auth.types';
 
 export const login = async (credentials: any): Promise<LoginResponse> => {
