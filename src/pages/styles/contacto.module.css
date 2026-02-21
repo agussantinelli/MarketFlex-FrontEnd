@@ -1,0 +1,152 @@
+.pageHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.pageHeader h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.pageHeader p {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contactContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+@media (min-width: 768px) {
+    .contactContent {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.infoCard {
+    background: #f5f7fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+}
+
+.infoCard:hover {
+    transform: translateY(-5px);
+    background: #ffffff;
+    border-color: var(--green-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.infoIcon {
+    font-size: 2rem;
+    color: var(--green-primary);
+}
+
+.infoCard h3 {
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.infoCard p {
+    color: #666;
+    margin: 0;
+}
+
+.contactForm {
+    background: #f5f7fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    color: #1a1a1a;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.formGroup input,
+.formGroup textarea {
+    background: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 1rem;
+    color: #1a1a1a;
+    font-family: inherit;
+    font-size: 1rem;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.formGroup input:focus:not(.readonlyInput),
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--green-primary);
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+}
+
+.readonlyInput {
+    background: #f1f3f5 !important;
+    color: #888 !important;
+    cursor: not-allowed;
+    border-color: #e1e4e8 !important;
+}
+
+.submitBtn {
+    background: var(--green-primary);
+    color: white;
+    /* Changed from black to white for better looking button matching the login design */
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+}
+
+.submitBtn:hover {
+    background: var(--green-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+}
+
+.submitBtn:active {
+    transform: scale(0.98);
+    box-shadow: none;
+}

@@ -1,0 +1,47 @@
+.pageHeader {
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 2rem;
+}
+
+.pageHeader h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.pageHeader p {
+    color: var(--green-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.legalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.legalContent section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.legalContent h2 {
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.legalContent p {
+    color: #666;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    margin: 0;
+}

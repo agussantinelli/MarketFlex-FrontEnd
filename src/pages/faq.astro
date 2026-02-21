@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import PageCard from "../components/common/PageCard.astro";
 import { Icon } from "astro-icon/components";
+import styles from "./styles/faq.module.css";
 
 const faqs = [
     {
@@ -24,7 +25,7 @@ const faqs = [
     description="Preguntas Frecuentes sobre MarketFlex"
 >
     <PageCard maxWidth="800px">
-        <header class="page-header">
+        <header class={styles.pageHeader}>
             <h1>Preguntas Frecuentes</h1>
             <p>
                 Resolvemos tus principales dudas sobre el funcionamiento de
@@ -32,15 +33,18 @@ const faqs = [
             </p>
         </header>
 
-        <div class="faq-list">
+        <div class={styles.faqList}>
             {
                 faqs.map((faq) => (
-                    <details class="faq-item" name="faq-accordion">
-                        <summary class="faq-question">
+                    <details class={styles.faqItem} name="faq-accordion">
+                        <summary class={styles.faqQuestion}>
                             <span>{faq.question}</span>
-                            <Icon name="lucide:chevron-down" class="chevron" />
+                            <Icon
+                                name="lucide:chevron-down"
+                                class={styles.chevron}
+                            />
                         </summary>
-                        <div class="faq-answer">
+                        <div class={styles.faqAnswer}>
                             <p>{faq.answer}</p>
                         </div>
                     </details>
@@ -49,103 +53,3 @@ const faqs = [
         </div>
     </PageCard>
 </Layout>
-
-<style>
-    .page-header {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .page-header h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        margin-bottom: 1rem;
-        color: #1a1a1a;
-    }
-
-    .page-header p {
-        color: #666;
-        font-size: 1.1rem;
-    }
-
-    .faq-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .faq-item {
-        background: #f5f7fa;
-        border: 1px solid #e1e4e8;
-        border-radius: 16px;
-        overflow: hidden;
-        transition:
-            border-color 0.2s,
-            background 0.2s,
-            box-shadow 0.2s;
-    }
-
-    .faq-item:hover {
-        background: #ffffff;
-        border-color: var(--green-primary);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .faq-question {
-        padding: 1.5rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        color: #1a1a1a;
-        font-weight: 600;
-        font-size: 1.1rem;
-        user-select: none;
-        list-style: none; /* Hide default triangle */
-    }
-
-    .faq-question::-webkit-details-marker {
-        display: none; /* Hide default triangle in WebKit */
-    }
-
-    .chevron {
-        color: var(--green-primary);
-        transition: transform 0.3s ease;
-        flex-shrink: 0;
-        width: 24px;
-        height: 24px;
-    }
-
-    details[open] .chevron {
-        transform: rotate(180deg);
-    }
-
-    details[open] .faq-item {
-        border-color: var(--green-primary);
-        background: #ffffff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .faq-answer {
-        padding: 0 2rem 1.5rem;
-        color: #666;
-        line-height: 1.6;
-        animation: slideDown 0.3s ease-out;
-    }
-
-    .faq-answer p {
-        margin: 0;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>

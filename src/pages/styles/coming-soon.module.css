@@ -1,0 +1,16 @@
+.title {
+    font-size: clamp(3rem, 10vw, 6rem);
+    margin-bottom: 1rem;
+    letter-spacing: -0.04em;
+    color: var(--green-cream);
+}
+
+.comingSoon {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--green-cream);
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    opacity: 0.6;
+    margin-top: -1rem;
+}

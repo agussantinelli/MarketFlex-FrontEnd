@@ -7,6 +7,7 @@ import {
 	getFeaturedProducts,
 	getNewArrivals,
 } from "../services/product.service";
+import styles from "./styles/index.module.css";
 
 const products = await getFeaturedProducts();
 const newArrivals = await getNewArrivals();
@@ -39,13 +40,3 @@ const welcomeMessage = isNewUser
 		viewMoreHref="/search?sort=newest"
 	/>
 </Layout>
-
-<style>
-	/* Shared Products Section Styles (if needed for overall layout) */
-	.products-section {
-		padding: 4rem 1rem;
-		max-width: 1200px;
-		margin: 0 auto;
-		--card-gap: 1.5rem;
-	}
-</style>

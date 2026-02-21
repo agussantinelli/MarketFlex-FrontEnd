@@ -1,0 +1,241 @@
+.aboutWrapper {
+    padding: 4rem 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aboutContent {
+    color: #1a1a1a;
+}
+
+.sectionDivider {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Header Styling */
+.aboutHeader {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.aboutHeader h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    letter-spacing: -3px;
+    color: #000;
+    line-height: 1;
+}
+
+.subtitle {
+    color: var(--green-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.introBox p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+    font-weight: 400;
+}
+
+/* Motivations Grid */
+.motivationsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.motivationCard {
+    padding: 2.5rem;
+    background: #fdfdfd;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.motivationCard:hover {
+    transform: translateY(-8px);
+    background: #fff;
+    border-color: var(--green-primary);
+    box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+}
+
+.cardIcon {
+    width: 36px;
+    height: 36px;
+    color: var(--green-primary);
+    margin-bottom: 1.5rem;
+}
+
+.motivationCard h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+    color: #111;
+}
+
+.motivationCard p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* Architect Section */
+.architectCard {
+    background: #0a0a0a;
+    border-radius: 24px;
+    padding: 4rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.architectCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(0, 255, 136, 0.05));
+    pointer-events: none;
+}
+
+.architectInfo {
+    max-width: 650px;
+    position: relative;
+    z-index: 2;
+}
+
+.label {
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: var(--green-primary);
+    margin-bottom: 1.5rem;
+    display: block;
+    opacity: 0.9;
+}
+
+.architectInfo h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.devBio {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+.socialBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--green-primary);
+    color: black;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2);
+}
+
+.socialBtn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 255, 136, 0.3);
+}
+
+/* Values Row */
+.valuesRow {
+    display: flex;
+    justify-content: space-around;
+    gap: 3rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.valueItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.valueItem [data-icon] {
+    width: 28px;
+    height: 28px;
+    color: var(--green-primary);
+    margin-bottom: 0.5rem;
+}
+
+.valueItem strong {
+    font-size: 1.2rem;
+    color: #000;
+    font-weight: 800;
+}
+
+.valueItem span {
+    font-size: 0.9rem;
+    color: #888;
+    max-width: 200px;
+}
+
+@media (max-width: 1000px) {
+    .aboutHeader {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .headerMain {
+        order: 1;
+    }
+
+    .introBox {
+        order: 2;
+    }
+
+    .motivationsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .aboutHeader h1 {
+        font-size: 3.5rem;
+    }
+
+    .valuesRow {
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    .architectCard {
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .socialBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}

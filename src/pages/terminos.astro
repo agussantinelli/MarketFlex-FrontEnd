@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PageCard from "../components/common/PageCard.astro";
+import styles from "./styles/terminos.module.css";
 ---
 
 <Layout
@@ -8,7 +9,7 @@ import PageCard from "../components/common/PageCard.astro";
     description="Términos Legales de Uso de MarketFlex"
 >
     <PageCard maxWidth="800px">
-        <header class="page-header">
+        <header class={styles.pageHeader}>
             <h1>Términos y Condiciones</h1>
             <p>
                 Última actualización: {
@@ -21,7 +22,7 @@ import PageCard from "../components/common/PageCard.astro";
             </p>
         </header>
 
-        <div class="legal-content">
+        <div class={styles.legalContent}>
             <section>
                 <h2>1. Condiciones Generales de Uso</h2>
                 <p>
@@ -88,53 +89,3 @@ import PageCard from "../components/common/PageCard.astro";
         </div>
     </PageCard>
 </Layout>
-
-<style>
-    .page-header {
-        margin-bottom: 4rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding-bottom: 2rem;
-    }
-
-    .page-header h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        margin-bottom: 1rem;
-        color: #1a1a1a;
-    }
-
-    .page-header p {
-        color: var(--green-primary);
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .legal-content {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-    }
-
-    .legal-content section {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .legal-content h2 {
-        color: #1a1a1a;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0;
-    }
-
-    .legal-content p {
-        color: #666;
-        line-height: 1.7;
-        font-size: 1.05rem;
-        margin: 0;
-    }
-</style>

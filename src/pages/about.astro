@@ -2,21 +2,24 @@
 import Layout from "../layouts/Layout.astro";
 import PageCard from "../components/common/PageCard.astro";
 import { Icon } from "astro-icon/components";
+import styles from "./styles/about.module.css";
 ---
 
 <Layout title="MarketFlex | Sobre Nosotros">
-    <div class="about-wrapper">
+    <div class={styles.aboutWrapper}>
         <PageCard maxWidth="1100px">
-            <div class="about-content">
+            <div class={styles.aboutContent}>
                 <!-- Header Section -->
-                <header class="about-header section-divider">
-                    <div class="header-main">
+                <header
+                    class={`${styles.aboutHeader} ${styles.sectionDivider}`}
+                >
+                    <div class={styles.headerMain}>
                         <h1>Market<span class="gradient-text">Flex</span></h1>
-                        <p class="subtitle">
+                        <p class={styles.subtitle}>
                             La Arquitectura de la Adaptabilidad
                         </p>
                     </div>
-                    <div class="intro-box">
+                    <div class={styles.introBox}>
                         <p>
                             MarketFlex no es solo un marketplace; es una
                             declaración de principios técnicos. Nacido bajo el
@@ -29,9 +32,11 @@ import { Icon } from "astro-icon/components";
                 </header>
 
                 <!-- Motivations Grid -->
-                <section class="motivations-grid section-divider">
-                    <div class="motivation-card">
-                        <Icon name="lucide:target" class="card-icon" />
+                <section
+                    class={`${styles.motivationsGrid} ${styles.sectionDivider}`}
+                >
+                    <div class={styles.motivationCard}>
+                        <Icon name="lucide:target" class={styles.cardIcon} />
                         <h3>Independencia</h3>
                         <p>
                             La arquitectura se adapta a tu negocio, no al revés.
@@ -39,16 +44,16 @@ import { Icon } from "astro-icon/components";
                             solidez.
                         </p>
                     </div>
-                    <div class="motivation-card">
-                        <Icon name="lucide:heart" class="card-icon" />
+                    <div class={styles.motivationCard}>
+                        <Icon name="lucide:heart" class={styles.cardIcon} />
                         <h3>Excelencia</h3>
                         <p>
                             Fusión de diseño premium e ingeniería de vanguardia
                             para elevar la experiencia del usuario final.
                         </p>
                     </div>
-                    <div class="motivation-card">
-                        <Icon name="lucide:book-open" class="card-icon" />
+                    <div class={styles.motivationCard}>
+                        <Icon name="lucide:book-open" class={styles.cardIcon} />
                         <h3>Ingeniería</h3>
                         <p>
                             Demostramos que el código limpio y la documentación
@@ -59,12 +64,14 @@ import { Icon } from "astro-icon/components";
                 </section>
 
                 <!-- Developer & Architecture Section -->
-                <section class="architect-section section-divider">
-                    <div class="architect-card">
-                        <div class="architect-info">
-                            <span class="label">EL ARQUITECTO</span>
+                <section
+                    class={`${styles.architectSection} ${styles.sectionDivider}`}
+                >
+                    <div class={styles.architectCard}>
+                        <div class={styles.architectInfo}>
+                            <span class={styles.label}>EL ARQUITECTO</span>
                             <h2>Agustín Santinelli</h2>
-                            <p class="dev-bio">
+                            <p class={styles.devBio}>
                                 Desarrollador FullStack enfocado en crear
                                 soluciones que importan. Agustín diseñó cada
                                 línea de MarketFlex —desde el esquema de base de
@@ -72,11 +79,11 @@ import { Icon } from "astro-icon/components";
                                 el objetivo de elevar el estándar del software
                                 regional.
                             </p>
-                            <div class="social-links">
+                            <div class={styles.socialLinks}>
                                 <a
                                     href="https://github.com/agussantinelli"
                                     target="_blank"
-                                    class="social-btn"
+                                    class={styles.socialBtn}
                                 >
                                     <Icon name="lucide:github" /> Github
                                 </a>
@@ -86,18 +93,18 @@ import { Icon } from "astro-icon/components";
                 </section>
 
                 <!-- Core Values -->
-                <section class="values-row">
-                    <div class="value-item">
+                <section class={styles.valuesRow}>
+                    <div class={styles.valueItem}>
                         <Icon name="lucide:zap" />
                         <strong>Rendimiento</strong>
                         <span>Optimización nativa en cada capa.</span>
                     </div>
-                    <div class="value-item">
+                    <div class={styles.valueItem}>
                         <Icon name="lucide:shield-check" />
                         <strong>Seguridad</strong>
                         <span>Protección robusta desde el núcleo.</span>
                     </div>
-                    <div class="value-item">
+                    <div class={styles.valueItem}>
                         <Icon name="lucide:mouse-pointer-2" />
                         <strong>UX Premium</strong>
                         <span>Diseño que deleita en cada clic.</span>
@@ -107,242 +114,3 @@ import { Icon } from "astro-icon/components";
         </PageCard>
     </div>
 </Layout>
-
-<style>
-    .about-wrapper {
-        padding: 4rem 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .about-content {
-        color: #1a1a1a;
-    }
-
-    .section-divider {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        padding-bottom: 3rem;
-        margin-bottom: 3rem;
-    }
-
-    /* Header Styling */
-    .about-header {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 4rem;
-        align-items: center;
-    }
-
-    h1 {
-        font-size: 4.5rem;
-        font-weight: 900;
-        margin-bottom: 0.5rem;
-        letter-spacing: -3px;
-        color: #000;
-        line-height: 1;
-    }
-
-    .subtitle {
-        color: var(--green-primary);
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        font-size: 0.85rem;
-        opacity: 0.8;
-    }
-
-    .intro-box p {
-        font-size: 1.15rem;
-        line-height: 1.8;
-        color: #444;
-        font-weight: 400;
-    }
-
-    /* Motivations Grid */
-    .motivations-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-    }
-
-    .motivation-card {
-        padding: 2.5rem;
-        background: #fdfdfd;
-        border-radius: 20px;
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .motivation-card:hover {
-        transform: translateY(-8px);
-        background: #fff;
-        border-color: var(--green-primary);
-        box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
-    }
-
-    .card-icon {
-        width: 36px;
-        height: 36px;
-        color: var(--green-primary);
-        margin-bottom: 1.5rem;
-    }
-
-    .motivation-card h3 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-        font-weight: 800;
-        color: #111;
-    }
-
-    .motivation-card p {
-        font-size: 1rem;
-        color: #666;
-        line-height: 1.7;
-    }
-
-    /* Architect Section */
-    .architect-card {
-        background: #0a0a0a;
-        border-radius: 24px;
-        padding: 4rem;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-    }
-
-    .architect-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(0, 255, 136, 0.05)
-        );
-        pointer-events: none;
-    }
-
-    .architect-info {
-        max-width: 650px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .label {
-        font-size: 0.7rem;
-        font-weight: 900;
-        letter-spacing: 5px;
-        color: var(--green-primary);
-        margin-bottom: 1.5rem;
-        display: block;
-        opacity: 0.9;
-    }
-
-    .architect-info h2 {
-        font-size: 3rem;
-        font-weight: 900;
-        margin-bottom: 1.5rem;
-        letter-spacing: -1px;
-    }
-
-    .dev-bio {
-        font-size: 1.2rem;
-        line-height: 1.8;
-        color: #aaa;
-        margin-bottom: 3rem;
-        font-weight: 300;
-    }
-
-    .social-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        background: var(--green-primary);
-        color: black;
-        text-decoration: none;
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        font-weight: 800;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2);
-    }
-
-    .social-btn:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0, 255, 136, 0.3);
-    }
-
-    /* Values Row */
-    .values-row {
-        display: flex;
-        justify-content: space-around;
-        gap: 3rem;
-        text-align: center;
-        padding: 1rem 0;
-    }
-
-    .value-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    .value-item [data-icon] {
-        width: 28px;
-        height: 28px;
-        color: var(--green-primary);
-        margin-bottom: 0.5rem;
-    }
-
-    .value-item strong {
-        font-size: 1.2rem;
-        color: #000;
-        font-weight: 800;
-    }
-
-    .value-item span {
-        font-size: 0.9rem;
-        color: #888;
-        max-width: 200px;
-    }
-
-    @media (max-width: 1000px) {
-        .about-header {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            text-align: center;
-        }
-        .header-main {
-            order: 1;
-        }
-        .intro-box {
-            order: 2;
-        }
-        .motivations-grid {
-            grid-template-columns: 1fr;
-        }
-        h1 {
-            font-size: 3.5rem;
-        }
-        .values-row {
-            flex-direction: column;
-            gap: 4rem;
-        }
-        .architect-card {
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        .social-btn {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-</style>

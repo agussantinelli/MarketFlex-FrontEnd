@@ -2,151 +2,161 @@
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import Notifications from "../components/common/Notifications";
+import styles from "./styles/login.module.css";
 ---
 
 <Layout title="MarketFlex | Iniciar Sesión" simple={true}>
-    <div class="login-container">
-        <div class="login-card">
+    <div class={styles.loginContainer}>
+        <div class={styles.loginCard}>
             <!-- Back Button -->
-            <a href="/" class="back-link" aria-label="Volver al inicio">
-                <Icon name="lucide:arrow-right" class="back-icon" />
+            <a href="/" class={styles.backLink} aria-label="Volver al inicio">
+                <Icon name="lucide:arrow-right" class={styles.backIcon} />
             </a>
 
             <!-- Decorative Crosses Pattern -->
-            <!-- Removed top-left cross to avoid overlap with back button -->
             <div
-                class="decorative-cross decorative-dark"
+                class={`${styles.decorativeCross} ${styles.decorativeDark}`}
                 style="top: 15px; right: 15px;"
             >
             </div>
             <div
-                class="decorative-cross decorative-dark"
+                class={`${styles.decorativeCross} ${styles.decorativeDark}`}
                 style="bottom: 15px; left: 15px;"
             >
             </div>
             <div
-                class="decorative-cross decorative-dark"
+                class={`${styles.decorativeCross} ${styles.decorativeDark}`}
                 style="bottom: 15px; right: 15px;"
             >
             </div>
 
             <div
-                class="decorative-cross decorative-x"
+                class={`${styles.decorativeCross} ${styles.decorativeX}`}
                 style="top: 50%; left: 15px; opacity: 0.3"
             >
             </div>
             <div
-                class="decorative-cross decorative-x"
+                class={`${styles.decorativeCross} ${styles.decorativeX}`}
                 style="top: 50%; right: 15px; opacity: 0.3"
             >
             </div>
 
             <div
-                class="decorative-cross decorative-darker"
+                class={`${styles.decorativeCross} ${styles.decorativeDarker}`}
                 style="top: 15%; left: 50%; opacity: 0.2"
             >
             </div>
             <div
-                class="decorative-cross decorative-darker"
+                class={`${styles.decorativeCross} ${styles.decorativeDarker}`}
                 style="bottom: 15%; left: 50%; opacity: 0.2"
             >
             </div>
 
             <div
-                class="decorative-cross decorative-x decorative-dark"
+                class={`${styles.decorativeCross} ${styles.decorativeX} ${styles.decorativeDark}`}
                 style="top: 25%; left: 10%; opacity: 0.15"
             >
             </div>
             <div
-                class="decorative-cross decorative-x decorative-dark"
+                class={`${styles.decorativeCross} ${styles.decorativeX} ${styles.decorativeDark}`}
                 style="bottom: 25%; right: 10%; opacity: 0.15"
             >
             </div>
 
             <!-- Specific X shapes -->
             <div
-                class="decorative-cross decorative-x decorative-darker"
+                class={`${styles.decorativeCross} ${styles.decorativeX} ${styles.decorativeDarker}`}
                 style="top: 10%; right: 40%; opacity: 0.15"
             >
             </div>
             <div
-                class="decorative-cross decorative-x decorative-darker"
+                class={`${styles.decorativeCross} ${styles.decorativeX} ${styles.decorativeDarker}`}
                 style="bottom: 10%; left: 40%; opacity: 0.15"
             >
             </div>
             <div
-                class="decorative-cross decorative-x"
+                class={`${styles.decorativeCross} ${styles.decorativeX}`}
                 style="bottom: 40%; right: 5%; opacity: 0.1"
             >
             </div>
             <div
-                class="decorative-cross decorative-x"
+                class={`${styles.decorativeCross} ${styles.decorativeX}`}
                 style="top: 40%; left: 5%; opacity: 0.1"
             >
             </div>
 
-            <div class="login-header">
-                <a href="/" class="logo">
+            <div class={styles.loginHeader}>
+                <a href="/" class={styles.logo}>
                     <img
                         src="/logo-marketflex-no-circle.png"
                         alt="MarketFlex Logo"
-                        class="logo-img"
+                        class={styles.logoImg}
                     />
                 </a>
                 <h1>Bienvenido de nuevo</h1>
                 <p>Ingresa a tu cuenta para continuar</p>
             </div>
 
-            <form class="login-form">
-                <div class="form-group">
+            <form class={styles.loginForm}>
+                <div class={styles.formGroup}>
                     <label for="email">Correo Electrónico</label>
-                    <div class="input-wrapper">
-                        <Icon name="lucide:mail" class="input-icon" />
+                    <div class={styles.inputWrapper}>
+                        <Icon name="lucide:mail" class={styles.inputIcon} />
                         <input
                             type="email"
                             id="email"
                             name="email"
                             placeholder="nombre@ejemplo.com"
                             required
+                            class={styles.inputField}
                         />
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class={styles.formGroup}>
                     <label for="password">Contraseña</label>
-                    <div class="input-wrapper">
-                        <Icon name="lucide:lock" class="input-icon" />
+                    <div class={styles.inputWrapper}>
+                        <Icon name="lucide:lock" class={styles.inputIcon} />
                         <input
                             type="password"
                             id="password"
                             name="password"
                             placeholder="••••••••"
                             required
+                            class={styles.inputField}
                         />
                     </div>
                 </div>
 
-                <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="remember" />
+                <div class={styles.formOptions}>
+                    <label class={styles.checkboxLabel}>
+                        <input
+                            type="checkbox"
+                            name="remember"
+                            class={styles.checkboxInput}
+                        />
                         <span>Recordarme</span>
                     </label>
-                    <a href="#" class="forgot-password"
+                    <a href="#" class={styles.forgotPassword}
                         >¿Olvidaste tu contraseña?</a
                     >
                 </div>
 
-                <button type="submit" class="btn-login">
+                <button type="submit" class={styles.btnLogin}>
                     Iniciar Sesión
-                    <Icon name="lucide:arrow-right" class="btn-icon" />
+                    <Icon name="lucide:arrow-right" class={styles.btnIcon} />
                 </button>
             </form>
 
-            <div class="divider">
+            <div class={styles.divider}>
                 <span>o continuar con</span>
             </div>
 
-            <button id="google-login-btn" class="btn-google" type="button">
+            <button
+                id="google-login-btn"
+                class={styles.btnGoogle}
+                type="button"
+            >
                 <img
                     src="/logos/google.svg"
                     alt="Google"
@@ -156,7 +166,7 @@ import Notifications from "../components/common/Notifications";
                 Iniciar sesión con Google
             </button>
 
-            <button id="fb-login-btn" class="btn-facebook" type="button">
+            <button id="fb-login-btn" class={styles.btnFacebook} type="button">
                 <img
                     src="/logos/facebook.svg"
                     alt="Facebook"
@@ -166,7 +176,7 @@ import Notifications from "../components/common/Notifications";
                 Iniciar sesión con Facebook
             </button>
 
-            <div class="login-footer">
+            <div class={styles.loginFooter}>
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
             </div>
         </div>
@@ -192,393 +202,3 @@ import Notifications from "../components/common/Notifications";
     // Support for View Transitions
     document.addEventListener("astro:page-load", initLogin);
 </script>
-
-<style>
-    .login-container {
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    }
-
-    .login-card {
-        background: var(--foreground);
-        backdrop-filter: blur(30px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-top: 4px solid var(--green-primary);
-        padding: 2.5rem;
-        border-radius: 24px;
-        width: 100%;
-        max-width: 420px;
-        box-shadow:
-            0 20px 40px -10px rgba(0, 0, 0, 0.3),
-            0 0 20px rgba(74, 222, 128, 0.1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .login-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        position: relative;
-    }
-
-    .login-header::after {
-        content: "";
-        display: block;
-        width: 40px;
-        height: 3px;
-        background: var(--green-primary);
-        margin: 1.5rem auto 0;
-        border-radius: 2px;
-    }
-
-    /* Decorative Crosses */
-    .decorative-cross {
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        opacity: 0.4;
-    }
-
-    .decorative-cross::before,
-    .decorative-cross::after {
-        content: "";
-        position: absolute;
-        background: var(--green-primary);
-        border-radius: 1px;
-    }
-
-    .decorative-cross::before {
-        top: 5px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-    }
-
-    .decorative-cross::after {
-        top: 0;
-        left: 5px;
-        height: 100%;
-        width: 2px;
-    }
-
-    .decorative-cross.decorative-x {
-        transform: rotate(45deg);
-    }
-
-    .decorative-cross.decorative-dark::before,
-    .decorative-cross.decorative-dark::after {
-        background: var(--green-accent);
-    }
-
-    .decorative-cross.decorative-darker::before,
-    .decorative-cross.decorative-darker::after {
-        background: var(--green-800);
-    }
-
-    .logo {
-        display: inline-block;
-        text-decoration: none;
-        margin-bottom: 1.5rem;
-    }
-
-    .logo-img {
-        height: 100px;
-        width: auto;
-    }
-
-    .login-header h1 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        color: #1a1a1a;
-    }
-
-    .login-header p {
-        color: #666;
-        font-size: 0.95rem;
-    }
-
-    .login-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .form-group label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #1a1a1a;
-        margin-left: 0.25rem;
-    }
-
-    .input-wrapper {
-        position: relative;
-    }
-
-    .input-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #666;
-        width: 18px;
-        height: 18px;
-        pointer-events: none;
-        transition: color 0.3s ease;
-    }
-
-    input:not([type="checkbox"]) {
-        width: 100%;
-        padding: 0.8rem 1rem 0.8rem 2.8rem;
-        background: #f5f7fa;
-        border: 1px solid #e1e4e8;
-        border-radius: 12px;
-        color: #1a1a1a;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    input:focus {
-        outline: none;
-        border-color: var(--green-primary);
-        background: #ffffff;
-        box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
-    }
-
-    input:focus + .input-icon {
-        color: var(--green-primary);
-    }
-
-    .form-options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.9rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .checkbox-label {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        cursor: pointer;
-        color: #666;
-        user-select: none;
-        font-weight: 500;
-        font-size: 0.95rem;
-    }
-
-    .checkbox-label input {
-        appearance: none;
-        -webkit-appearance: none;
-        width: 1.25rem;
-        height: 1.25rem;
-        border: 2px solid #e1e4e8;
-        border-radius: 6px;
-        background-color: #f5f7fa;
-        cursor: pointer;
-        display: grid;
-        place-content: center;
-        transition: all 0.2s ease;
-        padding: 0; /* Override previous input padding */
-    }
-
-    .checkbox-label input::before {
-        content: "";
-        width: 0.65rem;
-        height: 0.65rem;
-        transform: scale(0);
-        transition: 120ms transform ease-in-out;
-        box-shadow: inset 1em 1em white;
-        transform-origin: center;
-        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-    }
-
-    .checkbox-label input:checked {
-        background-color: var(--green-primary);
-        border-color: var(--green-primary);
-    }
-
-    .checkbox-label input:checked::before {
-        transform: scale(1);
-    }
-
-    .checkbox-label input:hover {
-        border-color: var(--green-primary);
-    }
-
-    .checkbox-label:hover {
-        color: #1a1a1a;
-    }
-
-    .forgot-password {
-        color: var(--green-primary);
-        text-decoration: none;
-        font-weight: 500;
-        transition: opacity 0.2s ease;
-    }
-
-    .forgot-password:hover {
-        opacity: 0.8;
-        text-decoration: underline;
-    }
-
-    .btn-login {
-        background: var(--green-primary);
-        color: white;
-        border: none;
-        padding: 1rem;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        transition: all 0.2s ease;
-        margin-top: 0.5rem;
-    }
-
-    .btn-login:hover {
-        background: var(--green-accent);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(var(--green-primary), 0.3);
-    }
-
-    .divider {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 1.5rem 0;
-    }
-
-    .divider::before,
-    .divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: #e1e4e8;
-    }
-
-    .divider span {
-        color: #999;
-        font-size: 0.85rem;
-        white-space: nowrap;
-    }
-
-    .btn-google {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: white;
-        color: #444;
-        border: 1px solid #dadce0;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        transition: all 0.2s ease;
-    }
-
-    .btn-google:hover {
-        background: #f7f8f8;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-facebook {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: #1877f2;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        transition: all 0.2s ease;
-        margin-top: 0.75rem;
-    }
-
-    .btn-facebook:hover {
-        background: #166fe5;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
-    }
-
-    .login-footer {
-        margin-top: 2rem;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #666;
-    }
-
-    .login-footer a {
-        color: var(--green-primary);
-        text-decoration: none;
-        font-weight: 600;
-        margin-left: 0.25rem;
-    }
-
-    .login-footer a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 480px) {
-        .form-options {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-    }
-    .back-link {
-        position: absolute;
-        top: 1.5rem;
-        left: 1.5rem;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f5f7fa;
-        border-radius: 50%;
-        color: #666;
-        transition: all 0.2s ease;
-        z-index: 10;
-        border: 1px solid transparent;
-    }
-
-    .back-link:hover {
-        background: white;
-        color: var(--green-primary);
-        border-color: var(--green-primary);
-        transform: rotate(
-            -45deg
-        ); /* Cool effect for arrow-right used as 'corner return' */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .back-icon {
-        width: 20px;
-        height: 20px;
-        transform: rotate(180deg); /* Point left using arrow-right icon */
-    }
-</style>
