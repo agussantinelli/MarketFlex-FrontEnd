@@ -42,28 +42,38 @@ const welcomeMessage = isNewUser
 			<Icon name="lucide:sparkles" class="title-icon" />
 		</h2>
 
-		<div class="carousel-container">
-			<div class="carousel-track">
-				{
-					newArrivals.slice(0, 8).map((product) => (
-						<div class="carousel-item">
-							<ProductCard
-								product={product}
-								showFeatured={false}
-							/>
-						</div>
-					))
-				}
+		<div class="carousel-wrapper">
+			<button class="carousel-btn prev" aria-label="Anterior">
+				<Icon name="lucide:chevron-left" size={24} />
+			</button>
 
-				<div class="carousel-item view-more-card">
-					<a href="/search?sort=newest" class="view-more-btn">
-						<div class="icon-wrapper">
-							<Icon name="lucide:arrow-right" size={32} />
-						</div>
-						<span>Ver más</span>
-					</a>
+			<div class="carousel-container" id="new-arrivals-carousel">
+				<div class="carousel-track">
+					{
+						newArrivals.slice(0, 8).map((product) => (
+							<div class="carousel-item">
+								<ProductCard
+									product={product}
+									showFeatured={false}
+								/>
+							</div>
+						))
+					}
+
+					<div class="carousel-item view-more-card">
+						<a href="/search?sort=newest" class="view-more-btn">
+							<div class="icon-wrapper">
+								<Icon name="lucide:arrow-right" size={32} />
+							</div>
+							<span>Ver más</span>
+						</a>
+					</div>
 				</div>
 			</div>
+
+			<button class="carousel-btn next" aria-label="Siguiente">
+				<Icon name="lucide:chevron-right" size={24} />
+			</button>
 		</div>
 	</section>
 </Layout>
@@ -123,6 +133,13 @@ const welcomeMessage = isNewUser
 	}
 
 	/* Carousel Styles */
+	.carousel-wrapper {
+		position: relative;
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+
 	.carousel-container {
 		width: 100%;
 		overflow-x: auto;
@@ -130,6 +147,7 @@ const welcomeMessage = isNewUser
 		/* Hide scrollbar for cleaner look but keep functionality */
 		scrollbar-width: none; /* Firefox */
 		-ms-overflow-style: none; /* IE/Edge */
+		scroll-behavior: smooth;
 	}
 
 	.carousel-container::-webkit-scrollbar {
@@ -138,6 +156,7 @@ const welcomeMessage = isNewUser
 
 	.carousel-track {
 		display: flex;
+		align-items: stretch;
 		gap: 1.5rem;
 		padding: 1rem;
 		/* Ensure exact width for items */
@@ -145,8 +164,54 @@ const welcomeMessage = isNewUser
 	}
 
 	.carousel-item {
-		width: 280px; /* Fixed width for carousel items */
+		width: 280px; /* Matched typical grid item width at common breakpoints */
 		flex-shrink: 0;
+	}
+
+	/* Carousel Buttons */
+	.carousel-btn {
+		display: none; /* Hidden on mobile by default */
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 20;
+		background: rgba(var(--green-900), 0.6);
+		border: 1px solid rgba(var(--green-primary), 0.4);
+		color: rgba(var(--green-primary), 1);
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		cursor: pointer;
+		align-items: center;
+		justify-content: center;
+		backdrop-filter: blur(12px);
+		box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.carousel-btn:hover {
+		background: rgba(var(--green-primary), 0.2);
+		border-color: rgba(var(--green-primary), 1);
+		transform: translateY(-50%) scale(1.1);
+		box-shadow: 0 0 20px rgba(var(--green-primary), 0.4);
+	}
+
+	.carousel-btn:active {
+		transform: translateY(-50%) scale(0.95);
+	}
+
+	.carousel-btn.prev {
+		left: -25px;
+	}
+
+	.carousel-btn.next {
+		right: -25px;
+	}
+
+	@media (min-width: 768px) {
+		.carousel-btn {
+			display: flex;
+		}
 	}
 
 	/* View More Card */
@@ -164,7 +229,6 @@ const welcomeMessage = isNewUser
 		gap: 1rem;
 		width: 100%;
 		height: 100%;
-		min-height: 380px; /* Match product card approx height */
 		background: rgba(var(--green-900), 0.2);
 		border: 1px dashed rgba(var(--green-primary), 0.5);
 		border-radius: 16px;
@@ -203,3 +267,27 @@ const welcomeMessage = isNewUser
 		color: rgba(var(--green-primary), 1);
 	}
 </style>
+
+<script>
+	function setupCarousel() {
+		const container = document.getElementById("new-arrivals-carousel");
+		const prevBtn = document.querySelector(".carousel-btn.prev");
+		const nextBtn = document.querySelector(".carousel-btn.next");
+
+		if (!container || !prevBtn || !nextBtn) return;
+
+		const scrollAmount = 280 + 24; // item width + gap
+
+		prevBtn.addEventListener("click", () => {
+			container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+		});
+
+		nextBtn.addEventListener("click", () => {
+			container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+		});
+	}
+
+	// Setup on initial load and after view transitions
+	setupCarousel();
+	document.addEventListener("astro:page-load", setupCarousel);
+</script>
