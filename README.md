@@ -147,7 +147,7 @@
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
-  <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL auto-generado para cumplir requisitos de SDKs externos (Facebook).</li>
+  <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
 
 <hr>
@@ -173,7 +173,7 @@
     <b>Creación automática de cuenta:</b> Si el usuario social no existe, se crea automáticamente. Si ya existe, se vincula. Se diferencia con mensajes: <b>"¡Bienvenido!"</b> vs <b>"Bienvenido de nuevo"</b>.
   </li>
   <li>
-    <b>HTTPS en Desarrollo:</b> Certificado SSL auto-generado (<code>@vitejs/plugin-basic-ssl</code>) requerido por el SDK de Facebook para <code>FB.login()</code>.
+    <b>HTTPS en Desarrollo:</b> Uso de <code>vite-plugin-mkcert</code> para generar una Autoridad Certificadora (CA) local y certificados confiables. Esto elimina la advertencia de "Conexión no privada" en el navegador y es un requisito estricto del SDK de Facebook para <code>FB.login()</code>. <i>Nota: La primera vez que ejecutes <code>pnpm dev</code>, tu sistema operativo podría solicitar permisos de administrador para instalar la CA.</i>
   </li>
   <li>
     <b>Logos locales:</b> Los logos de Google y Facebook se sirven desde <code>public/logos/</code> para evitar dependencias externas.
