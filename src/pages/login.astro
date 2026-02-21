@@ -249,7 +249,8 @@ import Notifications from "../components/common/Notifications";
             localStorage.setItem("user", JSON.stringify(result.user));
 
             const userName = result.user.nombre || "Usuario";
-            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+            const newParam = result.isNewUser ? "&new=true" : "";
+            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
         } catch (error) {
             console.error("Google login error:", error);
             window.location.href = "/login?error=true";
@@ -318,7 +319,10 @@ import Notifications from "../components/common/Notifications";
                             );
 
                             const userName = result.user.nombre || "Usuario";
-                            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+                            const newParam = result.isNewUser
+                                ? "&new=true"
+                                : "";
+                            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
                         })
                         .catch((error) => {
                             console.error("Facebook login error:", error);

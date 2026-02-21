@@ -7,7 +7,10 @@ import { getFeaturedProducts } from "../services/product.service";
 
 const products = await getFeaturedProducts();
 const user = Astro.url.searchParams.get("user") || "Usuario";
-const welcomeMessage = `Bienvenido de nuevo, ${user}`;
+const isNewUser = Astro.url.searchParams.get("new") === "true";
+const welcomeMessage = isNewUser
+	? `¡Bienvenido, ${user}!`
+	: `Bienvenido de nuevo, ${user}`;
 ---
 
 <Layout title="MarketFlex | Premium Marketplace" showToaster={false}>
