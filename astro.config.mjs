@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import react from '@astrojs/react';
-import basicSsl from '@vitejs/plugin-basic-ssl';
+import mkcert from 'vite-plugin-mkcert';
 
 export default defineConfig({
     integrations: [icon(), react()],
@@ -10,6 +10,6 @@ export default defineConfig({
         port: 2611,
     },
     vite: {
-        plugins: [basicSsl()],
+        plugins: [mkcert()],
     },
 });
