@@ -190,6 +190,7 @@
 ├── node_modules/                                   # Dependencias del proyecto
 ├── public/                                         # Archivos estáticos
 │   ├── background/                                 # Galería de fondos y texturas
+│   ├── logos/                                      # Iconos de proveedores
 │   ├── logo-marketflex-circle.png                  # Isotipo circular
 │   ├── logo-marketflex-letters.png                 # Logotipo
 │   └── logo-marketflex-no-circle.png               # Isotipo sin círculo
