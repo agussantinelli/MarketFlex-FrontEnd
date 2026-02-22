@@ -70,7 +70,7 @@ const categories = await getCategories();
                         class={styles.chevronIcon}
                     />
                 </button>
-                <div class={styles.navDropdownMenu}>
+                <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
                     {
                         productTypes.map((type) => (
                             <a
@@ -96,7 +96,7 @@ const categories = await getCategories();
                         class={styles.chevronIcon}
                     />
                 </button>
-                <div class={styles.navDropdownMenu}>
+                <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
                     {
                         categories.map((cat) => (
                             <a

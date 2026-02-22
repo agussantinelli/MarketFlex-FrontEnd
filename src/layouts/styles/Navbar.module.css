@@ -82,12 +82,12 @@
     transform: rotate(-90deg);
 }
 
-.mobileMenuBtn.active .iconMenu {
+.mobileMenuBtn:global(.active) .iconMenu {
     opacity: 0;
     transform: rotate(90deg);
 }
 
-.mobileMenuBtn.active .iconClose {
+.mobileMenuBtn:global(.active) .iconClose {
     opacity: 1;
     transform: rotate(0);
 }
@@ -118,7 +118,7 @@
     visibility: visible;
 }
 
-.navLinks.active {
+.navLinks:global(.active) {
     right: 0;
 }
 
@@ -222,7 +222,7 @@
     z-index: 1000;
 }
 
-.navDropdownMenu.active {
+.navDropdownMenu:global(.active) {
     display: flex;
     animation: fadeIn 0.2s ease;
 }
@@ -259,7 +259,7 @@
         background: transparent;
     }
 
-    .navDropdownMenu.active {
+    .navDropdownMenu:global(.active) {
         display: flex;
     }
 
@@ -325,7 +325,7 @@
     z-index: 1000;
 }
 
-.dropdownMenu.active {
+.dropdownMenu:global(.active) {
     display: flex;
     animation: fadeIn 0.2s ease;
 }
@@ -457,7 +457,7 @@
     color: #4b5563;
 }
 
-.searchClearBtn.visible {
+.searchClearBtn:global(.visible) {
     opacity: 1;
     visibility: visible;
 }
