@@ -48,3 +48,32 @@
 .inputField:focus+.inputIcon {
     color: var(--green-primary);
 }
+
+.passwordRequirements {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.requirement.met {
+    color: #059669;
+}
+
+.requirementIcon {
+    width: 14px;
+    height: 14px;
+}
