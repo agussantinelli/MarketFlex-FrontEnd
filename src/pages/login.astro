@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import Notifications from "../components/common/Notifications";
+import AuthInputs from "../components/auth/AuthInputs.astro";
 import styles from "./styles/login.module.css";
 ---
 
@@ -97,36 +98,8 @@ import styles from "./styles/login.module.css";
                 <p>Ingresa a tu cuenta para continuar</p>
             </div>
 
-            <form class={styles.loginForm}>
-                <div class={styles.formGroup}>
-                    <label for="email">Correo Electrónico</label>
-                    <div class={styles.inputWrapper}>
-                        <Icon name="lucide:mail" class={styles.inputIcon} />
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="nombre@ejemplo.com"
-                            required
-                            class={styles.inputField}
-                        />
-                    </div>
-                </div>
-
-                <div class={styles.formGroup}>
-                    <label for="password">Contraseña</label>
-                    <div class={styles.inputWrapper}>
-                        <Icon name="lucide:lock" class={styles.inputIcon} />
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="••••••••"
-                            required
-                            class={styles.inputField}
-                        />
-                    </div>
-                </div>
+            <form class={`${styles.loginForm} login-form`}>
+                <AuthInputs type="login" />
 
                 <div class={styles.formOptions}>
                     <label class={styles.checkboxLabel}>
@@ -142,7 +115,7 @@ import styles from "./styles/login.module.css";
                     >
                 </div>
 
-                <button type="submit" class={styles.btnLogin}>
+                <button type="submit" class={`${styles.btnLogin} btn-login`}>
                     Iniciar Sesión
                     <Icon name="lucide:arrow-right" class={styles.btnIcon} />
                 </button>

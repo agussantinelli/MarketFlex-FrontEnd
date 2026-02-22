@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageCard from "../components/common/PageCard.astro";
+import AuthInputs from "../components/auth/AuthInputs.astro";
+import Captcha from "../components/auth/Captcha.astro";
+import { Icon } from "astro-icon/components";
+import styles from "./styles/register.module.css";
+---
+
+<Layout title="MarketFlex | Registro" simple={true}>
+    <PageCard maxWidth="480px">
+        <div class={styles.logoContainer}>
+            <a href="/">
+                <img
+                    src="/logo-marketflex-no-circle.png"
+                    alt="MarketFlex Logo"
+                    class={styles.logoImg}
+                />
+            </a>
+        </div>
+
+        <div class={styles.registerHeader}>
+            <h1>Crear cuenta</h1>
+            <p>Únete a MarketFlex y comienza a explorar</p>
+        </div>
+
+        <form class={styles.registerForm}>
+            <AuthInputs type="register" />
+
+            <Captcha />
+
+            <button type="submit" class={styles.btnRegister}>
+                Registrarse
+                <Icon name="lucide:user-plus" class={styles.btnIcon} />
+            </button>
+        </form>
+
+        <div class={styles.registerFooter}>
+            <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
+        </div>
+    </PageCard>
+</Layout>
