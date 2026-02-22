@@ -352,6 +352,7 @@
     <li><code>css-modules</code>: Todo CSS complejo debe vivir en su propio archivo modular.</li>
     <li><code>astro-scripts</code>: La lógica compleja de scripts debe extraerse de los archivos Astro.</li>
     <li><code>modular-architecture</code>: Mantener la separación de servicios, tipos y componentes.</li>
+    <li><code>sileo-notifications</code>: Uso obligatorio de Sileo para notificaciones visuales.</li>
 </ul>
 
 <hr>
