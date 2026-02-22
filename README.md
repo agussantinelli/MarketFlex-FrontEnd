@@ -115,7 +115,7 @@
         <tr>
             <td><strong>Notificaciones</strong></td>
             <td>Sileo</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^0.1.1</strong></td>
             <td>Sistema de avisos visuales con efectos "gooey".</td>
         </tr>
         <tr>
@@ -157,7 +157,7 @@
         <tr>
             <td><strong>Estado Global</strong></td>
             <td>Zustand</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^5.0.11</strong></td>
             <td>Gestor de estado global para React Islands (ej. Carrito de Compras).</td>
         </tr>
     </tbody>
