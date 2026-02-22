@@ -35,6 +35,7 @@ export function initRegister() {
 
     registerForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+
         const formData = new FormData(registerForm);
         const data = Object.fromEntries(formData);
 
@@ -59,7 +60,21 @@ export function initRegister() {
 
         try {
             submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
+            submitBtn.textContent = "Verificando...";
+
+            // reCAPTCHA v3 Execution
+            // @ts-ignore
+            if (!window.grecaptcha) {
+                throw new Error("reCAPTCHA no está disponible. Por favor, recarga la página.");
+            }
+
+            // @ts-ignore
+            const token = await window.grecaptcha.execute(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
+
+            if (!token) {
+                throw new Error("No se pudo obtener el token de verificación");
+            }
+
             submitBtn.textContent = "Registrando...";
 
             const response = await register({
@@ -74,7 +89,8 @@ export function initRegister() {
                 ciudadResidencia: data.ciudadResidencia as string,
                 codigoPostal: data.codigoPostal as string,
                 foto: data.foto as string,
-                rol: "customer" // Default role
+                rol: "customer",
+                captchaToken: token // Use the fresh v3 token
             });
 
             // Save session
