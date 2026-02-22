@@ -20,6 +20,8 @@ export function initLogin() {
         rememberCheckbox.checked = true;
     }
 
+
+
     loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(loginForm);
@@ -50,10 +52,30 @@ export function initLogin() {
 
             const userName = response.user.nombre || "Usuario";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
-        } catch (error) {
-            console.error("Login error:", error);
-            window.location.href = "/login?error=true";
+        } catch (error: any) {
+            console.error("❌ Login error:", error);
+
+            let message = "Ocurrió un error al iniciar sesión";
+
+            // Extract detailed message from ky error if possible
+            if (error.response) {
+                try {
+                    const errorData = await error.response.json();
+                    message = errorData.error || errorData.message || message;
+                } catch (e) {
+                    message = `Error ${error.response.status}: ${error.response.statusText}`;
+                }
+            } else if (error.message) {
+                message = error.message;
+            }
+
+            // Use Sileo notification
+            if (typeof (window as any).triggerSileo === 'function') {
+                (window as any).triggerSileo('error', message);
+            }
+
             submitBtn.disabled = false;
+            submitBtn.innerHTML = `Iniciar Sesión <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
         }
     });
 
@@ -68,9 +90,23 @@ export function initLogin() {
             const userName = result.user.nombre || "Usuario";
             const newParam = result.isNewUser ? "&new=true" : "";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
-        } catch (error) {
-            console.error("Google login error:", error);
-            window.location.href = "/login?error=true";
+        } catch (error: any) {
+            console.error("❌ Google login error:", error);
+
+            let message = "Error en el inicio de sesión con Google";
+            if (error.response) {
+                try {
+                    const errorData = await error.response.json();
+                    message = errorData.error || errorData.message || message;
+                } catch (e) {
+                    message = `Error ${error.response.status}: ${error.response.statusText}`;
+                }
+            }
+
+            // Use Sileo notification
+            if (typeof (window as any).triggerSileo === 'function') {
+                (window as any).triggerSileo('error', message);
+            }
         }
     };
 
@@ -145,9 +181,23 @@ export function initLogin() {
                                 : "";
                             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
                         })
-                        .catch((error) => {
-                            console.error("Facebook login error:", error);
-                            window.location.href = "/login?error=true";
+                        .catch(async (error) => {
+                            console.error("❌ Facebook login error:", error);
+
+                            let message = "Error en el inicio de sesión con Facebook";
+                            if (error.response) {
+                                try {
+                                    const errorData = await error.response.json();
+                                    message = errorData.error || errorData.message || message;
+                                } catch (e) {
+                                    message = `Error ${error.response.status}: ${error.response.statusText}`;
+                                }
+                            }
+
+                            // Use Sileo notification
+                            if (typeof (window as any).triggerSileo === 'function') {
+                                (window as any).triggerSileo('error', message);
+                            }
                         });
                 }
             },
