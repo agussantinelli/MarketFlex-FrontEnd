@@ -14,20 +14,20 @@ export function initProductCarousel(sectionId: string) {
 
         // Use a small buffer (5px) for tolerance
         if (scrollLeft <= 5) {
-            prevBtn.classList.add("disabled");
+            prevBtn.setAttribute("data-disabled", "true");
         } else {
-            prevBtn.classList.remove("disabled");
+            prevBtn.removeAttribute("data-disabled");
         }
 
         if (scrollLeft >= maxScroll - 5) {
-            nextBtn.classList.add("disabled");
+            nextBtn.setAttribute("data-disabled", "true");
         } else {
-            nextBtn.classList.remove("disabled");
+            nextBtn.removeAttribute("data-disabled");
         }
     };
 
     const getScrollAmount = () => {
-        const item = container.querySelector(".carousel-item");
+        const item = container.querySelector("[data-carousel-item]");
         return item ? item.getBoundingClientRect().width + 24 : 300;
     };
 
@@ -56,7 +56,7 @@ export function initProductCarousel(sectionId: string) {
 }
 
 export function setupAllProductCarousels() {
-    const carousels = document.querySelectorAll(".carousel-section");
+    const carousels = document.querySelectorAll("[data-carousel]");
     carousels.forEach((carousel) => {
         if (carousel.id) initProductCarousel(carousel.id);
     });

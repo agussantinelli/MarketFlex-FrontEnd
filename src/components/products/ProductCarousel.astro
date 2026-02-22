@@ -27,7 +27,11 @@ const {
 const displayProducts = products.slice(0, limit);
 ---
 
-<section class={`${styles.productsSection} ${styles.carouselSection}`} id={id}>
+<section
+    class={`${styles.productsSection} ${styles.carouselSection}`}
+    id={id}
+    data-carousel
+>
     <h2 class={styles.sectionTitle}>
         {title}
         {titleHighlight && <span class="gradient-text">{titleHighlight}</span>}
@@ -47,7 +51,7 @@ const displayProducts = products.slice(0, limit);
             <div class={styles.carouselTrack}>
                 {
                     displayProducts.map((product) => (
-                        <div class={styles.carouselItem}>
+                        <div class={styles.carouselItem} data-carousel-item>
                             <ProductCard
                                 product={product}
                                 showFeatured={false}
@@ -56,7 +60,10 @@ const displayProducts = products.slice(0, limit);
                     ))
                 }
 
-                <div class={`${styles.carouselItem} ${styles.viewMoreCard}`}>
+                <div
+                    class={`${styles.carouselItem} ${styles.viewMoreCard}`}
+                    data-carousel-item
+                >
                     <a href={viewMoreHref} class={styles.viewMoreBtn}>
                         <div class={styles.iconWrapper}>
                             <Icon name="lucide:arrow-right" size={32} />
