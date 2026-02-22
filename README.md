@@ -362,7 +362,7 @@
 
 <hr>
 
-<h2>📜 Scripts Disponibles</h2>
+<h2>📜 Comandos Disponibles</h2>
 <p>En el directorio del proyecto, puedes ejecutar los siguientes comandos:</p>
 <ul>
     <li><code>pnpm dev</code>: Inicia el servidor de desarrollo en <code>localhost:2611</code> (incluye HTTPS local con <code>mkcert</code>).</li>
