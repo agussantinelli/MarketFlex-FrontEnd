@@ -9,6 +9,9 @@ export const api = ky.create({
     hooks: {
         beforeRequest: [
             (request) => {
+                // Skip token if it's an auth request to prevent interference
+                if (request.url.includes('/auth/')) return;
+
                 if (typeof window !== 'undefined' && localStorage.getItem('token')) {
                     const token = localStorage.getItem('token');
                     request.headers.set('Authorization', `Bearer ${token}`);
