@@ -286,10 +286,11 @@
 │   │   ├── Layout.astro                            # Layout principal
 │   │   └── Navbar.astro                            # Barra de navegación principal
 │   ├── lib/                                        # Utilidades y configuración
-│   │   └── api.ts                                  # Interceptor de API y configuración global
+│   │   └── api.ts                                  # Interceptor de API con Auto-Refresh
 │   ├── scripts/                                    # Lógica interactiva extraída de componentes
-│   │   ├── auth-login.ts                           # Lógica de Google/FB/Login
-│   │   ├── navbar.ts                               # Lógica de menús y buscador
+│   │   ├── auth-login.ts                           # Lógica de Login (Dual Token)
+│   │   ├── auth-register.ts                        # Lógica de Registro (Email & reCAPTCHA)
+│   │   ├── navbar.ts                               # Lógica de menús, buscador y sesión
 │   │   ├── contact.ts                              # Lógica de formulario de soporte
 │   │   ├── search-filters.ts                       # Lógica de modal de búsqueda
 │   │   └── carousel.ts                             # Lógica de carruseles premium
@@ -300,7 +301,7 @@
 │   │   ├── product.service.ts                      # Servicio de productos
 │   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
 │   ├── types/                                      # Definiciones de tipos TypeScript
-│   │   ├── auth.types.ts                           # Tipos de Autenticación
+│   │   ├── auth.types.ts                           # Tipos de Autenticación (Dual Token)
 │   │   ├── category.types.ts                       # Tipos de Categorías
 │   │   ├── product-type.types.ts                   # Tipos de Tipos de Producto
 │   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
