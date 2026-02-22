@@ -138,9 +138,9 @@
         </tr>
         <tr>
             <td><strong>Seguridad</strong></td>
-            <td>JWT (JSON Web Tokens)</td>
-            <td><strong>Nativo</strong></td>
-            <td>Manejo de sesiones interceptadas vía Ky.</td>
+            <td>JWT & Refresh Tokens</td>
+            <td><strong>Auto-Refresh</strong></td>
+            <td>Renovación automática de sesión interceptada vía Ky.</td>
         </tr>
         <tr>
             <td><strong>Anti-Bot</strong></td>
@@ -199,7 +199,8 @@
 <p>La comunicación con el backend (Hono/Node.js) se gestiona centralizadamente utilizando <b>Ky</b>, una librería cliente HTTP moderna y ligera basada en la API Fetch nativa. El corazón de este flujo se encuentra en <code>src/lib/api.ts</code>.</p>
 <ul>
   <li><b>Instancia Centralizada:</b> Todos los servicios (como <code>auth.service.ts</code> o <code>product.service.ts</code>) utilizan la misma instancia pre-configurada de Ky. Esto garantiza consistencia en las URLs, headers comunes y tiempos de espera (<i>timeouts</i>).</li>
-  <li><b>Intercepción Automática (JWT):</b> Mediante un <i>hook</i> <code>beforeRequest</code>, la API verifica automáticamente si existe un token JWT en el <code>localStorage</code>. De ser así, inyecta el encabezado <code>Authorization: Bearer [token]</code> en cada petición saliente sin tener que escribir este código repetitivamente en cada función de los servicios.</li>
+  <li><b>Intercepción de Salida (JWT):</b> Mediante un <i>hook</i> <code>beforeRequest</code>, la API inyecta automáticamente el encabezado <code>Authorization: Bearer [accessToken]</code>.</li>
+  <li><b>Intercepción de Entrada (Auto-Refresh):</b> Se implementó un interceptor <code>afterResponse</code> que detecta errores <code>401 Unauthorized</code>. Si el token expiró, el interceptor solicita un nuevo par de tokens al backend usando el <code>marketflex_refresh_token</code> y reintenta la petición original de forma transparente para el usuario.</li>
 </ul>
 
 <hr>
@@ -234,7 +235,10 @@
 </p>
 <ul>
   <li>
-    <b>JWT (Json Web Tokens):</b> Manejo seguro de sesiones. El token se almacena en <code>localStorage</code> y se inyecta automáticamente en cada petición HTTP saliente vía <code>src/lib/api.ts</code> (<code>Authorization: Bearer ...</code>).
+    <b>Sesiones Persistentes (Refresh Tokens):</b> Manejo seguro de sesiones duales. El <code>marketflex_token</code> (15 min) se usa para peticiones, mientras que el <code>marketflex_refresh_token</code> (7 días) permite renovar la sesión sin que el usuario tenga que volver a loguearse.
+  </li>
+  <li>
+    <b>JWT (Json Web Tokens):</b> Los tokens se almacenan en <code>localStorage</code> con el prefijo <code>marketflex_</code> para evitar colisiones y se inyectan automáticamente en cada petición HTTP saliente.
   </li>
   <li>
     <b>Login Tradicional:</b> Formulario de email/contraseña con validación en tiempo real de complejidad (Mayúsculas, Números, Longitud) y persistencia en el backend.
