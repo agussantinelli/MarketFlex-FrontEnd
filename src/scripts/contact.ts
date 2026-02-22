@@ -2,7 +2,7 @@ import { sendSupportMessage } from "../services/support.service";
 
 export function initContactForm() {
     // Auto-fill and disable if logged in
-    const userStr = localStorage.getItem("user");
+    const userStr = localStorage.getItem("marketflex_user");
     const nameInput = document.getElementById("name") as HTMLInputElement;
     const emailInput = document.getElementById("email") as HTMLInputElement;
 

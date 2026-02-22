@@ -94,8 +94,9 @@ export function initRegister() {
             });
 
             // Save session
-            localStorage.setItem("token", response.token);
-            localStorage.setItem("user", JSON.stringify(response.user));
+            localStorage.setItem("marketflex_token", response.accessToken);
+            localStorage.setItem("marketflex_refresh_token", response.refreshToken);
+            localStorage.setItem("marketflex_user", JSON.stringify(response.user));
 
             const userName = response.user.nombre || "Usuario";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}&new=true`;

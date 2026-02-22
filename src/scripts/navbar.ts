@@ -65,8 +65,8 @@ export function initNavbar() {
     const customerLinks = document.querySelectorAll(".customer-only");
 
     function updateAuthUI() {
-        const userStr = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+        const userStr = localStorage.getItem("marketflex_user");
+        const token = localStorage.getItem("marketflex_token");
 
         if (userStr && token) {
             const user = JSON.parse(userStr);
@@ -104,8 +104,9 @@ export function initNavbar() {
     // Logout Handler
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            localStorage.removeItem("marketflex_token");
+            localStorage.removeItem("marketflex_refresh_token");
+            localStorage.removeItem("marketflex_user");
             window.location.href = "/login";
         });
     }

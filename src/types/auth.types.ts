@@ -8,7 +8,8 @@ export type User = {
 
 export type LoginResponse = {
     user: User;
-    token: string;
+    accessToken: string;
+    refreshToken: string;
 };
 
 export type GoogleLoginResponse = LoginResponse & {

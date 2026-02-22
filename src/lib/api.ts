@@ -12,11 +12,39 @@ export const api = ky.create({
                 // Skip token if it's an auth request to prevent interference
                 if (request.url.includes('/auth/')) return;
 
-                if (typeof window !== 'undefined' && localStorage.getItem('token')) {
-                    const token = localStorage.getItem('token');
+                if (typeof window !== 'undefined' && localStorage.getItem('marketflex_token')) {
+                    const token = localStorage.getItem('marketflex_token');
                     request.headers.set('Authorization', `Bearer ${token}`);
                 }
             },
         ],
+        afterResponse: [
+            async (request, options, response) => {
+                if (response.status === 401 && !request.url.includes('/auth/refresh')) {
+                    const refreshToken = localStorage.getItem('marketflex_refresh_token');
+
+                    if (refreshToken) {
+                        try {
+                            const newTokens: any = await api.post('auth/refresh', {
+                                json: { refreshToken },
+                                hooks: { beforeRequest: [] } // Evitar bucle infinito
+                            }).json();
+
+                            localStorage.setItem('marketflex_token', newTokens.accessToken);
+                            localStorage.setItem('marketflex_refresh_token', newTokens.refreshToken);
+
+                            // Reintentar la petición original con el nuevo token
+                            request.headers.set('Authorization', `Bearer ${newTokens.accessToken}`);
+                            return ky(request);
+                        } catch (refreshError) {
+                            // Si el refresh falla, sesión caducada definitivamente
+                            localStorage.removeItem('marketflex_token');
+                            localStorage.removeItem('marketflex_refresh_token');
+                            window.location.href = '/login?expired=true';
+                        }
+                    }
+                }
+            }
+        ]
     },
 });

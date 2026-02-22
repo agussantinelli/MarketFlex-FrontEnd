@@ -127,7 +127,7 @@ const { product, showFeatured = true } = Astro.props;
 
     addButtons.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("marketflex_token");
             if (!token) {
                 e.preventDefault();
                 window.location.href = "/login";

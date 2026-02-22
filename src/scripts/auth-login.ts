@@ -47,8 +47,9 @@ export function initLogin() {
             }
 
             // Save session
-            localStorage.setItem("token", response.token);
-            localStorage.setItem("user", JSON.stringify(response.user));
+            localStorage.setItem("marketflex_token", response.accessToken);
+            localStorage.setItem("marketflex_refresh_token", response.refreshToken);
+            localStorage.setItem("marketflex_user", JSON.stringify(response.user));
 
             const userName = response.user.nombre || "Usuario";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
@@ -84,8 +85,9 @@ export function initLogin() {
         try {
             const result = await loginWithGoogle(credentialResponse.credential);
 
-            localStorage.setItem("token", result.token);
-            localStorage.setItem("user", JSON.stringify(result.user));
+            localStorage.setItem("marketflex_token", result.accessToken);
+            localStorage.setItem("marketflex_refresh_token", result.refreshToken);
+            localStorage.setItem("marketflex_user", JSON.stringify(result.user));
 
             const userName = result.user.nombre || "Usuario";
             const newParam = result.isNewUser ? "&new=true" : "";
@@ -169,9 +171,10 @@ export function initLogin() {
                 if (response.authResponse) {
                     loginWithFacebook(response.authResponse.accessToken)
                         .then((result) => {
-                            localStorage.setItem("token", result.token);
+                            localStorage.setItem("marketflex_token", result.accessToken);
+                            localStorage.setItem("marketflex_refresh_token", result.refreshToken);
                             localStorage.setItem(
-                                "user",
+                                "marketflex_user",
                                 JSON.stringify(result.user),
                             );
 
