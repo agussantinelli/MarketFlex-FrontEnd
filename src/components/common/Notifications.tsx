@@ -14,7 +14,7 @@ export default function Notifications({
     message,
     type = "success",
     delay = 100,
-    position = "top-right",
+    position = "top-center",
     offset,
     requiredQueryParam
 }: Props) {
