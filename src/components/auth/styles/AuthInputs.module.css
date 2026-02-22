@@ -1,0 +1,50 @@
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-left: 0.25rem;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.inputField {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    background: #f5f7fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    color: #1a1a1a;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: var(--green-primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+}
+
+.inputField:focus+.inputIcon {
+    color: var(--green-primary);
+}

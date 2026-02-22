@@ -1,0 +1,182 @@
+---
+import { Icon } from "astro-icon/components";
+import styles from "./styles/AuthInputs.module.css";
+
+interface Props {
+    type: "login" | "register";
+}
+
+const { type } = Astro.props;
+---
+
+{
+    type === "register" && (
+        <>
+            <div class={styles.formGroup}>
+                <label for="nombre">Nombre</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:user" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Tu nombre"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="apellido">Apellido</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:user" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="apellido"
+                        name="apellido"
+                        placeholder="Tu apellido"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="dni">DNI</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:id-card" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="dni"
+                        name="dni"
+                        placeholder="12.345.678"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:calendar" class={styles.inputIcon} />
+                    <input
+                        type="date"
+                        id="fechaNacimiento"
+                        name="fechaNacimiento"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="paisNacimiento">País de Nacimiento</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:globe" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="paisNacimiento"
+                        name="paisNacimiento"
+                        placeholder="Ej: Argentina"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="ciudadResidencia">Ciudad de Residencia</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:map-pin" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="ciudadResidencia"
+                        name="ciudadResidencia"
+                        placeholder="Ej: Buenos Aires"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
+                <label for="codigoPostal">Código Postal</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:hash" class={styles.inputIcon} />
+                    <input
+                        type="text"
+                        id="codigoPostal"
+                        name="codigoPostal"
+                        placeholder="Ej: 1425"
+                        required
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+            <div class={styles.formGroup}>
+                <label for="foto">Foto de Perfil (URL)</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:image" class={styles.inputIcon} />
+                    <input
+                        type="url"
+                        id="foto"
+                        name="foto"
+                        placeholder="https://ejemplo.com/foto.jpg"
+                        class={styles.inputField}
+                    />
+                </div>
+            </div>
+        </>
+    )
+}
+
+<div class={styles.formGroup}>
+    <label for="email">Correo Electrónico</label>
+    <div class={styles.inputWrapper}>
+        <Icon name="lucide:mail" class={styles.inputIcon} />
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="nombre@ejemplo.com"
+            required
+            class={styles.inputField}
+        />
+    </div>
+</div>
+
+<div class={styles.formGroup}>
+    <label for="password">Contraseña</label>
+    <div class={styles.inputWrapper}>
+        <Icon name="lucide:lock" class={styles.inputIcon} />
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            required
+            class={styles.inputField}
+        />
+    </div>
+</div>
+
+{
+    type === "register" && (
+        <div class={styles.formGroup}>
+            <label for="confirmPassword">Confirmar Contraseña</label>
+            <div class={styles.inputWrapper}>
+                <Icon name="lucide:lock" class={styles.inputIcon} />
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    required
+                    class={styles.inputField}
+                />
+            </div>
+        </div>
+    )
+}
