@@ -90,7 +90,7 @@ export function initRegister() {
                 codigoPostal: data.codigoPostal as string,
                 foto: data.foto as string,
                 rol: "customer",
-                captchaToken: token // Use the fresh v3 token
+                recaptchaToken: token // Use the correct field name for the backend
             });
 
             // Save session
@@ -99,10 +99,42 @@ export function initRegister() {
 
             const userName = response.user.nombre || "Usuario";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}&new=true`;
-        } catch (error) {
-            console.error("Registration error:", error);
-            const message = error instanceof Error ? error.message : "Error al registrar. Intente nuevamente";
-            notify("error", message);
+        } catch (error: any) {
+            console.error("❌ Registration error:", error);
+
+            let message: any = "Error al registrar. Intente nuevamente";
+
+            // Extract detailed message from ky error if possible
+            if (error.response) {
+                try {
+                    const errorData = await error.response.json();
+
+                    if (errorData.error) {
+                        message = errorData.error;
+                    } else if (errorData.message) {
+                        message = errorData.message;
+                    } else if (errorData.details) {
+                        // If it's a Zod error object, try to get the first error message
+                        const details = errorData.details;
+                        const firstKey = Object.keys(details)[0];
+                        if (firstKey && details[firstKey]._errors && details[firstKey]._errors[0]) {
+                            message = `${firstKey}: ${details[firstKey]._errors[0]}`;
+                        } else {
+                            message = JSON.stringify(details);
+                        }
+                    }
+                } catch (e) {
+                    message = `Error ${error.response.status}: ${error.response.statusText}`;
+                }
+            } else if (error.message) {
+                message = error.message;
+            }
+
+            // Final safety check: ensure it's a string and not a weird object
+            const finalMessage = String(message || "Error inesperado");
+
+            notify("error", finalMessage);
+
             submitBtn.disabled = false;
             submitBtn.textContent = "Registrarse";
         }
