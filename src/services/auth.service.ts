@@ -5,6 +5,10 @@ export const login = async (credentials: any): Promise<LoginResponse> => {
     return await api.post('auth/login', { json: credentials }).json();
 };
 
+export const register = async (userData: any): Promise<LoginResponse> => {
+    return await api.post('auth/register', { json: userData }).json();
+};
+
 export const loginWithGoogle = async (idToken: string): Promise<GoogleLoginResponse> => {
     return await api.post('auth/google', { json: { idToken } }).json();
 };

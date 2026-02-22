@@ -10,7 +10,7 @@ const categories = await getCategories();
 
 <nav class={styles.navbar}>
     <div class={styles.navContainer}>
-        <a href="/" class={styles.navLogo}>
+        <a href="/" class={`${styles.navLogo} nav-logo`}>
             <img
                 src="/logo-marketflex-letters.png"
                 alt="MarketFlex Logo"
@@ -19,19 +19,23 @@ const categories = await getCategories();
             <span class={styles.logoText}>MarketFlex</span>
         </a>
 
-        <form action="/search" method="GET" class={styles.navSearchForm}>
+        <form
+            action="/search"
+            method="GET"
+            class={`${styles.navSearchForm} nav-search-form`}
+        >
             <div class={styles.searchInputWrapper}>
                 <Icon name="lucide:search" class={styles.searchIcon} />
                 <input
                     type="text"
                     name="q"
                     placeholder="Buscar productos..."
-                    class={styles.searchInput}
+                    class={`${styles.searchInput} search-input`}
                     autocomplete="off"
                 />
                 <button
                     type="button"
-                    class={styles.searchClearBtn}
+                    class={`${styles.searchClearBtn} search-clear-btn`}
                     aria-label="Clear search"
                 >
                     <Icon name="lucide:x" class={styles.clearIcon} />
@@ -39,12 +43,15 @@ const categories = await getCategories();
             </div>
         </form>
 
-        <button class={styles.mobileMenuBtn} aria-label="Toggle menu">
+        <button
+            class={`${styles.mobileMenuBtn} mobile-menu-btn`}
+            aria-label="Toggle menu"
+        >
             <Icon name="lucide:menu" class={styles.iconMenu} />
             <Icon name="lucide:x" class={styles.iconClose} />
         </button>
 
-        <div class={styles.navLinks}>
+        <div class={`${styles.navLinks} nav-links`}>
             <!-- Explorar -->
             <a href="/search" class={styles.navLink}>
                 <Icon name="lucide:compass" class={styles.linkIcon} />
@@ -52,8 +59,10 @@ const categories = await getCategories();
             </a>
 
             <!-- Tipos Dropdown -->
-            <div class={styles.navItemDropdown}>
-                <button class={`${styles.navLink} ${styles.dropdownBtn}`}>
+            <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
+                <button
+                    class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
+                >
                     <Icon name="lucide:book" class={styles.linkIcon} />
                     Tipos
                     <Icon
@@ -76,8 +85,10 @@ const categories = await getCategories();
             </div>
 
             <!-- Categorías Dropdown -->
-            <div class={styles.navItemDropdown}>
-                <button class={`${styles.navLink} ${styles.dropdownBtn}`}>
+            <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
+                <button
+                    class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
+                >
                     <Icon name="lucide:layers" class={styles.linkIcon} />
                     Categorías
                     <Icon
@@ -114,8 +125,10 @@ const categories = await getCategories();
             </div>
 
             <div class="nav-auth-user" style="display: none;">
-                <div class={styles.userDropdown}>
-                    <button class={styles.dropdownTrigger}>
+                <div class={`${styles.userDropdown} user-dropdown`}>
+                    <button
+                        class={`${styles.dropdownTrigger} dropdown-trigger`}
+                    >
                         <span class={styles.userGreeting}
                             >Hola, <span id="user-name">Usuario</span></span
                         >
@@ -124,7 +137,7 @@ const categories = await getCategories();
                             class={styles.dropdownIcon}
                         />
                     </button>
-                    <div class={styles.dropdownMenu}>
+                    <div class={`${styles.dropdownMenu} dropdown-menu`}>
                         <a href="/profile" class={styles.dropdownItem}>
                             <Icon name="lucide:user" class={styles.itemIcon} />
                             Mi Perfil
