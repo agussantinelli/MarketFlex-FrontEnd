@@ -5,13 +5,55 @@ export function initRegister() {
 
     if (!registerForm) return;
 
+    const errorContainer = document.querySelector("#auth-error") as HTMLDivElement;
+
+    const showError = (message: string) => {
+        if (!errorContainer) return;
+        errorContainer.textContent = message;
+        errorContainer.style.display = "block";
+        errorContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    const hideError = () => {
+        if (!errorContainer) return;
+        errorContainer.style.display = "none";
+    };
+
+    const passwordInput = registerForm.querySelector("#password") as HTMLInputElement;
+    const reqLength = registerForm.querySelector("#req-length");
+    const reqUpper = registerForm.querySelector("#req-upper");
+    const reqNumber = registerForm.querySelector("#req-number");
+
+    passwordInput?.addEventListener("input", () => {
+        const value = passwordInput.value;
+        const hasMinLen = value.length >= 6;
+        const hasUpper = /[A-Z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+
+        if (reqLength) reqLength.classList.toggle("met", hasMinLen);
+        if (reqUpper) reqUpper.classList.toggle("met", hasUpper);
+        if (reqNumber) reqNumber.classList.toggle("met", hasNumber);
+    });
+
     registerForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(registerForm);
         const data = Object.fromEntries(formData);
 
+        const password = data.password as string;
+        const hasMinLen = password.length >= 6;
+        const hasUpper = /[A-Z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+
+        hideError();
+
+        if (!hasMinLen || !hasUpper || !hasNumber) {
+            showError("La contraseña no cumple con los requisitos de seguridad");
+            return;
+        }
+
         if (data.password !== data.confirmPassword) {
-            alert("Las contraseñas no coinciden");
+            showError("Las contraseñas no coinciden");
             return;
         }
 
@@ -47,7 +89,7 @@ export function initRegister() {
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}&new=true`;
         } catch (error) {
             console.error("Registration error:", error);
-            alert("Error al registrar: " + (error instanceof Error ? error.message : "Intente nuevamente"));
+            showError(error instanceof Error ? error.message : "Error al registrar. Intente nuevamente");
             submitBtn.disabled = false;
             submitBtn.textContent = "Registrarse";
         }
