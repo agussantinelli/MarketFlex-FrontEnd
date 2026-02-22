@@ -1,20 +1,17 @@
 ---
-
+const siteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 ---
 
-<div id="captcha-container" class="captcha-container">
-    <!-- El captcha no debe tener layout visible por sí mismo -->
+<div class="captcha-container">
+    <script
+        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+        async
+        defer></script>
 </div>
 
 <style>
+    /* Usually good to keep reCAPTCHA badge visible for TOS, but we can move it or style it */
     .captcha-container {
-        display: none; /* No layout footprint */
+        display: none;
     }
 </style>
-
-<script>
-    // reCAPTCHA v3 logic
-    // En un entorno real, aquí se cargaría el script de Google y se obtendría el token.
-    // Por ahora, simulamos la existencia del contenedor.
-    console.log("Captcha component initialized");
-</script>
