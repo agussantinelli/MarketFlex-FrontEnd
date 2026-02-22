@@ -43,6 +43,23 @@ const { type } = Astro.props;
             </div>
 
             <div class={styles.formGroup}>
+                <label for="tipoDni">Tipo de ID</label>
+                <div class={styles.inputWrapper}>
+                    <Icon name="lucide:id-card" class={styles.inputIcon} />
+                    <select
+                        id="tipoDni"
+                        name="tipoDni"
+                        required
+                        class={styles.inputField}
+                    >
+                        <option value="DNI">DNI</option>
+                        <option value="PASSPORT">Pasaporte</option>
+                        <option value="ID">ID Extranjero</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class={styles.formGroup}>
                 <label for="dni">DNI</label>
                 <div class={styles.inputWrapper}>
                     <Icon name="lucide:id-card" class={styles.inputIcon} />
@@ -111,19 +128,6 @@ const { type } = Astro.props;
                         name="codigoPostal"
                         placeholder="Ej: 1425"
                         required
-                        class={styles.inputField}
-                    />
-                </div>
-            </div>
-            <div class={styles.formGroup}>
-                <label for="foto">Foto de Perfil (URL)</label>
-                <div class={styles.inputWrapper}>
-                    <Icon name="lucide:image" class={styles.inputIcon} />
-                    <input
-                        type="url"
-                        id="foto"
-                        name="foto"
-                        placeholder="https://ejemplo.com/foto.jpg"
                         class={styles.inputField}
                     />
                 </div>

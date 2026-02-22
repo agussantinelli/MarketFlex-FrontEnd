@@ -28,6 +28,7 @@ export function initRegister() {
                 nombre: data.nombre as string,
                 apellido: data.apellido as string,
                 dni: data.dni as string,
+                tipoDni: data.tipoDni as string,
                 email: data.email as string,
                 password: data.password as string,
                 fechaNacimiento: data.fechaNacimiento as string,
