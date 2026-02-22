@@ -77,3 +77,29 @@
     width: 14px;
     height: 14px;
 }
+
+.requirementIconMet {
+    display: none;
+    width: 14px;
+    height: 14px;
+    color: #059669;
+}
+
+.requirementIconUnmet {
+    display: block;
+    width: 14px;
+    height: 14px;
+    color: #9ca3af;
+}
+
+.requirement.met .requirementIconMet {
+    display: block;
+}
+
+.requirement.met .requirementIconUnmet {
+    display: none;
+}
+
+.requirement.met span {
+    color: #059669;
+}

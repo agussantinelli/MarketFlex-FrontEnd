@@ -5,18 +5,16 @@ export function initRegister() {
 
     if (!registerForm) return;
 
-    const errorContainer = document.querySelector("#auth-error") as HTMLDivElement;
-
-    const showError = (message: string) => {
-        if (!errorContainer) return;
-        errorContainer.textContent = message;
-        errorContainer.style.display = "block";
-        errorContainer.scrollIntoView({ behavior: "smooth", block: "center" });
-    };
-
-    const hideError = () => {
-        if (!errorContainer) return;
-        errorContainer.style.display = "none";
+    // Helper for notifications using Sileo
+    const notify = (type: 'success' | 'error' | 'info' | 'warning', message: string) => {
+        // @ts-ignore
+        if (window.triggerSileo) {
+            // @ts-ignore
+            window.triggerSileo(type, message);
+        } else {
+            // Fallback for extreme cases
+            alert(message);
+        }
     };
 
     const passwordInput = registerForm.querySelector("#password") as HTMLInputElement;
@@ -45,15 +43,13 @@ export function initRegister() {
         const hasUpper = /[A-Z]/.test(password);
         const hasNumber = /[0-9]/.test(password);
 
-        hideError();
-
         if (!hasMinLen || !hasUpper || !hasNumber) {
-            showError("La contraseña no cumple con los requisitos de seguridad");
+            notify("error", "La contraseña no cumple con los requisitos de seguridad");
             return;
         }
 
         if (data.password !== data.confirmPassword) {
-            showError("Las contraseñas no coinciden");
+            notify("error", "Las contraseñas no coinciden");
             return;
         }
 
@@ -89,7 +85,8 @@ export function initRegister() {
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}&new=true`;
         } catch (error) {
             console.error("Registration error:", error);
-            showError(error instanceof Error ? error.message : "Error al registrar. Intente nuevamente");
+            const message = error instanceof Error ? error.message : "Error al registrar. Intente nuevamente";
+            notify("error", message);
             submitBtn.disabled = false;
             submitBtn.textContent = "Registrarse";
         }

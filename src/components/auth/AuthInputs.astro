@@ -168,15 +168,36 @@ const { type } = Astro.props;
         type === "register" && (
             <div class={styles.passwordRequirements}>
                 <div class={`${styles.requirement}`} id="req-length">
-                    <Icon name="lucide:circle" class={styles.requirementIcon} />
+                    <Icon
+                        name="lucide:circle"
+                        class={styles.requirementIconUnmet}
+                    />
+                    <Icon
+                        name="lucide:check-circle-2"
+                        class={styles.requirementIconMet}
+                    />
                     <span>Mínimo 6 caracteres</span>
                 </div>
                 <div class={`${styles.requirement}`} id="req-upper">
-                    <Icon name="lucide:circle" class={styles.requirementIcon} />
+                    <Icon
+                        name="lucide:circle"
+                        class={styles.requirementIconUnmet}
+                    />
+                    <Icon
+                        name="lucide:check-circle-2"
+                        class={styles.requirementIconMet}
+                    />
                     <span>Al menos una mayúscula</span>
                 </div>
                 <div class={`${styles.requirement}`} id="req-number">
-                    <Icon name="lucide:circle" class={styles.requirementIcon} />
+                    <Icon
+                        name="lucide:circle"
+                        class={styles.requirementIconUnmet}
+                    />
+                    <Icon
+                        name="lucide:check-circle-2"
+                        class={styles.requirementIconMet}
+                    />
                     <span>Al menos un número</span>
                 </div>
             </div>

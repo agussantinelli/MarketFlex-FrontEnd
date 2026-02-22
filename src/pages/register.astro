@@ -24,7 +24,7 @@ import styles from "./styles/register.module.css";
             <p>Únete a MarketFlex y comienza a explorar</p>
         </div>
 
-        <form class={styles.registerForm}>
+        <form class={`${styles.registerForm} register-form`}>
             <AuthInputs type="register" />
 
             <Captcha />
@@ -40,3 +40,13 @@ import styles from "./styles/register.module.css";
         </div>
     </PageCard>
 </Layout>
+
+<script>
+    import { initRegister } from "../scripts/auth-register";
+
+    // Initialize on load
+    initRegister();
+
+    // Support for View Transitions
+    document.addEventListener("astro:page-load", initRegister);
+</script>
