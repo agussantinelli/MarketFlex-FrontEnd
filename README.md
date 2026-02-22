@@ -25,6 +25,7 @@
     <img src="https://img.shields.io/badge/Google_Sign--In-GSI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Sign-In Badge">
     <img src="https://img.shields.io/badge/Facebook_Login-SDK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Login Badge">
     <img src="https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge">
+    <img src="https://img.shields.io/badge/reCAPTCHA-v3-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="reCAPTCHA Badge">
     <img src="https://img.shields.io/badge/HTTPS-mkcert-003666?style=for-the-badge&logo=letsencrypt&logoColor=white" alt="mkcert Badge">
 </div>
 
@@ -142,6 +143,12 @@
             <td>Manejo de sesiones interceptadas vía Ky.</td>
         </tr>
         <tr>
+            <td><strong>Anti-Bot</strong></td>
+            <td>reCAPTCHA v3</td>
+            <td><strong>Invisible</strong></td>
+            <td>Protección automática contra bots sin fricción para el usuario.</td>
+        </tr>
+        <tr>
             <td><strong>Herramientas</strong></td>
             <td>vite-plugin-mkcert</td>
             <td><strong>^1.17.9</strong></td>
@@ -170,6 +177,7 @@
   <li>🎠 <b>Carruseles Premium:</b> Componente reutilizable de carrusel con estados interactivos (flechas que cambian de color al límite del scroll) y efectos premium.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
+  <li>🤖 <b>Anti-Bot (reCAPTCHA v3):</b> Protección invisible contra bots activada durante el registro para garantizar transacciones legítimas.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
@@ -229,7 +237,10 @@
     <b>JWT (Json Web Tokens):</b> Manejo seguro de sesiones. El token se almacena en <code>localStorage</code> y se inyecta automáticamente en cada petición HTTP saliente vía <code>src/lib/api.ts</code> (<code>Authorization: Bearer ...</code>).
   </li>
   <li>
-    <b>Login Tradicional:</b> Formulario de email/contraseña con validación en el backend (bcryptjs + JWT).
+    <b>Login Tradicional:</b> Formulario de email/contraseña con validación en tiempo real de complejidad (Mayúsculas, Números, Longitud) y persistencia en el backend.
+  </li>
+  <li>
+    <b>reCAPTCHA v3 (Invisible):</b> Verificación automática de "humanidad" basada en comportamiento, eliminando la necesidad de seleccionar imágenes o checkboxes manuales.
   </li>
   <li>
     <b>Login Social — Google:</b> Integración con <b>Google Identity Services (GSI)</b>. El usuario hace click → popup de Google → se obtiene un <code>ID Token</code> → se verifica en el backend con <code>google-auth-library</code>.
@@ -362,6 +373,7 @@ PORT=2611
 PUBLIC_API_URL=http://localhost:5979/api
 PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 PUBLIC_FACEBOOK_APP_ID=your_facebook_app_id
+PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
 </pre>
 
 <h2>🚀 Instalación</h2>
