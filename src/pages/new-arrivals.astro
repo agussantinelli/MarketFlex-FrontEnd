@@ -1,0 +1,123 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import ProductCard from "../components/products/ProductCard.astro";
+import { getNewArrivals } from "../services/product.service";
+import styles from "./styles/search.module.css";
+
+const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
+const limit = 20;
+
+const response = await getNewArrivals(currentPage, limit);
+
+const products = response.data;
+const pagination = response.pagination;
+
+// Helper to build pagination links
+const getPageUrl = (page: number) => {
+    const params = new URLSearchParams(Astro.url.searchParams);
+    params.set("page", page.toString());
+    return `/new-arrivals?${params.toString()}`;
+};
+
+
+const startRange = (currentPage - 1) * limit + 1;
+const endRange = Math.min(currentPage * limit, pagination.total);
+---
+
+<Layout title="MarketFlex | Novedades y Lanzamientos">
+    <section class={styles.searchSection}>
+        <div class={styles.searchHeader}>
+            <h2 class={styles.sectionTitle}>
+                Últimas <span class="gradient-text">Novedades</span>
+                <span class={styles.resultCount}>
+                    ({pagination.total})
+                </span>
+            </h2>
+        </div>
+
+        {
+            products.length > 0 ? (
+                <>
+                    <div class={styles.productsGrid} id="products-grid">
+                        {products.map((product) => (
+                            <ProductCard
+                                product={product}
+                                showFeatured={false}
+                            />
+                        ))}
+                    </div>
+
+                    {pagination.totalPages > 1 && (
+                        <nav
+                            class={styles.pagination}
+                            aria-label="Navegación de páginas"
+                        >
+                            <div class={styles.paginationControls}>
+                                <a
+                                    href={getPageUrl(currentPage - 1)}
+                                    class={`${styles.paginationItem} ${styles.prev} ${currentPage === 1 ? styles.disabled : ""}`}
+                                    aria-label="Página anterior"
+                                >
+                                    <Icon name="lucide:chevron-left" />
+                                    <span>Anterior</span>
+                                </a>
+
+                                <a
+                                    href={getPageUrl(currentPage + 1)}
+                                    class={`${styles.paginationItem} ${styles.next} ${currentPage === pagination.totalPages ? styles.disabled : ""}`}
+                                    aria-label="Página siguiente"
+                                >
+                                    <span>Siguiente</span>
+                                    <Icon name="lucide:chevron-right" />
+                                </a>
+                            </div>
+
+                            <div class={styles.paginationPages}>
+                                {Array.from(
+                                    { length: pagination.totalPages },
+                                    (_, i) => (
+                                        <a
+                                            href={getPageUrl(i + 1)}
+                                            class={`${styles.paginationItem} ${styles.page} ${currentPage === i + 1 ? styles.active : ""}`}
+                                            aria-label={`Ir a página ${i + 1}`}
+                                        >
+                                            {i + 1}
+                                        </a>
+                                    ),
+                                )}
+                            </div>
+                        </nav>
+                        <div class={styles.paginationInfo}>
+                            Página <strong>{currentPage}</strong> de{" "}
+                            <strong>{pagination.totalPages}</strong>, viendo los
+                            publicaciones <strong>{startRange}-{endRange}</strong> de{" "}
+                            <strong>{pagination.total}</strong>
+                        </div>
+                    )}
+                </>
+            ) : (
+                <div class={styles.emptyResults}>
+                    <div class={styles.emptyIconWrapper}>
+                        <Icon name="lucide:sparkles" class={styles.emptyIcon} />
+                    </div>
+                    <h3 class={styles.emptyTitle}>No hay novedades</h3>
+                    <p>
+                        Parece que no hay productos nuevos en los últimos 7 días.
+                        <br />
+                        ¡Volvé pronto para ver qué tenemos de nuevo!
+                    </p>
+                    <div class={styles.actions}>
+                        <a href="/" class="btn btn-secondary btn-sm">
+                            Volver al Inicio
+                        </a>
+                        <a href="/search" class="btn btn-primary btn-sm">
+                            Ver Todo el Catálogo
+                        </a>
+                    </div>
+                </div>
+            )
+        }
+    </section>
+</Layout>
