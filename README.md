@@ -173,6 +173,7 @@
   <li>⚡ <b>Performance:</b> Carga asíncrona optimizada para catálogos de cualquier escala.</li>
   <li>🔢 <b>Paginación Tradicional:</b> Navegación basada en URL para una mejor indexación (SEO) y accesibilidad.</li>
   <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
+  <li>🔼 <b>Navbar Jerárquico:</b> Navegación inteligente con subcategorías anidadas, triggers de flecha y sistema de "hover delay" (2s) para una experiencia fluida.</li>
   <li>🎡 <b>CSS Modules:</b> Aislamiento total de estilos mediante archivos <code>.module.css</code> localizados por componente/página.</li>
   <li>🎠 <b>Carruseles Premium:</b> Componente reutilizable de carrusel con estados interactivos (flechas que cambian de color al límite del scroll) y efectos premium.</li>
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
@@ -297,13 +298,13 @@
 │   ├── services/                                   # Servicios de negocio (API calls)
 │   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
 │   │   ├── category.service.ts                     # Servicio de categorías
-│   │   ├── product-type.service.ts                 # Servicio de tipos de producto
+│   │   ├── subcategory.service.ts                  # Servicio de subcategorías
 │   │   ├── product.service.ts                      # Servicio de productos
 │   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
 │   ├── types/                                      # Definiciones de tipos TypeScript
 │   │   ├── auth.types.ts                           # Tipos de Autenticación (Dual Token)
 │   │   ├── category.types.ts                       # Tipos de Categorías
-│   │   ├── product-type.types.ts                   # Tipos de Tipos de Producto
+│   │   ├── subcategory.types.ts                    # Tipos de Subcategorías
 │   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
 │   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
