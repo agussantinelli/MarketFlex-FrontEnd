@@ -128,6 +128,19 @@ const {
                     </div>
                 </div>
             </div>
+
+            {/* Stock */}
+            <div class={styles.filterSection}>
+                <div class={styles.checkboxSection}>
+                    <label for="with-stock-checkbox"
+                        >Solo productos con stock</label
+                    >
+                    <label class={styles.switch}>
+                        <input type="checkbox" id="with-stock-checkbox" />
+                        <span class={styles.slider}></span>
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class={styles.modalFooter}>
@@ -157,6 +170,19 @@ const {
     const urlParams = new URLSearchParams(window.location.search);
     selectedType = urlParams.get("type") || "";
     selectedCategory = urlParams.get("category") || "";
+
+    // Populate price inputs
+    const minPriceInput = document.getElementById("min-price");
+    const maxPriceInput = document.getElementById("max-price");
+    const stockCheckbox = document.getElementById("with-stock-checkbox");
+
+    if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
+    if (maxPriceInput) maxPriceInput.value = urlParams.get("maxPrice") || "";
+
+    // Default to checked if not explicitly 'false'
+    if (stockCheckbox) {
+        stockCheckbox.checked = urlParams.get("withStock") !== "false";
+    }
 
     function toggleModal() {
         backdrop.classList.toggle(styles.active);
@@ -263,6 +289,13 @@ const {
         if (maxPrice) params.set("maxPrice", maxPrice);
         else params.delete("maxPrice");
 
+        const stockCheckbox = document.getElementById("with-stock-checkbox");
+        if (stockCheckbox && !stockCheckbox.checked) {
+            params.set("withStock", "false");
+        } else {
+            params.delete("withStock"); // Default is true, so no need for explicit param if true
+        }
+
         // Always reset to page 1 when filtering
         params.set("page", "1");
 
@@ -275,6 +308,7 @@ const {
         params.delete("category");
         params.delete("minPrice");
         params.delete("maxPrice");
+        params.delete("withStock");
         params.set("page", "1");
         window.location.href = `${window.location.pathname}?${params.toString()}`;
     });
