@@ -1,5 +1,6 @@
 import { api } from "../lib/api";
 import type { Product } from '../types/product.types';
+import type { PaginatedResponse } from '../types/common.types';
 
 export const getProducts = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
     try {
@@ -25,16 +26,7 @@ interface SearchOptions {
     limit?: number;
 }
 
-export interface PaginatedResponse<T> {
-    status: string;
-    data: T[];
-    pagination: {
-        total: number;
-        page: number;
-        limit: number;
-        totalPages: number;
-    };
-}
+// Pagination interfaces moved to common.types.ts
 
 export const searchProducts = async (options: SearchOptions): Promise<PaginatedResponse<Product>> => {
     try {
