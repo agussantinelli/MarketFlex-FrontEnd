@@ -167,8 +167,28 @@
 
 .profileActions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
 }
+
+.editBtn {
+    background: var(--green-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px hsla(142, 70%, 45%, 0.2);
+}
+
+.editBtn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -5px hsla(142, 70%, 45%, 0.4);
+}
+
 
 .logoutBtn {
     background: rgba(239, 68, 68, 0.1);
