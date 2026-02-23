@@ -125,6 +125,14 @@ const categories = await getCategories();
             </div>
 
             <div class="nav-auth-user" style="display: none;">
+                <a
+                    href="/cart"
+                    class={styles.cartLink}
+                    aria-label="Carrito de compras"
+                >
+                    <Icon name="lucide:shopping-cart" class={styles.cartIcon} />
+                    <span class={`${styles.cartBadge} cart-count`}>0</span>
+                </a>
                 <div class={`${styles.userDropdown} user-dropdown`}>
                     <button
                         class={`${styles.dropdownTrigger} dropdown-trigger`}
