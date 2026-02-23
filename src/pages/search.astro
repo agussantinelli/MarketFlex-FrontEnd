@@ -59,19 +59,6 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                         <>
                             Explorando{" "}
                             <span class="gradient-text">Productos</span>
-                            {typeParam && (
-                                <span class={styles.filterTag}>
-                                    Categoría: {typeParam}
-                                </span>
-                            )}
-                            {categoryParam && (
-                                <span class={styles.filterTag}>
-                                    Subcategoría: {categoryParam}
-                                </span>
-                            )}
-                            {offersParam && (
-                                <span class={styles.filterTag}>Ofertas</span>
-                            )}
                             <span class={styles.resultCount}>
                                 ({pagination.total})
                             </span>
@@ -81,15 +68,32 @@ const endRange = Math.min(currentPage * limit, pagination.total);
             </h2>
 
             {
-                /* Always show controls if we have products, OR if we are just exploring (to allow sorting/filtering of all items) */
-            }
-            {
                 (products.length > 0 || !searchQuery) && (
-                    <ProductControls 
-                        sort={sort}
-                        baseUrl="/search"
-                        params={Astro.url.searchParams}
-                    />
+                    <div class={styles.controlsWrapper}>
+                        <ProductControls 
+                            sort={sort}
+                            baseUrl="/search"
+                            params={Astro.url.searchParams}
+                        />
+                        
+                        {(typeParam || categoryParam || offersParam) && (
+                            <div class={styles.activeFilters}>
+                                {typeParam && (
+                                    <span class={styles.filterTag}>
+                                        Categoría: {typeParam}
+                                    </span>
+                                )}
+                                {categoryParam && (
+                                    <span class={styles.filterTag}>
+                                        Subcategoría: {categoryParam}
+                                    </span>
+                                )}
+                                {offersParam && (
+                                    <span class={styles.filterTag}>Ofertas</span>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 )
             }
         </div>

@@ -37,11 +37,13 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                 </span>
             </h2>
 
-            <ProductControls 
-                sort={sort}
-                baseUrl="/offers"
-                params={Astro.url.searchParams}
-            />
+            <div class={styles.controlsWrapper}>
+                <ProductControls 
+                    sort={sort}
+                    baseUrl="/offers"
+                    params={Astro.url.searchParams}
+                />
+            </div>
         </div>
 
         {
