@@ -23,7 +23,15 @@ const {
 } = Astro.props;
 ---
 
-<div id="filter-modal-backdrop" class={styles.modalBackdrop}>
+<div
+    id="filter-modal-backdrop"
+    class={styles.modalBackdrop}
+    data-categories={JSON.stringify(categories)}
+    data-subcategories={JSON.stringify(subcategories)}
+    data-styles={JSON.stringify(styles)}
+    data-initial-type={currentType}
+    data-initial-category={currentCategory}
+>
     <div class={styles.modalContent}>
         <button id="close-modal-btn" class={styles.modalClose}>
             <Icon name="lucide:x" />
@@ -141,6 +149,19 @@ const {
                     </label>
                 </div>
             </div>
+
+            {/* Ofertas */}
+            <div class={styles.filterSection}>
+                <div class={styles.checkboxSection}>
+                    <label for="only-offers-checkbox"
+                        >Solo productos en oferta</label
+                    >
+                    <label class={styles.switch}>
+                        <input type="checkbox" id="only-offers-checkbox" />
+                        <span class={styles.slider}></span>
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class={styles.modalFooter}>
@@ -154,162 +175,4 @@ const {
     </div>
 </div>
 
-<script define:vars={{ subcategories, categories, styles }}>
-    const backdrop = document.getElementById("filter-modal-backdrop");
-    const closeBtn = document.getElementById("close-modal-btn");
-    const filterBtn = document.getElementById("filter-btn");
-    const applyBtn = document.getElementById("apply-filters-btn");
-    const resetBtn = document.getElementById("reset-filters-btn");
-    const subcategorySection = document.getElementById("subcategory-section");
-    const subcategoryOptions = document.getElementById("subcategory-options");
-
-    let selectedType = backdrop.getAttribute("data-initial-type") || "";
-    let selectedCategory = backdrop.getAttribute("data-initial-category") || "";
-
-    // Initialize selected states from URL or props
-    const urlParams = new URLSearchParams(window.location.search);
-    selectedType = urlParams.get("type") || "";
-    selectedCategory = urlParams.get("category") || "";
-
-    // Populate price inputs
-    const minPriceInput = document.getElementById("min-price");
-    const maxPriceInput = document.getElementById("max-price");
-    const stockCheckbox = document.getElementById("with-stock-checkbox");
-
-    if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
-    if (maxPriceInput) maxPriceInput.value = urlParams.get("maxPrice") || "";
-
-    // Default to checked if not explicitly 'false'
-    if (stockCheckbox) {
-        stockCheckbox.checked = urlParams.get("withStock") !== "false";
-    }
-
-    function toggleModal() {
-        backdrop.classList.toggle(styles.active);
-    }
-
-    if (filterBtn) filterBtn.addEventListener("click", toggleModal);
-    if (closeBtn) closeBtn.addEventListener("click", toggleModal);
-    backdrop.addEventListener("click", (e) => {
-        if (e.target === backdrop) toggleModal();
-    });
-
-    // Category selection
-    document
-        .querySelectorAll(`.${styles.optionBtn}[data-type]`)
-        .forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const type = btn.getAttribute("data-type");
-                const catId = btn.getAttribute("data-category-id");
-
-                // Toggle selection
-                if (selectedType === type) {
-                    selectedType = "";
-                    btn.classList.remove(styles.optionActive);
-                } else {
-                    // Clear others
-                    document
-                        .querySelectorAll(`.${styles.optionBtn}[data-type]`)
-                        .forEach((b) =>
-                            b.classList.remove(styles.optionActive),
-                        );
-                    selectedType = type;
-                    btn.classList.add(styles.optionActive);
-                }
-
-                selectedCategory = ""; // Reset subcategory when type changes
-                updateSubcategories(catId);
-            });
-        });
-
-    function updateSubcategories(catId) {
-        if (!selectedType || !catId) {
-            subcategorySection.classList.add(styles.hidden);
-            subcategoryOptions.innerHTML = "";
-            return;
-        }
-
-        const filtered = subcategories.filter((s) => s.categoriaId === catId);
-
-        if (filtered.length > 0) {
-            subcategorySection.classList.remove(styles.hidden);
-            subcategoryOptions.innerHTML = filtered
-                .map(
-                    (sub) => `
-                <button 
-                    class="${styles.optionBtn} ${selectedCategory === sub.nombre ? styles.optionActive : ""}"
-                    data-category="${sub.nombre}"
-                >
-                    ${sub.nombre}
-                </button>
-            `,
-                )
-                .join("");
-
-            // Add events to new buttons
-            subcategoryOptions
-                .querySelectorAll(`.${styles.optionBtn}`)
-                .forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        const subName = btn.getAttribute("data-category");
-                        if (selectedCategory === subName) {
-                            selectedCategory = "";
-                            btn.classList.remove(styles.optionActive);
-                        } else {
-                            subcategoryOptions
-                                .querySelectorAll(`.${styles.optionBtn}`)
-                                .forEach((b) =>
-                                    b.classList.remove(styles.optionActive),
-                                );
-                            selectedCategory = subName;
-                            btn.classList.add(styles.optionActive);
-                        }
-                    });
-                });
-        } else {
-            subcategorySection.classList.add(styles.hidden);
-        }
-    }
-
-    applyBtn.addEventListener("click", () => {
-        const minPrice = document.getElementById("min-price").value;
-        const maxPrice = document.getElementById("max-price").value;
-
-        const params = new URLSearchParams(window.location.search);
-
-        if (selectedType) params.set("type", selectedType);
-        else params.delete("type");
-
-        if (selectedCategory) params.set("category", selectedCategory);
-        else params.delete("category");
-
-        if (minPrice) params.set("minPrice", minPrice);
-        else params.delete("minPrice");
-
-        if (maxPrice) params.set("maxPrice", maxPrice);
-        else params.delete("maxPrice");
-
-        const stockCheckbox = document.getElementById("with-stock-checkbox");
-        if (stockCheckbox && !stockCheckbox.checked) {
-            params.set("withStock", "false");
-        } else {
-            params.delete("withStock"); // Default is true, so no need for explicit param if true
-        }
-
-        // Always reset to page 1 when filtering
-        params.set("page", "1");
-
-        window.location.href = `${window.location.pathname}?${params.toString()}`;
-    });
-
-    resetBtn.addEventListener("click", () => {
-        const params = new URLSearchParams(window.location.search);
-        params.delete("type");
-        params.delete("category");
-        params.delete("minPrice");
-        params.delete("maxPrice");
-        params.delete("withStock");
-        params.set("page", "1");
-        window.location.href = `${window.location.pathname}?${params.toString()}`;
-    });
-</script>
+<script src="../../scripts/filter-modal.ts"></script>
