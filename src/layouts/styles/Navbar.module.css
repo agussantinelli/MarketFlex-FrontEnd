@@ -288,6 +288,7 @@
     border-radius: 50%;
     transition: all 0.3s ease;
     background: rgba(0, 0, 0, 0.03);
+    margin-right: 2rem;
 }
 
 .cartLink:hover {
