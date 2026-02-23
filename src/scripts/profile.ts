@@ -64,13 +64,26 @@ function populateProfile(user: User, styles: Record<string, string>) {
     const avatarImg = document.getElementById('profile-avatar') as HTMLImageElement;
     if (avatarImg) avatarImg.src = user.foto || defaultAvatar;
 
-    setText('user-full-name', `${user.nombre} ${user.apellido}`);
-    setText('user-email', user.email);
-    setText('user-dni', user.dni ? `${user.tipoDni} ${user.dni}` : null);
-    setText('user-birth', user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : null);
-    setText('user-nationality', user.paisNacimiento);
-    setText('user-residence', user.ciudadResidencia ? `${user.ciudadResidencia} ${user.codigoPostal ? `(${user.codigoPostal})` : ''}` : null);
-    setText('user-id', user.id);
+    const fullNameElement = document.getElementById('user-full-name');
+    const emailElement = document.getElementById('user-email');
+    const dniElement = document.getElementById('user-dni');
+    const birthElement = document.getElementById('user-birth');
+    const nationalityElement = document.getElementById('user-nationality');
+    const residenceElement = document.getElementById('user-residence');
+    const idElement = document.getElementById('user-id');
+    const googleElement = document.getElementById('social-google');
+    const facebookElement = document.getElementById('social-facebook');
+
+    if (fullNameElement) fullNameElement.textContent = `${user.nombre} ${user.apellido || ''}`;
+    if (emailElement) emailElement.textContent = user.email;
+    if (dniElement) dniElement.textContent = user.dni ? `${user.tipoDni} ${user.dni}` : 'No especificado';
+    if (birthElement) birthElement.textContent = user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No especificado';
+    if (nationalityElement) nationalityElement.textContent = user.paisNacimiento || 'No especificado';
+    if (residenceElement) residenceElement.textContent = user.ciudadResidencia ? `${user.ciudadResidencia} ${user.codigoPostal ? `(${user.codigoPostal})` : ''}` : 'No especificado';
+    if (idElement) idElement.textContent = user.id;
+
+    if (googleElement) googleElement.style.display = user.logueado_con_google ? 'inline-block' : 'none';
+    if (facebookElement) facebookElement.style.display = user.logueado_con_facebook ? 'inline-block' : 'none';
 
     const roleBadge = document.getElementById('user-role-badge');
     if (roleBadge) {
