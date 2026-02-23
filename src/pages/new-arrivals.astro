@@ -67,8 +67,8 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                         {maxPriceParam && (
                             <span class={styles.filterTag}>Max: ${maxPriceParam}</span>
                         )}
-                        {hasWithStockFilter && (
-                            <span class={styles.filterTag}>{withStockParam ? "Con Stock" : "Con y Sin Stock"}</span>
+                        {hasWithStockFilter && !withStockParam && (
+                            <span class={styles.filterTag}>Con y Sin Stock</span>
                         )}
                         {onlyOffersParam && (
                             <span class={styles.filterTag}>En Oferta</span>
