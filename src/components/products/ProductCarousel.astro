@@ -52,10 +52,7 @@ const displayProducts = products.slice(0, limit);
                 {
                     displayProducts.map((product) => (
                         <div class={styles.carouselItem} data-carousel-item>
-                            <ProductCard
-                                product={product}
-                                showFeatured={false}
-                            />
+                            <ProductCard product={product} />
                         </div>
                     ))
                 }
