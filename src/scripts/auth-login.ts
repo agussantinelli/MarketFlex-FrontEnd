@@ -13,6 +13,21 @@ export function initLogin() {
 
     if (!loginForm || !emailInput || !rememberCheckbox) return;
 
+    // Password Visibility Toggle
+    const toggleBtns = document.querySelectorAll("[data-toggle-for]");
+    toggleBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const inputId = btn.getAttribute("data-toggle-for");
+            if (!inputId) return;
+            const input = document.getElementById(inputId) as HTMLInputElement;
+            if (!input) return;
+
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            btn.classList.toggle("password-visible", isPassword);
+        });
+    });
+
     // Load remembered email
     const rememberedEmail = localStorage.getItem("rememberedEmail");
     if (rememberedEmail) {
