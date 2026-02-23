@@ -1,7 +1,9 @@
 ---
 import FilterButton from "./FilterButton.astro";
 import SortSelect from "./SortSelect.astro";
+import FilterModal from "./FilterModal.astro";
 import styles from "./styles/controls.module.css";
+import { filterService } from "../../services/filter.service";
 
 interface Props {
     sort: string;
@@ -18,10 +20,33 @@ const {
     showFilter = true,
     showSort = true,
 } = Astro.props;
+
+// Fetch filter data for the modal
+const categories = await filterService.getCategories();
+const subcategories = await filterService.getSubcategories();
+
+const currentType = params.get("type") || undefined;
+const currentCategory = params.get("category") || undefined;
+const currentMinPrice = params.get("minPrice") || undefined;
+const currentMaxPrice = params.get("maxPrice") || undefined;
 ---
 
 <div class={styles.searchControls}>
     {showSort && <SortSelect sort={sort} baseUrl={baseUrl} params={params} />}
 
-    {showFilter && <FilterButton />}
+    {
+        showFilter && (
+            <>
+                <FilterButton />
+                <FilterModal
+                    categories={categories}
+                    subcategories={subcategories}
+                    currentType={currentType}
+                    currentCategory={currentCategory}
+                    currentMinPrice={currentMinPrice}
+                    currentMaxPrice={currentMaxPrice}
+                />
+            </>
+        )
+    }
 </div>
