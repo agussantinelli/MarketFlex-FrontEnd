@@ -47,6 +47,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     sort={sort}
                     baseUrl="/offers"
                     params={Astro.url.searchParams}
+                    showOnlyOffersFilter={false}
                 />
 
                 {(minPriceParam || maxPriceParam || hasWithStockFilter) && (

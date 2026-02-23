@@ -11,6 +11,7 @@ interface Props {
     currentCategory?: string;
     currentMinPrice?: string;
     currentMaxPrice?: string;
+    showOnlyOffersFilter?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
     currentCategory,
     currentMinPrice,
     currentMaxPrice,
+    showOnlyOffersFilter = true,
 } = Astro.props;
 ---
 
@@ -151,17 +153,24 @@ const {
             </div>
 
             {/* Ofertas */}
-            <div class={styles.filterSection}>
-                <div class={styles.checkboxSection}>
-                    <label for="only-offers-checkbox"
-                        >Solo productos en oferta</label
-                    >
-                    <label class={styles.switch}>
-                        <input type="checkbox" id="only-offers-checkbox" />
-                        <span class={styles.slider}></span>
-                    </label>
-                </div>
-            </div>
+            {
+                showOnlyOffersFilter && (
+                    <div class={styles.filterSection}>
+                        <div class={styles.checkboxSection}>
+                            <label for="only-offers-checkbox">
+                                Solo productos en oferta
+                            </label>
+                            <label class={styles.switch}>
+                                <input
+                                    type="checkbox"
+                                    id="only-offers-checkbox"
+                                />
+                                <span class={styles.slider} />
+                            </label>
+                        </div>
+                    </div>
+                )
+            }
         </div>
 
         <div class={styles.modalFooter}>

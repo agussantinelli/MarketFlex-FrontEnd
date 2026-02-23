@@ -11,6 +11,7 @@ interface Props {
     params?: URLSearchParams;
     showFilter?: boolean;
     showSort?: boolean;
+    showOnlyOffersFilter?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
     params = new URLSearchParams(),
     showFilter = true,
     showSort = true,
+    showOnlyOffersFilter = true,
 } = Astro.props;
 
 // Fetch filter data for the modal
@@ -45,6 +47,7 @@ const currentMaxPrice = params.get("maxPrice") || undefined;
                     currentCategory={currentCategory}
                     currentMinPrice={currentMinPrice}
                     currentMaxPrice={currentMaxPrice}
+                    showOnlyOffersFilter={showOnlyOffersFilter}
                 />
             </>
         )
