@@ -18,4 +18,11 @@ export type Product = {
     marca: string | null;
     autor: string | null;
     fechaLlegada: string | null;
+    promocionActiva?: {
+        nombre: string;
+        tipoPromocion: string;
+        cantCompra: number | null;
+        cantPaga: number | null;
+        porcentajeDescuentoSegunda: string | null;
+    } | null;
 };
