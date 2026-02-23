@@ -10,15 +10,43 @@ export function initNavbar() {
         });
     }
 
+    // Hierarchical Subcategory Logic
+    const subcatToggles = document.querySelectorAll(".subcat-toggle");
+
+    subcatToggles.forEach(toggle => {
+        toggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const categoryItem = toggle.closest(".category-item");
+            const menu = categoryItem?.querySelector(".subcategory-menu");
+
+            if (menu) {
+                const isActive = menu.classList.contains("active");
+
+                // Close others in same parent
+                const parent = categoryItem?.parentElement;
+                parent?.querySelectorAll(".subcategory-menu.active").forEach((m: any) => m.classList.remove("active"));
+                parent?.querySelectorAll(".subcat-toggle.active").forEach((t: any) => t.classList.remove("active"));
+
+                if (!isActive) {
+                    menu.classList.add("active");
+                    toggle.classList.add("active");
+                }
+            }
+        });
+    });
+
     // Generic Dropdown Logic (User & Nav Items)
     const dropdowns = document.querySelectorAll(
         ".nav-item-dropdown, .user-dropdown",
     );
 
+    // Close nested menus when clicking outside main dropdown
     document.addEventListener("click", (e) => {
         let isDropdownClick = false;
 
-        dropdowns.forEach((dropdown) => {
+        dropdowns.forEach((dropdown: any) => {
             const btn = dropdown.querySelector(
                 ".dropdown-btn, .dropdown-trigger",
             );
@@ -30,14 +58,24 @@ export function initNavbar() {
                 if (btn.contains(e.target as Node)) {
                     isDropdownClick = true;
                     // Close others
-                    dropdowns.forEach((d) => {
+                    dropdowns.forEach((d: any) => {
                         if (d !== dropdown) {
                             d.querySelector(
                                 ".nav-dropdown-menu, .dropdown-menu",
                             )?.classList.remove("active");
+                            // Also close nested
+                            d.querySelectorAll(".subcategory-menu.active").forEach((m: any) => m.classList.remove("active"));
+                            d.querySelectorAll(".subcat-toggle.active").forEach((t: any) => t.classList.remove("active"));
                         }
                     });
                     menu.classList.toggle("active");
+
+                    // If closing main menu, close nested too
+                    if (!menu.classList.contains("active")) {
+                        menu.querySelectorAll(".subcategory-menu.active").forEach((m: any) => m.classList.remove("active"));
+                        menu.querySelectorAll(".subcat-toggle.active").forEach((t: any) => t.classList.remove("active"));
+                    }
+
                     e.stopPropagation();
                 } else if (menu.contains(e.target as Node)) {
                     isDropdownClick = true;
@@ -50,8 +88,10 @@ export function initNavbar() {
                 .querySelectorAll(
                     ".nav-dropdown-menu.active, .dropdown-menu.active",
                 )
-                .forEach((menu) => {
+                .forEach((menu: any) => {
                     menu.classList.remove("active");
+                    menu.querySelectorAll(".subcategory-menu.active").forEach((m: any) => m.classList.remove("active"));
+                    menu.querySelectorAll(".subcat-toggle.active").forEach((t: any) => t.classList.remove("active"));
                 });
         }
     });

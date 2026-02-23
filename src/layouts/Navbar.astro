@@ -58,7 +58,7 @@ const subcategories = await getSubcategories();
                 Explorar
             </a>
 
-            <!-- Categorías Dropdown -->
+            <!-- Categorías Dropdown Hierárquico -->
             <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
                 <button
                     class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
@@ -72,40 +72,55 @@ const subcategories = await getSubcategories();
                 </button>
                 <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
                     {
-                        categories.map((cat) => (
-                            <a
-                                href={`/search?type=${cat.nombre}`}
-                                class={styles.dropdownLink}
-                            >
-                                {cat.nombre}
-                            </a>
-                        ))
-                    }
-                </div>
-            </div>
+                        categories.map((cat) => {
+                            const catSubcategories = subcategories.filter(
+                                (s) => s.categoriaId === cat.id,
+                            );
+                            const hasSubcategories =
+                                catSubcategories.length > 0;
 
-            <!-- Subcategorías Dropdown -->
-            <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
-                <button
-                    class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
-                >
-                    <Icon name="lucide:layers" class={styles.linkIcon} />
-                    Subcategorías
-                    <Icon
-                        name="lucide:chevron-down"
-                        class={styles.chevronIcon}
-                    />
-                </button>
-                <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
-                    {
-                        subcategories.map((sub) => (
-                            <a
-                                href={`/search?category=${sub.nombre}`}
-                                class={styles.dropdownLink}
-                            >
-                                {sub.nombre}
-                            </a>
-                        ))
+                            return (
+                                <div
+                                    class={`${styles.categoryItem} category-item`}
+                                >
+                                    <div class={styles.categoryHeader}>
+                                        <a
+                                            href={`/search?type=${cat.nombre}`}
+                                            class={styles.categoryName}
+                                        >
+                                            {cat.nombre}
+                                        </a>
+                                        {hasSubcategories && (
+                                            <button
+                                                class={`${styles.subcatToggle} subcat-toggle`}
+                                                aria-label={`Ver subcategorías de ${cat.nombre}`}
+                                            >
+                                                <Icon
+                                                    name="lucide:chevron-right"
+                                                    class={styles.subcatIcon}
+                                                />
+                                            </button>
+                                        )}
+                                    </div>
+                                    {hasSubcategories && (
+                                        <div
+                                            class={`${styles.subcategoryMenu} subcategory-menu`}
+                                        >
+                                            {catSubcategories.map((sub) => (
+                                                <a
+                                                    href={`/search?type=${cat.nombre}&category=${sub.nombre}`}
+                                                    class={
+                                                        styles.subcategoryLink
+                                                    }
+                                                >
+                                                    {sub.nombre}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })
                     }
                 </div>
             </div>
@@ -114,6 +129,12 @@ const subcategories = await getSubcategories();
             <a href="/search?offers=true" class={styles.navLink}>
                 <Icon name="lucide:tag" class={styles.linkIcon} />
                 Ofertas
+            </a>
+
+            <!-- Novedades -->
+            <a href="/search?newArrivals=true" class={styles.navLink}>
+                <Icon name="lucide:sparkles" class={styles.linkIcon} />
+                Novedades
             </a>
 
             <!-- Auth Section -->
