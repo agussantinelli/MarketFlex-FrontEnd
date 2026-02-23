@@ -60,11 +60,12 @@ export const getFeaturedProducts = async (): Promise<Product[]> => {
     }
 };
 
-export const getNewArrivals = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
+export const getNewArrivals = async (page: number = 1, limit: number = 20, sort?: string): Promise<PaginatedResponse<Product>> => {
     try {
         const params = new URLSearchParams();
         params.append("page", page.toString());
         params.append("limit", limit.toString());
+        if (sort) params.append("sort", sort);
 
         return await api.get(`products/new-arrivals?${params.toString()}`).json();
     } catch (error) {
@@ -94,11 +95,12 @@ export const getBestsellers = async (page: number = 1, limit: number = 20): Prom
     }
 };
 
-export const getOffers = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
+export const getOffers = async (page: number = 1, limit: number = 20, sort?: string): Promise<PaginatedResponse<Product>> => {
     try {
         const params = new URLSearchParams();
         params.append("page", page.toString());
         params.append("limit", limit.toString());
+        if (sort) params.append("sort", sort);
 
         return await api.get(`products/offers?${params.toString()}`).json();
     } catch (error) {
