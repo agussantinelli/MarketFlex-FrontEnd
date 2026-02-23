@@ -191,6 +191,7 @@
   <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
   <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
+  <li>🚀 <b>Promotion Hero Section:</b> Banner dinámico y ultra-compacto para destacar promociones especiales, con slider interactivo y diseño adaptable.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
