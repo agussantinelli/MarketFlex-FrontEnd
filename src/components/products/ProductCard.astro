@@ -6,9 +6,10 @@ import styles from "./styles/ProductCard.module.css";
 interface Props {
     product: Product;
     showFeatured?: boolean;
+    rank?: number;
 }
 
-const { product, showFeatured = true } = Astro.props;
+const { product, showFeatured = true, rank } = Astro.props;
 ---
 
 <article class={styles.productCard}>
@@ -24,6 +25,24 @@ const { product, showFeatured = true } = Astro.props;
         <div class={styles.priceTag}>${product.precioActual || "0.00"}</div>
 
         <div class={styles.badgesContainer}>
+            {
+                rank && (
+                    <div
+                        class={`${styles.rankBadge} ${
+                            rank === 1
+                                ? styles.rankGold
+                                : rank === 2
+                                  ? styles.rankSilver
+                                  : rank === 3
+                                    ? styles.rankBronze
+                                    : styles.rankGeneric
+                        }`}
+                        title={`Puesto #${rank} en ventas`}
+                    >
+                        <span class={styles.rankNumber}>{rank}</span>
+                    </div>
+                )
+            }
             {
                 product.descuentoActivo && (
                     <div class={`${styles.badge} ${styles.discount}`}>

@@ -11,6 +11,8 @@ interface Props {
     products: Product[];
     limit?: number;
     viewMoreHref?: string;
+    showViewMore?: boolean;
+    showRank?: boolean;
     id: string;
 }
 
@@ -21,6 +23,8 @@ const {
     products,
     limit = 8,
     viewMoreHref = "/search",
+    showViewMore = true,
+    showRank = false,
     id,
 } = Astro.props;
 
@@ -46,24 +50,31 @@ const displayProducts = products.slice(0, limit);
         <div class={styles.carouselContainer} data-carousel-container>
             <div class={styles.carouselTrack}>
                 {
-                    displayProducts.map((product) => (
+                    displayProducts.map((product, index) => (
                         <div class={styles.carouselItem} data-carousel-item>
-                            <ProductCard product={product} />
+                            <ProductCard
+                                product={product}
+                                rank={showRank ? index + 1 : undefined}
+                            />
                         </div>
                     ))
                 }
 
-                <div
-                    class={`${styles.carouselItem} ${styles.viewMoreCard}`}
-                    data-carousel-item
-                >
-                    <a href={viewMoreHref} class={styles.viewMoreBtn}>
-                        <div class={styles.iconWrapper}>
-                            <Icon name="lucide:arrow-right" size={32} />
+                {
+                    showViewMore && (
+                        <div
+                            class={`${styles.carouselItem} ${styles.viewMoreCard}`}
+                            data-carousel-item
+                        >
+                            <a href={viewMoreHref} class={styles.viewMoreBtn}>
+                                <div class={styles.iconWrapper}>
+                                    <Icon name="lucide:arrow-right" size={32} />
+                                </div>
+                                <span>Ver más</span>
+                            </a>
                         </div>
-                        <span>Ver más</span>
-                    </a>
-                </div>
+                    )
+                }
             </div>
         </div>
 

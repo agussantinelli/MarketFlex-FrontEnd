@@ -6,11 +6,13 @@ import ProductCarousel from "../components/products/ProductCarousel.astro";
 import {
 	getFeaturedProducts,
 	getNewArrivals,
+	getBestsellers,
 } from "../services/product.service";
 import styles from "./styles/index.module.css";
 
 const products = await getFeaturedProducts();
 const { data: newArrivals } = await getNewArrivals(1, 7);
+const { data: bestSellers } = await getBestsellers(1, 10);
 const user = Astro.url.searchParams.get("user") || "Usuario";
 const isNewUser = Astro.url.searchParams.get("new") === "true";
 const welcomeMessage = isNewUser
@@ -29,6 +31,17 @@ const welcomeMessage = isNewUser
 	/>
 
 	<FeaturedProducts products={products} />
+
+	<ProductCarousel
+		id="best-sellers"
+		title="Más"
+		titleHighlight="vendidos"
+		icon="lucide:trending-up"
+		products={bestSellers}
+		limit={10}
+		showViewMore={false}
+		showRank={true}
+	/>
 
 	<ProductCarousel
 		id="new-arrivals"
