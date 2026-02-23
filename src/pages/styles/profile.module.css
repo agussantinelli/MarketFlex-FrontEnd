@@ -1,0 +1,210 @@
+.profileContainer {
+    padding: 4rem 1rem;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top right, hsla(142, 70%, 45%, 0.05), transparent),
+        radial-gradient(circle at bottom left, hsla(142, 70%, 45%, 0.05), transparent);
+}
+
+
+
+.loaderContainer,
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem 0;
+}
+
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 3px solid hsla(142, 70%, 45%, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--green-primary);
+    animation: spin 1s ease-in-out infinite;
+}
+
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 2rem;
+}
+
+.avatarContainer {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--green-primary);
+    box-shadow: 0 10px 25px -5px hsla(142, 70%, 45%, 0.4);
+}
+
+
+
+.profileAvatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.headerInfo h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(135deg, #fff 0%, var(--green-primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.admin {
+    background: hsla(142, 70%, 45%, 0.1);
+    color: var(--green-primary);
+    border: 1px solid hsla(142, 70%, 45%, 0.2);
+}
+
+
+
+.customer {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.infoGroup label {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.infoGroup p {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+    margin: 0;
+    font-weight: 500;
+}
+
+.smallId {
+    font-family: monospace;
+    font-size: 0.9rem !important;
+    opacity: 0.7;
+}
+
+.profileActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.logoutBtn {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+}
+
+.errorContainer {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.retryBtn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--green-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+/* Visibility Toggles */
+.profileData,
+.errorContainer {
+    display: none;
+}
+
+.isReady .profileData {
+    display: block;
+}
+
+.isReady .loaderContainer {
+    display: none;
+}
+
+.hasError .errorContainer {
+    display: block;
+}
+
+.hasError .loaderContainer,
+.hasError .profileData {
+    display: none;
+}
+
+@media (max-width: 640px) {
+
+    .profileHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .headerInfo h1 {
+        font-size: 1.8rem;
+    }
+
+    .profileActions {
+        justify-content: center;
+    }
+
+    .logoutBtn {
+        width: 100%;
+    }
+}
