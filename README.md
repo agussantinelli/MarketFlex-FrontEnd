@@ -14,7 +14,7 @@
 
 <div align="center">
     <img src="https://img.shields.io/badge/Astro-5.17.1-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
-    <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge">
+    <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge">
     <img src="https://img.shields.io/badge/Sileo-Notifications-FFD700?style=for-the-badge&logo=vlc&logoColor=black" alt="Sileo Badge">
     <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/OpenAPI-Consuming-6BA539?style=for-the-badge&logo=openapiinitiative&logoColor=white" alt="OpenAPI Badge">
@@ -27,6 +27,7 @@
     <img src="https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge">
     <img src="https://img.shields.io/badge/reCAPTCHA-v3-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="reCAPTCHA Badge">
     <img src="https://img.shields.io/badge/HTTPS-mkcert-003666?style=for-the-badge&logo=letsencrypt&logoColor=white" alt="mkcert Badge">
+    <img src="https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge">
 </div>
 
 <div align="center">
@@ -121,8 +122,14 @@
         <tr>
             <td><strong>UI Framework</strong></td>
             <td>React</td>
-            <td><strong>^19.x</strong></td>
+            <td><strong>^19.2.4</strong></td>
             <td>Soporte para componentes interactivos y librerías externas.</td>
+        </tr>
+        <tr>
+            <td><strong>DX Tools</strong></td>
+            <td>Astro Check</td>
+            <td><strong>^0.9.6</strong></td>
+            <td>Validación estática y visualización de errores de Astro.</td>
         </tr>
         <tr>
             <td><strong>Auth Social</strong></td>
