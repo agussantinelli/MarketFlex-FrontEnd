@@ -1,0 +1,27 @@
+---
+import FilterButton from "./FilterButton.astro";
+import SortSelect from "./SortSelect.astro";
+import styles from "./styles/controls.module.css";
+
+interface Props {
+    sort: string;
+    baseUrl: string;
+    params?: URLSearchParams;
+    showFilter?: boolean;
+    showSort?: boolean;
+}
+
+const {
+    sort,
+    baseUrl,
+    params = new URLSearchParams(),
+    showFilter = true,
+    showSort = true,
+} = Astro.props;
+---
+
+<div class={styles.searchControls}>
+    {showSort && <SortSelect sort={sort} baseUrl={baseUrl} params={params} />}
+
+    {showFilter && <FilterButton />}
+</div>
