@@ -84,14 +84,21 @@ const { product, showFeatured = true } = Astro.props;
     <div class={styles.productInfo}>
         <div class={styles.productCategories}>
             {
-                product.categorias?.map((cat, index) => (
-                    <>
-                        <span class={styles.categoryName}>{cat}</span>
-                        {index < product.categorias.length - 1 && (
-                            <span class={styles.separator}>•</span>
-                        )}
-                    </>
-                ))
+                product.categoria && (
+                    <span class={styles.categoryName}>{product.categoria}</span>
+                )
+            }
+            {
+                product.categoria && product.subcategoria && (
+                    <span class={styles.separator}>•</span>
+                )
+            }
+            {
+                product.subcategoria && (
+                    <span class={styles.categoryName}>
+                        {product.subcategoria}
+                    </span>
+                )
             }
         </div>
         <h3 class={styles.title}>{product.nombre}</h3>

@@ -1,11 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
-import { getProductTypes } from "../services/product-type.service";
 import { getCategories } from "../services/category.service";
+import { getSubcategories } from "../services/subcategory.service";
 import styles from "./styles/Navbar.module.css";
 
-const productTypes = await getProductTypes();
 const categories = await getCategories();
+const subcategories = await getSubcategories();
 ---
 
 <nav class={styles.navbar}>
@@ -58,38 +58,12 @@ const categories = await getCategories();
                 Explorar
             </a>
 
-            <!-- Tipos Dropdown -->
-            <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
-                <button
-                    class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
-                >
-                    <Icon name="lucide:book" class={styles.linkIcon} />
-                    Tipos
-                    <Icon
-                        name="lucide:chevron-down"
-                        class={styles.chevronIcon}
-                    />
-                </button>
-                <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
-                    {
-                        productTypes.map((type) => (
-                            <a
-                                href={`/search?type=${type.nombre}`}
-                                class={styles.dropdownLink}
-                            >
-                                {type.nombre}
-                            </a>
-                        ))
-                    }
-                </div>
-            </div>
-
             <!-- Categorías Dropdown -->
             <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
                 <button
                     class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
                 >
-                    <Icon name="lucide:layers" class={styles.linkIcon} />
+                    <Icon name="lucide:book" class={styles.linkIcon} />
                     Categorías
                     <Icon
                         name="lucide:chevron-down"
@@ -100,10 +74,36 @@ const categories = await getCategories();
                     {
                         categories.map((cat) => (
                             <a
-                                href={`/search?category=${cat.nombre}`}
+                                href={`/search?type=${cat.nombre}`}
                                 class={styles.dropdownLink}
                             >
                                 {cat.nombre}
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Subcategorías Dropdown -->
+            <div class={`${styles.navItemDropdown} nav-item-dropdown`}>
+                <button
+                    class={`${styles.navLink} ${styles.dropdownBtn} dropdown-btn`}
+                >
+                    <Icon name="lucide:layers" class={styles.linkIcon} />
+                    Subcategorías
+                    <Icon
+                        name="lucide:chevron-down"
+                        class={styles.chevronIcon}
+                    />
+                </button>
+                <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
+                    {
+                        subcategories.map((sub) => (
+                            <a
+                                href={`/search?category=${sub.nombre}`}
+                                class={styles.dropdownLink}
+                            >
+                                {sub.nombre}
                             </a>
                         ))
                     }
