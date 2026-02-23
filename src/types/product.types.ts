@@ -1,9 +1,10 @@
 export type Product = {
-    id: number;
+    id: string;
     nombre: string;
     caracteristicas: string | null;
     foto: string | null;
-    categorias: string[];
+    categoria: string | null;
+    subcategoria: string | null;
     precioActual: number | null;
     precioConDescuento: number | null;
     descuentoActivo: {
