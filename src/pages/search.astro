@@ -3,6 +3,7 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import ProductCard from "../components/products/ProductCard.astro";
+import ProductControls from "../components/products/ProductControls.astro";
 import { searchProducts } from "../services/product.service";
 import styles from "./styles/search.module.css";
 
@@ -84,64 +85,11 @@ const endRange = Math.min(currentPage * limit, pagination.total);
             }
             {
                 (products.length > 0 || !searchQuery) && (
-                    <div class={styles.searchControls}>
-                        <div class={styles.sortWrapper}>
-                            <select
-                                class={styles.sortSelect}
-                                onchange="window.location.href = this.value"
-                            >
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=`}
-                                    selected={
-                                        sort === "" || sort === "relevance"
-                                    }
-                                >
-                                    Relevancia
-                                </option>
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=price_asc`}
-                                    selected={sort === "price_asc"}
-                                >
-                                    Menor Precio
-                                </option>
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=price_desc`}
-                                    selected={sort === "price_desc"}
-                                >
-                                    Mayor Precio
-                                </option>
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=name_asc`}
-                                    selected={sort === "name_asc"}
-                                >
-                                    A - Z
-                                </option>
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=name_desc`}
-                                    selected={sort === "name_desc"}
-                                >
-                                    Z - A
-                                </option>
-                                <option
-                                    value={`/search?q=${searchQuery}&sort=bestselling`}
-                                    selected={sort === "bestselling"}
-                                >
-                                    Más Vendidos
-                                </option>
-                            </select>
-                            <Icon
-                                name="lucide:chevron-down"
-                                class={styles.sortIcon}
-                            />
-                        </div>
-                        <button id="filter-btn" class={styles.filterBtn}>
-                            <Icon
-                                name="lucide:list-filter"
-                                class={styles.filterIcon}
-                            />
-                            Filtrar
-                        </button>
-                    </div>
+                    <ProductControls 
+                        sort={sort}
+                        baseUrl="/search"
+                        params={Astro.url.searchParams}
+                    />
                 )
             }
         </div>

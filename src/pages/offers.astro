@@ -3,13 +3,15 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import ProductCard from "../components/products/ProductCard.astro";
+import ProductControls from "../components/products/ProductControls.astro";
 import { getOffers } from "../services/product.service";
 import styles from "./styles/search.module.css";
 
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
+const sort = Astro.url.searchParams.get("sort") || "relevance";
 const limit = 20;
 
-const response = await getOffers(currentPage, limit);
+const response = await getOffers(currentPage, limit, sort);
 
 const products = response.data;
 const pagination = response.pagination;
@@ -34,6 +36,12 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     ({pagination.total})
                 </span>
             </h2>
+
+            <ProductControls 
+                sort={sort}
+                baseUrl="/offers"
+                params={Astro.url.searchParams}
+            />
         </div>
 
         {
