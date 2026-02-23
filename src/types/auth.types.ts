@@ -1,10 +1,6 @@
-export type User = {
-    id: number;
-    email: string;
-    nombre: string;
-    rol: string;
-    foto?: string;
-};
+import type { User } from "./user.types";
+
+
 
 export type LoginResponse = {
     user: User;
