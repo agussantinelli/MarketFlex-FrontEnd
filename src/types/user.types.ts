@@ -11,6 +11,6 @@ export type User = {
     paisNacimiento?: string | null;
     codigoPostal?: string | null;
     ciudadResidencia?: string | null;
-    googleId?: string | null;
-    facebookId?: string | null;
+    logueado_con_google: boolean;
+    logueado_con_facebook: boolean;
 };
