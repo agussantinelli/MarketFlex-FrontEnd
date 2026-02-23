@@ -102,4 +102,21 @@ export const getBestsellers = async (page: number = 1, limit: number = 20): Prom
     }
 };
 
+export const getOffers = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
+    try {
+        const params = new URLSearchParams();
+        params.append("page", page.toString());
+        params.append("limit", limit.toString());
+
+        return await api.get(`products/offers?${params.toString()}`).json();
+    } catch (error) {
+        console.error("Error fetching offers:", error);
+        return {
+            status: 'error',
+            data: [],
+            pagination: { total: 0, page: 1, limit: 20, totalPages: 0 }
+        };
+    }
+};
+
 
