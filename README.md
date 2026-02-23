@@ -320,6 +320,7 @@
 
 │   │   ├── subcategory.types.ts                    # Tipos de Subcategorías
 │   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
+│   │   ├── common.types.ts                         # Tipos transversales (Paginación, etc.)
 │   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
 │   │   ├── admin/                                  # Panel de administración
@@ -336,8 +337,11 @@
 │   │   ├── terminos.astro                          # Página de Términos y Condiciones
 │   │   ├── index.astro                             # Página de inicio
 │   │   ├── login.astro                             # Página de inicio de sesión
+│   │   ├── offers.astro                            # Dashboard de Ofertas con paginación
 │   │   ├── profile.astro                           # Página de perfil del usuario
-│   │   └── search.astro                            # Página de búsqueda y filtrado
+│   │   ├── register.astro                          # Registro con reCAPTCHA v3
+│   │   ├── new-arrivals.astro                      # Sección de novedades
+│   │   └── search.astro                            # Motor de búsqueda y filtrado
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales
 │   │   │   ├── styles/                             # Estilos (ej. PageCard.module.css)
