@@ -12,6 +12,41 @@ export function initNavbar() {
 
     // Hierarchical Subcategory Logic
     const subcatToggles = document.querySelectorAll(".subcat-toggle");
+    let subcatTimeout: any = null;
+
+    // Hover logic for desktop
+    const categoryItems = document.querySelectorAll(".category-item");
+    categoryItems.forEach((item: any) => {
+        item.addEventListener("mouseenter", () => {
+            if (window.innerWidth >= 768) {
+                if (subcatTimeout) {
+                    clearTimeout(subcatTimeout);
+                    subcatTimeout = null;
+                }
+
+                // Close others in same parent
+                const parent = item.parentElement;
+                parent?.querySelectorAll(".subcategory-menu.active").forEach((m: any) => m.classList.remove("active"));
+                parent?.querySelectorAll(".subcat-toggle.active").forEach((t: any) => t.classList.remove("active"));
+
+                const menu = item.querySelector(".subcategory-menu");
+                const toggle = item.querySelector(".subcat-toggle");
+                if (menu) menu.classList.add("active");
+                if (toggle) toggle.classList.add("active");
+            }
+        });
+
+        item.addEventListener("mouseleave", () => {
+            if (window.innerWidth >= 768) {
+                subcatTimeout = setTimeout(() => {
+                    const menu = item.querySelector(".subcategory-menu");
+                    const toggle = item.querySelector(".subcat-toggle");
+                    if (menu) menu.classList.remove("active");
+                    if (toggle) toggle.classList.remove("active");
+                }, 2000); // 2 seconds grace period
+            }
+        });
+    });
 
     subcatToggles.forEach(toggle => {
         toggle.addEventListener("click", (e) => {
@@ -23,6 +58,11 @@ export function initNavbar() {
 
             if (menu) {
                 const isActive = menu.classList.contains("active");
+
+                if (subcatTimeout) {
+                    clearTimeout(subcatTimeout);
+                    subcatTimeout = null;
+                }
 
                 // Close others in same parent
                 const parent = categoryItem?.parentElement;
