@@ -39,147 +39,150 @@ const {
             <Icon name="lucide:x" />
         </button>
 
-        <div class={styles.modalHeader}>
-            <div class={styles.modalIconWrapper}>
-                <Icon name="lucide:list-filter" class={styles.modalIcon} />
-            </div>
-            <h2 class={styles.modalTitle}>Filtrar Productos</h2>
-        </div>
-
-        <div class={styles.modalBody}>
-            {/* Categorías */}
-            <div class={styles.filterSection}>
-                <h3 class={styles.filterSectionTitle}>Categorías</h3>
-                <div class={styles.optionsGrid}>
-                    {
-                        categories.map((cat) => (
-                            <button
-                                class:list={[
-                                    styles.optionBtn,
-                                    {
-                                        [styles.optionActive]:
-                                            currentType === cat.nombre,
-                                    },
-                                ]}
-                                data-type={cat.nombre}
-                                data-category-id={cat.id}
-                            >
-                                {cat.nombre}
-                            </button>
-                        ))
-                    }
+        <div class={styles.modalScrollArea}>
+            <div class={styles.modalHeader}>
+                <div class={styles.modalIconWrapper}>
+                    <Icon name="lucide:list-filter" class={styles.modalIcon} />
                 </div>
+                <h2 class={styles.modalTitle}>Filtrar Productos</h2>
             </div>
 
-            {/* Subcategorías - Conditional */}
-            <div
-                id="subcategory-section"
-                class:list={[
-                    styles.filterSection,
-                    { [styles.hidden]: !currentType },
-                ]}
-            >
-                <h3 class={styles.filterSectionTitle}>Subcategorías</h3>
-                <div id="subcategory-options" class={styles.optionsGrid}>
-                    {
-                        /* Will be populated by JS or rendered if currentType exists */
-                    }
-                    {
-                        subcategories
-                            .filter((sub) => {
-                                const parentCat = categories.find(
-                                    (c) => c.nombre === currentType,
-                                );
-                                return (
-                                    parentCat &&
-                                    sub.categoriaId === parentCat.id
-                                );
-                            })
-                            .map((sub) => (
+            <div class={styles.modalBody}>
+                {/* Categorías */}
+                <div class={styles.filterSection}>
+                    <h3 class={styles.filterSectionTitle}>Categorías</h3>
+                    <div class={styles.optionsGrid}>
+                        {
+                            categories.map((cat) => (
                                 <button
                                     class:list={[
                                         styles.optionBtn,
                                         {
                                             [styles.optionActive]:
-                                                currentCategory === sub.nombre,
+                                                currentType === cat.nombre,
                                         },
                                     ]}
-                                    data-category={sub.nombre}
+                                    data-type={cat.nombre}
+                                    data-category-id={cat.id}
                                 >
-                                    {sub.nombre}
+                                    {cat.nombre}
                                 </button>
                             ))
-                    }
-                </div>
-            </div>
-
-            {/* Precio */}
-            <div class={styles.filterSection}>
-                <h3 class={styles.filterSectionTitle}>Precio</h3>
-                <div class={styles.priceInputs}>
-                    <div class={styles.inputGroup}>
-                        <span>$</span>
-                        <input
-                            type="number"
-                            id="min-price"
-                            placeholder="Mínimo"
-                            value={currentMinPrice}
-                        />
-                    </div>
-                    <span class={styles.priceSeparator}>-</span>
-                    <div class={styles.inputGroup}>
-                        <span>$</span>
-                        <input
-                            type="number"
-                            id="max-price"
-                            placeholder="Máximo"
-                            value={currentMaxPrice}
-                        />
+                        }
                     </div>
                 </div>
-            </div>
 
-            {/* Stock */}
-            <div class={styles.filterSection}>
-                <div class={styles.checkboxSection}>
-                    <label for="with-stock-checkbox"
-                        >Solo productos con stock</label
-                    >
-                    <label class={styles.switch}>
-                        <input type="checkbox" id="with-stock-checkbox" />
-                        <span class={styles.slider}></span>
-                    </label>
+                {/* Subcategorías - Conditional */}
+                <div
+                    id="subcategory-section"
+                    class:list={[
+                        styles.filterSection,
+                        { [styles.hidden]: !currentType },
+                    ]}
+                >
+                    <h3 class={styles.filterSectionTitle}>Subcategorías</h3>
+                    <div id="subcategory-options" class={styles.optionsGrid}>
+                        {
+                            /* Will be populated by JS or rendered if currentType exists */
+                        }
+                        {
+                            subcategories
+                                .filter((sub) => {
+                                    const parentCat = categories.find(
+                                        (c) => c.nombre === currentType,
+                                    );
+                                    return (
+                                        parentCat &&
+                                        sub.categoriaId === parentCat.id
+                                    );
+                                })
+                                .map((sub) => (
+                                    <button
+                                        class:list={[
+                                            styles.optionBtn,
+                                            {
+                                                [styles.optionActive]:
+                                                    currentCategory ===
+                                                    sub.nombre,
+                                            },
+                                        ]}
+                                        data-category={sub.nombre}
+                                    >
+                                        {sub.nombre}
+                                    </button>
+                                ))
+                        }
+                    </div>
                 </div>
-            </div>
 
-            {/* Ofertas */}
-            {
-                showOnlyOffersFilter && (
-                    <div class={styles.filterSection}>
-                        <div class={styles.checkboxSection}>
-                            <label for="only-offers-checkbox">
-                                Solo productos en oferta
-                            </label>
-                            <label class={styles.switch}>
-                                <input
-                                    type="checkbox"
-                                    id="only-offers-checkbox"
-                                />
-                                <span class={styles.slider} />
-                            </label>
+                {/* Precio */}
+                <div class={styles.filterSection}>
+                    <h3 class={styles.filterSectionTitle}>Precio</h3>
+                    <div class={styles.priceInputs}>
+                        <div class={styles.inputGroup}>
+                            <span>$</span>
+                            <input
+                                type="number"
+                                id="min-price"
+                                placeholder="Mínimo"
+                                value={currentMinPrice}
+                            />
+                        </div>
+                        <span class={styles.priceSeparator}>-</span>
+                        <div class={styles.inputGroup}>
+                            <span>$</span>
+                            <input
+                                type="number"
+                                id="max-price"
+                                placeholder="Máximo"
+                                value={currentMaxPrice}
+                            />
                         </div>
                     </div>
-                )
-            }
-        </div>
+                </div>
 
-        <div class={styles.modalFooter}>
-            <button id="reset-filters-btn" class={styles.resetBtn}
-                >Limpiar Filtros</button
-            >
-            <button id="apply-filters-btn" class={styles.applyBtn}
-                >Aplicar</button
-            >
+                {/* Stock */}
+                <div class={styles.filterSection}>
+                    <div class={styles.checkboxSection}>
+                        <label for="with-stock-checkbox"
+                            >Solo productos con stock</label
+                        >
+                        <label class={styles.switch}>
+                            <input type="checkbox" id="with-stock-checkbox" />
+                            <span class={styles.slider}></span>
+                        </label>
+                    </div>
+                </div>
+
+                {/* Ofertas */}
+                {
+                    showOnlyOffersFilter && (
+                        <div class={styles.filterSection}>
+                            <div class={styles.checkboxSection}>
+                                <label for="only-offers-checkbox">
+                                    Solo productos en oferta
+                                </label>
+                                <label class={styles.switch}>
+                                    <input
+                                        type="checkbox"
+                                        id="only-offers-checkbox"
+                                    />
+                                    <span class={styles.slider} />
+                                </label>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+
+            <div class={styles.modalFooter}>
+                <button id="reset-filters-btn" class={styles.resetBtn}
+                    >Limpiar Filtros</button
+                >
+                <button id="apply-filters-btn" class={styles.applyBtn}
+                    >Aplicar</button
+                >
+            </div>
         </div>
     </div>
 </div>
