@@ -68,12 +68,20 @@ export const getFeaturedProducts = async (): Promise<Product[]> => {
     }
 };
 
-export const getNewArrivals = async (): Promise<Product[]> => {
+export const getNewArrivals = async (page: number = 1, limit: number = 20): Promise<PaginatedResponse<Product>> => {
     try {
-        const response: { data: Product[] } = await api.get('products/new-arrivals').json();
-        return response.data;
+        const params = new URLSearchParams();
+        params.append("page", page.toString());
+        params.append("limit", limit.toString());
+
+        return await api.get(`products/new-arrivals?${params.toString()}`).json();
     } catch (error) {
         console.error("Error fetching new arrivals:", error);
-        return [];
+        return {
+            status: 'error',
+            data: [],
+            pagination: { total: 0, page: 1, limit: 20, totalPages: 0 }
+        };
     }
 };
+

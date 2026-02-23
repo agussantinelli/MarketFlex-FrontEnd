@@ -10,7 +10,7 @@ import {
 import styles from "./styles/index.module.css";
 
 const products = await getFeaturedProducts();
-const newArrivals = await getNewArrivals();
+const { data: newArrivals } = await getNewArrivals(1, 7);
 const user = Astro.url.searchParams.get("user") || "Usuario";
 const isNewUser = Astro.url.searchParams.get("new") === "true";
 const welcomeMessage = isNewUser
@@ -36,7 +36,7 @@ const welcomeMessage = isNewUser
 		titleHighlight="Novedades"
 		icon="lucide:sparkles"
 		products={newArrivals}
-		limit={8}
-		viewMoreHref="/search?sort=newest"
+		limit={7}
+		viewMoreHref="/new-arrivals"
 	/>
 </Layout>
