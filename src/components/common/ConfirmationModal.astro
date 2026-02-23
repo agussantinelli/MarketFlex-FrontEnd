@@ -1,0 +1,49 @@
+---
+import { Icon } from "astro-icon/components";
+import styles from "./styles/ConfirmationModal.module.css";
+
+interface Props {
+    id: string;
+    title: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    type?: "default" | "danger";
+}
+
+const {
+    id,
+    title,
+    message,
+    confirmText = "Confirmar",
+    cancelText = "Cancelar",
+    type = "default",
+} = Astro.props;
+---
+
+<div id={id} class={styles.modalOverlay}>
+    <div class={styles.modalContent}>
+        <div class={styles.modalIcon}>
+            <Icon
+                name={type === "danger"
+                    ? "lucide:alert-circle"
+                    : "lucide:help-circle"}
+                size={32}
+            />
+        </div>
+        <h3>{title}</h3>
+        <p>{message}</p>
+
+        <div class={styles.modalActions}>
+            <button id={`${id}-cancel`} class={styles.btnCancel}>
+                {cancelText}
+            </button>
+            <button
+                id={`${id}-confirm`}
+                class={`${styles.btnConfirm} ${type === "danger" ? styles.danger : ""}`}
+            >
+                {confirmText}
+            </button>
+        </div>
+    </div>
+</div>
