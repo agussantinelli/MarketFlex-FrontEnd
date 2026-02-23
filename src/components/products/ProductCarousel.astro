@@ -27,14 +27,10 @@ const {
 const displayProducts = products.slice(0, limit);
 ---
 
-<section
-    class={`${styles.productsSection} ${styles.carouselSection}`}
-    id={id}
-    data-carousel
->
+<section class={styles.productsSection} id={id} data-carousel>
     <h2 class={styles.sectionTitle}>
         {title}
-        {titleHighlight && <span class="gradient-text">{titleHighlight}</span>}
+        <span class="gradient-text">{titleHighlight}</span>
         {icon && <Icon name={icon} class={styles.titleIcon} />}
     </h2>
 
