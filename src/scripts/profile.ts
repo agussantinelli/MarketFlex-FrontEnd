@@ -70,7 +70,6 @@ function populateProfile(user: User, styles: Record<string, string>) {
     const birthElement = document.getElementById('user-birth');
     const nationalityElement = document.getElementById('user-nationality');
     const residenceElement = document.getElementById('user-residence');
-    const idElement = document.getElementById('user-id');
     const googleElement = document.getElementById('social-google');
     const facebookElement = document.getElementById('social-facebook');
 
@@ -80,16 +79,9 @@ function populateProfile(user: User, styles: Record<string, string>) {
     if (birthElement) birthElement.textContent = user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No especificado';
     if (nationalityElement) nationalityElement.textContent = user.paisNacimiento || 'No especificado';
     if (residenceElement) residenceElement.textContent = user.ciudadResidencia ? `${user.ciudadResidencia} ${user.codigoPostal ? `(${user.codigoPostal})` : ''}` : 'No especificado';
-    if (idElement) idElement.textContent = user.id;
 
     if (googleElement) googleElement.style.display = user.logueado_con_google ? 'inline-block' : 'none';
     if (facebookElement) facebookElement.style.display = user.logueado_con_facebook ? 'inline-block' : 'none';
-
-    const roleBadge = document.getElementById('user-role-badge');
-    if (roleBadge) {
-        roleBadge.textContent = user.rol.toUpperCase();
-        roleBadge.className = `${styles.badge} ${styles[user.rol.toLowerCase()]}`;
-    }
 
     // Transition from loading to ready
     container.classList.remove(styles.loading);

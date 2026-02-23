@@ -38,9 +38,6 @@ import styles from "./styles/profile.module.css";
                         </div>
                         <div class={styles.headerInfo}>
                             <h1 id="user-full-name">Cargando...</h1>
-                            <span id="user-role-badge" class={styles.badge}
-                                >ROL</span
-                            >
                             <span
                                 id="social-google"
                                 class={`${styles.badge} ${styles.socialBadge}`}
@@ -79,10 +76,6 @@ import styles from "./styles/profile.module.css";
                             <label>Residencia</label>
                             <p id="user-residence">...</p>
                         </div>
-                        <div class={styles.infoGroup}>
-                            <label>ID de Usuario</label>
-                            <p id="user-id" class={styles.smallId}>...</p>
-                        </div>
                     </div>
 
                     <div class={styles.profileActions}>
@@ -103,18 +96,18 @@ import styles from "./styles/profile.module.css";
             type="danger"
         />
     </main>
+
+    <script>
+        import { initProfile } from "../scripts/profile";
+        import styles from "./styles/profile.module.css";
+        import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
+
+        // Initialize on load
+        initProfile(styles, modalStyles);
+
+        // Support for View Transitions
+        document.addEventListener("astro:page-load", () =>
+            initProfile(styles, modalStyles),
+        );
+    </script>
 </Layout>
-
-<script>
-    import { initProfile } from "../scripts/profile";
-    import styles from "./styles/profile.module.css";
-    import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
-
-    // Initialize on load
-    initProfile(styles, modalStyles);
-
-    // Support for View Transitions
-    document.addEventListener("astro:page-load", () =>
-        initProfile(styles, modalStyles),
-    );
-</script>
