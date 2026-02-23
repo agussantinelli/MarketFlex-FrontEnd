@@ -90,9 +90,9 @@ import styles from "./styles/profile.module.css";
 
                     <div class={styles.profileActions}>
                         <button id="edit-profile-btn" class={styles.editBtn}
-                            >Editar Perfil</button
+                            >Completar Perfil</button
                         >
-                        <button id="logout-btn" class={styles.logoutBtn}
+                        <button id="profile-logout-btn" class={styles.logoutBtn}
                             >Cerrar Sesión</button
                         >
                     </div>
@@ -101,7 +101,7 @@ import styles from "./styles/profile.module.css";
         </PageCard>
 
         <ConfirmationModal
-            id="logout-modal"
+            id="profile-logout-modal"
             title="¿Cerrar sesión?"
             message="¿Estás seguro que deseas cerrar tu sesión actual? Tendrás que volver a ingresar tus credenciales para acceder de nuevo."
             confirmText="Cerrar Sesión"

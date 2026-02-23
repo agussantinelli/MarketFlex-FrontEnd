@@ -23,11 +23,12 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
 
     // Modal Logic & Event Listeners
     const setupListeners = () => {
-        const logoutModal = document.getElementById('logout-modal');
-        const logoutBtn = document.getElementById('logout-btn');
-        const cancelModalBtn = document.getElementById('logout-modal-cancel');
-        const confirmLogoutBtn = document.getElementById('logout-modal-confirm');
+        const logoutModal = document.getElementById('profile-logout-modal');
+        const logoutBtn = document.getElementById('profile-logout-btn');
+        const cancelModalBtn = document.getElementById('profile-logout-modal-cancel');
+        const confirmLogoutBtn = document.getElementById('profile-logout-modal-confirm');
         const retryBtn = document.getElementById('retry-btn');
+
 
         const showModal = () => logoutModal?.classList.add(modalStyles.active);
         const hideModal = () => logoutModal?.classList.remove(modalStyles.active);
