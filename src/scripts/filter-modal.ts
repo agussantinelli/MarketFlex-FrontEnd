@@ -1,87 +1,52 @@
 import type { Category } from "../types/category.types";
 import type { Subcategory } from "../types/subcategory.types";
 
-document.addEventListener('astro:page-load', () => {
+const initFilterModal = () => {
     const backdrop = document.getElementById("filter-modal-backdrop");
-    if (!backdrop) return;
+    const filterBtn = document.getElementById("filter-btn");
 
+    if (!backdrop || !filterBtn) return;
+
+    // Recuperar datos y el mapeo de clases de CSS Modules
     const categories: Category[] = JSON.parse(backdrop.getAttribute("data-categories") || "[]");
     const subcategories: Subcategory[] = JSON.parse(backdrop.getAttribute("data-subcategories") || "[]");
     const styles = JSON.parse(backdrop.getAttribute("data-styles") || "{}");
 
+    // Elementos del DOM
     const closeBtn = document.getElementById("close-modal-btn");
-    const filterBtn = document.getElementById("filter-btn");
     const applyBtn = document.getElementById("apply-filters-btn");
     const resetBtn = document.getElementById("reset-filters-btn");
     const subcategorySection = document.getElementById("subcategory-section");
     const subcategoryOptions = document.getElementById("subcategory-options");
-
-    let selectedType = backdrop.getAttribute("data-initial-type") || "";
-    let selectedCategory = backdrop.getAttribute("data-initial-category") || "";
-
-    // Initialize selected states from URL or props
-    const urlParams = new URLSearchParams(window.location.search);
-    selectedType = urlParams.get("type") || "";
-    selectedCategory = urlParams.get("category") || "";
-
-    // Populate price inputs
     const minPriceInput = document.getElementById("min-price") as HTMLInputElement;
     const maxPriceInput = document.getElementById("max-price") as HTMLInputElement;
     const stockCheckbox = document.getElementById("with-stock-checkbox") as HTMLInputElement;
     const onlyOffersCheckbox = document.getElementById("only-offers-checkbox") as HTMLInputElement;
 
+    // Estado inicial desde URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let selectedType = urlParams.get("type") || "";
+    let selectedCategory = urlParams.get("category") || "";
+
+    // Sincronizar UI con URL
     if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
     if (maxPriceInput) maxPriceInput.value = urlParams.get("maxPrice") || "";
+    if (stockCheckbox) stockCheckbox.checked = urlParams.get("withStock") !== "false";
+    if (onlyOffersCheckbox) onlyOffersCheckbox.checked = urlParams.get("onlyOffers") === "true";
 
-    // Default to checked if not explicitly 'false'
-    if (stockCheckbox) {
-        stockCheckbox.checked = urlParams.get("withStock") !== "false";
-    }
+    // --- ACCIONES ---
 
-    // Default to unchecked
-    if (onlyOffersCheckbox) {
-        onlyOffersCheckbox.checked = urlParams.get("onlyOffers") === "true";
-    }
+    const openModal = () => {
+        backdrop.classList.add(styles.active);
+        document.body.style.overflow = "hidden";
+    };
 
-    function toggleModal() {
-        backdrop?.classList.toggle(styles.active);
-    }
+    const closeModal = () => {
+        backdrop.classList.remove(styles.active);
+        document.body.style.overflow = "";
+    };
 
-    if (filterBtn) filterBtn.addEventListener("click", toggleModal);
-    if (closeBtn) closeBtn.addEventListener("click", toggleModal);
-    backdrop.addEventListener("click", (e) => {
-        if (e.target === backdrop) toggleModal();
-    });
-
-    // Category selection
-    document
-        .querySelectorAll(`.${styles.optionBtn}[data-type]`)
-        .forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const type = btn.getAttribute("data-type");
-                const catId = btn.getAttribute("data-category-id");
-
-                // Toggle selection
-                if (selectedType === type) {
-                    selectedType = "";
-                    btn.classList.remove(styles.optionActive);
-                } else {
-                    // Clear others
-                    document
-                        .querySelectorAll(`.${styles.optionBtn}[data-type]`)
-                        .forEach((b) =>
-                            b.classList.remove(styles.optionActive),
-                        );
-                    selectedType = type || "";
-                    btn.classList.add(styles.optionActive);
-                }
-
-                selectedCategory = ""; // Reset subcategory when type changes
-                updateSubcategories(catId || "");
-            });
-        });
-
-    function updateSubcategories(catId: string) {
+    const updateSubcategories = (catId: string) => {
         if (!subcategorySection || !subcategoryOptions) return;
 
         if (!selectedType || !catId) {
@@ -95,92 +60,92 @@ document.addEventListener('astro:page-load', () => {
         if (filtered.length > 0) {
             subcategorySection.classList.remove(styles.hidden);
             subcategoryOptions.innerHTML = filtered
-                .map(
-                    (sub) => `
-                <button 
-                    class="${styles.optionBtn} ${selectedCategory === sub.nombre ? styles.optionActive : ""}"
-                    data-category="${sub.nombre}"
-                >
-                    ${sub.nombre}
-                </button>
-            `,
-                )
-                .join("");
+                .map(sub => `
+                    <button 
+                        class="${styles.optionBtn} ${selectedCategory === sub.nombre ? styles.optionActive : ""}"
+                        data-category="${sub.nombre}"
+                    >
+                        ${sub.nombre}
+                    </button>
+                `).join("");
 
-            // Add events to new buttons
-            subcategoryOptions
-                .querySelectorAll(`.${styles.optionBtn}`)
-                .forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        const subName = btn.getAttribute("data-category");
-                        if (selectedCategory === subName) {
-                            selectedCategory = "";
-                            btn.classList.remove(styles.optionActive);
-                        } else {
-                            subcategoryOptions
-                                ?.querySelectorAll(`.${styles.optionBtn}`)
-                                .forEach((b) =>
-                                    b.classList.remove(styles.optionActive),
-                                );
-                            selectedCategory = subName || "";
-                            btn.classList.add(styles.optionActive);
-                        }
-                    });
+            // Re-vincular eventos a botones inyectados
+            subcategoryOptions.querySelectorAll(`.${styles.optionBtn}`).forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const subName = btn.getAttribute("data-category");
+                    if (selectedCategory === subName) {
+                        selectedCategory = "";
+                        btn.classList.remove(styles.optionActive);
+                    } else {
+                        subcategoryOptions.querySelectorAll(`.${styles.optionBtn}`).forEach(b =>
+                            b.classList.remove(styles.optionActive)
+                        );
+                        selectedCategory = subName || "";
+                        btn.classList.add(styles.optionActive);
+                    }
                 });
+            });
         } else {
             subcategorySection.classList.add(styles.hidden);
         }
-    }
+    };
 
-    if (applyBtn) {
-        applyBtn.addEventListener("click", () => {
-            const minPrice = (document.getElementById("min-price") as HTMLInputElement).value;
-            const maxPrice = (document.getElementById("max-price") as HTMLInputElement).value;
+    // --- LISTENERS ---
 
-            const params = new URLSearchParams(window.location.search);
+    filterBtn.addEventListener("click", openModal);
+    closeBtn?.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeModal();
+    });
 
-            if (selectedType) params.set("type", selectedType);
-            else params.delete("type");
+    // Categorías principales
+    document.querySelectorAll(`.${styles.optionBtn}[data-type]`).forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const type = btn.getAttribute("data-type");
+            const catId = btn.getAttribute("data-category-id");
 
-            if (selectedCategory) params.set("category", selectedCategory);
-            else params.delete("category");
-
-            if (minPrice) params.set("minPrice", minPrice);
-            else params.delete("minPrice");
-
-            if (maxPrice) params.set("maxPrice", maxPrice);
-            else params.delete("maxPrice");
-
-            if (stockCheckbox && !stockCheckbox.checked) {
-                params.set("withStock", "false");
+            if (selectedType === type) {
+                selectedType = "";
+                btn.classList.remove(styles.optionActive);
             } else {
-                params.delete("withStock");
+                document.querySelectorAll(`.${styles.optionBtn}[data-type]`).forEach(b =>
+                    b.classList.remove(styles.optionActive)
+                );
+                selectedType = type || "";
+                btn.classList.add(styles.optionActive);
             }
-
-            if (onlyOffersCheckbox && onlyOffersCheckbox.checked) {
-                params.set("onlyOffers", "true");
-            } else {
-                params.delete("onlyOffers");
-            }
-
-            // Always reset to page 1 when filtering
-            params.set("page", "1");
-
-            window.location.href = `${window.location.pathname}?${params.toString()}`;
+            selectedCategory = "";
+            updateSubcategories(catId || "");
         });
-    }
+    });
 
-    if (resetBtn) {
-        resetBtn.addEventListener("click", () => {
-            const params = new URLSearchParams(window.location.search);
-            params.delete("type");
-            params.delete("category");
-            params.delete("minPrice");
-            params.delete("maxPrice");
-            params.delete("withStock");
-            params.delete("onlyOffers");
-            params.set("page", "1");
-            window.location.href = `${window.location.pathname}?${params.toString()}`;
-        });
+    applyBtn?.addEventListener("click", () => {
+        const params = new URLSearchParams(window.location.search);
+        selectedType ? params.set("type", selectedType) : params.delete("type");
+        selectedCategory ? params.set("category", selectedCategory) : params.delete("category");
+        minPriceInput?.value ? params.set("minPrice", minPriceInput.value) : params.delete("minPrice");
+        maxPriceInput?.value ? params.set("maxPrice", maxPriceInput.value) : params.delete("maxPrice");
+
+        if (stockCheckbox) params.set("withStock", stockCheckbox.checked ? "true" : "false");
+        if (onlyOffersCheckbox) params.set("onlyOffers", onlyOffersCheckbox.checked ? "true" : "false");
+
+        params.set("page", "1");
+        window.location.href = `${window.location.pathname}?${params.toString()}`;
+    });
+
+    resetBtn?.addEventListener("click", () => {
+        window.location.href = window.location.pathname;
+    });
+
+    // Carga inicial de subcategorías si ya hay filtros
+    if (selectedType) {
+        const activeBtn = document.querySelector(`.${styles.optionActive}[data-category-id]`);
+        if (activeBtn) updateSubcategories(activeBtn.getAttribute("data-category-id") || "");
     }
-});
+};
+
+// Ejecución para Astro (View Transitions + Carga normal)
+document.addEventListener('astro:page-load', initFilterModal);
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFilterModal();
+}
