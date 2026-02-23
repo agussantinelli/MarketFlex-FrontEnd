@@ -1,0 +1,184 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Promotion } from "../../types/promotion.types";
+import styles from "./styles/PromotionHero.module.css";
+
+interface Props {
+    promotions: Promotion[];
+}
+
+const { promotions } = Astro.props;
+const STATIC_URL = import.meta.env.PUBLIC_API_URL
+    ? import.meta.env.PUBLIC_API_URL.replace("/api", "")
+    : "http://localhost:5979";
+
+if (promotions.length === 0) return null;
+---
+
+<section class={styles.heroSection} aria-label="Promociones Destacadas">
+    <div class={styles.heroContainer} data-hero-container>
+        <div class={styles.heroTrack} data-hero-track>
+            {
+                promotions.map((promo, index) => (
+                    <div
+                        class={styles.heroSlide}
+                        data-hero-slide
+                        data-active={index === 0}
+                    >
+                        <div class={styles.slideContent}>
+                            <div class={styles.textColumn}>
+                                <div class={styles.badge}>
+                                    <Icon name="lucide:zap" size={14} />
+                                    <span>Destacado</span>
+                                </div>
+                                <h1 class={styles.title}>{promo.nombre}</h1>
+                                <p class={styles.description}>
+                                    {promo.descripcion}
+                                </p>
+
+                                <div class={styles.promoDetails}>
+                                    {promo.tipoPromocion === "NxM" && (
+                                        <div class={styles.promoTag}>
+                                            <span class={styles.promoMain}>
+                                                {promo.cantCompra}x
+                                                {promo.cantPaga}
+                                            </span>
+                                            <span class={styles.promoSub}>
+                                                Llevás {promo.cantCompra}, pagás{" "}
+                                                {promo.cantPaga}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <a
+                                    href={`/search?promotion=${promo.id}`}
+                                    class={styles.ctaButton}
+                                >
+                                    Ver Productos
+                                    <Icon name="lucide:arrow-right" size={20} />
+                                </a>
+                            </div>
+
+                            <div class={styles.imageColumn}>
+                                <div class={styles.imageWrapper}>
+                                    {promo.foto && (
+                                        <img
+                                            src={`${STATIC_URL}/${promo.foto}`}
+                                            alt={promo.nombre}
+                                            class={styles.promoImage}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+
+        {
+            promotions.length > 1 && (
+                <>
+                    <div class={styles.indicators}>
+                        {promotions.map((_, index) => (
+                            <button
+                                class={styles.indicator}
+                                data-hero-indicator={index}
+                                data-active={index === 0}
+                                aria-label={`Ir a promoción ${index + 1}`}
+                            />
+                        ))}
+                    </div>
+
+                    <button
+                        class={`${styles.navBtn} ${styles.prev}`}
+                        data-hero-prev
+                        aria-label="Anterior"
+                    >
+                        <Icon name="lucide:chevron-left" size={28} />
+                    </button>
+                    <button
+                        class={`${styles.navBtn} ${styles.next}`}
+                        data-hero-next
+                        aria-label="Siguiente"
+                    >
+                        <Icon name="lucide:chevron-right" size={28} />
+                    </button>
+                </>
+            )
+        }
+    </div>
+</section>
+
+<script>
+    function setupHero() {
+        const containers = document.querySelectorAll("[data-hero-container]");
+
+        containers.forEach((container) => {
+            const track = container.querySelector(
+                "[data-hero-track]",
+            ) as HTMLElement;
+            const slides = container.querySelectorAll(
+                "[data-hero-slide]",
+            ) as NodeListOf<HTMLElement>;
+            const indicators = container.querySelectorAll(
+                "[data-hero-indicator]",
+            ) as NodeListOf<HTMLElement>;
+            const nextBtn = container.querySelector("[data-hero-next]");
+            const prevBtn = container.querySelector("[data-hero-prev]");
+
+            if (!track || slides.length <= 1) return;
+
+            let currentIndex = 0;
+            let interval: any;
+
+            const updateHero = (index: number) => {
+                currentIndex = index;
+                const offset = -currentIndex * 100;
+                track.style.transform = `translateX(${offset}%)`;
+
+                // Update dots/indicators
+                indicators.forEach((ind, i) => {
+                    ind.setAttribute(
+                        "data-active",
+                        (i === currentIndex).toString(),
+                    );
+                });
+
+                // Reset interval
+                startAutoPlay();
+            };
+
+            const next = () => {
+                const newIndex = (currentIndex + 1) % slides.length;
+                updateHero(newIndex);
+            };
+
+            const prev = () => {
+                const newIndex =
+                    (currentIndex - 1 + slides.length) % slides.length;
+                updateHero(newIndex);
+            };
+
+            const startAutoPlay = () => {
+                if (interval) clearInterval(interval);
+                interval = setInterval(next, 6000);
+            };
+
+            nextBtn?.addEventListener("click", next);
+            prevBtn?.addEventListener("click", prev);
+
+            indicators.forEach((ind, i) => {
+                ind.addEventListener("click", () => updateHero(i));
+            });
+
+            startAutoPlay();
+        });
+    }
+
+    // Run on init
+    setupHero();
+    // Run on page change
+    document.addEventListener("astro:page-load", setupHero);
+</script>
