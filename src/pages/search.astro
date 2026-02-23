@@ -12,6 +12,11 @@ const sort = Astro.url.searchParams.get("sort") || "";
 const typeParam = Astro.url.searchParams.get("type") || "";
 const categoryParam = Astro.url.searchParams.get("category") || "";
 const offersParam = Astro.url.searchParams.get("offers") || "";
+const minPriceParam = Astro.url.searchParams.get("minPrice") || "";
+const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
+const withStockRaw = Astro.url.searchParams.get("withStock");
+const withStockParam = withStockRaw !== "false";
+const hasWithStockFilter = withStockRaw !== null;
 
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const limit = 20;
@@ -22,6 +27,9 @@ const response = await searchProducts({
     type: typeParam,
     category: categoryParam,
     offers: offersParam,
+    minPrice: minPriceParam,
+    maxPrice: maxPriceParam,
+    withStock: withStockParam.toString(),
     page: currentPage,
     limit,
 });
@@ -76,7 +84,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                             params={Astro.url.searchParams}
                         />
                         
-                        {(typeParam || categoryParam || offersParam) && (
+                        {(typeParam || categoryParam || offersParam || minPriceParam || maxPriceParam || hasWithStockFilter) && (
                             <div class={styles.activeFilters}>
                                 {typeParam && (
                                     <span class={styles.filterTag}>
@@ -90,6 +98,15 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                                 )}
                                 {offersParam && (
                                     <span class={styles.filterTag}>Ofertas</span>
+                                )}
+                                {minPriceParam && (
+                                    <span class={styles.filterTag}>Min: ${minPriceParam}</span>
+                                )}
+                                {maxPriceParam && (
+                                    <span class={styles.filterTag}>Max: ${maxPriceParam}</span>
+                                )}
+                                {hasWithStockFilter && (
+                                    <span class={styles.filterTag}>{withStockParam ? "Con Stock" : "Productos Con y Sin Stock"}</span>
                                 )}
                             </div>
                         )}

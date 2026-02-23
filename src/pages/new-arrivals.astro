@@ -9,9 +9,14 @@ import styles from "./styles/search.module.css";
 
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const sort = Astro.url.searchParams.get("sort") || "relevance";
+const minPriceParam = Astro.url.searchParams.get("minPrice") || "";
+const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
+const withStockRaw = Astro.url.searchParams.get("withStock");
+const withStockParam = withStockRaw !== "false";
+const hasWithStockFilter = withStockRaw !== null;
 const limit = 20;
 
-const response = await getNewArrivals(currentPage, limit, sort);
+const response = await getNewArrivals(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString());
 
 const products = response.data;
 const pagination = response.pagination;
@@ -44,6 +49,20 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     baseUrl="/new-arrivals"
                     params={Astro.url.searchParams}
                 />
+
+                {(minPriceParam || maxPriceParam || hasWithStockFilter) && (
+                    <div class={styles.activeFilters}>
+                        {minPriceParam && (
+                            <span class={styles.filterTag}>Min: ${minPriceParam}</span>
+                        )}
+                        {maxPriceParam && (
+                            <span class={styles.filterTag}>Max: ${maxPriceParam}</span>
+                        )}
+                        {hasWithStockFilter && (
+                            <span class={styles.filterTag}>{withStockParam ? "Con Stock" : "Productos Con y Sin Stock"}</span>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
 
