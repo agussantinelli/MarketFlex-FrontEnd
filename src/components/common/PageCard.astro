@@ -3,13 +3,14 @@ import styles from "./styles/PageCard.module.css";
 
 interface Props {
     maxWidth?: string;
+    variant?: "light" | "dark";
 }
 
-const { maxWidth = "800px" } = Astro.props;
+const { maxWidth = "800px", variant = "light" } = Astro.props;
 ---
 
 <div class={styles.pageCardContainer} style={`--cardMaxWidth: ${maxWidth}`}>
-    <div class={styles.pageCard}>
+    <div class={`${styles.pageCard} ${styles[variant]}`}>
         <div
             class={`${styles.decorativeCross} ${styles.decorativeDark} ${styles.posTopRight}`}
         >

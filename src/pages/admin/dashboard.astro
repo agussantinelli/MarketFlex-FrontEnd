@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import PageCard from "../../components/common/PageCard.astro";
 import styles from "./styles/dashboard.module.css";
 
 // Mocked Data
@@ -75,97 +76,104 @@ const recentOrders = [
 ---
 
 <Layout title="MarketFlex | Admin Dashboard">
-    <div class={styles.dashboardContainer}>
-        <header class={styles.dashboardHeader}>
-            <div>
-                <h1>Panel Administrativo</h1>
-                <p>Resumen de actividad y métricas clave.</p>
-            </div>
-            <div class={styles.headerActions}>
-                <button class={styles.btnSecondary}>
-                    <Icon name="lucide:download" /> Exportar
-                </button>
-                <button class={styles.btnPrimary}>
-                    <Icon name="lucide:plus" /> Nuevo Producto
-                </button>
-            </div>
-        </header>
+    <PageCard maxWidth="1400px" variant="dark">
+        <div class={styles.dashboardContainer}>
+            <header class={styles.dashboardHeader}>
+                <div>
+                    <h1>Panel Administrativo</h1>
+                    <p>Resumen de actividad y métricas clave.</p>
+                </div>
+                <div class={styles.headerActions}>
+                    <button class={styles.btnSecondary}>
+                        <Icon name="lucide:download" /> Exportar
+                    </button>
+                    <button class={styles.btnPrimary}>
+                        <Icon name="lucide:plus" /> Nuevo Producto
+                    </button>
+                </div>
+            </header>
 
-        <!-- Stats Grid -->
-        <div class={styles.statsGrid}>
-            {
-                stats.map((stat) => (
-                    <div class={styles.statCard}>
-                        <div
-                            class={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}
-                        >
-                            <Icon name={stat.icon} class={styles.statIcon} />
-                        </div>
-                        <div class={styles.statInfo}>
-                            <h3>{stat.title}</h3>
-                            <div class={styles.statValue}>{stat.value}</div>
-                            <span
-                                class={`${styles.statTrend} ${styles.positive}`}
+            <!-- Stats Grid -->
+            <div class={styles.statsGrid}>
+                {
+                    stats.map((stat) => (
+                        <div class={styles.statCard}>
+                            <div
+                                class={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}
                             >
-                                <Icon name="lucide:arrow-up-right" />{" "}
-                                {stat.trend}
-                            </span>
+                                <Icon
+                                    name={stat.icon}
+                                    class={styles.statIcon}
+                                />
+                            </div>
+                            <div class={styles.statInfo}>
+                                <h3>{stat.title}</h3>
+                                <div class={styles.statValue}>{stat.value}</div>
+                                <span
+                                    class={`${styles.statTrend} ${styles.positive}`}
+                                >
+                                    <Icon name="lucide:arrow-up-right" />{" "}
+                                    {stat.trend}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                ))
-            }
-        </div>
-
-        <!-- Recent Activity -->
-        <div class={styles.recentActivity}>
-            <div class={styles.sectionHeader}>
-                <h2>Transacciones Recientes</h2>
-                <a href="#" class={styles.viewAll}>Ver todas</a>
+                    ))
+                }
             </div>
 
-            <div class={styles.tableContainer}>
-                <table class={styles.table}>
-                    <thead>
-                        <tr>
-                            <th>ID Orden</th>
-                            <th>Usuario</th>
-                            <th>Fecha</th>
-                            <th>Monto</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            recentOrders.map((order) => (
-                                <tr>
-                                    <td class={styles.orderId}>{order.id}</td>
-                                    <td class={styles.userCell}>
-                                        <div class={styles.userAvatar}>
-                                            {order.user.charAt(0)}
-                                        </div>
-                                        {order.user}
-                                    </td>
-                                    <td>{order.date}</td>
-                                    <td class={styles.amount}>
-                                        {order.amount}
-                                    </td>
-                                    <td>
-                                        <span
-                                            class={
-                                                styles[
-                                                    order.status.toLowerCase()
-                                                ]
-                                            }
-                                        >
-                                            {order.status}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+            <!-- Recent Activity -->
+            <div class={styles.recentActivity}>
+                <div class={styles.sectionHeader}>
+                    <h2>Transacciones Recientes</h2>
+                    <a href="#" class={styles.viewAll}>Ver todas</a>
+                </div>
+
+                <div class={styles.tableContainer}>
+                    <table class={styles.table}>
+                        <thead>
+                            <tr>
+                                <th>ID Orden</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                recentOrders.map((order) => (
+                                    <tr>
+                                        <td class={styles.orderId}>
+                                            {order.id}
+                                        </td>
+                                        <td class={styles.userCell}>
+                                            <div class={styles.userAvatar}>
+                                                {order.user.charAt(0)}
+                                            </div>
+                                            {order.user}
+                                        </td>
+                                        <td>{order.date}</td>
+                                        <td class={styles.amount}>
+                                            {order.amount}
+                                        </td>
+                                        <td>
+                                            <span
+                                                class={
+                                                    styles[
+                                                        order.status.toLowerCase()
+                                                    ]
+                                                }
+                                            >
+                                                {order.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </PageCard>
 </Layout>
