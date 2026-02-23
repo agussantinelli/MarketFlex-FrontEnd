@@ -1,0 +1,61 @@
+---
+import { Icon } from "astro-icon/components";
+import styles from "./styles/controls.module.css";
+
+interface Props {
+    sort: string;
+    baseUrl: string;
+    params?: URLSearchParams;
+}
+
+const { sort, baseUrl, params = new URLSearchParams() } = Astro.props;
+
+// Helper to build sort URLs
+const getSortUrl = (sortValue: string) => {
+    const newParams = new URLSearchParams(params);
+    if (sortValue) {
+        newParams.set("sort", sortValue);
+    } else {
+        newParams.delete("sort");
+    }
+    // Always reset to page 1 when sorting
+    newParams.set("page", "1");
+    return `${baseUrl}?${newParams.toString()}`;
+};
+---
+
+<div class={styles.sortWrapper}>
+    <select
+        class={styles.sortSelect}
+        onchange="window.location.href = this.value"
+    >
+        <option
+            value={getSortUrl("")}
+            selected={sort === "" || sort === "relevance"}
+        >
+            Relevancia
+        </option>
+        <option value={getSortUrl("price_asc")} selected={sort === "price_asc"}>
+            Menor Precio
+        </option>
+        <option
+            value={getSortUrl("price_desc")}
+            selected={sort === "price_desc"}
+        >
+            Mayor Precio
+        </option>
+        <option value={getSortUrl("name_asc")} selected={sort === "name_asc"}>
+            A - Z
+        </option>
+        <option value={getSortUrl("name_desc")} selected={sort === "name_desc"}>
+            Z - A
+        </option>
+        <option
+            value={getSortUrl("bestselling")}
+            selected={sort === "bestselling"}
+        >
+            Más Vendidos
+        </option>
+    </select>
+    <Icon name="lucide:chevron-down" class={styles.sortIcon} />
+</div>
