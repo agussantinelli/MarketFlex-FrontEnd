@@ -163,15 +163,6 @@ const { type } = Astro.props;
             required
             class={styles.inputField}
         />
-        <button
-            type="button"
-            class={styles.passwordToggle}
-            data-toggle-for="password"
-            aria-label="Mostrar contraseña"
-        >
-            <Icon name="lucide:eye-off" class={styles.eyeIcon} />
-            <Icon name="lucide:eye" class={styles.eyeOffIcon} />
-        </button>
     </div>
     {
         type === "register" && (
