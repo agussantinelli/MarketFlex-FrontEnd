@@ -21,32 +21,40 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
         container.classList.add(styles.hasError);
     }
 
-    // Modal Logic
-    const logoutModal = document.getElementById('logout-modal');
-    const logoutBtn = document.getElementById('logout-btn');
-    const cancelModalBtn = document.getElementById('logout-modal-cancel');
-    const confirmLogoutBtn = document.getElementById('logout-modal-confirm');
+    // Modal Logic & Event Listeners
+    const setupListeners = () => {
+        const logoutModal = document.getElementById('logout-modal');
+        const logoutBtn = document.getElementById('logout-btn');
+        const cancelModalBtn = document.getElementById('logout-modal-cancel');
+        const confirmLogoutBtn = document.getElementById('logout-modal-confirm');
+        const retryBtn = document.getElementById('retry-btn');
 
-    const showModal = () => logoutModal?.classList.add(modalStyles.active);
-    const hideModal = () => logoutModal?.classList.remove(modalStyles.active);
+        const showModal = () => logoutModal?.classList.add(modalStyles.active);
+        const hideModal = () => logoutModal?.classList.remove(modalStyles.active);
 
-    logoutBtn?.addEventListener('click', showModal);
-    cancelModalBtn?.addEventListener('click', hideModal);
+        logoutBtn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showModal();
+        });
 
-    // Close modal if clicking outside
-    logoutModal?.addEventListener('click', (e) => {
-        if (e.target === logoutModal) hideModal();
-    });
+        cancelModalBtn?.addEventListener('click', hideModal);
 
-    confirmLogoutBtn?.addEventListener('click', () => {
-        logout();
-    });
+        logoutModal?.addEventListener('click', (e) => {
+            if (e.target === logoutModal) hideModal();
+        });
 
-    // Setup retry
-    document.getElementById('retry-btn')?.addEventListener('click', () => {
-        window.location.reload();
-    });
+        confirmLogoutBtn?.addEventListener('click', () => {
+            logout();
+        });
+
+        retryBtn?.addEventListener('click', () => {
+            window.location.reload();
+        });
+    };
+
+    setupListeners();
 }
+
 
 function populateProfile(user: User, styles: Record<string, string>) {
     const container = document.getElementById('profile-content');
