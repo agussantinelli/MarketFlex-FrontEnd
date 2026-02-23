@@ -25,9 +25,21 @@ export default function Notifications({
         // Client-side check for query parameter
         if (requiredQueryParam) {
             const params = new URLSearchParams(window.location.search);
-            if (params.get(requiredQueryParam) !== "true") {
+            const paramValue = params.get(requiredQueryParam);
+
+            if (paramValue !== "true") {
                 return;
             }
+
+            // [NEW] Check if this notification has already been shown in this session
+            // We use a key based on the message content to identify it
+            const storageKey = `marketflex_notif_${btoa(unescape(encodeURIComponent(message))).substring(0, 32)}`;
+            if (sessionStorage.getItem(storageKey)) {
+                return;
+            }
+
+            // Mark as shown
+            sessionStorage.setItem(storageKey, "true");
         }
 
         const timeout = setTimeout(() => {
