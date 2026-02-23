@@ -637,7 +637,8 @@
 
 @media (max-width: 767px) {
     .navSearchForm {
-        max-width: 200px;
+        max-width: none;
+        flex: 1;
         margin: 0 0.5rem;
     }
 }
