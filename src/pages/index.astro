@@ -7,12 +7,14 @@ import {
 	getFeaturedProducts,
 	getNewArrivals,
 	getBestsellers,
+	getOffers,
 } from "../services/product.service";
 import styles from "./styles/index.module.css";
 
 const products = await getFeaturedProducts();
 const { data: newArrivals } = await getNewArrivals(1, 7);
 const { data: bestSellers } = await getBestsellers(1, 10);
+const { data: offers } = await getOffers(1, 10);
 const user = Astro.url.searchParams.get("user") || "Usuario";
 const isNewUser = Astro.url.searchParams.get("new") === "true";
 const welcomeMessage = isNewUser
@@ -31,6 +33,17 @@ const welcomeMessage = isNewUser
 	/>
 
 	<FeaturedProducts products={products} />
+
+	<ProductCarousel
+		id="offers"
+		title="Grandes"
+		titleHighlight="Ofertas"
+		icon="lucide:tag"
+		products={offers}
+		limit={10}
+		showViewMore={true}
+		viewMoreHref="/search?offers=true"
+	/>
 
 	<ProductCarousel
 		id="best-sellers"
