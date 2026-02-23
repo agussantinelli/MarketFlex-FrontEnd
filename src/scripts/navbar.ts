@@ -1,4 +1,4 @@
-export function initNavbar() {
+export function initNavbar(styles: Record<string, string>, modalStyles: Record<string, string>) {
     // Mobile Menu Logic
     const mobileBtn = document.querySelector(".mobile-menu-btn");
     const navLinks = document.querySelector(".nav-links");
@@ -181,9 +181,27 @@ export function initNavbar() {
     // Initial check
     updateAuthUI();
 
-    // Logout Handler
-    if (logoutBtn) {
+    // Logout Handler with Modal
+    const logoutModal = document.getElementById('navbar-logout-modal');
+    const cancelModalBtn = document.getElementById('navbar-logout-modal-cancel');
+    const confirmLogoutBtn = document.getElementById('navbar-logout-modal-confirm');
+
+    if (logoutBtn && logoutModal) {
         logoutBtn.addEventListener("click", () => {
+            logoutModal.classList.add(modalStyles.active);
+        });
+
+        cancelModalBtn?.addEventListener('click', () => {
+            logoutModal.classList.remove(modalStyles.active);
+        });
+
+        logoutModal.addEventListener('click', (e) => {
+            if (e.target === logoutModal) {
+                logoutModal.classList.remove(modalStyles.active);
+            }
+        });
+
+        confirmLogoutBtn?.addEventListener("click", () => {
             localStorage.removeItem("marketflex_token");
             localStorage.removeItem("marketflex_refresh_token");
             localStorage.removeItem("marketflex_user");

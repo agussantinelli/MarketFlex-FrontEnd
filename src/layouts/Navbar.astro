@@ -2,7 +2,9 @@
 import { Icon } from "astro-icon/components";
 import { getCategories } from "../services/category.service";
 import { getSubcategories } from "../services/subcategory.service";
+import ConfirmationModal from "../components/common/ConfirmationModal.astro";
 import styles from "./styles/Navbar.module.css";
+import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
 
 const categories = await getCategories();
 const subcategories = await getSubcategories();
@@ -208,14 +210,27 @@ const subcategories = await getSubcategories();
             </div>
         </div>
     </div>
+
+    <ConfirmationModal
+        id="navbar-logout-modal"
+        title="¿Cerrar sesión?"
+        message="¿Estás seguro que deseas cerrar tu sesión actual? Tendrás que volver a ingresar tus credenciales para acceder de nuevo."
+        confirmText="Cerrar Sesión"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </nav>
 
 <script>
     import { initNavbar } from "../scripts/navbar";
+    import styles from "./styles/Navbar.module.css";
+    import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
 
     // Initialize on load
-    initNavbar();
+    initNavbar(styles, modalStyles);
 
     // Support for View Transitions
-    document.addEventListener("astro:page-load", initNavbar);
+    document.addEventListener("astro:page-load", () =>
+        initNavbar(styles, modalStyles),
+    );
 </script>
