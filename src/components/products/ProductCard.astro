@@ -44,7 +44,19 @@ const { product, showFeatured = true, rank } = Astro.props;
                 )
             }
             {
-                product.descuentoActivo && (
+                product.promocionActiva && (
+                    <div class={`${styles.badge} ${styles.promotion}`}>
+                        {product.promocionActiva.tipoPromocion === "NxM"
+                            ? `${product.promocionActiva.cantCompra}x${product.promocionActiva.cantPaga}`
+                            : product.promocionActiva.tipoPromocion ===
+                                "DESCUENTO_SEGUNDA_UNIDAD"
+                              ? `2da al ${product.promocionActiva.porcentajeDescuentoSegunda}%`
+                              : "PROMO"}
+                    </div>
+                )
+            }
+            {
+                product.descuentoActivo && !product.promocionActiva && (
                     <div class={`${styles.badge} ${styles.discount}`}>
                         {product.descuentoActivo.porcentaje
                             ? `-${product.descuentoActivo.porcentaje}%`

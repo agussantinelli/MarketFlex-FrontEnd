@@ -116,6 +116,13 @@
     gap: 0.3rem;
 }
 
+.promotion {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .featured {
     width: 32px;
     height: 32px;
