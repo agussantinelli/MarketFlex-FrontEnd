@@ -179,9 +179,12 @@
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
   <li>🤖 <b>Anti-Bot (reCAPTCHA v3):</b> Protección invisible contra bots activada durante el registro para garantizar transacciones legítimas.</li>
-  <li>👤 <b>Perfil de Usuario:</b> Página con UI de alta gama para visualizar información del usuario logueado.</li>
+  <li>👤 <b>Perfil de Usuario Premium:</b> Página de perfil con diseño de mini-cards altamente visuales y organización de información por grupos de interés.</li>
+  <li>🌙 <b>Dark Mode Nativo:</b> Implementación de tema oscuro profundo con efectos de <i>glassmorphism</i>, desenfoques y transparencias que realzan la estética premium.</li>
+  <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
   <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
+
 
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
