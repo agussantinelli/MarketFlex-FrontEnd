@@ -11,12 +11,21 @@ const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const sort = Astro.url.searchParams.get("sort") || "relevance";
 const minPriceParam = Astro.url.searchParams.get("minPrice") || "";
 const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
+const onlyOffersParam = Astro.url.searchParams.get("onlyOffers") === "true";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
 const hasWithStockFilter = withStockRaw !== null;
 const limit = 20;
 
-const response = await getNewArrivals(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString());
+const response = await getNewArrivals(
+    currentPage,
+    limit,
+    sort,
+    minPriceParam,
+    maxPriceParam,
+    withStockParam.toString(),
+    onlyOffersParam ? "true" : undefined
+);
 
 const products = response.data;
 const pagination = response.pagination;
@@ -50,7 +59,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     params={Astro.url.searchParams}
                 />
 
-                {(minPriceParam || maxPriceParam || hasWithStockFilter) && (
+                {(minPriceParam || maxPriceParam || hasWithStockFilter || onlyOffersParam) && (
                     <div class={styles.activeFilters}>
                         {minPriceParam && (
                             <span class={styles.filterTag}>Min: ${minPriceParam}</span>
@@ -59,7 +68,10 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                             <span class={styles.filterTag}>Max: ${maxPriceParam}</span>
                         )}
                         {hasWithStockFilter && (
-                            <span class={styles.filterTag}>{withStockParam ? "Con Stock" : "Productos Con y Sin Stock"}</span>
+                            <span class={styles.filterTag}>{withStockParam ? "Con Stock" : "Sin Stock"}</span>
+                        )}
+                        {onlyOffersParam && (
+                            <span class={styles.filterTag}>En Oferta</span>
                         )}
                     </div>
                 )}
