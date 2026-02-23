@@ -179,7 +179,10 @@
   <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
   <li>🤖 <b>Anti-Bot (reCAPTCHA v3):</b> Protección invisible contra bots activada durante el registro para garantizar transacciones legítimas.</li>
+  <li>👤 <b>Perfil de Usuario:</b> Página con UI de alta gama para visualizar información del usuario logueado.</li>
+  <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
+
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
 
@@ -303,7 +306,9 @@
 │   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
 │   ├── types/                                      # Definiciones de tipos TypeScript
 │   │   ├── auth.types.ts                           # Tipos de Autenticación (Dual Token)
+│   │   ├── user.types.ts                           # Tipos de Usuario (Dominio)
 │   │   ├── category.types.ts                       # Tipos de Categorías
+
 │   │   ├── subcategory.types.ts                    # Tipos de Subcategorías
 │   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
 │   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
@@ -322,12 +327,15 @@
 │   │   ├── terminos.astro                          # Página de Términos y Condiciones
 │   │   ├── index.astro                             # Página de inicio
 │   │   ├── login.astro                             # Página de inicio de sesión
+│   │   ├── profile.astro                           # Página de perfil del usuario
 │   │   └── search.astro                            # Página de búsqueda y filtrado
 │   ├── components/                                 # Componentes reutilizables
 │   │   ├── common/                                 # Componentes transversales
 │   │   │   ├── styles/                             # Estilos (ej. PageCard.module.css)
 │   │   │   ├── Notifications.tsx                   # Sistema de notificaciones (React)
-│   │   │   └── PageCard.astro                      # Tarjeta blanca central genérica
+│   │   │   ├── PageCard.astro                      # Tarjeta blanca central genérica
+│   │   │   └── ConfirmationModal.astro             # Modal de confirmación premium
+
 │   │   └── products/                               # Componentes de dominio
 │   │       ├── styles/                             # Estilos (ej. ProductCard.module.css)
 │   │       ├── FeaturedProducts.astro              # Grilla de productos destacados
