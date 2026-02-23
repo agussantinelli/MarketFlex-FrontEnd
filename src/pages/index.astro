@@ -38,17 +38,6 @@ const welcomeMessage = isNewUser
 	<FeaturedProducts products={products} />
 
 	<ProductCarousel
-		id="offers"
-		title="Grandes"
-		titleHighlight="Ofertas"
-		icon="lucide:tag"
-		products={offers}
-		limit={7}
-		showViewMore={true}
-		viewMoreHref="/offers"
-	/>
-
-	<ProductCarousel
 		id="best-sellers"
 		title="Más"
 		titleHighlight="vendidos"
@@ -57,6 +46,17 @@ const welcomeMessage = isNewUser
 		limit={10}
 		showViewMore={false}
 		showRank={true}
+	/>
+
+	<ProductCarousel
+		id="offers"
+		title="Grandes"
+		titleHighlight="Ofertas"
+		icon="lucide:tag"
+		products={offers}
+		limit={7}
+		showViewMore={true}
+		viewMoreHref="/offers"
 	/>
 
 	<ProductCarousel
