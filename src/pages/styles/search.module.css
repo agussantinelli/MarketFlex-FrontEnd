@@ -1,8 +1,14 @@
 .searchSection {
-    padding: 4rem 1rem;
+    padding: 2.5rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
     min-height: 60vh;
+}
+
+@media (max-width: 768px) {
+    .searchSection {
+        padding: 2rem 0.75rem;
+    }
 }
 
 .searchHeader {
@@ -10,7 +16,14 @@
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .searchHeader {
+        margin-bottom: 2rem;
+        gap: 1.25rem;
+    }
 }
 
 .sectionTitle {
@@ -22,8 +35,17 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    flex-wrap: wrap;
     margin-bottom: 0;
+    flex-wrap: wrap;
+    /* Allow wrapping of tags/count */
+}
+
+@media (max-width: 768px) {
+    .sectionTitle {
+        font-size: 1.75rem;
+        flex-direction: row;
+        gap: 0.4rem;
+    }
 }
 
 .filterTag {
@@ -231,9 +253,16 @@
 
 .productsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5rem;
     padding: 1rem;
+}
+
+@media (max-width: 480px) {
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
 }
 
 @media (min-width: 1024px) {
