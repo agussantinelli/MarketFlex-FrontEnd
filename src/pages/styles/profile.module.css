@@ -106,11 +106,42 @@
 }
 
 .socialBadge {
-    background: rgba(0, 0, 0, 0.05);
-    color: #64748b;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: hsla(142, 70%, 45%, 0.05);
+    padding: 0.45rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid hsla(142, 70%, 45%, 0.1);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
 }
+
+.socialBadge span {
+    color: inherit;
+    font-weight: 700;
+}
+
+
+
+
+#social-google {
+    color: #4285f4;
+    border: 1px solid rgba(66, 133, 244, 0.2);
+}
+
+#social-facebook {
+    color: #1877f2;
+    border: 1px solid rgba(24, 119, 242, 0.2);
+}
+
+.socialIcon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
 
 
 .profileGrid {
@@ -188,6 +219,12 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 20px -5px hsla(142, 70%, 45%, 0.4);
 }
+
+.warningBtn {
+    display: none;
+}
+
+
 
 
 .logoutBtn {

@@ -80,8 +80,16 @@ function populateProfile(user: User, styles: Record<string, string>) {
     if (nationalityElement) nationalityElement.textContent = user.paisNacimiento || 'No especificado';
     if (residenceElement) residenceElement.textContent = user.ciudadResidencia ? `${user.ciudadResidencia} ${user.codigoPostal ? `(${user.codigoPostal})` : ''}` : 'No especificado';
 
-    if (googleElement) googleElement.style.display = user.logueado_con_google ? 'inline-block' : 'none';
-    if (facebookElement) facebookElement.style.display = user.logueado_con_facebook ? 'inline-block' : 'none';
+    if (googleElement) googleElement.style.display = user.logueado_con_google ? 'flex' : 'none';
+    if (facebookElement) facebookElement.style.display = user.logueado_con_facebook ? 'flex' : 'none';
+
+    // Check for incomplete profile
+    const isIncomplete = !user.dni || !user.fechaNacimiento || !user.paisNacimiento || !user.ciudadResidencia;
+    const editBtn = document.getElementById('edit-profile-btn') as HTMLButtonElement;
+    if (editBtn) {
+        editBtn.textContent = isIncomplete ? 'Completar Perfil' : 'Editar Perfil';
+        editBtn.className = styles.editBtn;
+    }
 
     // Transition from loading to ready
     container.classList.remove(styles.loading);

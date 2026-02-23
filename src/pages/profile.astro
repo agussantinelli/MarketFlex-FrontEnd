@@ -38,20 +38,30 @@ import styles from "./styles/profile.module.css";
                         </div>
                         <div class={styles.headerInfo}>
                             <h1 id="user-full-name">Cargando...</h1>
-                            <span
+                            <div
                                 id="social-google"
                                 class={`${styles.badge} ${styles.socialBadge}`}
                                 style="display: none;"
                             >
-                                Conectado con Google
-                            </span>
-                            <span
+                                <img
+                                    src="/logos/google.svg"
+                                    alt="Google"
+                                    class={styles.socialIcon}
+                                />
+                                <span>Conectado con Google</span>
+                            </div>
+                            <div
                                 id="social-facebook"
                                 class={`${styles.badge} ${styles.socialBadge}`}
                                 style="display: none;"
                             >
-                                Conectado con Facebook
-                            </span>
+                                <img
+                                    src="/logos/facebook.svg"
+                                    alt="Facebook"
+                                    class={styles.socialIcon}
+                                />
+                                <span>Conectado con Facebook</span>
+                            </div>
                         </div>
                     </div>
 
