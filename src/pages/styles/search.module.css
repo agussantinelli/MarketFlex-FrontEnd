@@ -65,8 +65,26 @@
 }
 
 
+.promotionDetail {
+    background: rgba(34, 197, 94, 0.05);
+    border: 1px dashed rgba(34, 197, 94, 0.2);
+    border-radius: 1.25rem;
+    padding: 1.25rem 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-/* Modal Styles */
+.promotionDescription {
+    color: #ffffff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+}
+
 .modalBackdrop {
     position: fixed;
     top: 0;
