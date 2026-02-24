@@ -8,7 +8,17 @@
             ]
         },
         "types": [
-            "vitest/globals"
-        ]
-    }
+            "vitest/globals",
+            "@playwright/test"
+        ],
+        "skipLibCheck": true,
+        "moduleResolution": "node"
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*",
+        "*.ts",
+        "*.mjs",
+        "*.mts"
+    ]
 }
