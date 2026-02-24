@@ -175,30 +175,31 @@ const {
 
                 {/* Promociones */}
                 {
-                    promotions.length > 0 && (
-                        <div class={styles.filterSection}>
-                            <h3 class={styles.filterSectionTitle}>
-                                Promociones
-                            </h3>
-                            <div class={styles.optionsGrid}>
-                                {promotions.map((promo) => (
-                                    <button
-                                        class:list={[
-                                            styles.optionBtn,
-                                            {
-                                                [styles.optionActive]:
-                                                    currentPromotion ===
-                                                    promo.nombre,
-                                            },
-                                        ]}
-                                        data-promotion={promo.nombre}
-                                    >
-                                        {promo.nombre}
-                                    </button>
-                                ))}
+                    promotions.length > 0 &&
+                        !fixedKeys.includes("promotion") && (
+                            <div class={styles.filterSection}>
+                                <h3 class={styles.filterSectionTitle}>
+                                    Promociones
+                                </h3>
+                                <div class={styles.optionsGrid}>
+                                    {promotions.map((promo) => (
+                                        <button
+                                            class:list={[
+                                                styles.optionBtn,
+                                                {
+                                                    [styles.optionActive]:
+                                                        currentPromotion ===
+                                                        promo.nombre,
+                                                },
+                                            ]}
+                                            data-promotion={promo.nombre}
+                                        >
+                                            {promo.nombre}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )
+                        )
                 }
 
                 {

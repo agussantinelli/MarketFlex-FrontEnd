@@ -52,7 +52,7 @@ if (promotions.length === 0) return null;
                                 </div>
 
                                 <a
-                                    href={`/search?promotion=${promo.id}`}
+                                    href={`/offers?promotion=${encodeURIComponent(promo.nombre)}&fixedKeys=promotion`}
                                     class={styles.ctaButton}
                                 >
                                     Ver Productos
