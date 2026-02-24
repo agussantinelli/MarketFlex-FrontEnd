@@ -17,6 +17,10 @@ export const loginWithFacebook = async (accessToken: string): Promise<GoogleLogi
     return await api.post('auth/facebook', { json: { accessToken } }).json();
 };
 
+export const loginWithFacebookCode = async (code: string, redirectUri: string): Promise<GoogleLoginResponse> => {
+    return await api.post('auth/facebook/code', { json: { code, redirectUri } }).json();
+};
+
 export const logout = () => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('marketflex_token');
