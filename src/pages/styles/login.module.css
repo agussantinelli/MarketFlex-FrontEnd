@@ -281,6 +281,23 @@
     white-space: nowrap;
 }
 
+.googleContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    min-height: 44px;
+    /* Previene saltos de layout mientras carga */
+}
+
+.facebookContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    min-height: 44px;
+}
+
 .btnGoogle {
     width: 100%;
     padding: 0.75rem 1rem;

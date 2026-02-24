@@ -4,18 +4,47 @@ import {
     loginWithFacebook,
 } from "../services/auth.service";
 
+
+
 export function initLogin() {
+    console.log("🔍 [Auth] initLogin() started");
+
+    // Origin & Session Diagnostics
+    if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('marketflex_token');
+        const refreshToken = localStorage.getItem('marketflex_refresh_token');
+        console.log("🔍 [Auth] Diagnostic Report:", {
+            origin: window.location.origin,
+            pathname: window.location.pathname,
+            hasToken: !!token,
+            hasRefreshToken: !!refreshToken,
+            userStored: !!localStorage.getItem('marketflex_user')
+        });
+    }
+
     const loginForm = document.querySelector(".login-form") as HTMLFormElement;
+    if (!loginForm) {
+        console.log("🔍 [Auth] No login form found on this page");
+        return;
+    }
+
+    // Check if this specific form element has already been initialized
+    if (loginForm.getAttribute("data-auth-initialized") === "true") {
+        console.log("🔍 [Auth] Form already initialized, skipping listeners");
+        return;
+    }
+    loginForm.setAttribute("data-auth-initialized", "true");
+    console.log("🔍 [Auth] Attaching listeners to login form");
+
     const emailInput = document.getElementById("email") as HTMLInputElement;
     const rememberCheckbox = document.querySelector(
         "input[name='remember']",
     ) as HTMLInputElement;
 
-    if (!loginForm || !emailInput || !rememberCheckbox) return;
+    if (!emailInput || !rememberCheckbox) return;
 
     // Password Visibility Toggle
-    const toggleBtns = document.querySelectorAll("[data-toggle-for]");
-    toggleBtns.forEach(btn => {
+    document.querySelectorAll("[data-toggle-for]").forEach(btn => {
         btn.addEventListener("click", () => {
             const inputId = btn.getAttribute("data-toggle-for");
             if (!inputId) return;
@@ -97,30 +126,43 @@ export function initLogin() {
 
     // Google Sign-In
     const handleGoogleLogin = async (credentialResponse: any) => {
+        console.log("🔍 [Auth] Google Callback Recibido!", {
+            hasCredential: !!credentialResponse.credential,
+            tokenStart: credentialResponse.credential ? credentialResponse.credential.substring(0, 10) + "..." : "null"
+        });
         try {
+            console.log("🔍 [Auth] Llamando a loginWithGoogle en el backend...");
             const result = await loginWithGoogle(credentialResponse.credential);
+
+            console.log("🔍 [Auth] Login exitoso en backend:", {
+                user: result.user?.email,
+                accessToken: result.accessToken ? "Presente" : "Missing",
+                refreshToken: result.refreshToken ? "Presente" : "Missing"
+            });
 
             localStorage.setItem("marketflex_token", result.accessToken);
             localStorage.setItem("marketflex_refresh_token", result.refreshToken);
             localStorage.setItem("marketflex_user", JSON.stringify(result.user));
 
+            console.log("🔍 [Auth] Todo guardado en localStorage. Redirigiendo...");
+
             const userName = result.user.nombre || "Usuario";
             const newParam = result.isNewUser ? "&new=true" : "";
             window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
         } catch (error: any) {
-            console.error("❌ Google login error:", error);
+            console.error("❌ [Auth] Google login error:", error);
 
             let message = "Error en el inicio de sesión con Google";
             if (error.response) {
                 try {
                     const errorData = await error.response.json();
+                    console.error("❌ [Auth] Error data from backend:", errorData);
                     message = errorData.error || errorData.message || message;
                 } catch (e) {
                     message = `Error ${error.response.status}: ${error.response.statusText}`;
                 }
             }
 
-            // Use Sileo notification
             if (typeof (window as any).triggerSileo === 'function') {
                 (window as any).triggerSileo('error', message);
             }
@@ -129,97 +171,171 @@ export function initLogin() {
 
     (window as any).handleGoogleCredentialResponse = handleGoogleLogin;
 
-    const googleBtn = document.getElementById("google-login-btn");
-    googleBtn?.addEventListener("click", () => {
-        const google = (window as any).google;
-        if (!google) {
-            console.error("Google SDK not loaded");
+    const initializeGoogle = () => {
+        if ((window as any).isGoogleInitialized) {
+            console.log("🔍 [Auth] Google SDK already initialized, skipping");
             return;
         }
+        const google = (window as any).google;
+        if (google?.accounts?.id) {
+            const client_id = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID;
+            console.log("🔍 [Auth] Initializing Google SDK and rendering Standard Button");
 
-        google.accounts.id.initialize({
-            client_id:
-                "697852573228-jl7nemqo3paglicuba0sdr68gshe1kta.apps.googleusercontent.com",
-            callback: handleGoogleLogin,
-            auto_select: false,
-        });
-        google.accounts.id.prompt();
+            google.accounts.id.initialize({
+                client_id: client_id,
+                callback: handleGoogleLogin,
+                auto_select: false,
+                use_fedcm_for_prompt: false,
+            });
+
+            const btnContainer = document.getElementById("google-signin-button");
+            if (btnContainer) {
+                console.log("🔍 [Auth] Rendering official Google button into container");
+                google.accounts.id.renderButton(btnContainer, {
+                    theme: "outline",
+                    size: "large",
+                    text: "signin_with",
+                    shape: "rectangular",
+                    width: btnContainer.offsetWidth || 350
+                });
+            } else {
+                console.warn("⚠️ [Auth] Container #google-signin-button NOT FOUND, showing fallback button");
+                const manualBtn = document.getElementById("google-login-btn");
+                if (manualBtn) manualBtn.style.display = "flex";
+            }
+
+            (window as any).isGoogleInitialized = true;
+        }
+    };
+
+    if ((window as any).google) {
+        initializeGoogle();
+    }
+
+    // Manual button fallback (just in case)
+    const googleBtn = document.getElementById("google-login-btn");
+    googleBtn?.addEventListener("click", () => {
+        console.log("🔍 [Auth] Manual Google button clicked (Fallback)");
+        const google = (window as any).google;
+        if (google?.accounts?.id) {
+            google.accounts.id.prompt();
+        }
     });
 
-    // Facebook Login
-    const fbAppId = "2098383814330615";
+    // Facebook Login Initialization
+    const fbAppId = import.meta.env.PUBLIC_FACEBOOK_APP_ID;
+    const initFB = () => {
+        const FB = (window as any).FB;
+        if (FB) {
+            console.log("🔍 [Auth] Initializing Facebook SDK with AppID (Unified):", fbAppId);
+            try {
+                FB.init({
+                    appId: fbAppId,
+                    cookie: true,
+                    xfbml: true,
+                    version: "v21.0",
+                });
+                console.log("🔍 [Auth] FB.init() successful with XFBML enabled");
 
-    // Load Facebook SDK
-    if (!(window as any).fbAsyncInit) {
-        (window as any).fbAsyncInit = function () {
-            (window as any).FB.init({
-                appId: fbAppId,
-                cookie: true,
-                xfbml: true,
-                version: "v21.0",
-            });
-        };
+                // Subscribe to auth events for the Official Button
+                FB.Event.subscribe('auth.statusChange', (response: any) => {
+                    console.log("🔍 [Auth] FB Official Button Status Change:", response.status);
+                    if (response.status === 'connected' && response.authResponse) {
+                        handleFacebookBackendLogin(response.authResponse.accessToken);
+                    }
+                });
 
-        // Inject FB SDK script if not already present
-        if (!document.getElementById("facebook-jssdk")) {
-            (function (d: Document, s: string, id: string) {
-                const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement | undefined;
-                if (!fjs || !fjs.parentNode || d.getElementById(id)) return;
-                const js = d.createElement(s) as HTMLScriptElement;
-                js.id = id;
-                js.src = "https://connect.facebook.net/es_LA/sdk.js";
-                (fjs.parentNode as Node).insertBefore(js, fjs);
-            })(document, "script", "facebook-jssdk");
+                // Force parsing of XFBML for Astro View Transitions
+                FB.XFBML.parse();
+            } catch (e) {
+                console.error("❌ [Auth] Error in FB.init():", e);
+            }
         }
-    }
+    };
+
+    // Helper for FB backend login (Common logic)
+    const handleFacebookBackendLogin = async (accessToken: string) => {
+        console.log("🔍 [Auth] Processing FB token on backend...");
+        try {
+            const result = await loginWithFacebook(accessToken);
+            console.log("🔍 [Auth] FB backend success:", {
+                success: !!result.accessToken,
+                user: result.user?.email
+            });
+            localStorage.setItem("marketflex_token", result.accessToken);
+            localStorage.setItem("marketflex_refresh_token", result.refreshToken);
+            localStorage.setItem("marketflex_user", JSON.stringify(result.user));
+
+            const userName = result.user.nombre || "Usuario";
+            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+        } catch (error) {
+            console.error("❌ [Auth] Facebook backend login error:", error);
+            if (typeof (window as any).triggerSileo === 'function') {
+                (window as any).triggerSileo('error', "Error al procesar login con Facebook");
+            }
+        }
+    };
+
+    // Unified SDK Loading (Strict Isolation)
+    const loadSocialSDKs = () => {
+        // Google GSI
+        if (!document.getElementById("google-gsi-client")) {
+            console.log("🔍 [Auth] Injecting Google GSI SDK script...");
+            const script = document.createElement("script");
+            script.id = "google-gsi-client";
+            script.src = "https://accounts.google.com/gsi/client";
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                console.log("🔍 [Auth] Google SDK script loaded successfully");
+                initializeGoogle();
+            };
+            document.head.appendChild(script);
+        } else {
+            initializeGoogle();
+        }
+
+        // Facebook SDK (Ultra-defensive asynchronous loading)
+        const fbScriptId = "facebook-jssdk";
+        if (!document.getElementById(fbScriptId) && !(window as any).isFacebookScriptInjected) {
+            console.log("🔍 [Auth] Injecting Facebook SDK (Strict pattern)...");
+            (window as any).fbAsyncInit = initFB;
+            (window as any).isFacebookScriptInjected = true;
+
+            const fjs = document.getElementsByTagName("script")[0];
+            const js = document.createElement("script") as HTMLScriptElement;
+            js.id = fbScriptId;
+            js.src = "https://connect.facebook.net/es_LA/sdk.js";
+            js.async = true;
+            js.defer = true;
+            js.crossOrigin = "anonymous";
+            js.onload = () => console.log("🔍 [Auth] Facebook SDK script loaded successfully");
+
+            if (fjs && fjs.parentNode) {
+                fjs.parentNode.insertBefore(js, fjs);
+            } else {
+                document.head.appendChild(js);
+            }
+        } else {
+            console.log("🔍 [Auth] Facebook SDK already injected, re-initializing and parsing XFBML...");
+            initFB();
+            const FB = (window as any).FB;
+            if (FB?.XFBML) FB.XFBML.parse();
+        }
+    };
+
+    loadSocialSDKs();
 
     const fbBtn = document.getElementById("fb-login-btn");
     fbBtn?.addEventListener("click", () => {
+        console.log("🔍 [Auth] Manual Facebook button clicked (Fallback)");
         const FB = (window as any).FB;
-        if (!FB) {
-            console.error("Facebook SDK not loaded");
-            return;
-        }
-
-        FB.login(
-            (response: any) => {
+        if (FB) {
+            FB.login((response: any) => {
                 if (response.authResponse) {
-                    loginWithFacebook(response.authResponse.accessToken)
-                        .then((result) => {
-                            localStorage.setItem("marketflex_token", result.accessToken);
-                            localStorage.setItem("marketflex_refresh_token", result.refreshToken);
-                            localStorage.setItem(
-                                "marketflex_user",
-                                JSON.stringify(result.user),
-                            );
-
-                            const userName = result.user.nombre || "Usuario";
-                            const newParam = result.isNewUser
-                                ? "&new=true"
-                                : "";
-                            window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
-                        })
-                        .catch(async (error) => {
-                            console.error("❌ Facebook login error:", error);
-
-                            let message = "Error en el inicio de sesión con Facebook";
-                            if (error.response) {
-                                try {
-                                    const errorData = await error.response.json();
-                                    message = errorData.error || errorData.message || message;
-                                } catch (e) {
-                                    message = `Error ${error.response.status}: ${error.response.statusText}`;
-                                }
-                            }
-
-                            // Use Sileo notification
-                            if (typeof (window as any).triggerSileo === 'function') {
-                                (window as any).triggerSileo('error', message);
-                            }
-                        });
+                    handleFacebookBackendLogin(response.authResponse.accessToken);
                 }
-            },
-            { scope: "email,public_profile" },
-        );
+            }, { scope: "email,public_profile" });
+        }
     });
 }
