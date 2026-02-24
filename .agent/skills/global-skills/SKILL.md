@@ -15,6 +15,8 @@ This skill serves as a central index for all architectural and development guide
 - **[modular-architecture](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/modular-architecture/SKILL.md)**: Maintaining the modular structure of the frontend.
 - **[performance](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/performance/SKILL.md)**: Optimization strategies and Core Web Vitals.
 - **[responsive-design](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/responsive-design/SKILL.md)**: Mobile-first and fluid layout best practices.
+- **[sileo-notifications](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/sileo-notifications/SKILL.md)**: Mandatory rules for visual notifications using Sileo.
+- **[test-enforcement](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/test-enforcement/SKILL.md)**: Mandatory rule requiring one test per file.
 
 ## ⚙️ Backend Skills (`MarketFlex-BackEnd`)
 
@@ -26,6 +28,7 @@ This skill serves as a central index for all architectural and development guide
 - **[express](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/express/SKILL.md)**: Hono/Express routing and middleware best practices.
 - **[node](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/node/SKILL.md)**: Node.js runtime configuration and best practices.
 - **[test](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/test/SKILL.md)**: Testing guidelines for the backend.
+- **[test-enforcement](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/test-enforcement/SKILL.md)**: Mandatory rule requiring one test per file.
 - **[skill-generator](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/skill-generator/SKILL.md)**: Standardized way to create new skills like this one.
 
 ## 🛠️ Usage guidelines
