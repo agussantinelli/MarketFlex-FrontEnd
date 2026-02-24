@@ -307,7 +307,8 @@
 │   │   ├── navbar.ts                               # Lógica de menús, buscador y sesión
 │   │   ├── contact.ts                              # Lógica de formulario de soporte
 │   │   ├── search-filters.ts                       # Lógica de modal de búsqueda
-│   │   └── carousel.ts                             # Lógica de carruseles premium
+│   │   ├── carousel.ts                             # Lógica de carruseles premium
+│   │   └── promotion-hero.ts                       # Lógica de slider y auto-play de promociones
 │   ├── services/                                   # Servicios de negocio (API calls)
 │   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
 │   │   ├── category.service.ts                     # Servicio de categorías
@@ -350,6 +351,9 @@
 │   │   │   ├── PageCard.astro                      # Tarjeta blanca central genérica
 │   │   │   └── ConfirmationModal.astro             # Modal de confirmación premium
 
+│   │   ├── promotions/                             # Componentes de promociones
+│   │   │   ├── styles/                             # Estilos (ej. PromotionHero.module.css)
+│   │   │   └── PromotionHero.astro                 # Banner interactivo de promociones
 │   │   └── products/                               # Componentes de dominio
 │   │       ├── styles/                             # Estilos (ej. ProductCard.module.css)
 │   │       ├── FeaturedProducts.astro              # Grilla de productos destacados
