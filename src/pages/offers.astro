@@ -15,7 +15,6 @@ const minPriceParam = Astro.url.searchParams.get("minPrice") || "";
 const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
-const hasWithStockFilter = withStockRaw !== null;
 const promotionParam = Astro.url.searchParams.get("promotion") || "";
 const fixedKeysParam = Astro.url.searchParams.get("fixedKeys") || "";
 const fixedKeys = fixedKeysParam ? fixedKeysParam.split(",") : [];

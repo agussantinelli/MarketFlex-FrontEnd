@@ -18,7 +18,6 @@ const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const onlyOffersParam = Astro.url.searchParams.get("onlyOffers") === "true";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
-const hasWithStockFilter = withStockRaw !== null;
 const exploreParam = Astro.url.searchParams.get("explore") === "true";
 const brandParam = Astro.url.searchParams.get("brand") || "";
 
@@ -40,7 +39,7 @@ const response = await searchProducts({
     minPrice: minPriceParam,
     maxPrice: maxPriceParam,
     withStock: withStockParam.toString(),
-    onlyOffers: onlyOffersParam ? "true" : undefined,
+    ...(onlyOffersParam && { onlyOffers: "true" }),
     brand: brandParam,
     page: currentPage,
     limit,

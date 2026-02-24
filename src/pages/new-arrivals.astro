@@ -15,7 +15,6 @@ const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const onlyOffersParam = Astro.url.searchParams.get("onlyOffers") === "true";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
-const hasWithStockFilter = withStockRaw !== null;
 const limit = 20;
 
 const response = await getNewArrivals(

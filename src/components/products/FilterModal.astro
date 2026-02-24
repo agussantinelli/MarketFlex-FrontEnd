@@ -79,7 +79,7 @@ const {
                                         class:list={[
                                             styles.optionBtn,
                                             {
-                                                [styles.optionActive]:
+                                                [styles.optionActive as string]:
                                                     currentType === cat.nombre,
                                             },
                                         ]}
@@ -101,7 +101,7 @@ const {
                             id="subcategory-section"
                             class:list={[
                                 styles.filterSection,
-                                { [styles.hidden]: !currentType },
+                                { [styles.hidden as string]: !currentType },
                             ]}
                         >
                             <h3 class={styles.filterSectionTitle}>
@@ -126,7 +126,7 @@ const {
                                             class:list={[
                                                 styles.optionBtn,
                                                 {
-                                                    [styles.optionActive]:
+                                                    [styles.optionActive as string]:
                                                         currentCategory ===
                                                         sub.nombre,
                                                 },
@@ -210,7 +210,7 @@ const {
                                         class:list={[
                                             styles.optionBtn,
                                             {
-                                                [styles.optionActive]:
+                                                [styles.optionActive as string]:
                                                     currentPromotion ===
                                                     promo.nombre,
                                             },
@@ -254,7 +254,7 @@ const {
                                         class:list={[
                                             styles.optionBtn,
                                             {
-                                                [styles.optionActive]:
+                                                [styles.optionActive as string]:
                                                     currentBrands.includes(
                                                         brand.nombre,
                                                     ),

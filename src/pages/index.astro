@@ -11,7 +11,6 @@ import {
 } from "../services/product.service";
 import { getFeaturedPromotions } from "../services/promotion.service";
 import PromotionHero from "../components/promotions/PromotionHero.astro";
-import styles from "./styles/index.module.css";
 
 const products = await getFeaturedProducts();
 const promotions = await getFeaturedPromotions();
