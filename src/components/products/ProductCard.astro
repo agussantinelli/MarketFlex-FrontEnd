@@ -13,146 +13,154 @@ const { product, showFeatured = false, rank } = Astro.props;
 ---
 
 <article class={styles.productCard}>
-    <div class={styles.imageContainer}>
-        <img
-            src={product.foto
-                ? `http://localhost:5979/${product.foto}`
-                : "/placeholder.png"}
-            alt={product.nombre}
-            class={styles.productImage}
-            loading="lazy"
-        />
-        <div class={styles.priceTag}>${product.precioActual || "0.00"}</div>
+    <a href={`/productos/${product.id}`} class={styles.mainLink}>
+        <div class={styles.imageContainer}>
+            <img
+                src={product.foto
+                    ? `http://localhost:5979/${product.foto}`
+                    : "/placeholder.png"}
+                alt={product.nombre}
+                class={styles.productImage}
+                loading="lazy"
+            />
+            <div class={styles.priceTag}>${product.precioActual || "0.00"}</div>
 
-        <div class={styles.badgesContainer}>
-            {
-                rank && (
-                    <div
-                        class={`${styles.rankBadge} ${
-                            rank === 1
-                                ? styles.rankGold
-                                : rank === 2
-                                  ? styles.rankSilver
-                                  : rank === 3
-                                    ? styles.rankBronze
-                                    : styles.rankGeneric
-                        }`}
-                        title={`Puesto #${rank} en ventas`}
-                    >
-                        <span class={styles.rankNumber}>{rank}</span>
-                    </div>
-                )
-            }
-            {
-                product.esDestacado && showFeatured && (
-                    <div
-                        class={`${styles.badge} ${styles.featured}`}
-                        title="Producto Destacado"
-                    >
-                        <Icon name="lucide:star" size={16} />
-                    </div>
-                )
-            }
-            {
-                product.promocionActiva && (
-                    <div class={`${styles.badge} ${styles.promotion}`}>
-                        {product.promocionActiva.tipoPromocion === "NxM"
-                            ? `${product.promocionActiva.cantCompra}x${product.promocionActiva.cantPaga}`
-                            : product.promocionActiva.tipoPromocion ===
-                                "DESCUENTO_SEGUNDA_UNIDAD"
-                              ? `2da al ${product.promocionActiva.porcentajeDescuentoSegunda}%`
-                              : product.promocionActiva.nombre}
-                    </div>
-                )
-            }
-            {
-                product.descuentoActivo && !product.promocionActiva && (
-                    <div class={`${styles.badge} ${styles.discount}`}>
-                        {product.descuentoActivo.porcentaje
-                            ? `-${product.descuentoActivo.porcentaje}%`
-                            : "OFERTA"}
-                    </div>
-                )
-            }
-            {
-                product.envioGratis && (
-                    <div class={`${styles.badge} ${styles.freeShipping}`}>
-                        <Icon name="lucide:truck" size={14} /> Envío Gratis
-                    </div>
-                )
-            }
-        </div>
-
-        {
-            product.stock === 0 && (
-                <div class={styles.noStockOverlay}>
-                    <span>Sin Stock</span>
-                </div>
-            )
-        }
-
-        <div class={styles.priceContainer}>
-            {
-                product.precioConDescuento ? (
-                    <>
-                        <span class={styles.originalPrice}>
-                            ${product.precioActual}
-                        </span>
-                        <span
-                            class={`${styles.currentPrice} ${styles.discountText}`}
+            <div class={styles.badgesContainer}>
+                {
+                    rank && (
+                        <div
+                            class={`${styles.rankBadge} ${
+                                rank === 1
+                                    ? styles.rankGold
+                                    : rank === 2
+                                      ? styles.rankSilver
+                                      : rank === 3
+                                        ? styles.rankBronze
+                                        : styles.rankGeneric
+                            }`}
+                            title={`Puesto #${rank} en ventas`}
                         >
-                            ${product.precioConDescuento}
+                            <span class={styles.rankNumber}>{rank}</span>
+                        </div>
+                    )
+                }
+                {
+                    product.esDestacado && showFeatured && (
+                        <div
+                            class={`${styles.badge} ${styles.featured}`}
+                            title="Producto Destacado"
+                        >
+                            <Icon name="lucide:star" size={16} />
+                        </div>
+                    )
+                }
+                {
+                    product.promocionActiva && (
+                        <div class={`${styles.badge} ${styles.promotion}`}>
+                            {product.promocionActiva.tipoPromocion === "NxM"
+                                ? `${product.promocionActiva.cantCompra}x${product.promocionActiva.cantPaga}`
+                                : product.promocionActiva.tipoPromocion ===
+                                    "DESCUENTO_SEGUNDA_UNIDAD"
+                                  ? `2da al ${product.promocionActiva.porcentajeDescuentoSegunda}%`
+                                  : product.promocionActiva.nombre}
+                        </div>
+                    )
+                }
+                {
+                    product.descuentoActivo && !product.promocionActiva && (
+                        <div class={`${styles.badge} ${styles.discount}`}>
+                            {product.descuentoActivo.porcentaje
+                                ? `-${product.descuentoActivo.porcentaje}%`
+                                : "OFERTA"}
+                        </div>
+                    )
+                }
+                {
+                    product.envioGratis && (
+                        <div class={`${styles.badge} ${styles.freeShipping}`}>
+                            <Icon name="lucide:truck" size={14} /> Envío Gratis
+                        </div>
+                    )
+                }
+            </div>
+
+            {
+                product.stock === 0 && (
+                    <div class={styles.noStockOverlay}>
+                        <span>Sin Stock</span>
+                    </div>
+                )
+            }
+
+            <div class={styles.priceContainer}>
+                {
+                    product.precioConDescuento ? (
+                        <>
+                            <span class={styles.originalPrice}>
+                                ${product.precioActual}
+                            </span>
+                            <span
+                                class={`${styles.currentPrice} ${styles.discountText}`}
+                            >
+                                ${product.precioConDescuento}
+                            </span>
+                        </>
+                    ) : (
+                        <span class={styles.currentPrice}>
+                            ${product.precioActual || "0.00"}
                         </span>
-                    </>
-                ) : (
-                    <span class={styles.currentPrice}>
-                        ${product.precioActual || "0.00"}
-                    </span>
-                )
-            }
+                    )
+                }
+            </div>
         </div>
-    </div>
-    <div class={styles.productInfo}>
-        <div class={styles.productCategories}>
-            {
-                product.categoria && (
-                    <span class={styles.categoryName}>{product.categoria}</span>
-                )
-            }
-            {
-                product.categoria && product.subcategoria && (
-                    <span class={styles.separator}>•</span>
-                )
-            }
-            {
-                product.subcategoria && (
-                    <span class={styles.categoryName}>
-                        {product.subcategoria}
-                    </span>
-                )
-            }
+        <div class={styles.productInfo}>
+            <div class={styles.productCategories}>
+                {
+                    product.categoria && (
+                        <span class={styles.categoryName}>
+                            {product.categoria}
+                        </span>
+                    )
+                }
+                {
+                    product.categoria && product.subcategoria && (
+                        <span class={styles.separator}>•</span>
+                    )
+                }
+                {
+                    product.subcategoria && (
+                        <span class={styles.categoryName}>
+                            {product.subcategoria}
+                        </span>
+                    )
+                }
+            </div>
+            <h3 class={styles.title}>{product.nombre}</h3>
+            <div class={styles.productMeta}>
+                {
+                    product.marca && (
+                        <span class={styles.brandEditorial}>
+                            {product.marca}
+                        </span>
+                    )
+                }
+                {
+                    product.autor && (
+                        <span class={styles.authorLabel}>{product.autor}</span>
+                    )
+                }
+            </div>
+            <p class={styles.description}>
+                {
+                    product.descripcion
+                        ? product.descripcion.substring(0, 100) +
+                          (product.descripcion.length > 100 ? "..." : "")
+                        : "Sin descripción disponible."
+                }
+            </p>
         </div>
-        <h3 class={styles.title}>{product.nombre}</h3>
-        <div class={styles.productMeta}>
-            {
-                product.marca && (
-                    <span class={styles.brandEditorial}>{product.marca}</span>
-                )
-            }
-            {
-                product.autor && (
-                    <span class={styles.authorLabel}>{product.autor}</span>
-                )
-            }
-        </div>
-        <p class={styles.description}>
-            {
-                product.descripcion
-                    ? product.descripcion.substring(0, 100) +
-                      (product.descripcion.length > 100 ? "..." : "")
-                    : "Sin descripción disponible."
-            }
-        </p>
+    </a>
+    <div class={styles.buttonWrapper}>
         <button class={styles.btnAdd} disabled={product.stock === 0}>
             <Icon name="lucide:shopping-cart" />
             {product.stock === 0 ? "Sin Stock" : "Agregar"}
@@ -165,11 +173,19 @@ const { product, showFeatured = false, rank } = Astro.props;
 
     addButtons.forEach((btn) => {
         btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
             const token = localStorage.getItem("marketflex_token");
             if (!token) {
-                e.preventDefault();
                 window.location.href = "/login";
                 return;
+            }
+
+            // @ts-ignore - Sileo is injected globally
+            if (window.triggerSileo) {
+                // @ts-ignore
+                window.triggerSileo("success", "Producto agregado al carrito");
             }
         });
     });
