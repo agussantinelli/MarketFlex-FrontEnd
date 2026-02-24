@@ -5,14 +5,17 @@ import type { Category } from "../../types/category.types";
 import type { Subcategory } from "../../types/subcategory.types";
 
 import type { Promotion } from "../../types/promotion.types";
+import type { Brand } from "../../types/brand.types";
 
 interface Props {
     categories: Category[];
     subcategories: Subcategory[];
     promotions: Promotion[];
+    brands: Brand[];
     currentType?: string;
     currentCategory?: string;
     currentPromotion?: string;
+    currentBrands?: string[];
     currentMinPrice?: string;
     currentMaxPrice?: string;
     showOnlyOffersFilter?: boolean;
@@ -23,9 +26,11 @@ const {
     categories,
     subcategories,
     promotions,
+    brands,
     currentType,
     currentCategory,
     currentPromotion,
+    currentBrands = [],
     currentMinPrice,
     currentMaxPrice,
     showOnlyOffersFilter = true,
@@ -39,10 +44,12 @@ const {
     data-categories={JSON.stringify(categories)}
     data-subcategories={JSON.stringify(subcategories)}
     data-promotions={JSON.stringify(promotions)}
+    data-brands={JSON.stringify(brands)}
     data-styles={JSON.stringify(styles)}
     data-initial-type={currentType}
     data-initial-category={currentCategory}
     data-initial-promotion={currentPromotion}
+    data-initial-brands={JSON.stringify(currentBrands)}
     data-fixed-keys={JSON.stringify(fixedKeys)}
 >
     <div class={styles.modalContent}>
@@ -211,6 +218,51 @@ const {
                                         data-promotion={promo.nombre}
                                     >
                                         {promo.nombre}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* Marcas (Editoriales) */}
+                {
+                    brands.length > 0 && (
+                        <div class={styles.filterSection}>
+                            <div
+                                class={styles.collapsibleTrigger}
+                                id="brands-trigger"
+                            >
+                                <h3 class={styles.filterSectionTitle}>
+                                    Marcas
+                                </h3>
+                                <Icon
+                                    name="lucide:chevron-down"
+                                    class={styles.chevronIcon}
+                                    id="brands-chevron"
+                                />
+                            </div>
+                            <div
+                                class:list={[
+                                    styles.optionsGrid,
+                                    styles.collapsed,
+                                ]}
+                                id="brands-content"
+                            >
+                                {brands.map((brand) => (
+                                    <button
+                                        class:list={[
+                                            styles.optionBtn,
+                                            {
+                                                [styles.optionActive]:
+                                                    currentBrands.includes(
+                                                        brand.nombre,
+                                                    ),
+                                            },
+                                        ]}
+                                        data-brand={brand.nombre}
+                                    >
+                                        {brand.nombre}
                                     </button>
                                 ))}
                             </div>

@@ -5,6 +5,7 @@ import FilterModal from "./FilterModal.astro";
 import styles from "./styles/controls.module.css";
 import { filterService } from "../../services/filter.service";
 import { getActivePromotions } from "../../services/promotion.service";
+import { getBrands } from "../../services/brand.service";
 
 interface Props {
     sort: string;
@@ -31,6 +32,7 @@ const {
 // Fetch filter data for the modal
 const categories = await filterService.getCategories();
 const subcategories = await filterService.getSubcategories();
+const brands = await getBrands();
 const promotions = showPromotions ? await getActivePromotions() : [];
 
 const currentType = params.get("type") || undefined;
@@ -51,9 +53,11 @@ const currentMaxPrice = params.get("maxPrice") || undefined;
                     categories={categories}
                     subcategories={subcategories}
                     promotions={promotions}
+                    brands={brands}
                     currentType={currentType}
                     currentCategory={currentCategory}
                     currentPromotion={currentPromotion}
+                    currentBrands={params.get("brand")?.split(",") || []}
                     currentMinPrice={currentMinPrice}
                     currentMaxPrice={currentMaxPrice}
                     showOnlyOffersFilter={showOnlyOffersFilter}

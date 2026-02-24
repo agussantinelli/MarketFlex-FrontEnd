@@ -224,6 +224,46 @@
     letter-spacing: 0.05em;
 }
 
+.collapsibleTrigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.collapsibleTrigger:hover .filterSectionTitle {
+    color: white;
+}
+
+.chevronIcon {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+    transition: transform 0.3s ease;
+}
+
+.collapsed {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: all 0.3s ease;
+}
+
+.expanded .chevronIcon {
+    transform: rotate(180deg);
+}
+
+.expanded .collapsed {
+    max-height: 500px;
+    overflow-y: auto;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
 .optionsGrid {
     display: flex;
     flex-wrap: wrap;

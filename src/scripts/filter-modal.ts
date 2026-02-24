@@ -23,17 +23,27 @@ const initFilterModal = () => {
     const stockCheckbox = document.getElementById("with-stock-checkbox") as HTMLInputElement;
     const onlyOffersCheckbox = document.getElementById("only-offers-checkbox") as HTMLInputElement;
 
+    // Elementos de Marcas
+    const brandsTrigger = document.getElementById("brands-trigger");
+    const brandsContent = document.getElementById("brands-content");
+
     // Estado inicial desde URL
     const urlParams = new URLSearchParams(window.location.search);
     let selectedType = urlParams.get("type") || "";
     let selectedCategory = urlParams.get("category") || "";
     let selectedPromotion = urlParams.get("promotion") || "";
+    let selectedBrands: string[] = JSON.parse(backdrop.getAttribute("data-initial-brands") || "[]");
 
     // Sincronizar UI con URL
     if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
     if (maxPriceInput) maxPriceInput.value = urlParams.get("maxPrice") || "";
     if (stockCheckbox) stockCheckbox.checked = urlParams.get("withStock") !== "false";
     if (onlyOffersCheckbox) onlyOffersCheckbox.checked = urlParams.get("onlyOffers") === "true";
+
+    // Expandir marcas si ya hay seleccionadas
+    if (selectedBrands.length > 0 && brandsContent && brandsTrigger) {
+        brandsContent.parentElement?.classList.add(styles.expanded);
+    }
 
     // --- ACCIONES ---
 
@@ -99,6 +109,11 @@ const initFilterModal = () => {
         if (e.target === backdrop) closeModal();
     });
 
+    // Colapsable de Marcas
+    brandsTrigger?.addEventListener("click", () => {
+        brandsTrigger.parentElement?.classList.toggle(styles.expanded);
+    });
+
     // Categorías principales
     document.querySelectorAll(`.${styles.optionBtn}[data-type]`).forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -137,6 +152,21 @@ const initFilterModal = () => {
             }
         });
     });
+
+    // Marcas (Multi-selección)
+    document.querySelectorAll(`.${styles.optionBtn}[data-brand]`).forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const brand = btn.getAttribute("data-brand") || "";
+            if (selectedBrands.includes(brand)) {
+                selectedBrands = selectedBrands.filter(b => b !== brand);
+                btn.classList.remove(styles.optionActive);
+            } else {
+                selectedBrands.push(brand);
+                btn.classList.add(styles.optionActive);
+            }
+        });
+    });
+
     applyBtn?.addEventListener("click", () => {
         const params = new URLSearchParams(window.location.search);
         const fixedKeysAttr = backdrop.getAttribute("data-fixed-keys");
@@ -157,6 +187,12 @@ const initFilterModal = () => {
         if (onlyOffersCheckbox) params.set("onlyOffers", onlyOffersCheckbox.checked ? "true" : "false");
 
         selectedPromotion ? params.set("promotion", selectedPromotion) : params.delete("promotion");
+
+        if (selectedBrands.length > 0) {
+            params.set("brand", selectedBrands.join(","));
+        } else {
+            params.delete("brand");
+        }
 
         params.set("page", "1");
         window.location.href = `${window.location.pathname}?${params.toString()}`;
