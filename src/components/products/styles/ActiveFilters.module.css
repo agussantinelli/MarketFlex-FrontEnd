@@ -1,0 +1,80 @@
+.activeFilters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.chipsRow {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filterChip {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    color: var(--primary);
+    padding: 0.35rem 0.6rem 0.35rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    gap: 0.5rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.filterChip:hover {
+    background: #fdfdfd;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary);
+}
+
+.removeFilter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.removeFilter:hover {
+    background: var(--primary);
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+.clearAllFilters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.clearAllFilters:hover {
+    color: #ffffff;
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.4);
+    transform: translateY(-1px);
+}
