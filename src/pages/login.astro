@@ -169,8 +169,9 @@ import styles from "./styles/login.module.css";
 <script>
     import { initLogin } from "../scripts/auth-login";
 
-    // Initialize on load and on transitions
-    document.addEventListener("astro:page-load", () => {
-        initLogin();
-    });
+    // Initialize on load
+    initLogin();
+
+    // Support for View Transitions
+    document.addEventListener("astro:page-load", initLogin);
 </script>

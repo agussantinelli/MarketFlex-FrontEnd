@@ -142,7 +142,6 @@ export function initLogin() {
                 "697852573228-jl7nemqo3paglicuba0sdr68gshe1kta.apps.googleusercontent.com",
             callback: handleGoogleLogin,
             auto_select: false,
-            use_fedcm_for_prompt: false,
         });
         google.accounts.id.prompt();
     });
@@ -163,9 +162,9 @@ export function initLogin() {
 
         // Inject FB SDK script if not already present
         if (!document.getElementById("facebook-jssdk")) {
-            (function (d, s, id) {
-                const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement;
-                if (d.getElementById(id) || !fjs || !fjs.parentNode) return;
+            (function (d: Document, s: string, id: string) {
+                const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement | undefined;
+                if (!fjs || !fjs.parentNode || d.getElementById(id)) return;
                 const js = d.createElement(s) as HTMLScriptElement;
                 js.id = id;
                 js.src = "https://connect.facebook.net/es_LA/sdk.js";
