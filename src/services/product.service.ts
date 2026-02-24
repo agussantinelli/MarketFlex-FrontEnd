@@ -87,6 +87,7 @@ export const getNewArrivals = async (page: number = 1, limit: number = 20, sort?
         if (maxPrice) params.append("maxPrice", maxPrice);
         if (withStock) params.append("withStock", withStock);
         if (onlyOffers) params.append("onlyOffers", onlyOffers);
+        if (brand) params.append("brand", brand);
 
         return await api.get(`products/new-arrivals?${params.toString()}`).json();
     } catch (error) {
@@ -108,6 +109,7 @@ export const getBestsellers = async (page: number = 1, limit: number = 20, minPr
         if (maxPrice) params.append("maxPrice", maxPrice);
         if (withStock) params.append("withStock", withStock);
         if (onlyOffers) params.append("onlyOffers", onlyOffers);
+        if (brand) params.append("brand", brand);
 
         return await api.get(`products/bestsellers?${params.toString()}`).json();
     } catch (error) {
