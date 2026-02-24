@@ -50,34 +50,54 @@ const handleGoogleLogin = async (credentialResponse: any) => {
 };
 
 const initializeGoogle = () => {
-    if ((window as any).isGoogleInitialized) return;
     const google = (window as any).google;
     if (google?.accounts?.id) {
-        const client_id = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID;
-        google.accounts.id.initialize({
-            client_id: client_id,
-            callback: handleGoogleLogin,
-            auto_select: false,
-            use_fedcm_for_prompt: false,
-        });
+        // Init only once
+        if (!(window as any).isGoogleInitialized) {
+            const client_id = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID;
+            google.accounts.id.initialize({
+                client_id: client_id,
+                callback: handleGoogleLogin,
+                auto_select: false,
+                use_fedcm_for_prompt: false,
+            });
+            (window as any).isGoogleInitialized = true;
+        }
 
         const btnContainer = document.getElementById("google-signin-button");
         if (btnContainer) {
-            const referenceBtn = document.getElementById("fb-login-btn");
-            const containerWidth = btnContainer.parentElement?.clientWidth || window.innerWidth - 64;
+            let lastWidth = 0;
 
-            const buttonWidth = referenceBtn ? referenceBtn.clientWidth : Math.min(containerWidth, 370);
+            const renderGoogleButton = () => {
+                const referenceBtn = document.getElementById("fb-login-btn");
+                const parent = btnContainer.parentElement;
+                if (!parent) return;
 
-            google.accounts.id.renderButton(btnContainer, {
-                theme: "outline",
-                size: "large",
-                text: "continue_with",
-                shape: "rectangular",
-                width: buttonWidth, // Toma el ancho en px exacto
-                logo_alignment: "left"
+                const newWidth = referenceBtn?.clientWidth || Math.min(parent.clientWidth - 16, 370);
+
+                if (newWidth > 200 && Math.abs(newWidth - lastWidth) > 10) {
+                    lastWidth = newWidth;
+                    btnContainer.innerHTML = "";
+                    google.accounts.id.renderButton(btnContainer, {
+                        theme: "outline",
+                        size: "large",
+                        text: "continue_with",
+                        shape: "rectangular",
+                        width: newWidth,
+                        logo_alignment: "left"
+                    });
+                }
+            };
+
+            // Initial render
+            renderGoogleButton();
+
+            // Responsive observation
+            const observer = new ResizeObserver(() => {
+                window.requestAnimationFrame(() => renderGoogleButton());
             });
+            observer.observe(btnContainer.parentElement!);
         }
-        (window as any).isGoogleInitialized = true;
     }
 };
 
