@@ -19,6 +19,7 @@ const onlyOffersParam = Astro.url.searchParams.get("onlyOffers") === "true";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
 const hasWithStockFilter = withStockRaw !== null;
+const exploreParam = Astro.url.searchParams.get("explore") === "true";
 
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const limit = 20;
@@ -86,6 +87,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                             baseUrl="/search"
                             params={Astro.url.searchParams}
                             fixedKeys={["type", "category"]}
+                            showPromotions={exploreParam}
                         />
                         
                         <ActiveFilters 

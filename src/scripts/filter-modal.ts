@@ -156,9 +156,7 @@ const initFilterModal = () => {
         if (stockCheckbox) params.set("withStock", stockCheckbox.checked ? "true" : "false");
         if (onlyOffersCheckbox) params.set("onlyOffers", onlyOffersCheckbox.checked ? "true" : "false");
 
-        if (!fixedKeys.includes("promotion")) {
-            selectedPromotion ? params.set("promotion", selectedPromotion) : params.delete("promotion");
-        }
+        selectedPromotion ? params.set("promotion", selectedPromotion) : params.delete("promotion");
 
         params.set("page", "1");
         window.location.href = `${window.location.pathname}?${params.toString()}`;
