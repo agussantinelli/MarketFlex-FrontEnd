@@ -1,7 +1,8 @@
 export type Product = {
     id: string;
     nombre: string;
-    caracteristicas: string | null;
+    descripcion: string | null;
+    caracteristicas: { nombre: string; valor: string }[];
     foto: string | null;
     categoria: string | null;
     subcategoria: string | null;

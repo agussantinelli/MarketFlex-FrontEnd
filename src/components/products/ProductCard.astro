@@ -147,9 +147,9 @@ const { product, showFeatured = false, rank } = Astro.props;
         </div>
         <p class={styles.description}>
             {
-                product.caracteristicas
-                    ? product.caracteristicas.substring(0, 100) +
-                      (product.caracteristicas.length > 100 ? "..." : "")
+                product.descripcion
+                    ? product.descripcion.substring(0, 100) +
+                      (product.descripcion.length > 100 ? "..." : "")
                     : "Sin descripción disponible."
             }
         </p>
@@ -170,15 +170,6 @@ const { product, showFeatured = false, rank } = Astro.props;
                 e.preventDefault();
                 window.location.href = "/login";
                 return;
-            }
-
-            // TODO: Implement Add to Cart logic here
-            console.log("Add to cart clicked - User logged in");
-            // trigger Sileo notification if available?
-            if (window.triggerSileo) {
-                window.triggerSileo("success", "Producto agregado (simulado)");
-            } else {
-                alert("Producto agregado (simulado)");
             }
         });
     });
