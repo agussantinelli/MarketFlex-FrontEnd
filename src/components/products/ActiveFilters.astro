@@ -5,9 +5,10 @@ import styles from "./styles/ActiveFilters.module.css";
 interface Props {
     baseUrl: string;
     params: URLSearchParams;
+    fixedKeys?: string[];
 }
 
-const { baseUrl, params } = Astro.props;
+const { baseUrl, params, fixedKeys = [] } = Astro.props;
 
 interface ActiveFilter {
     label: string;
@@ -92,23 +93,26 @@ if (activeFilters.length === 0) return null;
             activeFilters.map((filter) => (
                 <div class={styles.filterChip}>
                     <span>{filter.label}</span>
-                    <a
-                        href={filter.url}
-                        class={styles.removeFilter}
-                        aria-label={`Quitar filtro ${filter.label}`}
-                    >
-                        <Icon name="lucide:x" size={12} />
-                    </a>
+                    {!fixedKeys.includes(filter.key) && (
+                        <a
+                            href={filter.url}
+                            class={styles.removeFilter}
+                            aria-label={`Quitar filtro ${filter.label}`}
+                        >
+                            <Icon name="lucide:x" size={12} />
+                        </a>
+                    )}
                 </div>
             ))
         }
     </div>
     {
-        activeFilters.length > 1 && (
-            <a href={baseUrl} class={styles.clearAllFilters}>
-                <Icon name="lucide:rotate-ccw" size={12} />
-                Limpiar filtros
-            </a>
-        )
+        activeFilters.length > 1 &&
+            activeFilters.some((f) => !fixedKeys.includes(f.key)) && (
+                <a href={baseUrl} class={styles.clearAllFilters}>
+                    <Icon name="lucide:rotate-ccw" size={12} />
+                    Limpiar filtros
+                </a>
+            )
     }
 </div>

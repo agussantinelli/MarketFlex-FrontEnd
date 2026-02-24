@@ -90,6 +90,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                         <ActiveFilters 
                             baseUrl="/search"
                             params={Astro.url.searchParams}
+                            fixedKeys={["type", "category"]}
                         />
                     </div>
                 )
