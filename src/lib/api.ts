@@ -27,7 +27,7 @@ export const api = ky.create({
             },
         ],
         afterResponse: [
-            async (request, options, response) => {
+            async (request, _options, response) => {
                 console.log(`🌐 [API] Response received: ${response.status} from ${response.url}`);
                 if (response.status === 401 && !request.url.includes('/auth/refresh')) {
                     console.warn(`🌐 [API] 401 Unauthorized detected. Attempting token refresh...`);
@@ -60,6 +60,7 @@ export const api = ky.create({
                         console.error(`❌ [API] No refresh token available in localStorage`);
                     }
                 }
+                return response;
             }
         ]
     },
