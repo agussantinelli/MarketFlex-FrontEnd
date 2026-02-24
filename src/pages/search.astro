@@ -22,6 +22,12 @@ const hasWithStockFilter = withStockRaw !== null;
 const exploreParam = Astro.url.searchParams.get("explore") === "true";
 const brandParam = Astro.url.searchParams.get("brand") || "";
 
+const fixedKeys: string[] = [];
+if (!exploreParam && !searchQuery) {
+    if (typeParam) fixedKeys.push("type");
+    if (categoryParam) fixedKeys.push("category");
+}
+
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const limit = 20;
 
@@ -88,14 +94,14 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                             sort={sort}
                             baseUrl="/search"
                             params={Astro.url.searchParams}
-                            fixedKeys={["type", "category"]}
+                            fixedKeys={fixedKeys}
                             showPromotions={exploreParam}
                         />
                         
                         <ActiveFilters 
                             baseUrl="/search"
                             params={Astro.url.searchParams}
-                            fixedKeys={["type", "category"]}
+                            fixedKeys={fixedKeys}
                         />
                     </div>
                 )
