@@ -44,6 +44,16 @@ const { product, showFeatured = false, rank } = Astro.props;
                 )
             }
             {
+                product.esDestacado && showFeatured && (
+                    <div
+                        class={`${styles.badge} ${styles.featured}`}
+                        title="Producto Destacado"
+                    >
+                        <Icon name="lucide:star" size={16} />
+                    </div>
+                )
+            }
+            {
                 product.promocionActiva && (
                     <div class={`${styles.badge} ${styles.promotion}`}>
                         {product.promocionActiva.tipoPromocion === "NxM"
@@ -61,16 +71,6 @@ const { product, showFeatured = false, rank } = Astro.props;
                         {product.descuentoActivo.porcentaje
                             ? `-${product.descuentoActivo.porcentaje}%`
                             : "OFERTA"}
-                    </div>
-                )
-            }
-            {
-                product.esDestacado && showFeatured && (
-                    <div
-                        class={`${styles.badge} ${styles.featured}`}
-                        title="Producto Destacado"
-                    >
-                        <Icon name="lucide:star" size={16} />
                     </div>
                 )
             }
