@@ -9,7 +9,7 @@ interface Props {
     rank?: number;
 }
 
-const { product, showFeatured = true, rank } = Astro.props;
+const { product, showFeatured = false, rank } = Astro.props;
 ---
 
 <article class={styles.productCard}>

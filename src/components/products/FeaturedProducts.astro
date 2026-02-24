@@ -18,6 +18,10 @@ const { products } = Astro.props;
     </h2>
 
     <div class={styles.productsGrid}>
-        {products.map((product) => <ProductCard product={product} />)}
+        {
+            products.map((product) => (
+                <ProductCard product={product} showFeatured={true} />
+            ))
+        }
     </div>
 </section>
