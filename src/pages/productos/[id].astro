@@ -215,8 +215,6 @@ const hasDiscount = product.precioConDescuento !== null;
 </Layout>
 
 <script>
-    import { toast } from "sileo";
-
     const addBtn = document.querySelector("[class*='addToCart']");
     const buyBtn = document.querySelector("[class*='buyNow']");
 
@@ -227,10 +225,15 @@ const hasDiscount = product.precioConDescuento !== null;
             return;
         }
 
-        if (type === "cart") {
-            toast.success("Producto agregado al carrito");
-        } else {
-            toast.info("Iniciando proceso de compra...");
+        // @ts-ignore - Sileo is injected globally
+        if (window.triggerSileo) {
+            if (type === "cart") {
+                // @ts-ignore
+                window.triggerSileo("success", "Producto agregado al carrito");
+            } else {
+                // @ts-ignore
+                window.triggerSileo("info", "Iniciando proceso de compra...");
+            }
         }
     }
 
