@@ -165,11 +165,12 @@ export function initLogin() {
         if (!document.getElementById("facebook-jssdk")) {
             (function (d, s, id) {
                 const fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id) || !fjs || !fjs.parentNode) return;
+                const parent = fjs?.parentNode;
+                if (d.getElementById(id) || !fjs || !parent) return;
                 const js = d.createElement(s) as HTMLScriptElement;
                 js.id = id;
                 js.src = "https://connect.facebook.net/es_LA/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
+                parent.insertBefore(js, fjs);
             })(document, "script", "facebook-jssdk");
         }
     }
