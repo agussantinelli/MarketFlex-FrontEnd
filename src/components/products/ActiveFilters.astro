@@ -1,0 +1,181 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    baseUrl: string;
+    params: URLSearchParams;
+}
+
+const { baseUrl, params } = Astro.props;
+
+interface ActiveFilter {
+    label: string;
+    key: string;
+    url: string;
+}
+
+const activeFilters: ActiveFilter[] = [];
+
+// Helper to create a URL without a specific filter
+const getRemoveFilterUrl = (key: string, value?: string) => {
+    const newParams = new URLSearchParams(params);
+    if (value !== undefined) {
+        // Handle cases where multiple values might exist for the same key (not current case but good practice)
+        newParams.delete(key);
+    } else {
+        newParams.delete(key);
+    }
+    // Always reset page to 1 when changing filters
+    newParams.set("page", "1");
+
+    // For withStock, if we remove it, it defaults to true (show only stock)
+    // The filter in the UI is "Show with and without stock"
+
+    return `${baseUrl}?${newParams.toString()}`;
+};
+
+// Process filters
+const q = params.get("q");
+if (q)
+    activeFilters.push({
+        label: `Búsqueda: ${q}`,
+        key: "q",
+        url: getRemoveFilterUrl("q"),
+    });
+
+const type = params.get("type");
+if (type)
+    activeFilters.push({
+        label: `Categoría: ${type}`,
+        key: "type",
+        url: getRemoveFilterUrl("type"),
+    });
+
+const category = params.get("category");
+if (category)
+    activeFilters.push({
+        label: `Subcategoría: ${category}`,
+        key: "category",
+        url: getRemoveFilterUrl("category"),
+    });
+
+const minPrice = params.get("minPrice");
+if (minPrice)
+    activeFilters.push({
+        label: `Min: $${minPrice}`,
+        key: "minPrice",
+        url: getRemoveFilterUrl("minPrice"),
+    });
+
+const maxPrice = params.get("maxPrice");
+if (maxPrice)
+    activeFilters.push({
+        label: `Max: $${maxPrice}`,
+        key: "maxPrice",
+        url: getRemoveFilterUrl("maxPrice"),
+    });
+
+const withStock = params.get("withStock");
+if (withStock === "false")
+    activeFilters.push({
+        label: "Con y Sin Stock",
+        key: "withStock",
+        url: getRemoveFilterUrl("withStock"),
+    });
+
+const onlyOffers = params.get("onlyOffers");
+if (onlyOffers === "true")
+    activeFilters.push({
+        label: "En Oferta",
+        key: "onlyOffers",
+        url: getRemoveFilterUrl("onlyOffers"),
+    });
+
+if (activeFilters.length === 0) return null;
+---
+
+<div class="active-filters">
+    {
+        activeFilters.map((filter) => (
+            <div class="filter-chip">
+                <span class="filter-chip-label">{filter.label}</span>
+                <a
+                    href={filter.url}
+                    class="remove-filter"
+                    aria-label={`Quitar filtro ${filter.label}`}
+                    title="Quitar filtro"
+                >
+                    <Icon name="lucide:x" size={14} />
+                </a>
+            </div>
+        ))
+    }
+    {
+        activeFilters.length > 1 && (
+            <a href={baseUrl} class="clear-all-filters">
+                Limpiar todo
+            </a>
+        )
+    }
+</div>
+
+<style>
+    .active-filters {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--primary);
+        padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.85rem;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        gap: 0.4rem;
+        transition: all 0.2s ease;
+    }
+
+    .filter-chip:hover {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.4);
+    }
+
+    .remove-filter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        padding: 2px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .remove-filter:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+    .clear-all-filters {
+        font-size: 0.85rem;
+        color: #9ca3af;
+        text-decoration: none;
+        padding: 0.25rem 0.75rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+    }
+
+    .clear-all-filters:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+</style>

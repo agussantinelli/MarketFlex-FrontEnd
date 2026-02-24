@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import ProductCard from "../components/products/ProductCard.astro";
 import ProductControls from "../components/products/ProductControls.astro";
+import ActiveFilters from "../components/products/ActiveFilters.astro";
 import { getOffers } from "../services/product.service";
 import styles from "./styles/search.module.css";
 
@@ -50,19 +51,10 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     showOnlyOffersFilter={false}
                 />
 
-                {(minPriceParam || maxPriceParam || hasWithStockFilter) && (
-                    <div class={styles.activeFilters}>
-                        {minPriceParam && (
-                            <span class={styles.filterTag}>Min: ${minPriceParam}</span>
-                        )}
-                        {maxPriceParam && (
-                            <span class={styles.filterTag}>Max: ${maxPriceParam}</span>
-                        )}
-                        {hasWithStockFilter && !withStockParam && (
-                            <span class={styles.filterTag}>Con y Sin Stock</span>
-                        )}
-                    </div>
-                )}
+                <ActiveFilters 
+                    baseUrl="/offers"
+                    params={Astro.url.searchParams}
+                />
             </div>
         </div>
 
