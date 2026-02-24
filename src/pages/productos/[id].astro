@@ -21,24 +21,36 @@ const hasDiscount = product.precioConDescuento !== null;
 
 <Layout title={`${product.nombre} | MarketFlex`}>
     <div class={styles.container}>
-        <div class={styles.breadcrumb}>
+        <nav class={styles.breadcrumb} aria-label="Breadcrumb">
             <a href="/">Inicio</a>
-            <Icon name="lucide:chevron-right" size={14} />
+            <Icon
+                name="lucide:chevron-right"
+                size={14}
+                class={styles.breadcrumbIcon}
+            />
             <a href={`/search?type=${product.categoria}`}>{product.categoria}</a
             >
             {
                 product.subcategoria && (
                     <>
-                        <Icon name="lucide:chevron-right" size={14} />
+                        <Icon
+                            name="lucide:chevron-right"
+                            size={14}
+                            class={styles.breadcrumbIcon}
+                        />
                         <a href={`/search?category=${product.subcategoria}`}>
                             {product.subcategoria}
                         </a>
                     </>
                 )
             }
-            <Icon name="lucide:chevron-right" size={14} />
+            <Icon
+                name="lucide:chevron-right"
+                size={14}
+                class={styles.breadcrumbIcon}
+            />
             <span>{product.nombre}</span>
-        </div>
+        </nav>
 
         <div class={styles.productGrid}>
             <div class={styles.imageSection}>
