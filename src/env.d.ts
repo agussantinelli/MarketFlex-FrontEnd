@@ -1,4 +1,6 @@
 /// <reference path="../.astro/types.d.ts" />
+/// <reference types="vitest/globals" />
+/// <reference types="@playwright/test" />
 
 interface Window {
     triggerSileo: (type: string, message: string) => boolean;
