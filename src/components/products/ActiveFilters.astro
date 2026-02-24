@@ -109,7 +109,21 @@ if (activeFilters.length === 0) return null;
     {
         activeFilters.length > 1 &&
             activeFilters.some((f) => !fixedKeys.includes(f.key)) && (
-                <a href={baseUrl} class={styles.clearAllFilters}>
+                <a
+                    href={`${baseUrl}?${(() => {
+                        const newParams = new URLSearchParams();
+                        fixedKeys.forEach((key) => {
+                            const val = params.get(key);
+                            if (val) newParams.set(key, val);
+                        });
+                        // Keep search query if present
+                        const q = params.get("q");
+                        if (q) newParams.set("q", q);
+                        newParams.set("page", "1");
+                        return newParams.toString();
+                    })()}`}
+                    class={styles.clearAllFilters}
+                >
                     <Icon name="lucide:rotate-ccw" size={12} />
                     Limpiar filtros
                 </a>

@@ -98,37 +98,9 @@ const endRange = Math.min(currentPage * limit, pagination.total);
             }
         </div>
 
-        {/* Modal Coming Soon - Keep existing */}
-        <div id="filter-modal" class={styles.modalBackdrop}>
-            <div class={styles.modalContent}>
-                <button id="close-modal" class={styles.modalClose}>
-                    <Icon name="lucide:x" />
-                </button>
-                <div class={styles.modalBody}>
-                    <div class={styles.modalIconWrapper}>
-                        <Icon name="lucide:sparkles" class={styles.modalIcon} />
-                    </div>
-                    <h3 class={styles.modalTitle}>Próximamente</h3>
-                    <p class={styles.modalText}>
-                        Estamos trabajando en opciones de filtrado avanzadas
-                        para que encuentres exactamente lo que buscás.
-                    </p>
-                    <button id="close-modal-btn" class="btn btn-primary">
-                        Entendido
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <script>
-    import { initSearchFilters } from "../scripts/search-filters";
 
-    // Initialize on load
-    initSearchFilters();
 
-    // Support for View Transitions
-    document.addEventListener("astro:page-load", initSearchFilters);
-</script>
 
         {
             products.length > 0 ? (

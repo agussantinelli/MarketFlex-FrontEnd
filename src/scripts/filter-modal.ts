@@ -121,8 +121,17 @@ const initFilterModal = () => {
 
     applyBtn?.addEventListener("click", () => {
         const params = new URLSearchParams(window.location.search);
-        selectedType ? params.set("type", selectedType) : params.delete("type");
-        selectedCategory ? params.set("category", selectedCategory) : params.delete("category");
+        const fixedKeysAttr = backdrop.getAttribute("data-fixed-keys");
+        const fixedKeys: string[] = JSON.parse(fixedKeysAttr || "[]");
+
+        // Only update type/category if they are not fixed
+        if (!fixedKeys.includes("type")) {
+            selectedType ? params.set("type", selectedType) : params.delete("type");
+        }
+        if (!fixedKeys.includes("category")) {
+            selectedCategory ? params.set("category", selectedCategory) : params.delete("category");
+        }
+
         minPriceInput?.value ? params.set("minPrice", minPriceInput.value) : params.delete("minPrice");
         maxPriceInput?.value ? params.set("maxPrice", maxPriceInput.value) : params.delete("maxPrice");
 
