@@ -384,14 +384,37 @@
 <p>Este proyecto se rige por un conjunto de reglas arquitectónicas y de calidad de código denominadas <b>Skills</b>. Podés consultar el catálogo completo en:</p>
 <ul>
     <li><b><a href=".agent/skills/global-skills/SKILL.md">Global Skills Catalog (Frontend)</a></b></li>
+    <li><b><a href=".agent/skills/test-enforcement/SKILL.md">Test Enforcement Rule</a></b></li>
 </ul>
 <p>Las directrices más críticas incluyen:</p>
 <ul>
     <li><code>css-modules</code>: Todo CSS complejo debe vivir en su propio archivo modular.</li>
+    <li><code>test-enforcement</code>: Regla obligatoria de "Un test por archivo" para componentes y servicios.</li>
     <li><code>astro-scripts</code>: La lógica compleja de scripts debe extraerse de los archivos Astro.</li>
-    <li><code>modular-architecture</code>: Mantener la separación de servicios, tipos y componentes.</li>
-    <li><code>sileo-notifications</code>: Uso obligatorio de Sileo para notificaciones visuales.</li>
 </ul>
+
+<hr>
+
+<h2>🧪 Testing y Calidad</h2>
+<p>
+  El frontend implementa una estrategia dual de pruebas para asegurar tanto la lógica interna como la experiencia del usuario final.
+</p>
+<ul>
+  <li><b>Pruebas Unitarias:</b> <a href="https://vitest.dev/">Vitest</a> + JSDOM para servicios y helpers.</li>
+  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a> para flujos de usuario críticos (Login, Carrito, Búsqueda).</li>
+</ul>
+
+<h3>Comandos de Test</h3>
+<pre>
+# Ejecutar tests unitarios
+pnpm test
+
+# Ejecutar tests E2E
+pnpm run test:e2e
+
+# Abrir interfaz de Playwright (UI)
+pnpm run test:e2e:ui
+</pre>
 
 <hr>
 
