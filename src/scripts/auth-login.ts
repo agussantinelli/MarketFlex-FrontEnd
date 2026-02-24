@@ -63,12 +63,18 @@ const initializeGoogle = () => {
 
         const btnContainer = document.getElementById("google-signin-button");
         if (btnContainer) {
+            const referenceBtn = document.getElementById("fb-login-btn");
+            const containerWidth = btnContainer.parentElement?.clientWidth || window.innerWidth - 64;
+
+            const buttonWidth = referenceBtn ? referenceBtn.clientWidth : Math.min(containerWidth, 370);
+
             google.accounts.id.renderButton(btnContainer, {
                 theme: "outline",
                 size: "large",
-                text: "signin_with",
+                text: "continue_with",
                 shape: "rectangular",
-                width: btnContainer.offsetWidth || 350
+                width: buttonWidth, // Toma el ancho en px exacto
+                logo_alignment: "left"
             });
         }
         (window as any).isGoogleInitialized = true;

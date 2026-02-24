@@ -285,9 +285,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     min-height: 44px;
-    /* Previene saltos de layout mientras carga */
 }
 
 .facebookContainer {
@@ -300,19 +299,30 @@
 
 .btnGoogle {
     width: 100%;
+    max-width: 370px;
+    /* Igualado a Facebook */
+    height: 44px;
+    /* Igualado a Facebook */
     padding: 0.75rem 1rem;
     background: white;
     color: #444;
     border: 1px solid #dadce0;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    /* Cambiado a 4px (Igualado a Facebook) */
+    font-weight: 500;
+    /* Igualado a Facebook */
+    font-size: 14px;
+    /* Igualado a Facebook */
+    font-family: 'Roboto', sans-serif;
+    /* Igualado a Facebook */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     transition: all 0.2s ease;
+    margin-top: 0.25rem;
+    /* Igualado a Facebook */
 }
 
 .btnGoogle:hover {
@@ -323,20 +333,26 @@
 
 .btnFacebook {
     width: 100%;
+    max-width: 370px;
     padding: 0.75rem 1rem;
     background: #1877f2;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    border-radius: 4px;
+    /* GSI rectangular shape is usually 4px border-radius */
+    font-weight: 500;
+    font-size: 14px;
+    /* Match GSI Large text size approx */
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     transition: all 0.2s ease;
-    margin-top: 0.75rem;
+    margin-top: 0.25rem;
+    height: 44px;
+    /* GSI Large height is 44px */
 }
 
 .btnFacebook:hover {
