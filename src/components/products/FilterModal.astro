@@ -172,36 +172,6 @@ const {
                         </label>
                     </div>
                 </div>
-
-                {/* Promociones */}
-                {
-                    promotions.length > 0 &&
-                        !fixedKeys.includes("promotion") && (
-                            <div class={styles.filterSection}>
-                                <h3 class={styles.filterSectionTitle}>
-                                    Promociones
-                                </h3>
-                                <div class={styles.optionsGrid}>
-                                    {promotions.map((promo) => (
-                                        <button
-                                            class:list={[
-                                                styles.optionBtn,
-                                                {
-                                                    [styles.optionActive]:
-                                                        currentPromotion ===
-                                                        promo.nombre,
-                                                },
-                                            ]}
-                                            data-promotion={promo.nombre}
-                                        >
-                                            {promo.nombre}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )
-                }
-
                 {
                     showOnlyOffersFilter && (
                         <div class={styles.filterSection}>
@@ -216,6 +186,33 @@ const {
                                     />
                                     <span class={styles.slider} />
                                 </label>
+                            </div>
+                        </div>
+                    )
+                }
+                {/* Promociones */}
+                {
+                    promotions.length > 0 && (
+                        <div class={styles.filterSection}>
+                            <h3 class={styles.filterSectionTitle}>
+                                Promociones
+                            </h3>
+                            <div class={styles.optionsGrid}>
+                                {promotions.map((promo) => (
+                                    <button
+                                        class:list={[
+                                            styles.optionBtn,
+                                            {
+                                                [styles.optionActive]:
+                                                    currentPromotion ===
+                                                    promo.nombre,
+                                            },
+                                        ]}
+                                        data-promotion={promo.nombre}
+                                    >
+                                        {promo.nombre}
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     )
