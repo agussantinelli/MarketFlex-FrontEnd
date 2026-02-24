@@ -144,5 +144,12 @@ export const getOffers = async (page: number = 1, limit: number = 20, sort?: str
         };
     }
 };
-
-
+export const getProductById = async (id: string): Promise<Product | null> => {
+    try {
+        const response: { data: Product } = await api.get(`products/${id}`).json();
+        return response.data;
+    } catch (error) {
+        console.error(`Error fetching product with id ${id}:`, error);
+        return null;
+    }
+};
