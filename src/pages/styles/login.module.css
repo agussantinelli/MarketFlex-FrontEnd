@@ -324,9 +324,9 @@
 .btnFacebook {
     width: 100%;
     padding: 0.75rem 1rem;
-    background: #1877f2;
-    color: white;
-    border: none;
+    background: white;
+    color: #444;
+    border: 1px solid #dadce0;
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -340,9 +340,9 @@
 }
 
 .btnFacebook:hover {
-    background: #166fe5;
+    background: #f7f8f8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .loginFooter {

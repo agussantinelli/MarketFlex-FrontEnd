@@ -125,10 +125,16 @@ import styles from "./styles/login.module.css";
                 <span>o continuar con</span>
             </div>
 
+            <!-- Facebook SDK Root -->
+            <div id="fb-root"></div>
+
+            <div id="google-signin-button" class={styles.googleContainer}></div>
+            <!-- Botón manual oculto por defecto, servirá de fallback si el SDK falla -->
             <button
                 id="google-login-btn"
                 class={styles.btnGoogle}
                 type="button"
+                style="display: none;"
             >
                 <img
                     src="/logos/google.svg"
@@ -139,7 +145,26 @@ import styles from "./styles/login.module.css";
                 Iniciar sesión con Google
             </button>
 
-            <button id="fb-login-btn" class={styles.btnFacebook} type="button">
+            <div id="fb-button-container" class={styles.facebookContainer}>
+                <div
+                    class="fb-login-button"
+                    data-width="320"
+                    data-size="large"
+                    data-button-type="continue_with"
+                    data-layout="default"
+                    data-auto-logout-link="false"
+                    data-use-continue-as="false"
+                >
+                </div>
+            </div>
+
+            <!-- Botón manual oculto por defecto -->
+            <button
+                id="fb-login-btn"
+                class={styles.btnFacebook}
+                type="button"
+                style="display: none;"
+            >
                 <img
                     src="/logos/facebook.svg"
                     alt="Facebook"
@@ -163,8 +188,6 @@ import styles from "./styles/login.module.css";
         requiredQueryParam="error"
     />
 </Layout>
-
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
     import { initLogin } from "../scripts/auth-login";
