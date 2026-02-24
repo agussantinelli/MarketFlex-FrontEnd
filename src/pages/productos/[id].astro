@@ -1,0 +1,239 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getProductById } from "../../services/product.service";
+import { Icon } from "astro-icon/components";
+import styles from "./styles/[id].module.css";
+
+const { id } = Astro.params;
+
+if (!id) {
+    return Astro.redirect("/404");
+}
+
+const product = await getProductById(id);
+
+if (!product) {
+    return Astro.redirect("/404");
+}
+
+const hasDiscount = product.precioConDescuento !== null;
+---
+
+<Layout title={`${product.nombre} | MarketFlex`}>
+    <div class={styles.container}>
+        <div class={styles.breadcrumb}>
+            <a href="/">Inicio</a>
+            <Icon name="lucide:chevron-right" size={14} />
+            <a href={`/search?type=${product.categoria}`}>{product.categoria}</a
+            >
+            {
+                product.subcategoria && (
+                    <>
+                        <Icon name="lucide:chevron-right" size={14} />
+                        <a href={`/search?category=${product.subcategoria}`}>
+                            {product.subcategoria}
+                        </a>
+                    </>
+                )
+            }
+            <Icon name="lucide:chevron-right" size={14} />
+            <span>{product.nombre}</span>
+        </div>
+
+        <div class={styles.productGrid}>
+            <div class={styles.imageSection}>
+                <div class={styles.imageWrapper}>
+                    <img
+                        src={product.foto
+                            ? `http://localhost:5979/${product.foto}`
+                            : "/placeholder.png"}
+                        alt={product.nombre}
+                        class={styles.mainImage}
+                    />
+                    {
+                        product.envioGratis && (
+                            <div class={styles.freeShippingBadge}>
+                                <Icon name="lucide:truck" size={16} /> Envío
+                                Gratis
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+
+            <div class={styles.infoSection}>
+                <div class={styles.header}>
+                    <div class={styles.brandContainer}>
+                        {
+                            product.marca && (
+                                <span class={styles.brand}>
+                                    {product.marca}
+                                </span>
+                            )
+                        }
+                        {
+                            product.autor && (
+                                <span class={styles.author}>
+                                    {product.autor}
+                                </span>
+                            )
+                        }
+                    </div>
+                    <h1 class={styles.title}>{product.nombre}</h1>
+                    <div class={styles.idBadge}>
+                        ID: {product.id.substring(0, 8)}
+                    </div>
+                </div>
+
+                <div class={styles.priceContainer}>
+                    {
+                        hasDiscount ? (
+                            <div class={styles.priceRow}>
+                                <span class={styles.discountPrice}>
+                                    ${product.precioConDescuento}
+                                </span>
+                                <span class={styles.originalPrice}>
+                                    ${product.precioActual}
+                                </span>
+                                {product.descuentoActivo?.porcentaje && (
+                                    <span class={styles.discountBadge}>
+                                        -{product.descuentoActivo.porcentaje}%
+                                        OFF
+                                    </span>
+                                )}
+                            </div>
+                        ) : (
+                            <span class={styles.mainPrice}>
+                                ${product.precioActual}
+                            </span>
+                        )
+                    }
+
+                    {
+                        product.promocionActiva && (
+                            <div class={styles.promoLabel}>
+                                <Icon name="lucide:tag" size={16} />
+                                <span>{product.promocionActiva.nombre}</span>
+                            </div>
+                        )
+                    }
+                </div>
+
+                <div class={styles.stockStatus}>
+                    {
+                        product.stock > 0 ? (
+                            <span class={styles.inStock}>
+                                <Icon name="lucide:check-circle" size={18} />
+                                Stock disponible ({product.stock} unidades)
+                            </span>
+                        ) : (
+                            <span class={styles.outOfStock}>
+                                <Icon name="lucide:alert-circle" size={18} />
+                                Sin stock por el momento
+                            </span>
+                        )
+                    }
+                </div>
+
+                <div class={styles.actions}>
+                    <button
+                        class={styles.buyNow}
+                        disabled={product.stock === 0}
+                    >
+                        Comprar ahora
+                    </button>
+                    <button
+                        class={styles.addToCart}
+                        disabled={product.stock === 0}
+                    >
+                        <Icon name="lucide:shopping-cart" size={20} />
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <div class={styles.trustBadges}>
+                    <div class={styles.trustItem}>
+                        <Icon name="lucide:shield-check" size={20} />
+                        <span>Compra Protegida</span>
+                    </div>
+                    <div class={styles.trustItem}>
+                        <Icon name="lucide:rotate-ccw" size={20} />
+                        <span>Devolución Gratis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class={styles.detailsGrid}>
+            <div class={styles.descriptionCard}>
+                <h2>Descripción</h2>
+                <div class={styles.descriptionContent}>
+                    {
+                        product.descripcion ||
+                            "No hay descripción disponible para este producto."
+                    }
+                </div>
+            </div>
+
+            <div class={styles.specsCard}>
+                <h2>Especificaciones</h2>
+                <table class={styles.specsTable}>
+                    <tbody>
+                        {
+                            product.caracteristicas.map((char) => (
+                                <tr>
+                                    <td>{char.nombre}</td>
+                                    <td>{char.valor}</td>
+                                </tr>
+                            ))
+                        }
+                        {
+                            product.marca && (
+                                <tr>
+                                    <td>Marca / Editorial</td>
+                                    <td>{product.marca}</td>
+                                </tr>
+                            )
+                        }
+                        <tr>
+                            <td>Categoría</td>
+                            <td>{product.categoria}</td>
+                        </tr>
+                        {
+                            product.subcategoria && (
+                                <tr>
+                                    <td>Subcategoría</td>
+                                    <td>{product.subcategoria}</td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { toast } from "sileo";
+
+    const addBtn = document.querySelector("[class*='addToCart']");
+    const buyBtn = document.querySelector("[class*='buyNow']");
+
+    function handleInteraction(type: string) {
+        const token = localStorage.getItem("marketflex_token");
+        if (!token) {
+            window.location.href = "/login";
+            return;
+        }
+
+        if (type === "cart") {
+            toast.success("Producto agregado al carrito");
+        } else {
+            toast.info("Iniciando proceso de compra...");
+        }
+    }
+
+    addBtn?.addEventListener("click", () => handleInteraction("cart"));
+    buyBtn?.addEventListener("click", () => handleInteraction("buy"));
+</script>
