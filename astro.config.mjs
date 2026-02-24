@@ -8,8 +8,18 @@ export default defineConfig({
     output: 'server',
     server: {
         port: 2611,
+        headers: {
+            "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+        }
     },
     vite: {
         plugins: [mkcert()],
+        server: {
+            headers: {
+                "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+                "Referrer-Policy": "strict-origin-when-cross-origin"
+            }
+        }
     },
 });
