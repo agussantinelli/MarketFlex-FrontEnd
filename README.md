@@ -193,8 +193,9 @@
   <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
   <li>🚀 <b>Promotion Hero Section:</b> Banner dinámico para destacar ofertas especiales con enlaces directos a contextos filtrados.</li>
   <li>🏷️ <b>Offers Dashboard (<code>/offers</code>):</b> Página dedicada a promociones con soporte para descripciones dinámicas y paginación propia.</li>
-  <li>🔒 <b>Filtros Fijos (<code>fixedKeys</code>):</b> Sistema que permite bloquear ciertos filtros (ej. una promoción específica) cuando el usuario llega desde un enlace promocional.</li>
-  <li>🔍 <b>Modo "Explorar":</b> Activación inteligente del selector de promociones en el buscador cuando se accede desde links de navegación general.</li>
+  <li>🔍 <b>Filtros de Marca (Editoriales):</b> Nuevo sistema de filtrado multi-selección para marcas con estados colapsables, sincronización con URL y persistencia en el buscador.</li>
+  <li>🔒 <b>Filtros Fijos (<code>fixedKeys</code>):</b> Sistema que permite bloquear ciertos filtros (ej. una promoción específica o categoría fija) para preservar el contexto de navegación.</li>
+  <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
