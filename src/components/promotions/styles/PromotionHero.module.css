@@ -137,7 +137,7 @@
 
 .imageWrapper {
     width: 100%;
-    max-width: 260px;
+    max-width: 300px;
     aspect-ratio: 16/10;
     border-radius: 1.5rem;
     overflow: hidden;
