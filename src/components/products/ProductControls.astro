@@ -57,7 +57,9 @@ const currentMaxPrice = params.get("maxPrice") || undefined;
                     currentType={currentType}
                     currentCategory={currentCategory}
                     currentPromotion={currentPromotion}
-                    currentBrands={params.get("brand")?.split(",") || []}
+                    currentBrands={
+                        params.get("brand")?.split(",").filter(Boolean) || []
+                    }
                     currentMinPrice={currentMinPrice}
                     currentMaxPrice={currentMaxPrice}
                     showOnlyOffersFilter={showOnlyOffersFilter}

@@ -32,7 +32,7 @@ const initFilterModal = () => {
     let selectedType = urlParams.get("type") || "";
     let selectedCategory = urlParams.get("category") || "";
     let selectedPromotion = urlParams.get("promotion") || "";
-    let selectedBrands: string[] = JSON.parse(backdrop.getAttribute("data-initial-brands") || "[]");
+    let selectedBrands: string[] = JSON.parse(backdrop.getAttribute("data-initial-brands") || "[]").filter(Boolean);
 
     // Sincronizar UI con URL
     if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
@@ -42,7 +42,7 @@ const initFilterModal = () => {
 
     // Expandir marcas si ya hay seleccionadas
     if (selectedBrands.length > 0 && brandsContent && brandsTrigger) {
-        brandsContent.parentElement?.classList.add(styles.expanded);
+        brandsTrigger.closest(`.${styles.filterSection}`)?.classList.add(styles.expanded);
     }
 
     // --- ACCIONES ---
@@ -111,7 +111,10 @@ const initFilterModal = () => {
 
     // Colapsable de Marcas
     brandsTrigger?.addEventListener("click", () => {
-        brandsTrigger.parentElement?.classList.toggle(styles.expanded);
+        const section = brandsTrigger.closest(`.${styles.filterSection}`);
+        if (section) {
+            section.classList.toggle(styles.expanded);
+        }
     });
 
     // Categorías principales

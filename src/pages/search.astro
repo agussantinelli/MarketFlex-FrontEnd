@@ -20,6 +20,7 @@ const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
 const hasWithStockFilter = withStockRaw !== null;
 const exploreParam = Astro.url.searchParams.get("explore") === "true";
+const brandParam = Astro.url.searchParams.get("brand") || "";
 
 const currentPage = parseInt(Astro.url.searchParams.get("page") || "1");
 const limit = 20;
@@ -34,6 +35,7 @@ const response = await searchProducts({
     maxPrice: maxPriceParam,
     withStock: withStockParam.toString(),
     onlyOffers: onlyOffersParam ? "true" : undefined,
+    brand: brandParam,
     page: currentPage,
     limit,
 });

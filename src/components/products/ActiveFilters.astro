@@ -92,6 +92,25 @@ if (promotion)
         url: getRemoveFilterUrl("promotion"),
     });
 
+const brands = params.get("brand")?.split(",").filter(Boolean) || [];
+brands.forEach((brand) => {
+    activeFilters.push({
+        label: `Marca: ${brand}`,
+        key: "brand",
+        url: (() => {
+            const newParams = new URLSearchParams(params);
+            const remainingBrands = brands.filter((b) => b !== brand);
+            if (remainingBrands.length > 0) {
+                newParams.set("brand", remainingBrands.join(","));
+            } else {
+                newParams.delete("brand");
+            }
+            newParams.set("page", "1");
+            return `${baseUrl}?${newParams.toString()}`;
+        })(),
+    });
+});
+
 if (activeFilters.length === 0) return null;
 ---
 
