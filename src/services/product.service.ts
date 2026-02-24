@@ -117,7 +117,7 @@ export const getBestsellers = async (page: number = 1, limit: number = 20, minPr
     }
 };
 
-export const getOffers = async (page: number = 1, limit: number = 20, sort?: string, minPrice?: string, maxPrice?: string, withStock?: string): Promise<PaginatedResponse<Product>> => {
+export const getOffers = async (page: number = 1, limit: number = 20, sort?: string, minPrice?: string, maxPrice?: string, withStock?: string, promotion?: string): Promise<PaginatedResponse<Product>> => {
     try {
         const params = new URLSearchParams();
         params.append("page", page.toString());
@@ -126,6 +126,7 @@ export const getOffers = async (page: number = 1, limit: number = 20, sort?: str
         if (minPrice) params.append("minPrice", minPrice);
         if (maxPrice) params.append("maxPrice", maxPrice);
         if (withStock) params.append("withStock", withStock);
+        if (promotion) params.append("promotion", promotion);
 
         return await api.get(`products/offers?${params.toString()}`).json();
     } catch (error) {

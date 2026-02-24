@@ -27,6 +27,7 @@ const initFilterModal = () => {
     const urlParams = new URLSearchParams(window.location.search);
     let selectedType = urlParams.get("type") || "";
     let selectedCategory = urlParams.get("category") || "";
+    let selectedPromotion = urlParams.get("promotion") || "";
 
     // Sincronizar UI con URL
     if (minPriceInput) minPriceInput.value = urlParams.get("minPrice") || "";
@@ -119,6 +120,23 @@ const initFilterModal = () => {
         });
     });
 
+    // Promociones
+    document.querySelectorAll(`.${styles.optionBtn}[data-promotion]`).forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const promo = btn.getAttribute("data-promotion");
+
+            if (selectedPromotion === promo) {
+                selectedPromotion = "";
+                btn.classList.remove(styles.optionActive);
+            } else {
+                document.querySelectorAll(`.${styles.optionBtn}[data-promotion]`).forEach(b =>
+                    b.classList.remove(styles.optionActive)
+                );
+                selectedPromotion = promo || "";
+                btn.classList.add(styles.optionActive);
+            }
+        });
+    });
     applyBtn?.addEventListener("click", () => {
         const params = new URLSearchParams(window.location.search);
         const fixedKeysAttr = backdrop.getAttribute("data-fixed-keys");
@@ -137,6 +155,8 @@ const initFilterModal = () => {
 
         if (stockCheckbox) params.set("withStock", stockCheckbox.checked ? "true" : "false");
         if (onlyOffersCheckbox) params.set("onlyOffers", onlyOffersCheckbox.checked ? "true" : "false");
+
+        selectedPromotion ? params.set("promotion", selectedPromotion) : params.delete("promotion");
 
         params.set("page", "1");
         window.location.href = `${window.location.pathname}?${params.toString()}`;
