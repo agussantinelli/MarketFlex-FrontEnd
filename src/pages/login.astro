@@ -125,9 +125,6 @@ import styles from "./styles/login.module.css";
                 <span>o continuar con</span>
             </div>
 
-            <!-- Facebook SDK Root -->
-            <div id="fb-root"></div>
-
             <div id="google-signin-button" class={styles.googleContainer}></div>
             <!-- Botón manual oculto por defecto, servirá de fallback si el SDK falla -->
             <button
@@ -146,33 +143,21 @@ import styles from "./styles/login.module.css";
             </button>
 
             <div id="fb-button-container" class={styles.facebookContainer}>
-                <div
-                    class="fb-login-button"
-                    data-width="320"
-                    data-size="large"
-                    data-button-type="continue_with"
-                    data-layout="default"
-                    data-auto-logout-link="false"
-                    data-use-continue-as="false"
+                <button
+                    id="fb-login-btn"
+                    class={styles.btnFacebook}
+                    type="button"
                 >
-                </div>
+                    <img
+                        src="/logos/facebook.svg"
+                        alt="Facebook"
+                        width="20"
+                        height="20"
+                        style="filter: brightness(0) invert(1);"
+                    />
+                    Continuar con Facebook
+                </button>
             </div>
-
-            <!-- Botón manual oculto por defecto -->
-            <button
-                id="fb-login-btn"
-                class={styles.btnFacebook}
-                type="button"
-                style="display: none;"
-            >
-                <img
-                    src="/logos/facebook.svg"
-                    alt="Facebook"
-                    width="20"
-                    height="20"
-                />
-                Iniciar sesión con Facebook
-            </button>
 
             <div class={styles.loginFooter}>
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
