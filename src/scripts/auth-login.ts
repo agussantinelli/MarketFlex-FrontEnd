@@ -164,13 +164,12 @@ export function initLogin() {
         // Inject FB SDK script if not already present
         if (!document.getElementById("facebook-jssdk")) {
             (function (d, s, id) {
-                const fjs = d.getElementsByTagName(s)[0];
-                const parent = fjs?.parentNode;
-                if (d.getElementById(id) || !fjs || !parent) return;
+                const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement;
+                if (d.getElementById(id) || !fjs || !fjs.parentNode) return;
                 const js = d.createElement(s) as HTMLScriptElement;
                 js.id = id;
                 js.src = "https://connect.facebook.net/es_LA/sdk.js";
-                parent.insertBefore(js, fjs);
+                (fjs.parentNode as Node).insertBefore(js, fjs);
             })(document, "script", "facebook-jssdk");
         }
     }
