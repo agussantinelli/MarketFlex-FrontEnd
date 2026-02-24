@@ -134,7 +134,22 @@ const initFilterModal = () => {
     });
 
     resetBtn?.addEventListener("click", () => {
-        window.location.href = window.location.pathname;
+        const params = new URLSearchParams(window.location.search);
+        const fixedKeysAttr = backdrop.getAttribute("data-fixed-keys");
+        const fixedKeys: string[] = JSON.parse(fixedKeysAttr || "[]");
+
+        // Remove query parameters that are NOT in fixedKeys and keep 'q' (search)
+        const keysToRemove: string[] = [];
+        params.forEach((_, key) => {
+            if (!fixedKeys.includes(key) && key !== 'q') {
+                keysToRemove.push(key);
+            }
+        });
+
+        keysToRemove.forEach(key => params.delete(key));
+        params.set("page", "1");
+
+        window.location.href = `${window.location.pathname}?${params.toString()}`;
     });
 
     // Carga inicial de subcategorías si ya hay filtros

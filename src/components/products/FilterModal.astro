@@ -12,6 +12,7 @@ interface Props {
     currentMinPrice?: string;
     currentMaxPrice?: string;
     showOnlyOffersFilter?: boolean;
+    fixedKeys?: string[];
 }
 
 const {
@@ -22,6 +23,7 @@ const {
     currentMinPrice,
     currentMaxPrice,
     showOnlyOffersFilter = true,
+    fixedKeys = [],
 } = Astro.props;
 ---
 
@@ -33,6 +35,7 @@ const {
     data-styles={JSON.stringify(styles)}
     data-initial-type={currentType}
     data-initial-category={currentCategory}
+    data-fixed-keys={JSON.stringify(fixedKeys)}
 >
     <div class={styles.modalContent}>
         <button id="close-modal-btn" class={styles.modalClose}>
@@ -49,71 +52,79 @@ const {
 
             <div class={styles.modalBody}>
                 {/* Categorías */}
-                <div class={styles.filterSection}>
-                    <h3 class={styles.filterSectionTitle}>Categorías</h3>
-                    <div class={styles.optionsGrid}>
-                        {
-                            categories.map((cat) => (
-                                <button
-                                    class:list={[
-                                        styles.optionBtn,
-                                        {
-                                            [styles.optionActive]:
-                                                currentType === cat.nombre,
-                                        },
-                                    ]}
-                                    data-type={cat.nombre}
-                                    data-category-id={cat.id}
-                                >
-                                    {cat.nombre}
-                                </button>
-                            ))
-                        }
-                    </div>
-                </div>
-
-                {/* Subcategorías - Conditional */}
-                <div
-                    id="subcategory-section"
-                    class:list={[
-                        styles.filterSection,
-                        { [styles.hidden]: !currentType },
-                    ]}
-                >
-                    <h3 class={styles.filterSectionTitle}>Subcategorías</h3>
-                    <div id="subcategory-options" class={styles.optionsGrid}>
-                        {
-                            /* Will be populated by JS or rendered if currentType exists */
-                        }
-                        {
-                            subcategories
-                                .filter((sub) => {
-                                    const parentCat = categories.find(
-                                        (c) => c.nombre === currentType,
-                                    );
-                                    return (
-                                        parentCat &&
-                                        sub.categoriaId === parentCat.id
-                                    );
-                                })
-                                .map((sub) => (
+                {
+                    !fixedKeys.includes("type") && (
+                        <div class={styles.filterSection}>
+                            <h3 class={styles.filterSectionTitle}>
+                                Categorías
+                            </h3>
+                            <div class={styles.optionsGrid}>
+                                {categories.map((cat) => (
                                     <button
                                         class:list={[
                                             styles.optionBtn,
                                             {
                                                 [styles.optionActive]:
-                                                    currentCategory ===
-                                                    sub.nombre,
+                                                    currentType === cat.nombre,
                                             },
                                         ]}
-                                        data-category={sub.nombre}
+                                        data-type={cat.nombre}
+                                        data-category-id={cat.id}
                                     >
-                                        {sub.nombre}
+                                        {cat.nombre}
                                     </button>
-                                ))
-                        }
-                    </div>
-                </div>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* Subcategorías - Conditional */}
+                {
+                    !fixedKeys.includes("category") && (
+                        <div
+                            id="subcategory-section"
+                            class:list={[
+                                styles.filterSection,
+                                { [styles.hidden]: !currentType },
+                            ]}
+                        >
+                            <h3 class={styles.filterSectionTitle}>
+                                Subcategorías
+                            </h3>
+                            <div
+                                id="subcategory-options"
+                                class={styles.optionsGrid}
+                            >
+                                {subcategories
+                                    .filter((sub) => {
+                                        const parentCat = categories.find(
+                                            (c) => c.nombre === currentType,
+                                        );
+                                        return (
+                                            parentCat &&
+                                            sub.categoriaId === parentCat.id
+                                        );
+                                    })
+                                    .map((sub) => (
+                                        <button
+                                            class:list={[
+                                                styles.optionBtn,
+                                                {
+                                                    [styles.optionActive]:
+                                                        currentCategory ===
+                                                        sub.nombre,
+                                                },
+                                            ]}
+                                            data-category={sub.nombre}
+                                        >
+                                            {sub.nombre}
+                                        </button>
+                                    ))}
+                            </div>
+                        </div>
+                    )
+                }
 
                 {/* Precio */}
                 <div class={styles.filterSection}>

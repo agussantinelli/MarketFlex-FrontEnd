@@ -12,6 +12,7 @@ interface Props {
     showFilter?: boolean;
     showSort?: boolean;
     showOnlyOffersFilter?: boolean;
+    fixedKeys?: string[];
 }
 
 const {
@@ -21,6 +22,7 @@ const {
     showFilter = true,
     showSort = true,
     showOnlyOffersFilter = true,
+    fixedKeys = [],
 } = Astro.props;
 
 // Fetch filter data for the modal
@@ -48,6 +50,7 @@ const currentMaxPrice = params.get("maxPrice") || undefined;
                     currentMinPrice={currentMinPrice}
                     currentMaxPrice={currentMaxPrice}
                     showOnlyOffersFilter={showOnlyOffersFilter}
+                    fixedKeys={fixedKeys}
                 />
             </>
         )
