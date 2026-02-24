@@ -36,6 +36,7 @@ interface SearchOptions {
     withStock?: string;
     onlyOffers?: string;
     brand?: string;
+    promotion?: string;
 }
 
 // Pagination interfaces moved to common.types.ts
@@ -55,6 +56,7 @@ export const searchProducts = async (options: SearchOptions): Promise<PaginatedR
         if (options.withStock) params.append("withStock", options.withStock);
         if (options.onlyOffers) params.append("onlyOffers", options.onlyOffers);
         if (options.brand) params.append("brand", options.brand);
+        if (options.promotion) params.append("promotion", options.promotion);
 
         return await api.get(`products/search?${params.toString()}`).json();
     } catch (error) {
