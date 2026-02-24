@@ -84,6 +84,14 @@ if (onlyOffers === "true")
         url: getRemoveFilterUrl("onlyOffers"),
     });
 
+const promotion = params.get("promotion");
+if (promotion)
+    activeFilters.push({
+        label: `Promo: ${promotion}`,
+        key: "promotion",
+        url: getRemoveFilterUrl("promotion"),
+    });
+
 if (activeFilters.length === 0) return null;
 ---
 

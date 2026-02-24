@@ -15,9 +15,10 @@ const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
 const hasWithStockFilter = withStockRaw !== null;
+const promotionParam = Astro.url.searchParams.get("promotion") || "";
 const limit = 20;
 
-const response = await getOffers(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString());
+const response = await getOffers(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString(), promotionParam);
 
 const products = response.data;
 const pagination = response.pagination;
@@ -49,6 +50,7 @@ const endRange = Math.min(currentPage * limit, pagination.total);
                     baseUrl="/offers"
                     params={Astro.url.searchParams}
                     showOnlyOffersFilter={false}
+                    showPromotions={true}
                 />
 
                 <ActiveFilters 

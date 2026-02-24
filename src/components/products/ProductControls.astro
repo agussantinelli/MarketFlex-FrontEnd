@@ -4,6 +4,7 @@ import SortSelect from "./SortSelect.astro";
 import FilterModal from "./FilterModal.astro";
 import styles from "./styles/controls.module.css";
 import { filterService } from "../../services/filter.service";
+import { getActivePromotions } from "../../services/promotion.service";
 
 interface Props {
     sort: string;
@@ -13,6 +14,7 @@ interface Props {
     showSort?: boolean;
     showOnlyOffersFilter?: boolean;
     fixedKeys?: string[];
+    showPromotions?: boolean;
 }
 
 const {
@@ -23,14 +25,17 @@ const {
     showSort = true,
     showOnlyOffersFilter = true,
     fixedKeys = [],
+    showPromotions = false,
 } = Astro.props;
 
 // Fetch filter data for the modal
 const categories = await filterService.getCategories();
 const subcategories = await filterService.getSubcategories();
+const promotions = showPromotions ? await getActivePromotions() : [];
 
 const currentType = params.get("type") || undefined;
 const currentCategory = params.get("category") || undefined;
+const currentPromotion = params.get("promotion") || undefined;
 const currentMinPrice = params.get("minPrice") || undefined;
 const currentMaxPrice = params.get("maxPrice") || undefined;
 ---
@@ -45,8 +50,10 @@ const currentMaxPrice = params.get("maxPrice") || undefined;
                 <FilterModal
                     categories={categories}
                     subcategories={subcategories}
+                    promotions={promotions}
                     currentType={currentType}
                     currentCategory={currentCategory}
+                    currentPromotion={currentPromotion}
                     currentMinPrice={currentMinPrice}
                     currentMaxPrice={currentMaxPrice}
                     showOnlyOffersFilter={showOnlyOffersFilter}

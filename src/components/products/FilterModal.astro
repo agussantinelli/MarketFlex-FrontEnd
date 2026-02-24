@@ -4,11 +4,15 @@ import styles from "./styles/controls.module.css";
 import type { Category } from "../../types/category.types";
 import type { Subcategory } from "../../types/subcategory.types";
 
+import type { Promotion } from "../../types/promotion.types";
+
 interface Props {
     categories: Category[];
     subcategories: Subcategory[];
+    promotions: Promotion[];
     currentType?: string;
     currentCategory?: string;
+    currentPromotion?: string;
     currentMinPrice?: string;
     currentMaxPrice?: string;
     showOnlyOffersFilter?: boolean;
@@ -18,8 +22,10 @@ interface Props {
 const {
     categories,
     subcategories,
+    promotions,
     currentType,
     currentCategory,
+    currentPromotion,
     currentMinPrice,
     currentMaxPrice,
     showOnlyOffersFilter = true,
@@ -32,9 +38,11 @@ const {
     class={styles.modalBackdrop}
     data-categories={JSON.stringify(categories)}
     data-subcategories={JSON.stringify(subcategories)}
+    data-promotions={JSON.stringify(promotions)}
     data-styles={JSON.stringify(styles)}
     data-initial-type={currentType}
     data-initial-category={currentCategory}
+    data-initial-promotion={currentPromotion}
     data-fixed-keys={JSON.stringify(fixedKeys)}
 >
     <div class={styles.modalContent}>
@@ -165,7 +173,34 @@ const {
                     </div>
                 </div>
 
-                {/* Ofertas */}
+                {/* Promociones */}
+                {
+                    promotions.length > 0 && (
+                        <div class={styles.filterSection}>
+                            <h3 class={styles.filterSectionTitle}>
+                                Promociones
+                            </h3>
+                            <div class={styles.optionsGrid}>
+                                {promotions.map((promo) => (
+                                    <button
+                                        class:list={[
+                                            styles.optionBtn,
+                                            {
+                                                [styles.optionActive]:
+                                                    currentPromotion ===
+                                                    promo.nombre,
+                                            },
+                                        ]}
+                                        data-promotion={promo.nombre}
+                                    >
+                                        {promo.nombre}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                }
+
                 {
                     showOnlyOffersFilter && (
                         <div class={styles.filterSection}>

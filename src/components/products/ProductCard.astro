@@ -61,7 +61,7 @@ const { product, showFeatured = false, rank } = Astro.props;
                             : product.promocionActiva.tipoPromocion ===
                                 "DESCUENTO_SEGUNDA_UNIDAD"
                               ? `2da al ${product.promocionActiva.porcentajeDescuentoSegunda}%`
-                              : "PROMO"}
+                              : product.promocionActiva.nombre}
                     </div>
                 )
             }
