@@ -213,6 +213,7 @@
   <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
+  <li>🧪 <b>100% Test Coverage (Scripts):</b> Todos los scripts interactivos en <code>src/scripts</code> cuentan con tests unitarios robustos, garantizando la fiabilidad de la UI.</li>
 </ul>
 
 <hr>
@@ -332,10 +333,19 @@
 │   │   └── api.ts                                  # Cliente Ky con interceptor de Auto-Refresh JWT
 │   ├── scripts/                                    # Lógica interactiva (Extracto de .astro)
 │   │   ├── auth-login.ts                           # Manejo de tokens y SDKs sociales
+│   │   ├── auth-login.test.ts                      # Test: Login Workflow
 │   │   ├── auth-register.ts                        # Registro con reCAPTCHA v3
+│   │   ├── auth-register.test.ts                   # Test: Registration Workflow
 │   │   ├── navbar.ts                               # Lógica de búsqueda y menús
+│   │   ├── navbar.test.ts                          # Test: Navigation & Unified Search
 │   │   ├── carousel.ts                             # Motor de carruseles premium
-│   │   └── search-filters.ts                       # Gestión de estados de filtros
+│   │   ├── carousel.test.ts                        # Test: Carousel Mechanics
+│   │   ├── profile.ts                              # Lógica de perfil de usuario
+│   │   ├── profile.test.ts                         # Test: Profile & Session management
+│   │   ├── promotion-hero.ts                       # Banner dinámico de promociones
+│   │   ├── promotion-hero.test.ts                  # Test: Hero Slider Logic
+│   │   ├── search-filters.ts                       # Gestión de estados de filtros
+│   │   └── search-filters.test.ts                  # Test: Filter Modal UI
 │   ├── services/                                   # Capa de API y Pruebas Unitarias
 │   │   ├── auth.service.ts                         # Login, Registro y Logout
 │   │   ├── product.service.ts                      # Catálogo, Búsqueda y Detalle
@@ -393,7 +403,7 @@
   El frontend implementa una estrategia dual de pruebas para asegurar tanto la lógica interna como la experiencia del usuario final.
 </p>
 <ul>
-  <li><b>Pruebas Unitarias:</b> <a href="https://vitest.dev/">Vitest</a> + JSDOM para servicios y helpers.</li>
+  <li><b>Pruebas Unitarias:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM para servicios, helpers y scripts interactivos. Cobertura del 100% en <code>src/scripts</code>.</li>
   <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a> para flujos de usuario críticos (Login, Carrito, Búsqueda).</li>
 </ul>
 
