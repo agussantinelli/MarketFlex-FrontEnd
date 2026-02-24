@@ -15,6 +15,7 @@ const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const onlyOffersParam = Astro.url.searchParams.get("onlyOffers") === "true";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
+const brandParam = Astro.url.searchParams.get("brand") || "";
 const limit = 20;
 
 const response = await getNewArrivals(
@@ -24,7 +25,8 @@ const response = await getNewArrivals(
     minPriceParam,
     maxPriceParam,
     withStockParam.toString(),
-    onlyOffersParam ? "true" : undefined
+    onlyOffersParam ? "true" : undefined,
+    brandParam
 );
 
 const products = response.data;

@@ -16,12 +16,13 @@ const maxPriceParam = Astro.url.searchParams.get("maxPrice") || "";
 const withStockRaw = Astro.url.searchParams.get("withStock");
 const withStockParam = withStockRaw !== "false";
 const promotionParam = Astro.url.searchParams.get("promotion") || "";
+const brandParam = Astro.url.searchParams.get("brand") || "";
 const fixedKeysParam = Astro.url.searchParams.get("fixedKeys") || "";
 const fixedKeys = fixedKeysParam ? fixedKeysParam.split(",") : [];
 
 const limit = 20;
 
-const response = await getOffers(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString(), promotionParam);
+const response = await getOffers(currentPage, limit, sort, minPriceParam, maxPriceParam, withStockParam.toString(), promotionParam, brandParam);
 
 const activePromotions = await getActivePromotions();
 const currentPromotion = promotionParam ? activePromotions.find(p => p.nombre === promotionParam) : null;
