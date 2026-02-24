@@ -40,19 +40,6 @@ const welcomeMessage = isNewUser
 
 	<PromotionHero promotions={promotions} />
 
-	<FeaturedProducts products={products} />
-
-	<ProductCarousel
-		id="best-sellers"
-		title="Más"
-		titleHighlight="vendidos"
-		icon="lucide:trending-up"
-		products={bestSellers}
-		limit={10}
-		showViewMore={false}
-		showRank={true}
-	/>
-
 	<ProductCarousel
 		id="offers"
 		title="Grandes"
@@ -72,5 +59,17 @@ const welcomeMessage = isNewUser
 		products={newArrivals}
 		limit={7}
 		viewMoreHref="/new-arrivals"
+	/>
+	<FeaturedProducts products={products} />
+
+	<ProductCarousel
+		id="best-sellers"
+		title="Más"
+		titleHighlight="vendidos"
+		icon="lucide:trending-up"
+		products={bestSellers}
+		limit={10}
+		showViewMore={false}
+		showRank={true}
 	/>
 </Layout>
