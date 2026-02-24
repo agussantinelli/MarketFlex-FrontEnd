@@ -28,6 +28,9 @@
     <img src="https://img.shields.io/badge/reCAPTCHA-v3-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="reCAPTCHA Badge">
     <img src="https://img.shields.io/badge/HTTPS-mkcert-003666?style=for-the-badge&logo=letsencrypt&logoColor=white" alt="mkcert Badge">
     <img src="https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge">
+    <img src="https://img.shields.io/badge/Vitest-Unit_Testing-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest Badge">
+    <img src="https://img.shields.io/badge/Playwright-E2E_Testing-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
+    <img src="https://img.shields.io/badge/Test_Enforcement-Mandatory-orange?style=for-the-badge&logo=vitest&logoColor=white" alt="Test Enforcement Badge">
 </div>
 
 <div align="center">
@@ -82,6 +85,18 @@
             <td>CSS Modules (Scoped)</td>
             <td>.module.css</td>
             <td>Estilizado modular con aislamiento automático por componente.</td>
+        </tr>
+        <tr>
+            <td><strong>E2E Testing</strong></td>
+            <td>Playwright</td>
+            <td><strong>Latest</strong></td>
+            <td>Pruebas de punta a punta en navegadores reales.</td>
+        </tr>
+        <tr>
+            <td><strong>Unit Testing</strong></td>
+            <td>Vitest</td>
+            <td><strong>^4.0.18</strong></td>
+            <td>Pruebas unitarias ultrarrápidas para servicios.</td>
         </tr>
         <tr>
             <td><strong>Paquetes</strong></td>
