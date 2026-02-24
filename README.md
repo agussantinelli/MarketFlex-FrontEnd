@@ -302,93 +302,43 @@
 
 <pre><code>MarketFlex-FrontEnd/
 ├── .agent/                                         # Configuración del agente (skills)
+├── .github/
+│   └── workflows/                                  # Automatización con GitHub Actions (CI)
+│       └── frontend-tests.yml                       # Workflow de testing unitario y E2E
 ├── .astro/                                         # Archivos generados por Astro
 ├── node_modules/                                   # Dependencias del proyecto
-├── public/                                         # Archivos estáticos
-│   ├── background/                                 # Galería de fondos y texturas
-│   ├── logos/                                      # Iconos de proveedores
-│   ├── logo-marketflex-circle.png                  # Isotipo circular
-│   ├── logo-marketflex-letters.png                 # Logotipo
-│   └── logo-marketflex-no-circle.png               # Isotipo sin círculo
+├── public/                                         # Archivos estáticos (Logo, Backgrounds)
+├── tests/                                          # Pruebas E2E (Playwright)
+│   └── example.spec.ts                             # Script de prueba de integración
 ├── src/
-│   ├── layouts/                                    # Componentes de diseño base
-│   │   ├── styles/                                 # Estilos modulares de layouts
-│   │   │   ├── Navbar.module.css                   
-│   │   │   └── Footer.module.css
-│   │   ├── Footer.astro                            # Pie de página responsivo
-│   │   ├── Layout.astro                            # Layout principal
-│   │   └── Navbar.astro                            # Barra de navegación principal
-│   ├── lib/                                        # Utilidades y configuración
-│   │   └── api.ts                                  # Interceptor de API con Auto-Refresh
-│   ├── scripts/                                    # Lógica interactiva extraída de componentes
-│   │   ├── auth-login.ts                           # Lógica de Login (Dual Token)
-│   │   ├── auth-register.ts                        # Lógica de Registro (Email & reCAPTCHA)
-│   │   ├── navbar.ts                               # Lógica de menús, buscador y sesión
-│   │   ├── contact.ts                              # Lógica de formulario de soporte
-│   │   ├── search-filters.ts                       # Lógica de modal de búsqueda
-│   │   ├── carousel.ts                             # Lógica de carruseles premium
-│   │   └── promotion-hero.ts                       # Lógica de slider y auto-play de promociones
-│   ├── services/                                   # Servicios de negocio (API calls)
-│   │   ├── auth.service.ts                         # Servicio de autenticación (Login)
-│   │   ├── category.service.ts                     # Servicio de categorías
-│   │   ├── subcategory.service.ts                  # Servicio de subcategorías
-│   │   ├── product.service.ts                      # Servicio de productos
-│   │   ├── promotion.service.ts                    # Servicio de promociones (Ofertas)
-│   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
+│   ├── components/                                 # Componentes reutilizables e Islas
+│   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales)
+│   │   ├── promotions/                             # Banners y Hero de promociones
+│   │   └── products/                               # Cards y Grillas de productos
+│   ├── layouts/                                    # Componentes de diseño base (Navbar, Footer)
+│   ├── lib/                                        # Utilidades y configuración de API (Ky)
+│   ├── scripts/                                    # Lógica interactiva extraída (Auth, Carousel)
+│   ├── services/                                   # Servicios de negocio y tests unitarios
+│   │   ├── auth.service.ts                         # Login y sesión
+│   │   ├── product.service.ts                      # Catálogo y búsqueda
+│   │   ├── brand.service.ts                        # Marcas y marcas registradas
+│   │   ├── brand.service.test.ts                   # Test unitario de marcas
+│   │   ├── category.service.ts                     # Categorías
+│   │   ├── category.service.test.ts                # Test unitario de categorías
+│   │   ├── filter.service.ts                       # Lógica de filtrado
+│   │   └── filter.service.test.ts                  # Test unitario de filtros
 │   ├── types/                                      # Definiciones de tipos TypeScript
-│   │   ├── auth.types.ts                           # Tipos de Autenticación (Dual Token)
-│   │   ├── user.types.ts                           # Tipos de Usuario (Dominio)
-│   │   ├── category.types.ts                       # Tipos de Categorías
-
-│   │   ├── subcategory.types.ts                    # Tipos de Subcategorías
-│   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
-│   │   ├── promotion.types.ts                      # Interfaces de Promociones
-│   │   ├── common.types.ts                         # Tipos transversales (Paginación, etc.)
-│   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
-│   ├── pages/                                      # Rutas y páginas de la aplicación
-│   │   ├── admin/                                  # Panel de administración
-│   │   │   ├── styles/                             # Estilos del admin
-│   │   │   └── dashboard.astro                     # Dashboard principal
-│   │   ├── styles/                                 # Estilos modulares de páginas
-│   │   │   ├── index.module.css
-│   │   │   ├── about.module.css
-│   │   │   └── ...
-│   │   ├── about.astro                             # Página "Sobre Nosotros"
-│   │   ├── coming-soon.astro                       # Página de próximo lanzamiento
-│   │   ├── contacto.astro                          # Página de Contacto y soporte
-│   │   ├── faq.astro                               # Página de Preguntas Frecuentes
-│   │   ├── terminos.astro                          # Página de Términos y Condiciones
-│   │   ├── index.astro                             # Página de inicio
-│   │   ├── login.astro                             # Página de inicio de sesión
-│   │   ├── offers.astro                            # Dashboard de Ofertas con paginación
-│   │   ├── profile.astro                           # Página de perfil del usuario
-│   │   ├── register.astro                          # Registro con reCAPTCHA v3
-│   │   ├── new-arrivals.astro                      # Sección de novedades
-│   │   └── search.astro                            # Motor de búsqueda y filtrado
-│   ├── components/                                 # Componentes reutilizables
-│   │   ├── common/                                 # Componentes transversales
-│   │   │   ├── styles/                             # Estilos (ej. PageCard.module.css)
-│   │   │   ├── Notifications.tsx                   # Sistema de notificaciones (React)
-│   │   │   ├── PageCard.astro                      # Tarjeta blanca central genérica
-│   │   │   └── ConfirmationModal.astro             # Modal de confirmación premium
-
-│   │   ├── promotions/                             # Componentes de promociones
-│   │   │   ├── styles/                             # Estilos (ej. PromotionHero.module.css)
-│   │   │   └── PromotionHero.astro                 # Banner interactivo de promociones
-│   │   └── products/                               # Componentes de dominio
-│   │       ├── styles/                             # Estilos (ej. ProductCard.module.css)
-│   │       ├── FeaturedProducts.astro              # Grilla de productos destacados
-│   │       ├── ProductCard.astro                   # Tarjeta de producto individual
-│   │       └── ProductCarousel.astro               # Carrusel interactivo reutilizable
-│   ├── styles/                                     # Estilos globales y utilidades
-│   │   ├── globals.css                             # Variables CSS y temas
-│   │   └── main.css                                # Estilos específicos / reset
+│   ├── pages/                                      # Rutas de la aplicación (SSR/SSG)
+│   │   ├── admin/                                  # Panel de administrador
+│   │   ├── productos/                              # Detalle de producto dinámico
+│   │   └── ...                                     # Index, Login, Register, Search, etc.
+│   ├── styles/                                     # Estilos globales y variables neón
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
 ├── .env                                            # Variables de entorno (API URL)
 ├── .gitignore                                      # Archivos ignorados por Git
-├── astro.config.mjs                                # Configuración de Astro (Puerto, plugins)
-├── package.json                                    # Metadatos y scripts del proyecto
-├── pnpm-lock.yaml                                  # Árbol de dependencias exacto (pnpm)
+├── astro.config.mjs                                # Configuración de Astro (Islands, Ports)
+├── package.json                                    # Metadatos y scripts (pnpm)
+├── pnpm-lock.yaml                                  # Dependencias exactas
 ├── README.md                                       # Documentación del proyecto
 └── tsconfig.json                                   # Configuración de TypeScript
 </code></pre>
