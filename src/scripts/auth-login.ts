@@ -245,7 +245,6 @@ export function initLogin() {
                     }
                 });
 
-                // Force parsing of XFBML for Astro View Transitions
                 FB.XFBML.parse();
             } catch (e) {
                 console.error("❌ [Auth] Error in FB.init():", e);
@@ -317,11 +316,31 @@ export function initLogin() {
                 document.head.appendChild(js);
             }
         } else {
-            console.log("🔍 [Auth] Facebook SDK already injected, re-initializing and parsing XFBML...");
+            console.log("🔍 [Auth] Facebook SDK already injected, re-initializing...");
             initFB();
-            const FB = (window as any).FB;
-            if (FB?.XFBML) FB.XFBML.parse();
         }
+
+        // --- GLOBAL FALLBACK TIMER ---
+        // Si después de 2.5s no hay nada renderizado, forzamos el botón manual (incluso si el SDK falló)
+        setTimeout(() => {
+            const placeholders = document.querySelectorAll('.fb-login-button');
+            let anyRendered = false;
+
+            placeholders.forEach((p) => {
+                const hasRendered = p.querySelector('iframe') || p.querySelector('span') || p.children.length > 0;
+                if (hasRendered) anyRendered = true;
+            });
+
+            if (!anyRendered) {
+                console.warn("⚠️ [Auth] FB Plugin failed to render after 3s, showing fallback button");
+                const manualBtn = document.getElementById("fb-login-btn");
+                const officialContainer = document.getElementById("fb-button-container");
+                if (manualBtn) manualBtn.style.display = "flex";
+                if (officialContainer) officialContainer.style.display = "none";
+            } else {
+                console.log("🔍 [Auth] FB Plugin rendered successfully");
+            }
+        }, 3000);
     };
 
     loadSocialSDKs();
@@ -336,6 +355,11 @@ export function initLogin() {
                     handleFacebookBackendLogin(response.authResponse.accessToken);
                 }
             }, { scope: "email,public_profile" });
+        } else {
+            console.error("❌ [Auth] Facebook SDK blocked or not loaded");
+            if (typeof (window as any).triggerSileo === 'function') {
+                (window as any).triggerSileo('error', "El inicio de sesión con Facebook parece estar bloqueado por tu navegador. Desactiva Adblock o intenta con otro navegador.");
+            }
         }
     });
 }
