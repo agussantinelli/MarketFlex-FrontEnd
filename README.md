@@ -191,7 +191,10 @@
   <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
   <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
-  <li>🚀 <b>Promotion Hero Section:</b> Banner dinámico y ultra-compacto para destacar promociones especiales, con slider interactivo y diseño adaptable.</li>
+  <li>🚀 <b>Promotion Hero Section:</b> Banner dinámico para destacar ofertas especiales con enlaces directos a contextos filtrados.</li>
+  <li>🏷️ <b>Offers Dashboard (<code>/offers</code>):</b> Página dedicada a promociones con soporte para descripciones dinámicas y paginación propia.</li>
+  <li>🔒 <b>Filtros Fijos (<code>fixedKeys</code>):</b> Sistema que permite bloquear ciertos filtros (ej. una promoción específica) cuando el usuario llega desde un enlace promocional.</li>
+  <li>🔍 <b>Modo "Explorar":</b> Activación inteligente del selector de promociones en el buscador cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
 </ul>
@@ -314,6 +317,7 @@
 │   │   ├── category.service.ts                     # Servicio de categorías
 │   │   ├── subcategory.service.ts                  # Servicio de subcategorías
 │   │   ├── product.service.ts                      # Servicio de productos
+│   │   ├── promotion.service.ts                    # Servicio de promociones (Ofertas)
 │   │   └── support.service.ts                      # Servicio de mensajería (Contacto)
 │   ├── types/                                      # Definiciones de tipos TypeScript
 │   │   ├── auth.types.ts                           # Tipos de Autenticación (Dual Token)
@@ -322,6 +326,7 @@
 
 │   │   ├── subcategory.types.ts                    # Tipos de Subcategorías
 │   │   ├── product.types.ts                        # Interfaces de dominio (Producto)
+│   │   ├── promotion.types.ts                      # Interfaces de Promociones
 │   │   ├── common.types.ts                         # Tipos transversales (Paginación, etc.)
 │   │   └── support.types.ts                        # Interfaces de mensajería (Contacto)
 │   ├── pages/                                      # Rutas y páginas de la aplicación
