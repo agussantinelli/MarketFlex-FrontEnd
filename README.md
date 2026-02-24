@@ -307,38 +307,66 @@
 │       └── frontend-tests.yml                       # Workflow de testing unitario y E2E
 ├── .astro/                                         # Archivos generados por Astro
 ├── node_modules/                                   # Dependencias del proyecto
-├── public/                                         # Archivos estáticos (Logo, Backgrounds)
-├── tests/                                          # Pruebas E2E (Playwright)
-│   └── example.spec.ts                             # Script de prueba de integración
+├── public/                                         # Archivos estáticos
+│   ├── background/                                 # Galería de fondos y texturas
+│   ├── logos/                                      # Iconos oficiales (Google, FB, MarketFlex)
+│   └── ...                                         # Isotipos y logotipos oficiales
+├── tests/                                          # Pruebas de Sistema (End-to-End)
+│   └── example.spec.ts                             # Suite de pruebas con Playwright
 ├── src/
-│   ├── components/                                 # Componentes reutilizables e Islas
-│   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales)
-│   │   ├── promotions/                             # Banners y Hero de promociones
-│   │   └── products/                               # Cards y Grillas de productos
-│   ├── layouts/                                    # Componentes de diseño base (Navbar, Footer)
-│   ├── lib/                                        # Utilidades y configuración de API (Ky)
-│   ├── scripts/                                    # Lógica interactiva extraída (Auth, Carousel)
-│   ├── services/                                   # Servicios de negocio y tests unitarios
-│   │   ├── auth.service.ts                         # Login y sesión
-│   │   ├── product.service.ts                      # Catálogo y búsqueda
-│   │   ├── brand.service.ts                        # Marcas y marcas registradas
+│   ├── components/                                 # Componentes de UI (Arquitectura de Islas)
+│   │   ├── auth/                                   # UI de Autenticación (Social Buttons)
+│   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales, Cards)
+│   │   ├── products/                               # Dominio de Productos
+│   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para Home
+│   │   │   ├── ProductCard.astro                   # Tarjeta individual con efectos premium
+│   │   │   ├── ProductCarousel.astro               # Carrusel interactivo reutilizable
+│   │   │   ├── ProductDetails.astro                # Ficha técnica del producto
+│   │   │   └── FilterModal.astro                   # Modal de filtros avanzados
+│   │   └── promotions/                             # Banners y sliders de promociones
+│   ├── layouts/                                    # Estructuras de página base
+│   │   ├── Navbar.astro                            # Navegación jerárquica con buscador
+│   │   ├── Footer.astro                            # Pie de página responsivo
+│   │   └── Layout.astro                            # Wrapper principal (SEO, Fuentes, Scripts)
+│   ├── lib/                                        # Configuración de librerías externas
+│   │   └── api.ts                                  # Cliente Ky con interceptor de Auto-Refresh JWT
+│   ├── scripts/                                    # Lógica interactiva (Extracto de .astro)
+│   │   ├── auth-login.ts                           # Manejo de tokens y SDKs sociales
+│   │   ├── auth-register.ts                        # Registro con reCAPTCHA v3
+│   │   ├── navbar.ts                               # Lógica de búsqueda y menús
+│   │   ├── carousel.ts                             # Motor de carruseles premium
+│   │   └── search-filters.ts                       # Gestión de estados de filtros
+│   ├── services/                                   # Capa de API y Pruebas Unitarias
+│   │   ├── auth.service.ts                         # Login, Registro y Logout
+│   │   ├── product.service.ts                      # Catálogo, Búsqueda y Detalle
+│   │   ├── brand.service.ts                        # Listado de marcas/editoriales
 │   │   ├── brand.service.test.ts                   # Test unitario de marcas
-│   │   ├── category.service.ts                     # Categorías
+│   │   ├── category.service.ts                     # Árbol de categorías
 │   │   ├── category.service.test.ts                # Test unitario de categorías
-│   │   ├── filter.service.ts                       # Lógica de filtrado
-│   │   └── filter.service.test.ts                  # Test unitario de filtros
-│   ├── types/                                      # Definiciones de tipos TypeScript
-│   ├── pages/                                      # Rutas de la aplicación (SSR/SSG)
-│   │   ├── admin/                                  # Panel de administrador
-│   │   ├── productos/                              # Detalle de producto dinámico
-│   │   └── ...                                     # Index, Login, Register, Search, etc.
-│   ├── styles/                                     # Estilos globales y variables neón
+│   │   ├── filter.service.ts                       # Lógica de normalización de filtros
+│   │   ├── filter.service.test.ts                  # Test unitario de filtros
+│   │   └── support.service.ts                      # Enlace con soporte/contacto
+│   ├── types/                                      # Tipado estricto del dominio
+│   │   ├── auth.types.ts                           # Interfaces de sesión
+│   │   ├── product.types.ts                        # Esquema de producto y atributos
+│   │   ├── category.types.ts                       # Interfaces de categorías/subcategorías
+│   │   ├── common.types.ts                         # Paginación y respuestas genéricas
+│   │   └── user.types.ts                           # Perfil y roles de usuario
+│   ├── pages/                                      # Rutas y Vistas (SSR)
+│   │   ├── admin/                                  # Panel privado de gestión
+│   │   ├── productos/                              # Rutas dinámicas de producto ([id].astro)
+│   │   ├── index.astro                             # Landing page principal
+│   │   ├── search.astro                            # Dashboard de búsqueda y resultados
+│   │   ├── login.astro                             # Autenticación de usuario
+│   │   ├── profile.astro                           # Mi Perfil (User Dashboard)
+│   │   └── ...                                     # FAQ, Contacto, Términos, Novedades
+│   ├── styles/                                     # Estilos globales y tokens neón
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
-├── .env                                            # Variables de entorno (API URL)
-├── .gitignore                                      # Archivos ignorados por Git
-├── astro.config.mjs                                # Configuración de Astro (Islands, Ports)
+├── .env                                            # Variables de entorno (API URL, Keys)
+├── .gitignore                                      # Exclusiones de Git
+├── astro.config.mjs                                # Configuración de Astro (React, mkcert)
 ├── package.json                                    # Metadatos y scripts (pnpm)
-├── pnpm-lock.yaml                                  # Dependencias exactas
+├── pnpm-lock.yaml                                  # Árbol de dependencias exacto
 ├── README.md                                       # Documentación del proyecto
 └── tsconfig.json                                   # Configuración de TypeScript
 </code></pre>
