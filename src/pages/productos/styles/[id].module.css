@@ -370,10 +370,8 @@
 }
 
 @media (max-width: 900px) {
-    .productGrid {
-        grid-template-columns: 1fr;
-    }
 
+    .productGrid,
     .detailsGrid {
         grid-template-columns: 1fr;
     }
@@ -399,61 +397,58 @@
         align-items: center;
     }
 
-    /* Rediseño de la botonera */
+    /* Rediseño de la botonera - Más ancho y prominente */
     .actions {
         flex-direction: column !important;
-        /* Stack vertical para ganar ancho */
         align-items: stretch !important;
-        gap: 1rem !important;
-        margin-top: 1rem;
-    }
-
-    .quantityWrapper {
-        width: 100% !important;
-        justify-content: space-between;
-        height: 60px;
-        order: 2;
-        /* Bajamos el selector de cantidad */
+        gap: 1.25rem !important;
+        margin-top: 2rem !important;
     }
 
     .addToCart {
+        order: 2 !important;
         width: 100% !important;
-        height: 70px;
-        /* Más alto para mejor UX táctil */
-        font-size: 1.1rem;
-        /* Texto un poco más grande */
-        order: 1;
-        /* El botón de compra arriba, es la acción principal */
-        padding: 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        border: 2px solid transparent;
+        height: 68px !important;
+        min-height: 68px !important;
+        max-height: 68px !important;
+        font-size: 1.2rem !important;
+        font-weight: 900 !important;
+        border-radius: 100px !important;
+        box-shadow: 0 15px 40px rgba(var(--green-primary), 0.3) !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
-    /* Evitamos que el icono se pegue al texto */
-    .addToCart [data-icon] {
-        width: 24px;
-        height: 24px;
+    .quantityWrapper {
+        order: 1 !important;
+        width: 100% !important;
+        height: 68px !important;
+        min-height: 68px !important;
+        max-height: 68px !important;
+        justify-content: space-between !important;
+        padding: 0 2rem !important;
+        background: rgba(20, 20, 20, 0.8) !important;
+        border-radius: 100px !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .addToCart [data-icon],
+    .addToCart :global(svg) {
+        width: 24px !important;
+        height: 24px !important;
     }
 
     .trustBadges {
         flex-direction: column;
         gap: 1.25rem;
         align-items: center;
-        padding-top: 1.5rem;
-    }
-}
-
-/* Detalles */
-.detailsGrid {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 3rem;
-}
-
-@media (max-width: 900px) {
-
-    .productGrid,
-    .detailsGrid {
-        grid-template-columns: 1fr;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 }
