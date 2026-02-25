@@ -9,8 +9,10 @@ export default defineConfig({
     reporter: 'html',
     use: {
         baseURL: 'https://localhost:2611',
-        trace: 'on-first-retry',
+        trace: 'on',
         ignoreHTTPSErrors: true,
+        screenshot: 'on',
+        video: 'on',
     },
     projects: [
         {
@@ -24,10 +26,12 @@ export default defineConfig({
        2. Run 'pnpm dev' (BackEnd)
        3. Run 'pnpm test:e2e'
     */
+    /* 
     webServer: {
         command: 'pnpm dev --port 2611',
         url: 'https://localhost:2611',
         reuseExistingServer: true,
         timeout: 120000,
     },
+    */
 });
