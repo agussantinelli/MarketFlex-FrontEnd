@@ -23,7 +23,11 @@ const CheckoutSummary: React.FC = () => {
             <div className={styles.itemList}>
                 {items.map((item) => (
                     <div key={item.id} className={styles.item}>
-                        <img src={item.foto || '/placeholder-product.png'} alt={item.nombre} className={styles.image} />
+                        <img
+                            src={item.foto ? `http://localhost:5979/${item.foto}` : '/placeholder-product.png'}
+                            alt={item.nombre}
+                            className={styles.image}
+                        />
                         <div className={styles.itemInfo}>
                             <span className={styles.itemName}>{item.nombre}</span>
                             <span className={styles.itemMeta}>Cant: {item.quantity}</span>
