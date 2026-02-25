@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CartView from "../components/cart/CartView";
+---
+
+<Layout title="Mi Carrito | MarketFlex">
+    <main class="cart-page">
+        <div class="container">
+            <CartView client:load />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .cart-page {
+        padding-top: 80px; /* Space for navbar */
+        min-height: 80vh;
+        background: radial-gradient(
+            circle at top center,
+            rgba(52, 211, 153, 0.05) 0%,
+            transparent 70%
+        );
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+</style>
