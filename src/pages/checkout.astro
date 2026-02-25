@@ -1,0 +1,120 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CheckoutForm from "../components/checkout/CheckoutForm";
+import CheckoutSummary from "../components/checkout/CheckoutSummary";
+---
+
+<Layout title="Checkout | MarketFlex">
+    <main class="checkout-page">
+        <div class="container">
+            <nav class="breadcrumbs">
+                <a href="/cart">Carrito</a>
+                <span class="separator">/</span>
+                <span class="current">Checkout</span>
+                <span class="separator">/</span>
+                <span class="inactive">Éxito</span>
+            </nav>
+
+            <h1 class="page-title">Finalizar Compra</h1>
+
+            <div class="checkout-grid">
+                <div class="form-section">
+                    <CheckoutForm client:load />
+                </div>
+                <div class="summary-section">
+                    <CheckoutSummary client:load />
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .checkout-page {
+        padding: 120px 0 80px;
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(251, 191, 36, 0.05),
+                transparent 400px
+            ),
+            radial-gradient(
+                circle at bottom left,
+                rgba(251, 191, 36, 0.05),
+                transparent 400px
+            );
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+    }
+
+    .breadcrumbs a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumbs a:hover {
+        color: #fbbf24;
+    }
+
+    .separator {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    .current {
+        color: #fff;
+        font-weight: 500;
+    }
+
+    .inactive {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 3rem;
+    }
+
+    .checkout-grid {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+
+    @media (max-width: 1024px) {
+        .checkout-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .summary-section {
+            order: -1;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .checkout-page {
+            padding-top: 100px;
+        }
+    }
+</style>
