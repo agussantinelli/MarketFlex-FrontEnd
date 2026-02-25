@@ -94,6 +94,6 @@ export default function Notifications({
     }, []);
 
     return (
-        <Toaster position={position} offset={offset} />
+        <Toaster position={position} offset={offset as any} />
     );
 }
