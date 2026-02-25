@@ -58,6 +58,8 @@ describe('CartView Component', () => {
 
         expect(screen.getByText('Product Test')).toBeDefined();
         expect(screen.getByText('2')).toBeDefined();
-        expect(screen.getByText('$200.00')).toBeDefined();
+
+        // Se usa getAllByText porque el precio aparece múltiples veces (ítem, subtotal, total)
+        expect(screen.getAllByText('$200.00')).toBeDefined();
     });
 });
