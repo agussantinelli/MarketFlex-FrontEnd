@@ -268,17 +268,19 @@ export function initNavbar(_styles: Record<string, string>, modalStyles: Record<
         });
     }
     // Cart Logic
-    const cartBadge = document.querySelector(".cart-count");
-    if (cartBadge) {
+    const cartBadges = document.querySelectorAll(".cart-count");
+    if (cartBadges.length > 0) {
         // We import dynamically to avoid issues with SSR if this script runs early
         import("../store/cartStore").then(({ cartCount }) => {
             cartCount.subscribe((count) => {
-                cartBadge.textContent = count.toString();
-                if (count > 0) {
-                    cartBadge.classList.add("has-items");
-                } else {
-                    cartBadge.classList.remove("has-items");
-                }
+                cartBadges.forEach(badge => {
+                    badge.textContent = count.toString();
+                    if (count > 0) {
+                        badge.classList.add("has-items");
+                    } else {
+                        badge.classList.remove("has-items");
+                    }
+                });
             });
         });
     }
