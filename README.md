@@ -28,8 +28,9 @@
     <img src="https://img.shields.io/badge/reCAPTCHA-v3-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="reCAPTCHA Badge">
     <img src="https://img.shields.io/badge/HTTPS-mkcert-003666?style=for-the-badge&logo=letsencrypt&logoColor=white" alt="mkcert Badge">
     <img src="https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge">
-    <img src="https://img.shields.io/badge/Vitest-Unit_Testing-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest Badge">
-    <img src="https://img.shields.io/badge/Playwright-E2E_Testing-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
+    <img src="https://img.shields.io/badge/Vitest-4.0.18-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest Badge">
+    <img src="https://img.shields.io/badge/MSW-2.x-FF6A00?style=for-the-badge&logo=mockserviceworker&logoColor=white" alt="MSW Badge">
+    <img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
     <img src="https://img.shields.io/badge/Test_Enforcement-Mandatory-orange?style=for-the-badge&logo=vitest&logoColor=white" alt="Test Enforcement Badge">
 </div>
 
@@ -213,7 +214,8 @@
   <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
-  <li>🧪 <b>100% Test Coverage (Scripts):</b> Todos los scripts interactivos en <code>src/scripts</code> cuentan con tests unitarios robustos, garantizando la fiabilidad de la UI.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (81 tests en total), garantizando la fiabilidad de la UI y la sesión.</li>
+  <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
 </ul>
 
 <hr>
@@ -403,8 +405,9 @@
   El frontend implementa una estrategia dual de pruebas para asegurar tanto la lógica interna como la experiencia del usuario final.
 </p>
 <ul>
-  <li><b>Pruebas Unitarias:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM para servicios, helpers y scripts interactivos. Cobertura del 100% en <code>src/scripts</code>.</li>
-  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a> para flujos de usuario críticos (Login, Carrito, Búsqueda).</li>
+  <li><b>Pruebas de Lógica & Infraestructura:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM + MSW para servicios, interceptores de API y scripts interactivos. Cobertura del 100% en <code>src/scripts</code> y <code>src/services</code>.</li>
+  <li><b>Verificación de Sesión:</b> Tests específicos para asegurar que el <b>Auto-Refresh</b> de JWT y la inyección de tokens en cada request funcionen correctamente.</li>
+  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a> (Configurado para la próxima fase de pruebas de integración visual).</li>
 </ul>
 
 <h3>Comandos de Test</h3>
