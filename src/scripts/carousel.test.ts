@@ -25,7 +25,7 @@ describe('carousel.ts', () => {
             Object.defineProperty(container, 'scrollWidth', { configurable: true, value: 2000 });
             Object.defineProperty(container, 'clientWidth', { configurable: true, value: 1000 });
 
-            container.scrollBy = vi.fn().mockImplementation((options) => {
+            container.scrollBy = vi.fn().mockImplementation((options: ScrollToOptions) => {
                 if (options.left) {
                     container.scrollLeft += options.left;
                     container.dispatchEvent(new Event('scroll'));
