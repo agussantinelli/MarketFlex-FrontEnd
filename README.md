@@ -419,16 +419,16 @@
 <ul>
   <li><b>Pruebas de Lógica & Infraestructura:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM + MSW para servicios, interceptores de API y scripts interactivos. Cobertura del 100% en <code>src/scripts</code> y <code>src/services</code>.</li>
   <li><b>Verificación de Sesión:</b> Tests específicos para asegurar que el <b>Auto-Refresh</b> de JWT y la inyección de tokens en cada request funcionen correctamente.</li>
-  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a> (Configurado para la próxima fase de pruebas de integración visual).</li>
+  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a>. Suite consolidada que valida el flujo completo: Login → Navegación → Detalle de Producto → Agregar al Carrito.</li>
 </ul>
 
 <h3>Comandos de Test</h3>
 <pre>
-# Ejecutar tests unitarios
+# Ejecutar tests unitarios (Servicios y Scripts)
 pnpm test
-# Ejecutar tests E2E
+# Ejecutar suite E2E completa (Headed)
 pnpm run test:e2e
-# Abrir interfaz de Playwright (UI)
+# Abrir entorno interactivo de Playwright
 pnpm run test:e2e:ui
 </pre>
 
