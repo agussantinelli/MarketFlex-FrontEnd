@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { cartItems, cartTotals, updateQuantity, removeItem, clearCart } from '../../store/cartStore';
 import styles from './styles/CartView.module.css';
@@ -6,6 +6,22 @@ import styles from './styles/CartView.module.css';
 const CartView: React.FC = () => {
     const items = useStore(cartItems);
     const totals = useStore(cartTotals);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Simular tiempo de carga para inicialización del store persistente
+        const timer = setTimeout(() => setIsLoading(false), 600);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className={styles.loadingContainer}>
+                <div className={styles.spinner}></div>
+                <p>Cargando tu carrito...</p>
+            </div>
+        );
+    }
 
     if (items.length === 0) {
         return (
@@ -107,30 +123,29 @@ const CartView: React.FC = () => {
                     <h2 className={styles.summaryTitle}>Resumen de compra</h2>
 
                     <div className={styles.summaryRow}>
-                        <span>Subtotal ({items.reduce((acc, i) => acc + i.quantity, 0)} productos)</span>
+                        <span>Subtotal (sin descuentos)</span>
                         <span>${totals.subtotal.toFixed(2)}</span>
                     </div>
 
-                    {totals.discount > 0 && (
-                        <div className={`${styles.summaryRow} ${styles.discount}`}>
-                            <span>Descuentos aplicados</span>
-                            <span>-${totals.discount.toFixed(2)}</span>
-                        </div>
+                    {totals.appliedPromotions.length > 0 && (
+                        <>
+                            <div className={styles.summarySeparator}></div>
+                            <div className={styles.summaryLabel}>Descuentos aplicados:</div>
+                            <div className={styles.appliedPromos}>
+                                {totals.appliedPromotions.map((promo, idx) => (
+                                    <div key={idx} className={styles.promoItem}>
+                                        <span>{promo.nombre}</span>
+                                        <span>-${promo.monto.toFixed(2)}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
                     )}
 
-                    {totals.appliedPromotions.length > 0 && (
-                        <div className={styles.appliedPromos}>
-                            {totals.appliedPromotions.map((promo, idx) => (
-                                <div key={idx} className={styles.promoItem}>
-                                    <span>{promo.nombre}</span>
-                                    <span>-${promo.monto.toFixed(2)}</span>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <div className={styles.summarySeparator}></div>
 
                     <div className={`${styles.summaryRow} ${styles.total}`}>
-                        <span>Total</span>
+                        <span>Monto final</span>
                         <span>${totals.total.toFixed(2)}</span>
                     </div>
 

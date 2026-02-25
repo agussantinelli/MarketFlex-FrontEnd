@@ -35,6 +35,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
         } else {
             setIsVisible(false);
             document.body.style.overflow = 'unset';
+            return undefined;
         }
     }, [isOpen]);
 
@@ -100,7 +101,19 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
 
                     <div className={styles.subtotalContainer}>
                         <span className={styles.subtotalLabel}>Subtotal estimado</span>
-                        <div className={styles.subtotalValue}>${subtotal}</div>
+                        <div className={styles.subtotalValue}>
+                            ${subtotal}
+                            {product.precioConDescuento && (
+                                <span className={styles.originalSubtotal}>
+                                    ${((product.precioActual || 0) * quantity).toFixed(2)}
+                                </span>
+                            )}
+                        </div>
+                        {product.precioConDescuento && (
+                            <div className={styles.savingsLabel}>
+                                Monto ahorrado: <span>${(((product.precioActual || 0) - (product.precioConDescuento || 0)) * quantity).toFixed(2)}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
 

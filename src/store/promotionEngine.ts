@@ -41,14 +41,17 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
 
     // Strategy: Calculate subtotal based on precioActual * quantity
     items.forEach(item => {
-        subtotal += (item.precioActual || 0) * item.quantity;
+        subtotal += (Number(item.precioActual) || 0) * (item.quantity || 0);
     });
 
     // 2. Process Individual Discounts (Simple % off or Fixed amount)
-    // IfprecioConDescuento is set, we use it as the unit price if no other complex promo applies
+    // If precioConDescuento is set, we use it as the unit price if no other complex promo applies
     individualItems.forEach(item => {
-        if (item.precioConDescuento && item.precioActual) {
-            const itemDiscount = (item.precioActual - item.precioConDescuento) * item.quantity;
+        const pActual = Number(item.precioActual) || 0;
+        const pDesc = Number(item.precioConDescuento);
+
+        if (pDesc > 0 && pActual > pDesc) {
+            const itemDiscount = (pActual - pDesc) * (item.quantity || 0);
             totalDiscount += itemDiscount;
             appliedPromotions.push({
                 nombre: `Descuento ${item.descuentoActivo?.nombre || 'Directo'}: ${item.nombre}`,
@@ -80,24 +83,33 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
         const totalUnits = allUnits.length;
         let groupDiscount = 0;
 
-        if (promo.tipoPromocion === 'CANTIDAD' && promo.cantCompra && promo.cantPaga) {
+        if (promo.tipoPromocion === 'NxM' && promo.cantCompra && promo.cantPaga) {
             // e.g., 2x1 -> buy 2, pay 1.
-            const sets = Math.floor(totalUnits / promo.cantCompra);
-            const freePerSet = promo.cantCompra - promo.cantPaga;
+            const cantCompra = Number(promo.cantCompra);
+            const cantPaga = Number(promo.cantPaga);
 
-            // We discount the cheapest available units across the set
-            for (let i = 0; i < sets * freePerSet; i++) {
-                groupDiscount += allUnits[i] || 0;
+            if (cantCompra > 0) {
+                const sets = Math.floor(totalUnits / cantCompra);
+                const freePerSet = cantCompra - cantPaga;
+
+                // We discount the cheapest available units across the set
+                if (freePerSet > 0) {
+                    for (let i = 0; i < sets * freePerSet; i++) {
+                        groupDiscount += allUnits[i] || 0;
+                    }
+                }
             }
         }
-        else if (promo.tipoPromocion === 'SEGUNDA_UNIDAD' && promo.porcentajeDescuentoSegunda) {
+        else if (promo.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' && promo.porcentajeDescuentoSegunda) {
             // e.g., 50% off second unit
             const pairs = Math.floor(totalUnits / 2);
-            const discountPercent = parseFloat(promo.porcentajeDescuentoSegunda) / 100;
+            const discountPercent = (parseFloat(String(promo.porcentajeDescuentoSegunda)) || 0) / 100;
 
             // Apply discount to the cheapest units that form a pair
-            for (let i = 0; i < pairs; i++) {
-                groupDiscount += (allUnits[i] || 0) * discountPercent;
+            if (discountPercent > 0) {
+                for (let i = 0; i < pairs; i++) {
+                    groupDiscount += (allUnits[i] || 0) * discountPercent;
+                }
             }
         }
 
@@ -110,8 +122,10 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
         } else {
             // Fallback to simple price discount if group logic didn't apply but item has a discount price
             groupItems.forEach(item => {
-                if (item.precioConDescuento && item.precioActual) {
-                    const itemDiscount = (item.precioActual - item.precioConDescuento) * item.quantity;
+                const pActual = Number(item.precioActual) || 0;
+                const pDesc = Number(item.precioConDescuento);
+                if (pDesc > 0 && pActual > pDesc) {
+                    const itemDiscount = (pActual - pDesc) * (item.quantity || 0);
                     totalDiscount += itemDiscount;
                     appliedPromotions.push({
                         nombre: `Descuento: ${item.nombre}`,

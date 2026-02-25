@@ -142,6 +142,32 @@
     font-size: 1.6rem;
     font-weight: 800;
     color: var(--green-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.originalSubtotal {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.savingsLabel {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(52, 211, 153, 0.8);
+    background: rgba(52, 211, 153, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.savingsLabel span {
+    font-weight: 700;
+    color: var(--green-primary);
 }
 
 .actions {
