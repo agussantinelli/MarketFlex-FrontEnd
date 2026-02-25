@@ -24,7 +24,9 @@ describe('AddToCartButton Component', () => {
         const outOfStockProduct = { ...mockProduct, stock: 0 };
         render(<AddToCartButton product={outOfStockProduct} />);
         const button = screen.getByRole('button');
-        expect(button.getAttribute('disabled')).toBeDefined();
+
+        // Verificamos el estado visual y el atributo de accesibilidad
+        expect(button.hasAttribute('disabled')).toBe(true);
         expect(screen.getByText('Sin Stock')).toBeDefined();
     });
 
@@ -37,9 +39,12 @@ describe('AddToCartButton Component', () => {
     it('should open modal if token exists', () => {
         localStorage.setItem('marketflex_token', 'valid-token');
         render(<AddToCartButton product={mockProduct} />);
-        fireEvent.click(screen.getByText('Agregar'));
 
-        // Check if modal content appears (e.g., the title in the modal)
-        expect(screen.getByText(/Seleccionar Cantidad/i)).toBeDefined();
+        const btnAgregar = screen.getByText('Agregar');
+        fireEvent.click(btnAgregar);
+
+        expect(screen.getByText(/Confirmar y Agregar/i)).toBeDefined();
+
+        expect(screen.getByText('Product Test')).toBeDefined();
     });
 });
