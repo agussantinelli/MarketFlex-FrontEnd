@@ -152,8 +152,13 @@ const CartView: React.FC = () => {
                             <div className={styles.appliedPromos}>
                                 {totals.appliedPromotions.map((promo, idx) => (
                                     <div key={idx} className={styles.promoItem}>
-                                        <span>{promo.nombre}</span>
-                                        <span>- ${promo.monto.toFixed(2)}</span>
+                                        <div className={styles.promoInfo}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                            <span>{promo.nombre}</span>
+                                        </div>
+                                        <span className={styles.promoAmount}>- ${promo.monto.toFixed(2)}</span>
                                     </div>
                                 ))}
                             </div>
