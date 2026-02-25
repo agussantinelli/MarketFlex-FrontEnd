@@ -21,6 +21,11 @@ const hasDiscount = product.precioConDescuento !== null;
 
 <Layout title={`${product.nombre} | MarketFlex`}>
     <div class={styles.container}>
+        <script
+            type="application/json"
+            id="product-data"
+            set:html={JSON.stringify(product)}
+        />
         <nav class={styles.breadcrumb} aria-label="Breadcrumb">
             <a href="/">Inicio</a>
             <Icon
@@ -145,14 +150,31 @@ const hasDiscount = product.precioConDescuento !== null;
                 </div>
 
                 <div class={styles.actions}>
-                    <button
-                        class={styles.buyNow}
-                        disabled={product.stock === 0}
-                    >
-                        Comprar ahora
-                    </button>
+                    <div class={styles.quantityWrapper}>
+                        <button
+                            class={styles.quantityBtn}
+                            id="decrement-qty"
+                            aria-label="Disminuir cantidad"
+                            disabled={product.stock === 0}
+                        >
+                            <Icon name="lucide:minus" size={18} />
+                        </button>
+                        <span class={styles.quantityValue} id="quantity-display"
+                            >1</span
+                        >
+                        <button
+                            class={styles.quantityBtn}
+                            id="increment-qty"
+                            aria-label="Aumentar cantidad"
+                            disabled={product.stock === 0}
+                        >
+                            <Icon name="lucide:plus" size={18} />
+                        </button>
+                    </div>
+
                     <button
                         class={styles.addToCart}
+                        id="add-to-cart-btn"
                         disabled={product.stock === 0}
                     >
                         <Icon name="lucide:shopping-cart" size={20} />
@@ -224,28 +246,67 @@ const hasDiscount = product.precioConDescuento !== null;
 </Layout>
 
 <script>
-    const addBtn = document.querySelector("[class*='addToCart']");
-    const buyBtn = document.querySelector("[class*='buyNow']");
+    import { addItem } from "../../store/cartStore";
+    import type { Product } from "../../types/product.types";
 
-    function handleInteraction(type: string) {
+    // Get the product data from the server-side to the client-side
+    const productData = document.getElementById("product-data")?.textContent;
+    const product: Product | null = productData
+        ? JSON.parse(productData)
+        : null;
+
+    const addBtn = document.getElementById("add-to-cart-btn");
+    const quantityDisplay = document.getElementById("quantity-display");
+    const incrementBtn = document.getElementById("increment-qty");
+    const decrementBtn = document.getElementById("decrement-qty");
+
+    let quantity = 1;
+
+    function updateDisplay() {
+        if (quantityDisplay) quantityDisplay.textContent = quantity.toString();
+        if (decrementBtn) {
+            (decrementBtn as HTMLButtonElement).disabled = quantity <= 1;
+        }
+    }
+
+    incrementBtn?.addEventListener("click", () => {
+        if (product && quantity < product.stock) {
+            quantity++;
+            updateDisplay();
+        }
+    });
+
+    decrementBtn?.addEventListener("click", () => {
+        if (quantity > 1) {
+            quantity--;
+            updateDisplay();
+        }
+    });
+
+    function handleAddToCart() {
+        if (!product) return;
+
         const token = localStorage.getItem("marketflex_token");
         if (!token) {
             window.location.href = "/login";
             return;
         }
 
+        // Add to cart store
+        addItem(product, quantity);
+
+        // Notify user with premium message
         // @ts-ignore - Sileo is injected globally
         if (window.triggerSileo) {
-            if (type === "cart") {
-                // @ts-ignore
-                window.triggerSileo("success", "Producto agregado al carrito");
-            } else {
-                // @ts-ignore
-                window.triggerSileo("info", "Iniciando proceso de compra...");
-            }
+            const message =
+                quantity === 1
+                    ? `¡Hecho! Agregaste 1 unidad de "${product.nombre}" al carrito.`
+                    : `¡Excelente! Agregaste ${quantity} unidades de "${product.nombre}" a tu bolsa.`;
+
+            // @ts-ignore
+            window.triggerSileo("success", message);
         }
     }
 
-    addBtn?.addEventListener("click", () => handleInteraction("cart"));
-    buyBtn?.addEventListener("click", () => handleInteraction("buy"));
+    addBtn?.addEventListener("click", handleAddToCart);
 </script>
