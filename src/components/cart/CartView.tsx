@@ -64,56 +64,73 @@ const CartView: React.FC = () => {
                 <div className={styles.cartItemsList}>
                     {items.map((item) => (
                         <div key={item.id} className={styles.cartItem}>
-                            <img
-                                src={item.foto ? `http://localhost:5979/${item.foto}` : '/placeholder.png'}
-                                alt={item.nombre}
-                                className={styles.itemImage}
-                            />
-                            <div className={styles.itemInfo}>
-                                <div className={styles.itemMain}>
-                                    <h3>{item.nombre}</h3>
-                                    <div className={styles.itemPrice}>
+                            <button
+                                className={styles.removeBtn}
+                                onClick={() => removeItem(item.id)}
+                                title="Eliminar producto"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 6L6 18M6 6l12 12"></path>
+                                </svg>
+                            </button>
+
+                            <div className={styles.itemImageContainer}>
+                                <img
+                                    src={item.foto ? `http://localhost:5979/${item.foto}` : '/placeholder.png'}
+                                    alt={item.nombre}
+                                    className={styles.itemImage}
+                                />
+                            </div>
+
+                            <div className={styles.itemContent}>
+                                <div className={styles.itemHeader}>
+                                    <div className={styles.itemTitleGroup}>
+                                        {(item.marca || item.autor) && (
+                                            <span className={styles.itemBrand}>{item.marca || item.autor}</span>
+                                        )}
+                                        <h3 className={styles.itemName}>{item.nombre}</h3>
+                                    </div>
+                                    <div className={styles.itemPriceGroup}>
                                         {item.precioConDescuento ? (
                                             <>
-                                                <span className={styles.discountPrice}>${item.precioConDescuento.toFixed(2)}</span>
-                                                <span className={styles.originalPrice}>${(item.precioActual || 0).toFixed(2)}</span>
+                                                <span className={styles.itemPrice}>${item.precioConDescuento.toFixed(2)}</span>
+                                                <span className={styles.itemOriginalPrice}>${(item.precioActual || 0).toFixed(2)}</span>
                                             </>
                                         ) : (
-                                            <span>${(item.precioActual || 0).toFixed(2)}</span>
+                                            <span className={styles.itemPrice}>${(item.precioActual || 0).toFixed(2)}</span>
                                         )}
                                     </div>
                                 </div>
-                                <div className={styles.itemActions}>
-                                    <div className={styles.quantityControls}>
+
+                                <div className={styles.itemFooter}>
+                                    <div className={styles.quantityPill}>
                                         <button
-                                            className={styles.controlBtn}
+                                            className={styles.qtyBtn}
                                             onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
                                             disabled={item.quantity <= 1}
                                         >
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                             </svg>
                                         </button>
-                                        <span className={styles.quantityValue}>{item.quantity}</span>
+                                        <span className={styles.qtyValue}>{item.quantity}</span>
                                         <button
-                                            className={styles.controlBtn}
+                                            className={styles.qtyBtn}
                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                             disabled={item.quantity >= (item.stock || 99)}
                                         >
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                             </svg>
                                         </button>
                                     </div>
-                                    <button className={styles.removeBtn} onClick={() => removeItem(item.id)} title="Eliminar producto">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                                        </svg>
-                                    </button>
+                                    <div className={styles.itemTotal}>
+                                        <span className={styles.totalLabel}>Subtotal:</span>
+                                        <span className={styles.totalValue}>
+                                            ${((item.precioConDescuento || item.precioActual || 0) * item.quantity).toFixed(2)}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
