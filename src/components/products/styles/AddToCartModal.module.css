@@ -159,7 +159,7 @@
 .btn {
     padding: 0.75rem;
     border-radius: 10px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid transparent;
@@ -193,16 +193,17 @@
 .btnAgregar {
     background: var(--green-primary);
     color: #000;
-    font-size: 0.95rem;
-    font-weight: 800;
-    padding: 0.9rem;
-    box-shadow: 0 8px 16px -4px rgba(52, 211, 153, 0.4);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
 .btnAgregar:hover {
-    transform: translateY(-1px);
     background: #4ade80;
-    box-shadow: 0 12px 20px -4px rgba(52, 211, 153, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(52, 211, 153, 0.3);
 }
 
 .btnAgregar:active {
