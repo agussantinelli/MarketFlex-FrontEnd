@@ -53,8 +53,12 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
 
         // @ts-ignore - Sileo is injected globally
         if (window.triggerSileo) {
+            const message = quantity === 1
+                ? `¡Hecho! Agregaste 1 unidad de "${productName}" al carrito. ✨`
+                : `¡Excelente! Agregaste ${quantity} unidades de "${productName}" a tu bolsa. 🛍️`;
+
             // @ts-ignore
-            window.triggerSileo("success", `¡${quantity} unidad(es) de ${productName} agregadas al carrito!`);
+            window.triggerSileo("success", message);
         }
         onClose();
     };
