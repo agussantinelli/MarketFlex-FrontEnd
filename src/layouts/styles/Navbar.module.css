@@ -441,6 +441,30 @@
     justify-content: center;
     border: 2px solid var(--foreground);
     padding: 0 4px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(0);
+    opacity: 0;
+}
+
+.cartBadge:global(.has-items) {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+    }
 }
 
 .userDropdown {
