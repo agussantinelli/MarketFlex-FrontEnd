@@ -48,11 +48,17 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     const subtotal = (productPrice * quantity).toFixed(2);
 
     const handleAddToCart = () => {
-        addItem(product, quantity);
-        if (onConfirm) onConfirm(quantity);
+        const result = addItem(product, quantity);
 
         // @ts-ignore - Sileo is injected globally
         if (window.triggerSileo) {
+            if (result && !result.success) {
+                // @ts-ignore
+                window.triggerSileo("error", result.message);
+                return;
+            }
+
+            if (onConfirm) onConfirm(quantity);
             const message = quantity === 1
                 ? `¡Hecho! Agregaste 1 unidad de "${productName}" al carrito. ✨`
                 : `¡Excelente! Agregaste ${quantity} unidades de "${productName}" a tu bolsa. 🛍️`;

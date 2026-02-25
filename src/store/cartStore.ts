@@ -21,6 +21,15 @@ export const cart = persistentAtom<CartStore>('marketflex_cart', { items: [] }, 
 export const addItem = (product: Product, quantity: number) => {
     const currentCart = cart.get();
     const existingItem = currentCart.items.find(item => item.id === product.id);
+    const currentQtyInCart = existingItem?.quantity || 0;
+    const newTotalQty = currentQtyInCart + quantity;
+
+    if (newTotalQty > product.stock) {
+        return {
+            success: false,
+            message: `No hay suficiente stock. Ya tenés ${currentQtyInCart} unidad(es) en el carrito y el máximo disponible es ${product.stock}.`
+        };
+    }
 
     if (existingItem) {
         const newItems = currentCart.items.map(item =>
@@ -35,6 +44,7 @@ export const addItem = (product: Product, quantity: number) => {
             items: [...currentCart.items, { ...product, quantity }]
         });
     }
+    return { success: true };
 };
 
 export const removeItem = (productId: string) => {
@@ -47,10 +57,20 @@ export const removeItem = (productId: string) => {
 
 export const updateQuantity = (productId: string, quantity: number) => {
     const currentCart = cart.get();
+    const item = currentCart.items.find(i => i.id === productId);
+
+    if (item && quantity > item.stock) {
+        return {
+            success: false,
+            message: `No podés agregar más de ${item.stock} unidades de este producto.`
+        };
+    }
+
     const newItems = currentCart.items.map(item =>
         item.id === productId ? { ...item, quantity } : item
     );
     cart.set({ ...currentCart, items: newItems });
+    return { success: true };
 };
 
 export const clearCart = () => {
