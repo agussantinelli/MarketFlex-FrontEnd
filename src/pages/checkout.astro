@@ -8,11 +8,20 @@ import CheckoutSummary from "../components/checkout/CheckoutSummary";
     <main class="checkout-page">
         <div class="container">
             <nav class="breadcrumbs">
-                <a href="/cart">Carrito</a>
+                <a href="/cart" class="breadcrumb-item">
+                    <span class="icon">🛒</span>
+                    Carrito
+                </a>
                 <span class="separator">/</span>
-                <span class="current">Checkout</span>
+                <span class="breadcrumb-item active">
+                    <span class="icon">📝</span>
+                    Checkout
+                </span>
                 <span class="separator">/</span>
-                <span class="inactive">Éxito</span>
+                <span class="breadcrumb-item disabled">
+                    <span class="icon">✨</span>
+                    Éxito
+                </span>
             </nav>
 
             <h1 class="page-title">Finalizar Compra</h1>
@@ -55,32 +64,51 @@ import CheckoutSummary from "../components/checkout/CheckoutSummary";
     .breadcrumbs {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 2rem;
+        gap: 0.5rem;
+        margin-bottom: 2.5rem;
         font-size: 0.875rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 0.75rem 1.25rem;
+        border-radius: 50px;
+        width: fit-content;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .breadcrumbs a {
+    .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         color: rgba(255, 255, 255, 0.5);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: all 0.3s ease;
     }
 
-    .breadcrumbs a:hover {
+    .breadcrumb-item:hover:not(.active):not(.disabled) {
         color: #fbbf24;
     }
 
+    .breadcrumb-item.active {
+        color: #fbbf24;
+        font-weight: 600;
+    }
+
+    .breadcrumb-item.disabled {
+        color: rgba(255, 255, 255, 0.2);
+        cursor: default;
+    }
+
+    .icon {
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+
+    .active .icon {
+        opacity: 1;
+    }
+
     .separator {
-        color: rgba(255, 255, 255, 0.2);
-    }
-
-    .current {
-        color: #fff;
-        font-weight: 500;
-    }
-
-    .inactive {
-        color: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.1);
+        margin: 0 0.25rem;
     }
 
     .page-title {
