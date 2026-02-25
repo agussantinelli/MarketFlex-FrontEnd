@@ -426,10 +426,8 @@
 <pre>
 # Ejecutar tests unitarios
 pnpm test
-
 # Ejecutar tests E2E
 pnpm run test:e2e
-
 # Abrir interfaz de Playwright (UI)
 pnpm run test:e2e:ui
 </pre>
