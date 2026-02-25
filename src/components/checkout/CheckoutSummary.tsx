@@ -5,8 +5,20 @@ import { cartItems, cartTotals } from '../../store/cartStore';
 import styles from './styles/CheckoutSummary.module.css';
 
 const CheckoutSummary: React.FC = () => {
+    const [isConfirmed, setIsConfirmed] = React.useState(false);
     const items = useStore(cartItems);
     const totals = useStore(cartTotals);
+
+    if (isConfirmed) {
+        return (
+            <div className={`${styles.summaryContainer} ${styles.success}`}>
+                <div className={styles.successIcon}>✅</div>
+                <h2 className={styles.title}>¡Pedido Recibido!</h2>
+                <p className={styles.successMessage}>Gracias por tu compra. Pronto recibirás un email con los detalles.</p>
+                <a href="/" className={styles.checkoutBtn}>Volver a la Tienda</a>
+            </div>
+        );
+    }
 
     if (items.length === 0) {
         return (
@@ -62,7 +74,7 @@ const CheckoutSummary: React.FC = () => {
                 </div>
             </div>
 
-            <button className={styles.checkoutBtn}>
+            <button className={styles.checkoutBtn} onClick={() => setIsConfirmed(true)}>
                 Confirmar Compra
                 <HiArrowRight />
             </button>

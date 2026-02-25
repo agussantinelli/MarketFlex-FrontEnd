@@ -13,25 +13,21 @@ const mockState = vi.hoisted(() => ({
     }
 }));
 
+vi.mock('@nanostores/react', () => ({
+    useStore: vi.fn((store: any) => {
+        if (store?.id === 'cartItems') return mockState.items;
+        if (store?.id === 'cartTotals') return mockState.totals;
+        return null;
+    })
+}));
+
 vi.mock('../../store/cartStore', () => ({
-    cartItems: {
-        get: () => mockState.items,
-        subscribe: (cb: any) => {
-            return () => { };
-        }
-    },
-    cartTotals: {
-        get: () => mockState.totals,
-        subscribe: (cb: any) => {
-            return () => { };
-        }
-    }
+    cartItems: { id: 'cartItems', get: () => mockState.items },
+    cartTotals: { id: 'cartTotals', get: () => mockState.totals }
 }));
 
 describe('CheckoutSummary Component', () => {
-    afterEach(() => {
-        cleanup();
-        vi.clearAllMocks();
+    beforeEach(() => {
         mockState.items = [];
         mockState.totals = {
             subtotal: 0,
@@ -41,9 +37,14 @@ describe('CheckoutSummary Component', () => {
         };
     });
 
+    afterEach(() => {
+        cleanup();
+        vi.clearAllMocks();
+    });
+
     it('should render empty state when cart is empty', () => {
         render(<CheckoutSummary />);
-        expect(screen.getByText(/Tu carrito está vacío/i)).toBeDefined();
+        expect(screen.getByText(/No hay productos en tu carrito/i)).toBeDefined();
     });
 
     it('should render items and totals when cart has items', () => {
@@ -61,7 +62,9 @@ describe('CheckoutSummary Component', () => {
             subtotal: 200,
             discount: 20,
             total: 180,
-            appliedPromotions: []
+            appliedPromotions: [
+                { nombre: 'Descuento Test', monto: 20 }
+            ]
         };
 
         // Update mock state
@@ -72,7 +75,8 @@ describe('CheckoutSummary Component', () => {
 
         expect(screen.getByText('Producto Test')).toBeDefined();
         expect(screen.getByText('Cant: 2')).toBeDefined();
-        expect(screen.getByText('$200')).toBeDefined();
+        expect(screen.getAllByText('$200')).toBeDefined();
+        expect(screen.getByText(/Descuento Test/i)).toBeDefined();
         expect(screen.getByText('-$20')).toBeDefined();
         expect(screen.getByText('$180')).toBeDefined();
     });
