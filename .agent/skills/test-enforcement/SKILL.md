@@ -1,31 +1,33 @@
 ---
 name: test-enforcement
-description: Mandatory rule requiring a corresponding test file for every component and logic file.
+description: Mandatory rule requiring a corresponding test file for every business logic file and UI component.
 ---
 
 # Test Enforcement (FrontEnd)
 
 ## Context
-Frontend components and complex logic are critical to user experience. Every meaningful logic file or component MUST have a corresponding test.
+To maintain 100% reliability and prevent visual or logic regressions in the MarketFlex Frontend, it is OBLIGATORY that every file containing business logic, services, stores, or UI components has a corresponding test file.
 
 ## Guidelines
-1. **Rule of One**: Every `.astro`, `.ts`, or `.js` file in `src/components`, `src/services`, or `src/utils` MUST have a matching `.test.ts`, `.spec.ts`, or `.test.js` file.
-2. **Location**: Test files should be located in the same directory as the source file.
-3. **Naming**: If the source is `ProductCard.astro`, the test should be `ProductCard.test.ts`.
-4. **Content**: Tests should verify that components render correctly and that utility/service functions return expected results.
+1. **Rule of One**: Every `.ts` or `.tsx` file in `src/services`, `src/store`, `src/utils`, or `src/components` MUST have a matching `.test.ts` or `.test.tsx` file.
+2. **Location**: Test files must be located in the same directory as the file they are testing.
+3. **Naming**: If the file is `Button.tsx`, the test file MUST be `Button.test.tsx`.
+4. **Content**:
+    - **Logic/Services**: Tests must cover main success paths and edge cases.
+    - **Components**: Tests must cover rendering, user interaction, and state changes (using Vitest + React Testing Library).
 
 ## Examples
 
 ### Correct Structure
 ```
-src/components/
-├── ProductCard.astro
-└── ProductCard.test.ts
+src/components/common/
+├── Button.tsx
+└── Button.test.tsx
 ```
 
 ### Incorrect Structure (Missing Test)
 ```
-src/components/
-└── ProductCard.astro
-(Error: Missing ProductCard.test.ts)
+src/components/common/
+└── Button.tsx
+(Error: Missing Button.test.tsx)
 ```
