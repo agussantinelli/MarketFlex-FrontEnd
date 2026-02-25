@@ -237,13 +237,14 @@
   <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (81 tests en total), garantizando la fiabilidad de la UI y la sesión.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>110 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
   <li>🛒 <b>Premium Checkout Experience:</b> Proceso de compra fluido con:
       <ul>
           <li><b>Multi-Sección:</b> División lógica entre Información Personal, Envío y Pago.</li>
           <li><b>Breadcrumbs Estilizados:</b> Navegación visual estilo píldora con iconos Lucide.</li>
           <li><b>Validación en Tiempo Real:</b> Feedback inmediato al usuario durante la carga de datos.</li>
           <li><b>Summary Dinámico:</b> Resumen de orden que refleja descuentos y promociones en tiempo real.</li>
++          <li><b>Pre-filling Inteligente:</b> Los campos de contacto y envío se auto-completan con la información del usuario logueado para una compra ultra-rápida.</li>
       </ul>
   </li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
@@ -448,7 +449,7 @@
 <ul>
   <li><b>Pruebas de Lógica & Infraestructura:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM + MSW para servicios, interceptores de API y scripts interactivos. Cobertura del 100% en <code>src/scripts</code> y <code>src/services</code>.</li>
   <li><b>Verificación de Sesión:</b> Tests específicos para asegurar que el <b>Auto-Refresh</b> de JWT y la inyección de tokens en cada request funcionen correctamente.</li>
-  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a>. Suite consolidada que valida el flujo completo: Login → Navegación → Detalle de Producto → Agregar al Carrito.</li>
+  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a>. Suite consolidada que valida el flujo completo de negocio: **Login → Descubrimiento de Producto → Carrito → Checkout**.</li>
 </ul>
 
 <h3>Comandos de Test</h3>
