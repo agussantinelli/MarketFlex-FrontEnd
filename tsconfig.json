@@ -8,11 +8,14 @@
             ]
         },
         "types": [
-            "vitest/globals",
-            "@playwright/test"
+            "node",
+            "vitest/globals"
         ],
         "skipLibCheck": true,
-        "moduleResolution": "node"
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "jsxImportSource": "react"
     },
     "include": [
         "src/**/*",
