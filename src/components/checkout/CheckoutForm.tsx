@@ -1,33 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { HiOutlineUser, HiOutlineTruck } from 'react-icons/hi2';
+import React, { useEffect } from 'react';
+import { useStore } from '@nanostores/react';
+import { HiOutlineUser, HiOutlineTruck, HiExclamationCircle } from 'react-icons/hi2';
 import { MdOutlinePayment, MdCreditCard, MdAccountBalance, MdPayments } from 'react-icons/md';
 import styles from './styles/CheckoutForm.module.css';
-import type { User } from '../../types/user.types';
+import { checkoutStore, updateFormData, updatePaymentMethod } from '../../store/checkoutStore';
 
 const CheckoutForm: React.FC = () => {
-    const [paymentMethod, setPaymentMethod] = useState('card');
-    const [formData, setFormData] = useState({
-        nombre: '',
-        email: '',
-        telefono: '',
-        direccion: '',
-        ciudad: '',
-        provincia: '',
-        cp: ''
-    });
+    const { formData, paymentMethod, error } = useStore(checkoutStore);
 
     useEffect(() => {
         const userStr = localStorage.getItem('marketflex_user');
         if (userStr) {
             try {
                 const user = JSON.parse(userStr);
-                setFormData(prev => ({
-                    ...prev,
+                updateFormData({
                     nombre: user.nombre ? `${user.nombre} ${user.apellido || ''}`.trim() : '',
                     email: user.email || '',
                     ciudad: user.ciudadResidencia || '',
                     cp: user.codigoPostal || ''
-                }));
+                });
             } catch (e) {
                 console.error("Error parsing user data for checkout", e);
             }
@@ -36,11 +27,21 @@ const CheckoutForm: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        setFormData(prev => ({ ...prev, [id]: value }));
+        updateFormData({ [id]: value });
+    };
+
+    const handlePaymentChange = (method: 'card' | 'cash' | 'transfer') => {
+        updatePaymentMethod(method);
     };
 
     return (
         <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
+            {error && (
+                <div className={styles.errorAlert}>
+                    <HiExclamationCircle />
+                    <span>{error}</span>
+                </div>
+            )}
             {/* Section 1: Personal Info */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>
@@ -151,21 +152,21 @@ const CheckoutForm: React.FC = () => {
                 <div className={styles.paymentOptions}>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'card' ? styles.active : ''}`}
-                        onClick={() => setPaymentMethod('card')}
+                        onClick={() => handlePaymentChange('card')}
                     >
                         <MdCreditCard className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Tarjeta</span>
                     </div>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'transfer' ? styles.active : ''}`}
-                        onClick={() => setPaymentMethod('transfer')}
+                        onClick={() => handlePaymentChange('transfer')}
                     >
                         <MdAccountBalance className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Transferencia</span>
                     </div>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'cash' ? styles.active : ''}`}
-                        onClick={() => setPaymentMethod('cash')}
+                        onClick={() => handlePaymentChange('cash')}
                     >
                         <MdPayments className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Efectivo</span>

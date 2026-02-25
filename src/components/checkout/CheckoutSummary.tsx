@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
-import { HiArrowRight } from 'react-icons/hi2';
+import { HiArrowRight, HiOutlineShoppingBag } from 'react-icons/hi2';
 import { cartItems, cartTotals } from '../../store/cartStore';
+import { checkoutStore, submitPurchase, resetCheckout } from '../../store/checkoutStore';
 import styles from './styles/CheckoutSummary.module.css';
 
 const CheckoutSummary: React.FC = () => {
-    const [isConfirmed, setIsConfirmed] = React.useState(false);
     const items = useStore(cartItems);
     const totals = useStore(cartTotals);
+    const { isSubmitting, success, error } = useStore(checkoutStore);
 
-    if (isConfirmed) {
+    // Reset checkout on unmount to avoid stale success state
+    useEffect(() => {
+        return () => resetCheckout();
+    }, []);
+
+    if (success) {
         return (
             <div className={`${styles.summaryContainer} ${styles.success}`}>
                 <div className={styles.successIcon}>✅</div>
                 <h2 className={styles.title}>¡Pedido Recibido!</h2>
                 <p className={styles.successMessage}>Gracias por tu compra. Pronto recibirás un email con los detalles.</p>
+                <div className={styles.successDetails}>
+                    <p>Monto Pagado: <strong>${totals.total.toLocaleString()}</strong></p>
+                </div>
                 <a href="/" className={styles.checkoutBtn}>Volver a la Tienda</a>
             </div>
         );
@@ -24,7 +33,11 @@ const CheckoutSummary: React.FC = () => {
         return (
             <div className={styles.summaryContainer}>
                 <h2 className={styles.title}>Resumen del Pedido</h2>
-                <p className={styles.emptyMessage}>No hay productos en tu carrito.</p>
+                <div className={styles.emptyContainer}>
+                    <HiOutlineShoppingBag className={styles.emptyIcon} />
+                    <p className={styles.emptyMessage}>No hay productos en tu carrito.</p>
+                    <a href="/search" className={styles.emptyLink}>Ir a la tienda</a>
+                </div>
             </div>
         );
     }
@@ -74,10 +87,16 @@ const CheckoutSummary: React.FC = () => {
                 </div>
             </div>
 
-            <button className={styles.checkoutBtn} onClick={() => setIsConfirmed(true)}>
-                Confirmar Compra
-                <HiArrowRight />
+            <button
+                className={`${styles.checkoutBtn} ${isSubmitting ? styles.loading : ''}`}
+                onClick={submitPurchase}
+                disabled={isSubmitting}
+            >
+                {isSubmitting ? 'Procesando...' : 'Confirmar Compra'}
+                {!isSubmitting && <HiArrowRight />}
             </button>
+
+            {error && <p className={styles.errorText}>{error}</p>}
         </div>
     );
 };
