@@ -405,8 +405,8 @@
 }
 
 .cartLink {
+    display: none;
     position: relative;
-    display: flex;
     align-items: center;
     justify-content: center;
     color: var(--nav-text);
@@ -416,6 +416,12 @@
     transition: all 0.3s ease;
     background: rgba(0, 0, 0, 0.03);
     margin-right: 2rem;
+}
+
+@media (min-width: 768px) {
+    .cartLink {
+        display: flex;
+    }
 }
 
 .cartLink:hover {
