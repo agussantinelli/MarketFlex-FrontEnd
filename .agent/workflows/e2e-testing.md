@@ -4,7 +4,7 @@ description: How to run End-to-End (E2E) tests in MarketFlex
 
 # E2E Testing Workflow
 
-This workflow describes how to run and debug the foundational E2E tests for MarketFlex.
+This workflow describes how to run and debug the **Foundational Flow** test (Login -> Discovery -> PDP -> Cart).
 
 ## Local Execution
 

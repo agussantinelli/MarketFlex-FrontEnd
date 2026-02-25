@@ -65,9 +65,21 @@ test.describe('MarketFlex Foundational Flow', () => {
 
         await expect(pdpTitle).toHaveText(productName?.trim() || '', { timeout: 10000 });
 
+        // --- 3. CART INTERACTION (Transitorio) ---
+        console.log('--- Phase 3: Cart Interaction (Transitorio) ---');
+        console.log('Locating "Agregar al carrito" button...');
+        const addToCartBtn = page.locator('button[class*="addToCart"]').first();
+        await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
+
+        console.log('Clicking "Agregar al carrito"...');
+        await addToCartBtn.click();
+
+        console.log('Verifying Sileo notification...');
+        // The script in [id].astro triggers: window.triggerSileo("success", "Producto agregado al carrito")
+        await expect(page.getByText(/Producto agregado al carrito/i)).toBeVisible({ timeout: 10000 });
+
         console.log('--- Foundational Flow Completed Successfully! ---');
     });
 
-
-    // Transitorio hasta que swe arme la logica de carrito y se incorpore la API de MP.
+    // Transitorio hasta que se arme la lógica de carrito y se incorpore la API de Mercado Pago (Checkout).
 });
