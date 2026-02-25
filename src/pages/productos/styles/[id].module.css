@@ -175,13 +175,6 @@
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.idBadge {
-    font-size: 0.7rem;
-    color: #555;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
 .priceContainer {
     padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
@@ -251,33 +244,28 @@
     font-weight: 600;
 }
 
-/* Actions */
+/* Actions Section - Desktop */
 .actions {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 .quantityWrapper {
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
     border-radius: 100px;
-    padding: 0.5rem;
+    padding: 0 1rem;
     height: 56px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.quantityWrapper:focus-within {
-    border-color: rgba(var(--green-primary), 0.5);
-    box-shadow: 0 0 20px rgba(var(--green-primary), 0.1);
+    min-width: 140px;
 }
 
 .quantityBtn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: none;
     background: transparent;
@@ -294,52 +282,40 @@
     color: var(--green-primary);
 }
 
-.quantityBtn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
 .quantityValue {
-    width: 40px;
+    flex: 1;
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: white;
-    user-select: none;
 }
 
 .addToCart {
-    flex: 1;
+    flex: 2;
     background: var(--green-primary);
     color: #000;
     border: none;
     height: 56px;
-    border-radius: 1rem;
-    font-size: 1.1rem;
+    border-radius: 100px;
+    font-size: 1rem;
     font-weight: 800;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .addToCart:hover:not(:disabled) {
-    background: white;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(var(--green-primary), 0.3);
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(var(--green-primary), 0.2);
 }
 
-.buyNow:disabled,
-.addToCart:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    filter: grayscale(1);
-}
-
+/* Trust Badges */
 .trustBadges {
     display: flex;
     gap: 2.5rem;
@@ -370,33 +346,6 @@
     padding: 3rem;
     border-radius: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.descriptionCard h2,
-.specsCard h2 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    margin-bottom: 2rem;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.descriptionCard h2::after,
-.specsCard h2::after {
-    content: '';
-    flex-grow: 1;
-    height: 1px;
-    background: linear-gradient(to right, rgba(var(--green-primary), 0.3), transparent);
-}
-
-.descriptionContent {
-    line-height: 1.8;
-    color: #bbb;
-    white-space: pre-wrap;
-    font-size: 1.1rem;
 }
 
 .specsTable {
@@ -404,37 +353,14 @@
     border-collapse: collapse;
 }
 
-.specsTable tr {
+.specsTable td {
+    padding: 1.25rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.specsTable tr:last-child {
-    border-bottom: none;
-}
-
-.specsTable td {
-    padding: 1.25rem 0;
-    font-size: 1rem;
-}
-
-.specsTable td:first-child {
-    font-weight: 700;
-    color: #666;
-    width: 40%;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-}
-
-.specsTable td:last-child {
-    color: white;
-    font-weight: 500;
-}
-
-/* Responsive */
 @media (max-width: 1024px) {
     .productGrid {
-        gap: 2.5rem;
+        gap: 2rem;
         padding: 2rem;
     }
 
@@ -455,43 +381,79 @@
     .imageSection {
         position: static;
     }
-
-    .title {
-        font-size: 2.2rem;
-    }
-
-    .breadcrumb {
-        max-width: 100%;
-    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .productGrid {
         padding: 1.5rem;
-        border-radius: 1.5rem;
-    }
-
-    .mainPrice,
-    .discountPrice {
-        font-size: 2.2rem;
+        gap: 2rem;
     }
 
     .title {
-        font-size: 1.8rem;
+        font-size: 2rem !important;
+        text-align: center;
     }
 
+    .priceContainer {
+        padding: 1.5rem;
+        align-items: center;
+    }
+
+    /* Rediseño de la botonera */
     .actions {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: column !important;
+        /* Stack vertical para ganar ancho */
+        align-items: stretch !important;
+        gap: 1rem !important;
+        margin-top: 1rem;
     }
 
     .quantityWrapper {
+        width: 100% !important;
         justify-content: space-between;
+        height: 60px;
+        order: 2;
+        /* Bajamos el selector de cantidad */
     }
 
-    .descriptionCard,
-    .specsCard {
-        padding: 1.5rem;
-        border-radius: 1.5rem;
+    .addToCart {
+        width: 100% !important;
+        height: 70px;
+        /* Más alto para mejor UX táctil */
+        font-size: 1.1rem;
+        /* Texto un poco más grande */
+        order: 1;
+        /* El botón de compra arriba, es la acción principal */
+        padding: 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 2px solid transparent;
+    }
+
+    /* Evitamos que el icono se pegue al texto */
+    .addToCart [data-icon] {
+        width: 24px;
+        height: 24px;
+    }
+
+    .trustBadges {
+        flex-direction: column;
+        gap: 1.25rem;
+        align-items: center;
+        padding-top: 1.5rem;
+    }
+}
+
+/* Detalles */
+.detailsGrid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+}
+
+@media (max-width: 900px) {
+
+    .productGrid,
+    .detailsGrid {
+        grid-template-columns: 1fr;
     }
 }
