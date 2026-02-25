@@ -69,6 +69,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
             <AddToCartModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                productId={productId}
                 productName={productName}
                 productPrice={productPrice}
                 onConfirm={handleConfirm}

@@ -5,6 +5,7 @@ import styles from './styles/AddToCartModal.module.css';
 interface AddToCartModalProps {
     isOpen: boolean;
     onClose: () => void;
+    productId: string;
     productName: string;
     productPrice: number;
     onConfirm: (quantity: number) => void;
@@ -13,6 +14,7 @@ interface AddToCartModalProps {
 const AddToCartModal: React.FC<AddToCartModalProps> = ({
     isOpen,
     onClose,
+    productId,
     productName,
     productPrice,
     onConfirm
@@ -114,9 +116,9 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                         </button>
                         <button
                             className={`${styles.btn} ${styles.btnVerMas}`}
-                            onClick={() => window.location.href = '/search'}
+                            onClick={() => window.location.href = `/productos/${productId}`}
                         >
-                            Ver más
+                            Ver detalle
                         </button>
                     </div>
                 </div>
