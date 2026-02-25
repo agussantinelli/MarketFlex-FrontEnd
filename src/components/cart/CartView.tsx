@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { cartItems, cartTotals, updateQuantity, removeItem, clearCart } from '../../store/cartStore';
+import LoadingSpinner from '../common/LoadingSpinner';
 import styles from './styles/CartView.module.css';
 
 const CartView: React.FC = () => {
@@ -15,12 +16,7 @@ const CartView: React.FC = () => {
     }, []);
 
     if (isLoading) {
-        return (
-            <div className={styles.loadingContainer}>
-                <div className={styles.spinner}></div>
-                <p>Cargando tu carrito...</p>
-            </div>
-        );
+        return <LoadingSpinner message="Cargando tu carrito..." />;
     }
 
     if (items.length === 0) {
