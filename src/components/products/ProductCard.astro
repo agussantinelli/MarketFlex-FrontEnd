@@ -162,14 +162,6 @@ const { product, showFeatured = false, rank } = Astro.props;
         </div>
     </a>
     <div class={styles.buttonWrapper}>
-        <AddToCartButton
-            client:load
-            productId={product.id}
-            productName={product.nombre}
-            productPrice={(product.precioConDescuento ||
-                product.precioActual) ??
-                0}
-            stock={product.stock}
-        />
+        <AddToCartButton client:load product={product} />
     </div>
 </article>

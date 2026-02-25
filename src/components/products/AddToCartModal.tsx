@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './styles/AddToCartModal.module.css';
+import { addItem } from '../../store/cartStore';
+import type { Product } from '../../types/product.types';
 
 interface AddToCartModalProps {
     isOpen: boolean;
     onClose: () => void;
-    productId: string;
-    productName: string;
-    productPrice: number;
-    onConfirm: (quantity: number) => void;
+    product: Product;
+    onConfirm?: (quantity: number) => void;
 }
 
 const AddToCartModal: React.FC<AddToCartModalProps> = ({
     isOpen,
     onClose,
-    productId,
-    productName,
-    productPrice,
+    product,
     onConfirm
 }) => {
     const [quantity, setQuantity] = useState(1);
     const [isVisible, setIsVisible] = useState(false);
     const [mounted, setMounted] = useState(false);
+
+    const productId = product.id;
+    const productName = product.nombre;
+    const productPrice = product.precioConDescuento || product.precioActual || 0;
 
     useEffect(() => {
         setMounted(true);
@@ -45,11 +47,13 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     const subtotal = (productPrice * quantity).toFixed(2);
 
     const handleAddToCart = () => {
-        onConfirm(quantity);
+        addItem(product, quantity);
+        if (onConfirm) onConfirm(quantity);
+
         // @ts-ignore - Sileo is injected globally
         if (window.triggerSileo) {
             // @ts-ignore
-            window.triggerSileo("success", `¡${quantity} unidad(es) agregadas al carrito!`);
+            window.triggerSileo("success", `¡${quantity} unidad(es) de ${productName} agregadas al carrito!`);
         }
         onClose();
     };

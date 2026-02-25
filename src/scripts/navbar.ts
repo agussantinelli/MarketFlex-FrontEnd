@@ -1,4 +1,4 @@
-export function initNavbar(styles: Record<string, string>, modalStyles: Record<string, string>) {
+export function initNavbar(_styles: Record<string, string>, modalStyles: Record<string, string>) {
     // Mobile Menu Logic
     const mobileBtn = document.querySelector(".mobile-menu-btn");
     const navLinks = document.querySelector(".nav-links");
@@ -186,18 +186,18 @@ export function initNavbar(styles: Record<string, string>, modalStyles: Record<s
     const cancelModalBtn = document.getElementById('navbar-logout-modal-cancel');
     const confirmLogoutBtn = document.getElementById('navbar-logout-modal-confirm');
 
-    if (logoutBtn && logoutModal) {
+    if (logoutBtn && logoutModal && modalStyles.active) {
         logoutBtn.addEventListener("click", () => {
-            logoutModal.classList.add(modalStyles.active);
+            logoutModal.classList.add(modalStyles.active as string);
         });
 
         cancelModalBtn?.addEventListener('click', () => {
-            logoutModal.classList.remove(modalStyles.active);
+            logoutModal.classList.remove(modalStyles.active as string);
         });
 
         logoutModal.addEventListener('click', (e) => {
             if (e.target === logoutModal) {
-                logoutModal.classList.remove(modalStyles.active);
+                logoutModal.classList.remove(modalStyles.active as string);
             }
         });
 
@@ -265,6 +265,21 @@ export function initNavbar(styles: Record<string, string>, modalStyles: Record<s
             searchInput.value = "";
             searchInput.focus();
             updateClearBtn();
+        });
+    }
+    // Cart Logic
+    const cartBadge = document.querySelector(".cart-count");
+    if (cartBadge) {
+        // We import dynamically to avoid issues with SSR if this script runs early
+        import("../store/cartStore").then(({ cartCount }) => {
+            cartCount.subscribe((count) => {
+                cartBadge.textContent = count.toString();
+                if (count > 0) {
+                    cartBadge.classList.add("has-items");
+                } else {
+                    cartBadge.classList.remove("has-items");
+                }
+            });
         });
     }
 }

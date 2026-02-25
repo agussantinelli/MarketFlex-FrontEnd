@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import AddToCartModal from './AddToCartModal';
+import type { Product } from '../../types/product.types';
 
 interface AddToCartButtonProps {
-    productId: string;
-    productName: string;
-    productPrice: number;
-    stock: number;
+    product: Product;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
-    productId,
-    productName,
-    productPrice,
-    stock
+    product
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const stock = product.stock;
 
     const handleOpenModal = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -31,7 +27,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
     const handleConfirm = (quantity: number) => {
         // Here we would typically call a cart service/store
-        console.log(`Adding ${quantity} units of product ${productId} to cart`);
+        console.log(`Adding ${quantity} units of product ${product.id} to cart`);
         // The modal itself triggers the Sileo notification
     };
 
@@ -69,9 +65,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
             <AddToCartModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                productId={productId}
-                productName={productName}
-                productPrice={productPrice}
+                product={product}
                 onConfirm={handleConfirm}
             />
         </>
