@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 import CheckoutForm from "../components/checkout/CheckoutForm";
 import CheckoutSummary from "../components/checkout/CheckoutSummary";
 ---
@@ -9,17 +10,17 @@ import CheckoutSummary from "../components/checkout/CheckoutSummary";
         <div class="container">
             <nav class="breadcrumbs">
                 <a href="/cart" class="breadcrumb-item">
-                    <span class="icon">🛒</span>
+                    <Icon name="lucide:shopping-cart" size={16} class="icon" />
                     Carrito
                 </a>
                 <span class="separator">/</span>
                 <span class="breadcrumb-item active">
-                    <span class="icon">📝</span>
+                    <Icon name="lucide:clipboard-list" size={16} class="icon" />
                     Checkout
                 </span>
                 <span class="separator">/</span>
                 <span class="breadcrumb-item disabled">
-                    <span class="icon">✨</span>
+                    <Icon name="lucide:sparkles" size={16} class="icon" />
                     Éxito
                 </span>
             </nav>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { HiOutlineUser, HiOutlineTruck } from 'react-icons/hi2';
+import { MdOutlinePayment, MdCreditCard, MdAccountBalance, MdPayments } from 'react-icons/md';
 import styles from './styles/CheckoutForm.module.css';
 
 const CheckoutForm: React.FC = () => {
@@ -9,7 +11,7 @@ const CheckoutForm: React.FC = () => {
             {/* Section 1: Personal Info */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>
-                    <span>1</span> Información Personal
+                    <span><HiOutlineUser /></span> Información Personal
                 </h2>
                 <div className={styles.grid}>
                     <div className={styles.field}>
@@ -30,7 +32,7 @@ const CheckoutForm: React.FC = () => {
             {/* Section 2: Shipping */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>
-                    <span>2</span> Dirección de Envío
+                    <span><HiOutlineTruck /></span> Dirección de Envío
                 </h2>
                 <div className={styles.grid}>
                     <div className={`${styles.field} ${styles.fullWidth}`}>
@@ -55,28 +57,28 @@ const CheckoutForm: React.FC = () => {
             {/* Section 3: Payment */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>
-                    <span>3</span> Método de Pago
+                    <span><MdOutlinePayment /></span> Método de Pago
                 </h2>
                 <div className={styles.paymentOptions}>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'card' ? styles.active : ''}`}
                         onClick={() => setPaymentMethod('card')}
                     >
-                        <span className={styles.paymentIcon}>💳</span>
+                        <MdCreditCard className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Tarjeta</span>
                     </div>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'transfer' ? styles.active : ''}`}
                         onClick={() => setPaymentMethod('transfer')}
                     >
-                        <span className={styles.paymentIcon}>🏦</span>
+                        <MdAccountBalance className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Transferencia</span>
                     </div>
                     <div
                         className={`${styles.paymentCard} ${paymentMethod === 'cash' ? styles.active : ''}`}
                         onClick={() => setPaymentMethod('cash')}
                     >
-                        <span className={styles.paymentIcon}>💵</span>
+                        <MdPayments className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Efectivo</span>
                     </div>
                 </div>

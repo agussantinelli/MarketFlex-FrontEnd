@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from '@nanostores/react';
+import { HiArrowRight } from 'react-icons/hi2';
 import { cartItems, cartTotals } from '../../store/cartStore';
 import styles from './styles/CheckoutSummary.module.css';
 
@@ -63,7 +64,7 @@ const CheckoutSummary: React.FC = () => {
 
             <button className={styles.checkoutBtn}>
                 Confirmar Compra
-                <span>→</span>
+                <HiArrowRight />
             </button>
         </div>
     );
