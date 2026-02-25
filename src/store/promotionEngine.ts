@@ -68,47 +68,70 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
         if (!firstItem || !firstItem.promocionActiva) return;
 
         const promo = firstItem.promocionActiva;
-
-        // Sort items by price (usually cheaper one is discounted in bundles)
-        const sortedItems = [...groupItems].sort((a, b) => (a.precioActual || 0) - (b.precioActual || 0));
-
-        // Flatten all units in the group to apply logic across them
-        const allUnits: number[] = [];
-        sortedItems.forEach(item => {
-            for (let i = 0; i < item.quantity; i++) {
-                allUnits.push(item.precioActual || 0);
-            }
-        });
-
-        const totalUnits = allUnits.length;
         let groupDiscount = 0;
+        const remainderUnits: number[] = [];
 
-        if (promo.tipoPromocion === 'NxM' && promo.cantCompra && promo.cantPaga) {
-            // e.g., 2x1 -> buy 2, pay 1.
-            const cantCompra = Number(promo.cantCompra);
-            const cantPaga = Number(promo.cantPaga);
+        // STEP 1: Process INDIVIDUAL SKUs first to ensure fair discounting
+        groupItems.forEach(item => {
+            const price = Number(item.precioActual) || 0;
+            const quantity = Number(item.quantity) || 0;
 
-            if (cantCompra > 0) {
-                const sets = Math.floor(totalUnits / cantCompra);
-                const freePerSet = cantCompra - cantPaga;
-
-                // We discount the cheapest available units across the set
-                if (freePerSet > 0) {
-                    for (let i = 0; i < sets * freePerSet; i++) {
-                        groupDiscount += allUnits[i] || 0;
+            if (promo.tipoPromocion === 'NxM' && promo.cantCompra && promo.cantPaga) {
+                const n = Number(promo.cantCompra);
+                const m = Number(promo.cantPaga);
+                if (n > 0) {
+                    const sets = Math.floor(quantity / n);
+                    const freePerSet = n - m;
+                    if (freePerSet > 0) {
+                        groupDiscount += sets * freePerSet * price;
+                    }
+                    // Units that didn't form a full set
+                    for (let i = 0; i < (quantity % n); i++) {
+                        remainderUnits.push(price);
                     }
                 }
             }
-        }
-        else if (promo.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' && promo.porcentajeDescuentoSegunda) {
-            // e.g., 50% off second unit
-            const pairs = Math.floor(totalUnits / 2);
-            const discountPercent = (parseFloat(String(promo.porcentajeDescuentoSegunda)) || 0) / 100;
+            else if (promo.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' && promo.porcentajeDescuentoSegunda) {
+                const pairs = Math.floor(quantity / 2);
+                const discountPercent = (parseFloat(String(promo.porcentajeDescuentoSegunda)) || 0) / 100;
+                if (discountPercent > 0) {
+                    groupDiscount += pairs * price * discountPercent;
+                }
+                // Odd unit that didn't form a pair
+                if (quantity % 2 !== 0) {
+                    remainderUnits.push(price);
+                }
+            } else {
+                // If it's a group promo but not one of the handled types, just push to remainder
+                for (let i = 0; i < quantity; i++) {
+                    remainderUnits.push(price);
+                }
+            }
+        });
 
-            // Apply discount to the cheapest units that form a pair
-            if (discountPercent > 0) {
-                for (let i = 0; i < pairs; i++) {
-                    groupDiscount += (allUnits[i] || 0) * discountPercent;
+        // STEP 2: Process the POOL of remainders across different products
+        if (remainderUnits.length > 0) {
+            // Sort cheapest first
+            remainderUnits.sort((a, b) => a - b);
+
+            if (promo.tipoPromocion === 'NxM' && promo.cantCompra && promo.cantPaga) {
+                const n = Number(promo.cantCompra);
+                const m = Number(promo.cantPaga);
+                const sets = Math.floor(remainderUnits.length / n);
+                const freePerSet = n - m;
+                if (freePerSet > 0) {
+                    for (let i = 0; i < (sets * freePerSet); i++) {
+                        groupDiscount += remainderUnits[i] || 0;
+                    }
+                }
+            }
+            else if (promo.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' && promo.porcentajeDescuentoSegunda) {
+                const pairs = Math.floor(remainderUnits.length / 2);
+                const discountPercent = (parseFloat(String(promo.porcentajeDescuentoSegunda)) || 0) / 100;
+                if (discountPercent > 0) {
+                    for (let i = 0; i < pairs; i++) {
+                        groupDiscount += (remainderUnits[i] || 0) * discountPercent;
+                    }
                 }
             }
         }
@@ -118,20 +141,6 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
             appliedPromotions.push({
                 nombre: promoName,
                 monto: groupDiscount
-            });
-        } else {
-            // Fallback to simple price discount if group logic didn't apply but item has a discount price
-            groupItems.forEach(item => {
-                const pActual = Number(item.precioActual) || 0;
-                const pDesc = Number(item.precioConDescuento);
-                if (pDesc > 0 && pActual > pDesc) {
-                    const itemDiscount = (pActual - pDesc) * (item.quantity || 0);
-                    totalDiscount += itemDiscount;
-                    appliedPromotions.push({
-                        nombre: `Descuento: ${item.nombre}`,
-                        monto: itemDiscount
-                    });
-                }
             });
         }
     });
