@@ -19,9 +19,11 @@
     <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/OpenAPI-Consuming-6BA539?style=for-the-badge&logo=openapiinitiative&logoColor=white" alt="OpenAPI Badge">
     <img src="https://img.shields.io/badge/Zustand-State-764ABC?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand Badge">
+    <img src="https://img.shields.io/badge/Nanostores-React-3178C6?style=for-the-badge&logo=nanostores&logoColor=white" alt="Nanostores Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
     <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
+    <img src="https://img.shields.io/badge/React--Icons-Librería-E91E63?style=for-the-badge&logo=react&logoColor=white" alt="React-Icons Badge">
     <img src="https://img.shields.io/badge/Google_Sign--In-GSI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Sign-In Badge">
     <img src="https://img.shields.io/badge/Facebook_Login-SDK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Login Badge">
     <img src="https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge">
@@ -131,9 +133,9 @@
         </tr>
         <tr>
             <td><strong>Iconos</strong></td>
-            <td>astro-icon & Lucide</td>
+            <td>astro-icon, Lucide & react-icons</td>
             <td><strong>Latest</strong></td>
-            <td>Iconografía SVG optimizada y animaciones.</td>
+            <td>Iconografía SVG optimizada, librerías modernas para React y animaciones.</td>
         </tr>
         <tr>
             <td><strong>Tipografía</strong></td>
@@ -191,9 +193,9 @@
         </tr>
         <tr>
             <td><strong>Estado Global</strong></td>
-            <td>Zustand</td>
-            <td><strong>^5.0.11</strong></td>
-            <td>Gestor de estado global para React Islands (ej. Carrito de Compras).</td>
+            <td>Zustand & Nanostores</td>
+            <td><strong>Latest</strong></td>
+            <td>Gestión de estado global para React Islands y compartida entre frameworks (Astro/React).</td>
         </tr>
     </tbody>
 </table>
@@ -236,6 +238,14 @@
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
   <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (81 tests en total), garantizando la fiabilidad de la UI y la sesión.</li>
+  <li>🛒 <b>Premium Checkout Experience:</b> Proceso de compra fluido con:
+      <ul>
+          <li><b>Multi-Sección:</b> División lógica entre Información Personal, Envío y Pago.</li>
+          <li><b>Breadcrumbs Estilizados:</b> Navegación visual estilo píldora con iconos Lucide.</li>
+          <li><b>Validación en Tiempo Real:</b> Feedback inmediato al usuario durante la carga de datos.</li>
+          <li><b>Summary Dinámico:</b> Resumen de orden que refleja descuentos y promociones en tiempo real.</li>
+      </ul>
+  </li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
 </ul>
 
@@ -341,6 +351,12 @@
 │   ├── components/                                 # Componentes de UI (Arquitectura de Islas)
 │   │   ├── auth/                                   # UI de Autenticación (Social Buttons)
 │   │   ├── cart/                                   # Módulo de Carrito (Shopping Cart UI)
+│   │   ├── checkout/                               # Proceso de Finalización de Compra
+│   │   │   ├── CheckoutForm.tsx                    # Formulario multi-paso de checkout
+│   │   │   ├── CheckoutForm.test.tsx               # Test unitario del formulario
+│   │   │   ├── CheckoutSummary.tsx                 # Resumen lateral de la orden
+│   │   │   ├── CheckoutSummary.test.tsx            # Test unitario del resumen
+│   │   │   └── styles/                             # Estilos específicos del checkout
 │   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales, Spinner)
 │   │   ├── products/                               # Dominio de Productos
 │   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para Home
