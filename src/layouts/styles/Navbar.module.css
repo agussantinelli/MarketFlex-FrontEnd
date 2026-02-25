@@ -145,6 +145,10 @@
         right: auto;
         top: auto;
     }
+
+    .mobileCartLink {
+        display: none !important;
+    }
 }
 
 .navLink {
@@ -423,6 +427,27 @@
 .cartIcon {
     width: 22px;
     height: 22px;
+}
+
+.mobileCartLink {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nav-text);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.03);
+    margin-right: 0.5rem;
+    /* Reduced for mobile next to search */
+}
+
+@media (min-width: 768px) {
+    .mobileCartLink {
+        display: none;
+    }
 }
 
 .cartBadge {

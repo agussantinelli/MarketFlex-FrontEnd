@@ -44,6 +44,15 @@ const subcategories = await getSubcategories();
             </div>
         </form>
 
+        <a
+            href="/cart"
+            class={`${styles.mobileCartLink} mobile-cart-link`}
+            aria-label="Carrito de compras"
+        >
+            <Icon name="lucide:shopping-cart" class={styles.cartIcon} />
+            <span class={`${styles.cartBadge} cart-count`}>0</span>
+        </a>
+
         <button
             class={`${styles.mobileMenuBtn} mobile-menu-btn`}
             aria-label="Toggle menu"
