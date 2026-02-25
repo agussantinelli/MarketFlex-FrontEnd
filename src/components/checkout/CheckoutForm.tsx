@@ -15,16 +15,16 @@ const CheckoutForm: React.FC = () => {
                 </h2>
                 <div className={styles.grid}>
                     <div className={styles.field}>
-                        <label className={styles.label}>Nombre Completo</label>
-                        <input type="text" className={styles.input} placeholder="Juan Pérez" required />
+                        <label className={styles.label} htmlFor="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" className={styles.input} placeholder="Juan Pérez" required />
                     </div>
                     <div className={styles.field}>
-                        <label className={styles.label}>Email</label>
-                        <input type="email" className={styles.input} placeholder="juan@ejemplo.com" required />
+                        <label className={styles.label} htmlFor="email">Email</label>
+                        <input type="email" id="email" className={styles.input} placeholder="juan@ejemplo.com" required />
                     </div>
                     <div className={`${styles.field} ${styles.fullWidth}`}>
-                        <label className={styles.label}>Teléfono</label>
-                        <input type="tel" className={styles.input} placeholder="+54 11 1234-5678" required />
+                        <label className={styles.label} htmlFor="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" className={styles.input} placeholder="+54 11 1234-5678" required />
                     </div>
                 </div>
             </div>
@@ -36,20 +36,20 @@ const CheckoutForm: React.FC = () => {
                 </h2>
                 <div className={styles.grid}>
                     <div className={`${styles.field} ${styles.fullWidth}`}>
-                        <label className={styles.label}>Calle y Número</label>
-                        <input type="text" className={styles.input} placeholder="Av. Siempre Viva 742" required />
+                        <label className={styles.label} htmlFor="direccion">Calle y Número</label>
+                        <input type="text" id="direccion" className={styles.input} placeholder="Av. Siempre Viva 742" required />
                     </div>
                     <div className={styles.field}>
-                        <label className={styles.label}>Ciudad</label>
-                        <input type="text" className={styles.input} placeholder="CABA" required />
+                        <label className={styles.label} htmlFor="ciudad">Ciudad</label>
+                        <input type="text" id="ciudad" className={styles.input} placeholder="CABA" required />
                     </div>
                     <div className={styles.field}>
-                        <label className={styles.label}>Provincia</label>
-                        <input type="text" className={styles.input} placeholder="Buenos Aires" required />
+                        <label className={styles.label} htmlFor="provincia">Provincia</label>
+                        <input type="text" id="provincia" className={styles.input} placeholder="Buenos Aires" required />
                     </div>
                     <div className={styles.field}>
-                        <label className={styles.label}>Código Postal</label>
-                        <input type="text" className={styles.input} placeholder="1425" required />
+                        <label className={styles.label} htmlFor="cp">Código Postal</label>
+                        <input type="text" id="cp" className={styles.input} placeholder="1425" required />
                     </div>
                 </div>
             </div>
