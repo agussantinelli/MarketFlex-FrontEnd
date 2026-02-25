@@ -30,7 +30,7 @@
     <img src="https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Badge">
     <img src="https://img.shields.io/badge/Vitest-4.0.18-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest Badge">
     <img src="https://img.shields.io/badge/MSW-2.x-FF6A00?style=for-the-badge&logo=mockserviceworker&logoColor=white" alt="MSW Badge">
-    <img src="https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
+    <img src="https://img.shields.io/badge/Playwright-1.58.2-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
     <img src="https://img.shields.io/badge/Test_Enforcement-Mandatory-orange?style=for-the-badge&logo=vitest&logoColor=white" alt="Test Enforcement Badge">
 </div>
 
@@ -98,6 +98,18 @@
             <td>Vitest</td>
             <td><strong>^4.0.18</strong></td>
             <td>Pruebas unitarias ultrarrápidas para servicios.</td>
+        </tr>
+        <tr>
+            <td><strong>Mocking</strong></td>
+            <td>MSW (Mock Service Worker)</td>
+            <td><strong>^2.12.10</strong></td>
+            <td>Intercepción de red para pruebas deterministas.</td>
+        </tr>
+        <tr>
+            <td><strong>Component Testing</strong></td>
+            <td>React Testing Library</td>
+            <td><strong>^16.3.2</strong></td>
+            <td>Pruebas de comportamiento para componentes React.</td>
         </tr>
         <tr>
             <td><strong>Paquetes</strong></td>
