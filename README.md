@@ -215,7 +215,16 @@
   <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
   <li>🤖 <b>Anti-Bot (reCAPTCHA v3):</b> Protección invisible contra bots activada durante el registro para garantizar transacciones legítimas.</li>
   <li>👤 <b>Perfil de Usuario Premium:</b> Página de perfil con diseño de mini-cards altamente visuales y organización de información por grupos de interés.</li>
-  <li>🌙 <b>Dark Mode Nativo:</b> Implementación de tema oscuro profundo con efectos de <i>glassmorphism</i>, desenfoques y transparencias que realzan la estética premium.</li>
+  <li>🌙 <b>Dark Mode Nativo:</b> Implementación de tema oscuro profundo con efectos de <i>glassmorphism</i>, desenfoques y transparencias que realzan la estética premium en toda la plataforma.</li>
+  <li>🛒 <b>Premium Shopping Cart:</b> Rediseño profundo del carrito con:
+      <ul>
+          <li><b>Glassmorphism Avanzado:</b> Desenfoques de alta densidad (25px) y bordes con brillo sutil.</li>
+          <li><b>Layout Asimétrico:</b> Estructura de tarjetas de producto moderna y dinámica.</li>
+          <li><b>Quantity Pills:</b> Controles de cantidad minimalistas y elegantes.</li>
+          <li><b>Micro-animaciones:</b> Efectos de rotación en iconos de eliminación y escalado suave en imágenes.</li>
+      </ul>
+  </li>
+  <li>🧮 <b>Motor de Promociones Inteligente:</b> Refactorización de la lógica de descuentos (`Individual-First`) que garantiza una aplicación justa de ofertas como 2x1 o Descuento en 2da Unidad, priorizando el ahorro en productos de mayor valor.</li>
   <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
   <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
@@ -331,7 +340,8 @@
 ├── src/
 │   ├── components/                                 # Componentes de UI (Arquitectura de Islas)
 │   │   ├── auth/                                   # UI de Autenticación (Social Buttons)
-│   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales, Cards)
+│   │   ├── cart/                                   # Módulo de Carrito (Shopping Cart UI)
+│   │   ├── common/                                 # Componentes transversales (Notificaciones, Modales, Spinner)
 │   │   ├── products/                               # Dominio de Productos
 │   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para Home
 │   │   │   ├── ProductCard.astro                   # Tarjeta individual con efectos premium
@@ -370,6 +380,9 @@
 │   │   ├── filter.service.ts                       # Lógica de normalización de filtros
 │   │   ├── filter.service.test.ts                  # Test unitario de filtros
 │   │   └── support.service.ts                      # Enlace con soporte/contacto
+│   ├── store/                                      # Gestión de Estado Centralizada (Nanostores)
+│   │   ├── cartStore.ts                            # Persistencia y lógica base del carrito
+│   │   └── promotionEngine.ts                      # Motor de cálculo de descuentos complejo
 │   ├── types/                                      # Tipado estricto del dominio
 │   │   ├── auth.types.ts                           # Interfaces de sesión
 │   │   ├── product.types.ts                        # Esquema de producto y atributos
