@@ -153,7 +153,7 @@ const CartView: React.FC = () => {
                                 {totals.appliedPromotions.map((promo, idx) => (
                                     <div key={idx} className={styles.promoItem}>
                                         <span>{promo.nombre}</span>
-                                        <span>-${promo.monto.toFixed(2)}</span>
+                                        <span>- ${promo.monto.toFixed(2)}</span>
                                     </div>
                                 ))}
                             </div>

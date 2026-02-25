@@ -43,9 +43,9 @@
 }
 
 .clearCartBtn:hover {
-    background: rgba(239, 68, 68, 0.05);
+    background: rgba(239, 68, 68, 0.1);
     color: #f87171;
-    border-color: rgba(239, 68, 68, 0.2);
+    border-color: #f87171;
     transform: translateY(-2px);
 }
 
@@ -212,6 +212,8 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 2rem;
+    padding-right: 3.5rem;
+    /* Align with itemHeader prices */
 }
 
 .quantityPill {
@@ -258,19 +260,21 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    gap: 0.2rem;
 }
 
 .totalLabel {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: rgba(255, 255, 255, 0.4);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .totalValue {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.4rem;
+    /* Match itemPrice size */
+    font-weight: 800;
     color: var(--green-primary);
 }
 
