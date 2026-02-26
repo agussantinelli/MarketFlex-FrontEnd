@@ -72,19 +72,35 @@ export const api = ky.create({
 
                 // Global Error Handling with Sileo Notifications
                 if (!response.ok && response.status !== 401) {
+                    let errorMessage = 'Ocurrió un error inesperado';
+
                     try {
                         const errorData: any = await response.clone().json();
-                        const message = errorData.message || errorData.error || 'Ocurrió un error inesperado';
+                        const rawMessage: string = (errorData.message || errorData.error || '') as string;
 
-                        if (typeof window !== 'undefined' && (window as any).triggerSileo) {
-                            (window as any).triggerSileo('error', message);
-                        } else {
-                            console.warn('⚠️ [API] triggerSileo not available in window');
+                        const errorMap: Record<string, string> = {
+                            'insufficient stock': 'Stock insuficiente para uno o más productos',
+                            'not found': 'Producto no encontrado o no disponible',
+                            'invalid data': 'Datos de compra inválidos',
+                            'unauthorized': 'Sesión no válida',
+                            'internal server error': 'Error interno del servidor, por favor intenta de nuevo'
+                        };
+
+                        const matchedKey = Object.keys(errorMap).find(key =>
+                            rawMessage.toLowerCase().includes(key)
+                        ) as keyof typeof errorMap | undefined;
+
+                        if (matchedKey && errorMap[matchedKey]) {
+                            errorMessage = errorMap[matchedKey];
+                        } else if (rawMessage && rawMessage.length < 100) {
+                            errorMessage = rawMessage;
                         }
                     } catch (e) {
-                        if (typeof window !== 'undefined' && (window as any).triggerSileo) {
-                            (window as any).triggerSileo('error', 'Error de conexión con el servidor');
-                        }
+                        errorMessage = 'Error de comunicación con el servidor';
+                    }
+
+                    if (typeof window !== 'undefined' && (window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', errorMessage);
                     }
                 }
 

@@ -106,11 +106,25 @@ export const submitPurchase = async () => {
             checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, success: true });
             clearCart();
         } else {
-            checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, error: 'Hubo un error al procesar tu compra. Por favor, intenta nuevamente.' });
+            checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, error: 'No se pudo procesar la compra. Verifica los productos en tu carrito.' });
         }
     } catch (err: any) {
         console.error("Purchase error:", err);
-        const message = err.response?.data?.message || 'Error de conexión con el servidor.';
+        let message = 'Error de comunicación con el servidor.';
+
+        if (err.response) {
+            try {
+                const data = await err.response.json();
+                message = data.message || data.error || message;
+
+                // Map to Spanish if it's a known technical error
+                if (message.toLowerCase().includes('not found')) message = 'Uno o más productos no están disponibles. Por favor, revisa tu carrito.';
+                if (message.toLowerCase().includes('insufficient stock')) message = 'Stock insuficiente para completar la compra.';
+            } catch (e) {
+                // Keep default message
+            }
+        }
+
         checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, error: message });
     }
 };
