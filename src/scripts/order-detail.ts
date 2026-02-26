@@ -72,7 +72,7 @@ export async function initOrderDetail() {
                     </td>
                     <td>${item.cantidad}</td>
                     <td>$${Number(item.precioUnitario).toLocaleString('es-AR')}</td>
-                    <td style="text-align: right; font-weight: 700; color: #fff;">
+                    <td style="font-weight: 700; color: #fff;">
                         $${Number(item.subtotal).toLocaleString('es-AR')}
                     </td>
                 </tr>

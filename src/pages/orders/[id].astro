@@ -42,15 +42,13 @@ const { id } = Astro.params;
                     <table class={styles.orderItemsTable}>
                         <thead>
                             <tr>
-                                <th>Producto</th>
+                                <th style="width: 40%;">Producto</th>
                                 <th>Cant.</th>
                                 <th>Precio Unit.</th>
-                                <th style="text-align: right;">Subtotal</th>
+                                <th>Subtotal</th>
                             </tr>
                         </thead>
-                        <tbody id="order-items-body">
-                            <!-- Injected by JS -->
-                        </tbody>
+                        <tbody id="order-items-body"> </tbody>
                     </table>
                 </section>
 
@@ -154,12 +152,12 @@ const { id } = Astro.params;
     </main>
 </Layout>
 
-<script define:vars={{ styles }}>
+<script>
     import { initOrderDetail } from "../../scripts/order-detail";
 
     // Initialize
-    initOrderDetail(styles);
+    initOrderDetail();
 
     // Support View Transitions
-    document.addEventListener("astro:page-load", () => initOrderDetail(styles));
+    document.addEventListener("astro:page-load", () => initOrderDetail());
 </script>
