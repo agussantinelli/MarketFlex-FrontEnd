@@ -226,7 +226,8 @@
           <li><b>Micro-animaciones:</b> Efectos de rotación en iconos de eliminación y escalado suave en imágenes.</li>
       </ul>
   </li>
-  <li>🧮 <b>Motor de Promociones Inteligente:</b> Refactorización de la lógica de descuentos (`Individual-First`) que garantiza una aplicación justa de ofertas como 2x1 o Descuento en 2da Unidad, priorizando el ahorro en productos de mayor valor.</li>
+  <li>🧮 <b>Motor de Promociones Inteligente:</b> Refactorización de la lógica de descuentos (`Individual-First`) sincronizada al 100% con el Backend, garantizando una aplicación justa de ofertas como 2x1 o Descuento en 2da Unidad.</li>
+  <li>🔄 <b>Reset Automático de Cache:</b> Sistema inteligente que detecta cambios en la versión de la base de datos (re-seed) mediante el endpoint de salud y limpia automáticamente el <code>localStorage</code> para evitar errores por IDs obsoletos.</li>
   <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
   <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
   <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
@@ -267,6 +268,7 @@
 <p>La comunicación con el backend (Hono/Node.js) se gestiona centralizadamente utilizando <b>Ky</b>, una librería cliente HTTP moderna y ligera basada en la API Fetch nativa. El corazón de este flujo se encuentra en <code>src/lib/api.ts</code>.</p>
 <ul>
   <li><b>Instancia Centralizada:</b> Todos los servicios (como <code>auth.service.ts</code> o <code>product.service.ts</code>) utilizan la misma instancia pre-configurada de Ky. Esto garantiza consistencia en las URLs, headers comunes y tiempos de espera (<i>timeouts</i>).</li>
+  <li><b>Reset de Datos (Auto-Invalidation):</b> Utilidad <code>dataReset.ts</code> que sincroniza el estado local con la versión del servidor, integrada globalmente en el <code>Layout.astro</code>.</li>
   <li><b>Intercepción de Salida (JWT):</b> Mediante un <i>hook</i> <code>beforeRequest</code>, la API inyecta automáticamente el encabezado <code>Authorization: Bearer [accessToken]</code>.</li>
   <li><b>Intercepción de Entrada (Auto-Refresh):</b> Se implementó un interceptor <code>afterResponse</code> que detecta errores <code>401 Unauthorized</code>. Si el token expiró, el interceptor solicita un nuevo par de tokens al backend usando el <code>marketflex_refresh_token</code> y reintenta la petición original de forma transparente para el usuario.</li>
 </ul>
@@ -371,7 +373,8 @@
 │   │   ├── Footer.astro                            # Pie de página responsivo
 │   │   └── Layout.astro                            # Wrapper principal (SEO, Fuentes, Scripts)
 │   ├── lib/                                        # Configuración de librerías externas
-│   │   └── api.ts                                  # Cliente Ky con interceptor de Auto-Refresh JWT
+│   │   ├── api.ts                                  # Cliente Ky con interceptor de Auto-Refresh JWT
+│   │   └── dataReset.ts                            # Utilidad de invalidación de cache (Seed Sync)
 │   ├── scripts/                                    # Lógica interactiva (Extracto de .astro)
 │   │   ├── auth-login.ts                           # Manejo de tokens y SDKs sociales
 │   │   ├── auth-login.test.ts                      # Test: Login Workflow
