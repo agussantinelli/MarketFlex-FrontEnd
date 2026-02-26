@@ -86,11 +86,53 @@ export async function initOrderDetail() {
             if (cuotasVal) cuotasVal.textContent = `${order.cantCuotas} cuotas`;
         }
 
+        // Calculate promo discounts distribution
+        const promoDiscounts = new Map();
+        if (order.promociones) {
+            order.promociones.forEach(p => {
+                promoDiscounts.set(p.nombre, {
+                    totalDiscount: Number(p.montoDescuento),
+                    totalBase: 0,
+                    appliedCount: 0,
+                    appliedDiscount: 0
+                });
+            });
+        }
+
+        order.lineas.forEach(l => {
+            if (l.promoAplicada && promoDiscounts.has(l.promoAplicada)) {
+                const info = promoDiscounts.get(l.promoAplicada);
+                info.totalBase += (Number(l.precioUnitario) * l.cantidad);
+                info.appliedCount++;
+            }
+        });
+
         // Populate Items Table
         const tableBody = document.getElementById('order-items-body');
         if (tableBody) {
             tableBody.innerHTML = order.lineas.map(item => {
-                const realSubtotal = Number(item.subtotal);
+                const baseSubtotal = Number(item.precioUnitario) * item.cantidad;
+                let realSubtotal = Number(item.subtotal);
+
+                // Distribute group discount if applicable
+                if (item.promoAplicada && promoDiscounts.has(item.promoAplicada)) {
+                    const info = promoDiscounts.get(item.promoAplicada);
+                    if (info.totalBase > 0) {
+                        let lineDiscount = 0;
+                        if (info.appliedCount === 1) {
+                            // Last element gets remainder to avoid fractional discrepancy
+                            lineDiscount = info.totalDiscount - info.appliedDiscount;
+                        } else {
+                            lineDiscount = (baseSubtotal / info.totalBase) * info.totalDiscount;
+                        }
+                        info.appliedDiscount += lineDiscount;
+                        info.appliedCount--;
+
+                        realSubtotal -= lineDiscount;
+                    }
+                }
+
+                const saved = baseSubtotal - realSubtotal;
 
                 return `
                 <tr>
@@ -103,6 +145,7 @@ export async function initOrderDetail() {
                     <td>${item.cantidad}</td>
                     <td>$${Number(item.precioUnitario).toLocaleString('es-AR')}</td>
                     <td style="font-weight: 700; color: #fff;">
+                        ${saved > 0.01 ? `<span style="text-decoration: line-through; color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-right: 0.5rem; font-weight: 500;">$${baseSubtotal.toLocaleString('es-AR')}</span>` : ''}
                         $${realSubtotal.toLocaleString('es-AR')}
                     </td>
                 </tr>
