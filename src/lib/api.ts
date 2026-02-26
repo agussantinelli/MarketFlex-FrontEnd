@@ -49,14 +49,14 @@ export const api = ky.create({
 
                             // Retry the original request
                             console.log(`🌐 [API] Retrying original request...`);
-                            return api(request.url, {
+                            const relativeUrl = request.url.replace(API_URL, '').replace(/^\//, '');
+
+                            return api(relativeUrl, {
                                 method: request.method,
                                 headers: {
                                     ...(_options.headers as any),
                                     'Authorization': `Bearer ${newTokens.accessToken}`
                                 },
-                                // Pass other relevant options manually if needed, 
-                                // or trust the defaults since we are using 'api' instance
                             } as any);
                         } catch (refreshError) {
                             console.error(`❌ [API] Refresh token flow FAILED:`, refreshError);
