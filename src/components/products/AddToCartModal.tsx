@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import styles from './styles/AddToCartModal.module.css';
 import { addItem } from '../../store/cartStore';
 import type { Product } from '../../types/product.types';
+import { HiCheckCircle, HiShoppingBag } from 'react-icons/hi2';
 
 interface AddToCartModalProps {
     isOpen: boolean;
@@ -59,12 +60,17 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
             }
 
             if (onConfirm) onConfirm(quantity);
+
             const message = quantity === 1
-                ? `¡Hecho! Agregaste 1 unidad de "${productName}" al carrito. ✨`
-                : `¡Excelente! Agregaste ${quantity} unidades de "${productName}" a tu bolsa. 🛍️`;
+                ? `¡Hecho! Agregaste 1 unidad de "${productName}" al carrito.`
+                : `¡Excelente! Agregaste ${quantity} unidades de "${productName}" a tu bolsa.`;
+
+            const icon = quantity === 1
+                ? <HiCheckCircle style={{ color: '#00ff80', fontSize: '1.2rem' }} />
+                : <HiShoppingBag style={{ color: '#00ff80', fontSize: '1.2rem' }} />;
 
             // @ts-ignore
-            window.triggerSileo("success", message);
+            window.triggerSileo("success", message, icon);
         }
         onClose();
     };

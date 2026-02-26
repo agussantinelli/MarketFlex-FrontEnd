@@ -71,12 +71,15 @@ export default function Notifications({
         `;
         document.head.appendChild(style);
 
-        window.triggerSileo = (type: string, message: string) => {
+        window.triggerSileo = (type: string, message: string, icon?: any) => {
             try {
                 // @ts-ignore
                 if (sileo[type]) {
                     // @ts-ignore
-                    sileo[type]({ title: message });
+                    sileo[type]({
+                        title: message,
+                        icon: icon
+                    });
                     return true;
                 }
                 return false;
