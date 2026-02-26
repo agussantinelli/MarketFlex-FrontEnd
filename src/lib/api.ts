@@ -47,17 +47,14 @@ export const api = ky.create({
                             localStorage.setItem('marketflex_token', newTokens.accessToken);
                             localStorage.setItem('marketflex_refresh_token', newTokens.refreshToken);
 
-                            // Retry the original request
-                            console.log(`🌐 [API] Retrying original request...`);
-                            const relativeUrl = request.url.replace(API_URL, '').replace(/^\//, '');
+                            // Retry the original request with the global ky to avoid doubled prefixUrl
+                            console.log(`🌐 [API] Retrying original request to: ${request.url}`);
 
-                            return api(relativeUrl, {
-                                method: request.method,
+                            return ky(request.clone(), {
                                 headers: {
-                                    ...(_options.headers as any),
                                     'Authorization': `Bearer ${newTokens.accessToken}`
-                                },
-                            } as any);
+                                }
+                            });
                         } catch (refreshError) {
                             console.error(`❌ [API] Refresh token flow FAILED:`, refreshError);
                             localStorage.removeItem('marketflex_token');
