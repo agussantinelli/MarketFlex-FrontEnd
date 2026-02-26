@@ -1,70 +1,61 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { HiShoppingBag, HiMagnifyingGlass } from "react-icons/hi2";
-import "./styles/orders.css";
+import styles from "./styles/orders-list.module.css";
 ---
 
 <Layout title="Mis Compras | MarketFlex">
-    <main class="orders-container">
-        <header class="orders-header">
-            <h1 class="orders-title">Mis Compras</h1>
-            <p class="orders-subtitle">
+    <main class={styles.ordersContainer}>
+        <header class={styles.ordersHeader}>
+            <h1 class={styles.ordersTitle}>Mis Compras</h1>
+            <p class={styles.ordersSubtitle}>
                 Historial completo de tus transacciones y pedidos.
             </p>
         </header>
 
         <div id="orders-content">
             <!-- Loading State -->
-            <div class="empty-orders" id="orders-loading">
-                <div class="spinner-premium"></div>
-                <p class="empty-text">Cargando tu historial...</p>
+            <div class={styles.emptyOrders} id="orders-loading">
+                <div class={styles.spinnerPremium}></div>
+                <p class={styles.emptyText}>Cargando tu historial...</p>
             </div>
 
             <!-- Empty State -->
-            <div class="empty-orders" id="orders-empty" style="display: none;">
-                <HiShoppingBag className="empty-icon" />
-                <h2 class="empty-title">Aún no tienes compras</h2>
-                <p class="empty-text">
+            <div
+                class={styles.emptyOrders}
+                id="orders-empty"
+                style="display: none;"
+            >
+                <HiShoppingBag className={styles.emptyIcon} />
+                <h2 class={styles.emptyTitle}>Aún no tienes compras</h2>
+                <p class={styles.emptyText}>
                     Explora nuestro catálogo y realiza tu primera compra para
                     verla aquí.
                 </p>
-                <a href="/search?explore=true" class="btn-shop">
+                <a href="/search?explore=true" class={styles.btnShop}>
                     <HiMagnifyingGlass />
                     Explorar Productos
                 </a>
             </div>
 
             <!-- List State -->
-            <div class="orders-list" id="orders-list" style="display: none;">
+            <div
+                class={styles.ordersList}
+                id="orders-list"
+                style="display: none;"
+            >
                 <!-- Filled dynamically by JS -->
             </div>
         </div>
     </main>
 </Layout>
 
-<style>
-    .spinner-premium {
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        border-top-color: #fff;
-        margin: 0 auto 1.5rem;
-        animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-</style>
-
-<script>
+<script define:vars={{ styles }}>
     import { initOrdersList } from "../../scripts/orders-list";
 
     // Initialize
-    initOrdersList();
+    initOrdersList(styles);
 
     // Support View Transitions
-    document.addEventListener("astro:page-load", initOrdersList);
+    document.addEventListener("astro:page-load", () => initOrdersList(styles));
 </script>

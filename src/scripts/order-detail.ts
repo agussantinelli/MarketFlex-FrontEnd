@@ -1,6 +1,6 @@
 import { getPurchaseById } from "../services/purchase.service";
 
-export async function initOrderDetail() {
+export async function initOrderDetail(styles: Record<string, string>) {
     const pathParts = window.location.pathname.split('/');
     const orderId = pathParts[pathParts.length - 1];
 
@@ -65,8 +65,8 @@ export async function initOrderDetail() {
             tableBody.innerHTML = order.lineas.map(item => `
                 <tr>
                     <td>
-                        <div class="product-info-cell">
-                            <span class="product-name">${item.nombreProducto}</span>
+                        <div class="${styles.productInfoCell}">
+                            <span class="${styles.productName}">${item.nombreProducto}</span>
                         </div>
                     </td>
                     <td>${item.cantidad}</td>
