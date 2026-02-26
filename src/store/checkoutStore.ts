@@ -1,5 +1,5 @@
 import { atom } from 'nanostores';
-import { cart, clearCart } from './cartStore';
+import { cart, clearCart, cartTotals } from './cartStore';
 import { createPurchase } from '../services/purchase.service';
 
 export interface CheckoutState {
@@ -16,6 +16,7 @@ export interface CheckoutState {
     isSubmitting: boolean;
     error: string | null;
     success: boolean;
+    lastOrderTotal: number;
 }
 
 export const checkoutStore = atom<CheckoutState>({
@@ -31,7 +32,8 @@ export const checkoutStore = atom<CheckoutState>({
     paymentMethod: 'card',
     isSubmitting: false,
     error: null,
-    success: false
+    success: false,
+    lastOrderTotal: 0
 });
 
 // Actions
@@ -103,7 +105,13 @@ export const submitPurchase = async () => {
         const response = await createPurchase(payload);
 
         if (response.status === 'success') {
-            checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, success: true });
+            const finalTotal = cartTotals.get().total;
+            checkoutStore.set({
+                ...checkoutStore.get(),
+                isSubmitting: false,
+                success: true,
+                lastOrderTotal: finalTotal
+            });
             clearCart();
         } else {
             checkoutStore.set({ ...checkoutStore.get(), isSubmitting: false, error: 'No se pudo procesar la compra. Verifica los productos en tu carrito.' });
@@ -143,6 +151,7 @@ export const resetCheckout = () => {
         paymentMethod: 'card',
         isSubmitting: false,
         error: null,
-        success: false
+        success: false,
+        lastOrderTotal: 0
     });
 };
