@@ -6,6 +6,16 @@ vi.mock('../store/cartStore', () => ({
     clearCart: vi.fn()
 }));
 
+vi.mock('@nanostores/persistent', () => {
+    let store: any = undefined;
+    return {
+        persistentAtom: vi.fn(() => ({
+            get: () => store,
+            set: (val: any) => { store = val; }
+        }))
+    };
+});
+
 describe('Data Reset Logic', () => {
     beforeEach(() => {
         vi.clearAllMocks();

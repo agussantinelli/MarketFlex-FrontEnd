@@ -42,7 +42,9 @@ describe('Order Detail Script', () => {
             <div id="cuotas-row" style="display: none;"></div>
             <div id="pay-cuotas"></div>
             
-            <tbody id="order-items-body"></tbody>
+            <table>
+                <tbody id="order-items-body"></tbody>
+            </table>
         `;
 
         // Mock window location
@@ -131,7 +133,7 @@ describe('Order Detail Script', () => {
         expect(payMethod?.textContent).toBe('Tarjeta de Crédito');
         expect(cuotasRow?.style.display).toBe('flex');
         expect(cuotasVal?.textContent).toBe('3 cuotas');
-        expect(promos?.innerHTML).toContain('Descuento Especial');
-        expect(items?.innerHTML).toContain('Test Product 1');
+        expect(promos?.innerHTML || '').toContain('Descuento Especial');
+        expect(items?.innerHTML || '').toContain('Test Product 1');
     });
 });
