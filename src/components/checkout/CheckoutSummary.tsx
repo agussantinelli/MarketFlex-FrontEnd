@@ -22,7 +22,7 @@ const CheckoutSummary: React.FC = () => {
                 <h2 className={styles.title}>¡Pedido Recibido!</h2>
                 <p className={styles.successMessage}>Gracias por tu compra. Pronto recibirás un email con los detalles.</p>
                 <div className={styles.successDetails}>
-                    <p>Monto Pagado: <strong>${totals.total.toLocaleString()}</strong></p>
+                    <p>Monto Pagado: <strong>${useStore(checkoutStore).lastOrderTotal.toLocaleString()}</strong></p>
                 </div>
                 <a href="/" className={styles.checkoutBtn}>Volver a la Tienda</a>
             </div>

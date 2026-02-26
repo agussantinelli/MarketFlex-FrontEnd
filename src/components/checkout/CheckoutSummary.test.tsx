@@ -14,7 +14,8 @@ const mockState = vi.hoisted(() => ({
     checkout: {
         isSubmitting: false,
         success: false,
-        error: null as string | null
+        error: null as string | null,
+        lastOrderTotal: 0
     }
 }));
 
@@ -95,13 +96,14 @@ describe('CheckoutSummary Component', () => {
 
     it('should show success message when state is success', () => {
         // Set success state
-        mockState.items = [{ id: '1', nombre: 'Test', precioActual: 10, quantity: 1, foto: 'test.jpg' }];
-        mockState.totals = { subtotal: 10, discount: 0, total: 10, appliedPromotions: [] };
+        mockState.items = []; // Cart is empty on success
+        mockState.totals = { subtotal: 0, discount: 0, total: 0, appliedPromotions: [] };
         mockState.checkout.success = true;
+        mockState.checkout.lastOrderTotal = 180;
 
         render(<CheckoutSummary />);
 
         expect(screen.getByText(/¡Pedido Recibido!/i)).toBeDefined();
-        expect(screen.getByText(/Gracias por tu compra/i)).toBeDefined();
+        expect(screen.getByText(/Monto Pagado: \$180/i)).toBeDefined();
     });
 });
