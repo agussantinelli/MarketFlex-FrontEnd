@@ -386,6 +386,9 @@
 │   │   ├── carousel.test.ts                        # Test: Carousel Mechanics
 │   │   ├── profile.ts                              # Lógica de perfil de usuario
 │   │   ├── profile.test.ts                         # Test: Profile & Session management
+│   │   ├── order-detail.ts                         # Lógica visual de las órdenes de compra
+│   │   ├── orders-list.ts                          # Carga dinámica del historial de compras
+│   │   ├── checkout-success.ts                     # Efectos y limpieza post-compra
 │   │   ├── promotion-hero.ts                       # Banner dinámico de promociones
 │   │   ├── promotion-hero.test.ts                  # Test: Hero Slider Logic
 │   │   ├── search-filters.ts                       # Gestión de estados de filtros
@@ -399,6 +402,7 @@
 │   │   ├── category.service.test.ts                # Test unitario de categorías
 │   │   ├── filter.service.ts                       # Lógica de normalización de filtros
 │   │   ├── filter.service.test.ts                  # Test unitario de filtros
+│   │   ├── purchase.service.ts                     # Servicio de obtención de órdenes de compras
 │   │   └── support.service.ts                      # Enlace con soporte/contacto
 │   ├── store/                                      # Gestión de Estado Centralizada (Nanostores)
 │   │   ├── cartStore.ts                            # Persistencia y lógica base del carrito
@@ -418,6 +422,10 @@
 │   │   ├── search.astro                            # Dashboard de búsqueda y resultados
 │   │   ├── login.astro                             # Autenticación de usuario
 │   │   ├── profile.astro                           # Mi Perfil (User Dashboard)
+│   │   ├── orders/                                 # Historial de compras del usuario
+│   │   │   ├── index.astro                         # Listado de compras (Mis Compras)
+│   │   │   ├── [id].astro                          # Detalle de orden con promociones
+│   │   │   └── styles/                             # Estilos específicos de orden
 │   │   ├── checkout/                               # Rutas de Checkout
 │   │   │   ├── success.astro                       # Página de compra exitosa
 │   │   │   ├── failure.astro                       # Página de compra fallida (Futura implementación)
