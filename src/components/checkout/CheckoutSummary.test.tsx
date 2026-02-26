@@ -10,6 +10,11 @@ const mockState = vi.hoisted(() => ({
         discount: 0,
         total: 0,
         appliedPromotions: [] as any[]
+    },
+    checkout: {
+        isSubmitting: false,
+        success: false,
+        error: null as string | null
     }
 }));
 
@@ -17,13 +22,20 @@ vi.mock('@nanostores/react', () => ({
     useStore: vi.fn((store: any) => {
         if (store?.id === 'cartItems') return mockState.items;
         if (store?.id === 'cartTotals') return mockState.totals;
-        return null;
+        if (store?.id === 'checkoutStore') return mockState.checkout;
+        return {};
     })
 }));
 
 vi.mock('../../store/cartStore', () => ({
     cartItems: { id: 'cartItems', get: () => mockState.items },
     cartTotals: { id: 'cartTotals', get: () => mockState.totals }
+}));
+
+vi.mock('../../store/checkoutStore', () => ({
+    checkoutStore: { id: 'checkoutStore', get: () => mockState.checkout },
+    submitPurchase: vi.fn(),
+    resetCheckout: vi.fn()
 }));
 
 describe('CheckoutSummary Component', () => {
