@@ -1,6 +1,7 @@
 import { getPurchaseById } from "../services/purchase.service";
+import styles from "../pages/orders/styles/order-detail.module.css";
 
-export async function initOrderDetail(styles: Record<string, string>) {
+export async function initOrderDetail() {
     const pathParts = window.location.pathname.split('/');
     const orderId = pathParts[pathParts.length - 1];
 

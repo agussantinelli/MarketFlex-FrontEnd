@@ -1,7 +1,8 @@
 import { getMyPurchases } from "../services/purchase.service";
 import type { Purchase } from "../types/purchase.types";
+import styles from "../pages/orders/styles/orders-list.module.css";
 
-export async function initOrdersList(styles: Record<string, string>) {
+export async function initOrdersList() {
     const ordersLoading = document.getElementById('orders-loading');
     const ordersEmpty = document.getElementById('orders-empty');
     const ordersList = document.getElementById('orders-list');

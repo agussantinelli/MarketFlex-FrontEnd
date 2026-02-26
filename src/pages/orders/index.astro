@@ -50,12 +50,12 @@ import styles from "./styles/orders-list.module.css";
     </main>
 </Layout>
 
-<script define:vars={{ styles }}>
+<script>
     import { initOrdersList } from "../../scripts/orders-list";
 
     // Initialize
-    initOrdersList(styles);
+    initOrdersList();
 
     // Support View Transitions
-    document.addEventListener("astro:page-load", () => initOrdersList(styles));
+    document.addEventListener("astro:page-load", () => initOrdersList());
 </script>
