@@ -238,7 +238,7 @@
   <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>115 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>116 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
   <li>🛒 <b>Premium Checkout Experience:</b> Proceso de compra fluido con:
       <ul>
           <li><b>Multi-Sección:</b> División lógica entre Información Personal, Envío y Pago.</li>
@@ -374,7 +374,9 @@
 │   │   └── Layout.astro                            # Wrapper principal (SEO, Fuentes, Scripts)
 │   ├── lib/                                        # Configuración de librerías externas
 │   │   ├── api.ts                                  # Cliente Ky con interceptor de Auto-Refresh JWT
-│   │   └── dataReset.ts                            # Utilidad de invalidación de cache (Seed Sync)
+│   │   ├── api.test.ts                             # Test: Interceptors
+│   │   ├── dataReset.ts                            # Utilidad de invalidación de cache (Seed Sync)
+│   │   └── dataReset.test.ts                       # Test: Seed Sync logic
 │   ├── scripts/                                    # Lógica interactiva (Extracto de .astro)
 │   │   ├── auth-login.ts                           # Manejo de tokens y SDKs sociales
 │   │   ├── auth-login.test.ts                      # Test: Login Workflow
@@ -387,11 +389,17 @@
 │   │   ├── profile.ts                              # Lógica de perfil de usuario
 │   │   ├── profile.test.ts                         # Test: Profile & Session management
 │   │   ├── order-detail.ts                         # Lógica visual de las órdenes de compra
+│   │   ├── order-detail.test.ts                    # Test: Order detail logic
 │   │   ├── orders-list.ts                          # Carga dinámica del historial de compras
+│   │   ├── orders-list.test.ts                     # Test: Orders list population
 │   │   ├── checkout-success.ts                     # Efectos y limpieza post-compra
+│   │   ├── checkout-success.test.ts                # Test: Checkout success logic
+│   │   ├── checkout-failure.ts                     # Efectos y limpieza post-error
+│   │   ├── checkout-failure.test.ts                # Test: Checkout error logic
+│   │   ├── filter-modal.ts                         # Gestión interactiva del modal de filtros
 │   │   ├── promotion-hero.ts                       # Banner dinámico de promociones
 │   │   ├── promotion-hero.test.ts                  # Test: Hero Slider Logic
-│   │   ├── search-filters.ts                       # Gestión de estados de filtros
+│   │   ├── search-filters.ts                       # Gestión genérica de estados de filtros
 │   │   └── search-filters.test.ts                  # Test: Filter Modal UI
 │   ├── services/                                   # Capa de API y Pruebas Unitarias
 │   │   ├── auth.service.ts                         # Login, Registro y Logout
@@ -403,10 +411,12 @@
 │   │   ├── filter.service.ts                       # Lógica de normalización de filtros
 │   │   ├── filter.service.test.ts                  # Test unitario de filtros
 │   │   ├── purchase.service.ts                     # Servicio de obtención de órdenes de compras
+│   │   ├── purchase.service.test.ts                # Test unitario de compras
 │   │   └── support.service.ts                      # Enlace con soporte/contacto
 │   ├── store/                                      # Gestión de Estado Centralizada (Nanostores)
 │   │   ├── cartStore.ts                            # Persistencia y lógica base del carrito
 │   │   ├── checkoutStore.ts                        # Coordinación y lógica de la compra
+│   │   ├── checkoutStore.test.ts                   # Test unitario de checkout
 │   │   └── promotionEngine.ts                      # Motor de cálculo de descuentos complejo
 │   ├── types/                                      # Tipado estricto del dominio
 │   │   ├── auth.types.ts                           # Interfaces de sesión
