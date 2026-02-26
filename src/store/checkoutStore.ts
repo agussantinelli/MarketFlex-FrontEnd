@@ -1,4 +1,4 @@
-import { atom } from 'nanostores';
+import { persistentAtom } from '@nanostores/persistent';
 import { cart, clearCart, cartTotals } from './cartStore';
 import { createPurchase } from '../services/purchase.service';
 
@@ -19,7 +19,7 @@ export interface CheckoutState {
     lastOrderTotal: number;
 }
 
-export const checkoutStore = atom<CheckoutState>({
+export const checkoutStore = persistentAtom<CheckoutState>('marketflex_checkout', {
     formData: {
         nombre: '',
         email: '',
@@ -34,6 +34,9 @@ export const checkoutStore = atom<CheckoutState>({
     error: null,
     success: false,
     lastOrderTotal: 0
+}, {
+    encode: JSON.stringify,
+    decode: JSON.parse
 });
 
 // Actions
