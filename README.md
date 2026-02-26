@@ -420,8 +420,10 @@
 │   │   ├── profile.astro                           # Mi Perfil (User Dashboard)
 │   │   ├── checkout/                               # Rutas de Checkout
 │   │   │   ├── success.astro                       # Página de compra exitosa
+│   │   │   ├── failure.astro                       # Página de compra fallida (Futura implementación)
 │   │   │   └── styles/                             # Estilos específicos
-│   │   │       └── success.css                     # Diseño premium de éxito
+│   │   │       ├── success.css                     # Diseño premium de éxito
+│   │   │       └── failure.css                     # Diseño premium de error
 │   │   └── ...                                     # FAQ, Contacto, Términos, Novedades
 │   ├── styles/                                     # Estilos globales y tokens neón
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
