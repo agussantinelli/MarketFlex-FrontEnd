@@ -1,44 +1,47 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { HiCheckCircle, HiHome, HiShoppingBag } from "react-icons/hi2";
-import "./styles/success.css";
+import styles from "./styles/success.module.css";
 ---
 
 <Layout title="Compra Exitosa | MarketFlex" simple>
-    <div class="success-container">
-        <div class="success-card">
-            <div class="icon-wrapper">
-                <HiCheckCircle className="check-icon" />
+    <div class={styles.successContainer}>
+        <div class={styles.successCard}>
+            <div class={styles.iconWrapper}>
+                <HiCheckCircle />
             </div>
 
-            <h1 class="success-title">¡Compra Exitosa!</h1>
-            <p class="success-subtitle">
+            <h1 class={styles.successTitle}>¡Compra Exitosa!</h1>
+            <p class={styles.successSubtitle}>
                 Gracias por confiar en MarketFlex. Tu pedido ha sido procesado
                 correctamente.
             </p>
 
-            <div class="order-info">
-                <div class="info-row">
+            <div class={styles.orderInfo}>
+                <div class={styles.infoRow}>
                     <span>Estado del Pedido</span>
-                    <span class="status-badge">Confirmado</span>
+                    <span class={styles.statusBadge}>Confirmado</span>
                 </div>
-                <div class="info-row total-row" id="total-display">
+                <div
+                    class={`${styles.infoRow} ${styles.totalRow}`}
+                    id="total-display"
+                >
                     <span>Monto Pagado</span>
                     <strong id="monto-valor">$0</strong>
                 </div>
             </div>
 
-            <p class="email-notice">
+            <p class={styles.emailNotice}>
                 Hemos enviado un correo electrónico con el resumen detallado de
                 tu compra y los pasos a seguir.
             </p>
 
-            <div class="actions">
-                <a href="/" class="btn-primary">
+            <div class={styles.actions}>
+                <a href="/" class={styles.btnPrimary}>
                     <HiHome />
                     Volver al Inicio
                 </a>
-                <a href="/search" class="btn-secondary">
+                <a href="/search" class={styles.btnSecondary}>
                     <HiShoppingBag />
                     Seguir Comprando
                 </a>
@@ -48,29 +51,11 @@ import "./styles/success.css";
 </Layout>
 
 <script>
-    import { checkoutStore, resetCheckout } from "../../store/checkoutStore";
+    import { initCheckoutSuccess } from "../../scripts/checkout-success";
 
-    // Get total from store
-    const { lastOrderTotal } = checkoutStore.get();
-    const montoValor = document.getElementById("monto-valor");
+    // Initialize
+    initCheckoutSuccess();
 
-    if (montoValor && lastOrderTotal > 0) {
-        montoValor.innerText = `$${lastOrderTotal.toLocaleString()}`;
-    }
-
-    // Reset store when leaving or after show
-    // We want to keep it while the user is on this page in case of refresh
-    // but clear it when they navigate away
-    document.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-            resetCheckout();
-        });
-    });
-
-    // Also clear on beforeunload to be sure
-    window.addEventListener("beforeunload", () => {
-        // Only reset if navigating away from the site or closing tab
-        // Note: this might trigger on internal link clicks too depending on browser
-        resetCheckout();
-    });
+    // Support View Transitions
+    document.addEventListener("astro:page-load", initCheckoutSuccess);
 </script>

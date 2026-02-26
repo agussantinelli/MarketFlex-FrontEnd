@@ -1,47 +1,58 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { HiXCircle, HiArrowLeft, HiChatBubbleLeftRight } from "react-icons/hi2";
-import "./styles/failure.css";
+import styles from "./styles/failure.module.css";
 ---
 
 <Layout title="Error en la Compra | MarketFlex" simple>
-    <main class="failure-container">
-        <div class="failure-card">
+    <main class={styles.failureContainer}>
+        <div class={styles.failureCard}>
             <!-- Icono de Error -->
-            <div class="icon-wrapper">
-                <div class="icon-bg"></div>
-                <HiXCircle className="error-icon" />
+            <div class={styles.iconWrapper}>
+                <div class={styles.iconBg}></div>
+                <HiXCircle className={styles.errorIcon} />
             </div>
 
             <!-- Título y Descripción -->
-            <h1 class="title">¡Ups! Algo salió mal</h1>
-            <p class="description">
+            <h1 class={styles.title}>¡Ups! Algo salió mal</h1>
+            <p class={styles.description}>
                 No pudimos procesar tu pedido en este momento. Puede deberse a
                 un problema con el método de pago o de conexión.
             </p>
 
             <!-- Cuadro de Información (Mock) -->
-            <div class="info-box">
-                <div class="info-item">
-                    <span class="info-label">Estado de la Orden</span>
-                    <span class="status-badge">Rechazada</span>
+            <div class={styles.infoBox}>
+                <div class={styles.infoItem}>
+                    <span class={styles.infoLabel}>Estado de la Orden</span>
+                    <span class={styles.statusBadge}>Rechazada</span>
                 </div>
                 <div
-                    class="info-item"
-                    style="margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;"
+                    class={styles.infoItem}
+                    style={{
+                        marginTop: "0.5rem",
+                        borderTop: "1px solid rgba(255,255,255,0.05)",
+                        paddingTop: "1rem",
+                    }}
                 >
-                    <span class="info-label">Motivo</span>
-                    <span class="error-msg">Transacción interrumpida</span>
+                    <span class={styles.infoLabel}>Motivo</span>
+                    <span class={styles.errorMsg}>Transacción interrumpida</span
+                    >
                 </div>
             </div>
 
             <!-- Botones de Acción -->
-            <div class="actions">
-                <a href="/checkout" class="btn btn-primary">
+            <div class={styles.actions}>
+                <a
+                    href="/checkout"
+                    class={`${styles.btn} ${styles.btnPrimary}`}
+                >
                     <HiArrowLeft />
                     Reintentar Pago
                 </a>
-                <a href="/soporte" class="btn btn-secondary">
+                <a
+                    href="/soporte"
+                    class={`${styles.btn} ${styles.btnSecondary}`}
+                >
                     <HiChatBubbleLeftRight />
                     Contactar Soporte
                 </a>
@@ -51,11 +62,11 @@ import "./styles/failure.css";
 </Layout>
 
 <script>
-    import { checkoutStore } from "../../store/checkoutStore";
+    import { initCheckoutFailure } from "../../scripts/checkout-failure";
 
-    // Log the error for future debugging if it existed in the store
-    const { error } = checkoutStore.get();
-    if (error) {
-        console.error("Failure page reached with store error:", error);
-    }
+    // Initialize
+    initCheckoutFailure();
+
+    // Support View Transitions
+    document.addEventListener("astro:page-load", initCheckoutFailure);
 </script>
