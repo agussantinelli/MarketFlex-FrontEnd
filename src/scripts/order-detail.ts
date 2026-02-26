@@ -17,6 +17,11 @@ export async function initOrderDetail() {
         loading.style.display = 'none';
         if (!response.data) {
             errorView.style.display = 'block';
+            // @ts-ignore
+            if (window.triggerSileo) {
+                // @ts-ignore
+                window.triggerSileo('error', 'No pudimos encontrar la orden solicitada.');
+            }
             return;
         }
 
@@ -33,7 +38,6 @@ export async function initOrderDetail() {
         });
 
         // Totals Calculation
-        // Calculate subtotal from line items base price vs subtotal
         const itemBaseSubtotal = order.lineas.reduce((acc, line) => acc + (line.precioUnitario * line.cantidad), 0);
         const subtotalEl = document.getElementById('order-subtotal-amount');
         if (subtotalEl) subtotalEl.textContent = `$${itemBaseSubtotal.toLocaleString('es-AR')}`;
@@ -111,5 +115,11 @@ export async function initOrderDetail() {
         console.error("Error loading order detail:", error);
         loading.style.display = 'none';
         errorView.style.display = 'block';
+
+        // @ts-ignore
+        if (window.triggerSileo) {
+            // @ts-ignore
+            window.triggerSileo('error', 'Hubo un error de conexión al cargar la orden.');
+        }
     }
 }
