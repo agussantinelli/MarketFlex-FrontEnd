@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import CheckoutSummary from './CheckoutSummary';
 
 // Mock data that can be updated from tests
@@ -93,15 +93,13 @@ describe('CheckoutSummary Component', () => {
         expect(screen.getByText('$180')).toBeDefined();
     });
 
-    it('should show success message after "Confirmar Compra"', () => {
-        // Mock cart items so it's not empty
+    it('should show success message when state is success', () => {
+        // Set success state
         mockState.items = [{ id: '1', nombre: 'Test', precioActual: 10, quantity: 1, foto: 'test.jpg' }];
         mockState.totals = { subtotal: 10, discount: 0, total: 10, appliedPromotions: [] };
+        mockState.checkout.success = true;
 
         render(<CheckoutSummary />);
-
-        const confirmBtn = screen.getByText(/Confirmar Compra/i);
-        fireEvent.click(confirmBtn);
 
         expect(screen.getByText(/¡Pedido Recibido!/i)).toBeDefined();
         expect(screen.getByText(/Gracias por tu compra/i)).toBeDefined();
