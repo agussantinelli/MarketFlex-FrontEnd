@@ -1,0 +1,176 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { HiArrowLeft, HiCreditCard, HiTruck } from "react-icons/hi2";
+import "./styles/orders.css";
+
+const { id } = Astro.params;
+---
+
+<Layout title={`Orden #${id?.slice(0, 8).toUpperCase()} | MarketFlex`}>
+    <main class="orders-container">
+        <a href="/orders" class="back-link">
+            <HiArrowLeft />
+            Volver a mis compras
+        </a>
+
+        <div id="detail-loading" class="empty-orders">
+            <div class="spinner-premium"></div>
+            <p class="empty-text">Cargando detalles de la orden...</p>
+        </div>
+
+        <div id="detail-content" style="display: none;">
+            <header class="order-detail-header">
+                <div>
+                    <h1 class="orders-title" id="order-id-title">Orden #...</h1>
+                    <p class="orders-subtitle" id="order-date-full">...</p>
+                </div>
+                <div class="order-stats">
+                    <span class="status-badge" id="order-status-badge"
+                        >COMPLETADA</span
+                    >
+                </div>
+            </header>
+
+            <div class="order-detail-grid">
+                <!-- Items Table -->
+                <section class="order-items-section">
+                    <h3>Artículos en esta orden</h3>
+                    <table class="order-items-table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cant.</th>
+                                <th>Precio Unit.</th>
+                                <th style="text-align: right;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-items-body">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Sidebar with Info -->
+                <aside class="order-sidebar">
+                    <!-- Shipping Info -->
+                    <div class="sidebar-card">
+                        <h3>
+                            <HiTruck
+                                style={{
+                                    display: "inline",
+                                    marginRight: "0.5rem",
+                                    verticalAlign: "middle",
+                                }}
+                            />
+                            Detalles de Envío
+                        </h3>
+                        <div class="shipping-info">
+                            <p class="product-name" id="ship-name">...</p>
+                            <p class="shipping-address" id="ship-address">
+                                ...
+                            </p>
+                            <p class="shipping-address" id="ship-location">
+                                ...
+                            </p>
+                            <div
+                                class="info-row"
+                                style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;"
+                            >
+                                <span class="info-label">Teléfono</span>
+                                <span class="info-value" id="ship-phone"
+                                    >...</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Info & Totals -->
+                    <div class="sidebar-card">
+                        <h3>
+                            <HiCreditCard
+                                style={{
+                                    display: "inline",
+                                    marginRight: "0.5rem",
+                                    verticalAlign: "middle",
+                                }}
+                            />
+                            Resumen de Pago
+                        </h3>
+                        <div class="info-row">
+                            <span class="info-label">Método</span>
+                            <span
+                                class="info-value"
+                                style="text-transform: capitalize;"
+                                id="pay-method">...</span
+                            >
+                        </div>
+                        <div
+                            class="info-row"
+                            id="cuotas-row"
+                            style="display: none;"
+                        >
+                            <span class="info-label">Cuotas</span>
+                            <span class="info-value" id="pay-cuotas">...</span>
+                        </div>
+
+                        <div class="total-section">
+                            <div class="total-row">
+                                <span class="total-label">Total Pagado</span>
+                                <span
+                                    class="total-amount"
+                                    id="order-total-amount">$0</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="detail-error" class="empty-orders" style="display: none;">
+            <h2 class="empty-title">No pudimos encontrar la orden</h2>
+            <p class="empty-text">
+                Hubo un problema al cargar los detalles. Es posible que el
+                enlace sea inválido o la orden no exista.
+            </p>
+            <a href="/orders" class="btn-shop">Ver mis compras</a>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .spinner-premium {
+        width: 50px;
+        height: 50px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #fff;
+        margin: 0 auto 1.5rem;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    .status-badge {
+        background: rgba(34, 197, 94, 0.1);
+        color: #4ade80;
+        padding: 0.5rem 1.25rem;
+        border-radius: 99px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+</style>
+
+<script>
+    import { initOrderDetail } from "../../scripts/order-detail";
+
+    // Initialize
+    initOrderDetail();
+
+    // Support View Transitions
+    document.addEventListener("astro:page-load", initOrderDetail);
+</script>
