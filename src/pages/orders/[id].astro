@@ -2,11 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import { HiArrowLeft, HiCreditCard, HiTruck } from "react-icons/hi2";
 import styles from "./styles/order-detail.module.css";
+import Notifications from "../../components/common/Notifications";
 
 const { id } = Astro.params;
 ---
 
 <Layout title={`Orden #${id?.slice(0, 8).toUpperCase()} | MarketFlex`}>
+    <Notifications client:only="react" />
     <main class={styles.ordersContainer}>
         <a href="/orders" class={styles.backLink}>
             <HiArrowLeft />
