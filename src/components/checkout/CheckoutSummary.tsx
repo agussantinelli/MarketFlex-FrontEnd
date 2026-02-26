@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { HiArrowRight, HiOutlineShoppingBag } from 'react-icons/hi2';
 import { cartItems, cartTotals } from '../../store/cartStore';
-import { checkoutStore, submitPurchase, resetCheckout } from '../../store/checkoutStore';
+import { checkoutStore, submitPurchase } from '../../store/checkoutStore';
 import styles from './styles/CheckoutSummary.module.css';
 
 const CheckoutSummary: React.FC = () => {
@@ -10,26 +10,22 @@ const CheckoutSummary: React.FC = () => {
     const totals = useStore(cartTotals);
     const { isSubmitting, success, error } = useStore(checkoutStore);
 
-    // Reset checkout on unmount to avoid stale success state
+    // Handle redirection on success
     useEffect(() => {
-        return () => resetCheckout();
+        if (success) {
+            window.location.href = '/checkout/success';
+        }
+    }, [success]);
+
+    // Cleanup on unmount (only if not success, to allow success page to read lastOrderTotal)
+    useEffect(() => {
+        return () => {
+            // We don't reset here anymore because we need the success state for redirection
+            // and lastOrderTotal for the success page
+        };
     }, []);
 
-    if (success) {
-        return (
-            <div className={`${styles.summaryContainer} ${styles.success}`}>
-                <div className={styles.successIcon}>✅</div>
-                <h2 className={styles.title}>¡Pedido Recibido!</h2>
-                <p className={styles.successMessage}>Gracias por tu compra. Pronto recibirás un email con los detalles.</p>
-                <div className={styles.successDetails}>
-                    <p>Monto Pagado: <strong>${useStore(checkoutStore).lastOrderTotal.toLocaleString()}</strong></p>
-                </div>
-                <a href="/" className={styles.checkoutBtn}>Volver a la Tienda</a>
-            </div>
-        );
-    }
-
-    if (items.length === 0) {
+    if (items.length === 0 && !success) {
         return (
             <div className={styles.summaryContainer}>
                 <h2 className={styles.title}>Resumen del Pedido</h2>

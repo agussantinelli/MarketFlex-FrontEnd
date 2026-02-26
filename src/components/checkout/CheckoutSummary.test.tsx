@@ -94,7 +94,12 @@ describe('CheckoutSummary Component', () => {
         expect(screen.getByText('$180')).toBeDefined();
     });
 
-    it('should show success message when state is success', () => {
+    it('should redirect to success page when success state is true', () => {
+        // Mock window.location
+        const originalLocation = window.location;
+        delete (window as any).location;
+        window.location = { ...originalLocation, href: '' } as any;
+
         // Set success state
         mockState.items = []; // Cart is empty on success
         mockState.totals = { subtotal: 0, discount: 0, total: 0, appliedPromotions: [] };
@@ -103,7 +108,9 @@ describe('CheckoutSummary Component', () => {
 
         render(<CheckoutSummary />);
 
-        expect(screen.getByText(/¡Pedido Recibido!/i)).toBeDefined();
-        expect(screen.getByText(/Monto Pagado: \$180/i)).toBeDefined();
+        expect(window.location.href).toBe('/checkout/success');
+
+        // Cleanup location mock
+        window.location = originalLocation as any;
     });
 });
