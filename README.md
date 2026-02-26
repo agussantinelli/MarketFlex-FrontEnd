@@ -418,6 +418,10 @@
 │   │   ├── search.astro                            # Dashboard de búsqueda y resultados
 │   │   ├── login.astro                             # Autenticación de usuario
 │   │   ├── profile.astro                           # Mi Perfil (User Dashboard)
+│   │   ├── checkout/                               # Rutas de Checkout
+│   │   │   ├── success.astro                       # Página de compra exitosa
+│   │   │   └── styles/                             # Estilos específicos
+│   │   │       └── success.css                     # Diseño premium de éxito
 │   │   └── ...                                     # FAQ, Contacto, Términos, Novedades
 │   ├── styles/                                     # Estilos globales y tokens neón
 │   └── env.d.ts                                    # Definiciones de tipos para env vars
