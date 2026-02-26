@@ -45,4 +45,9 @@ const {
 		</main>
 		{!simple && <Footer />}
 	</body>
+	<script>
+		import { checkDataVersion } from "../lib/dataReset";
+		// Run check on load
+		checkDataVersion();
+	</script>
 </html>
