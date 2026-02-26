@@ -33,9 +33,10 @@ export async function initOrderDetail() {
         });
 
         // Totals Calculation
-        const itemSubtotal = order.lineas.reduce((acc, line) => acc + Number(line.subtotal), 0);
+        // Calculate subtotal from line items base price vs subtotal
+        const itemBaseSubtotal = order.lineas.reduce((acc, line) => acc + (line.precioUnitario * line.cantidad), 0);
         const subtotalEl = document.getElementById('order-subtotal-amount');
-        if (subtotalEl) subtotalEl.textContent = `$${itemSubtotal.toLocaleString('es-AR')}`;
+        if (subtotalEl) subtotalEl.textContent = `$${itemBaseSubtotal.toLocaleString('es-AR')}`;
 
         const promosContainer = document.getElementById('promos-container');
         if (promosContainer) {
@@ -84,20 +85,25 @@ export async function initOrderDetail() {
         // Populate Items Table
         const tableBody = document.getElementById('order-items-body');
         if (tableBody) {
-            tableBody.innerHTML = order.lineas.map(item => `
+            tableBody.innerHTML = order.lineas.map(item => {
+                const realSubtotal = Number(item.subtotal);
+
+                return `
                 <tr>
                     <td>
-                        <div class="${styles.productInfoCell}">
+                        <div class="${styles.productInfoCell}" style="flex-direction: column; align-items: flex-start;">
                             <span class="${styles.productName}">${item.nombreProducto}</span>
+                            ${item.promoAplicada ? `<span class="${styles.itemPromoBadge}">🎁 ${item.promoAplicada}</span>` : ''}
                         </div>
                     </td>
                     <td>${item.cantidad}</td>
                     <td>$${Number(item.precioUnitario).toLocaleString('es-AR')}</td>
                     <td style="font-weight: 700; color: #fff;">
-                        $${Number(item.subtotal).toLocaleString('es-AR')}
+                        $${realSubtotal.toLocaleString('es-AR')}
                     </td>
                 </tr>
-            `).join('');
+                `;
+            }).join('');
         }
 
         content.style.display = 'block';

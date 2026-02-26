@@ -14,6 +14,7 @@ export interface LineaCompra {
     cantidad: number;
     precioUnitario: number;
     subtotal: number;
+    promoAplicada?: string;
 }
 
 export interface AppliedPromotion {
