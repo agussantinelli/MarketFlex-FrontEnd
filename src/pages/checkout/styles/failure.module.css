@@ -1,0 +1,189 @@
+/* Checkout Failure Module Styles */
+.failureContainer {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.failureCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 32px;
+    padding: 3.5rem 3rem;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.iconWrapper {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconBg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(239, 68, 68, 0.15);
+    border-radius: 28px;
+    transform: rotate(-10deg);
+    animation: rotateSlow 8s linear infinite;
+}
+
+.errorIcon {
+    font-size: 3rem;
+    color: #ef4444;
+    position: relative;
+    z-index: 1;
+    animation: shake 0.5s ease-in-out infinite alternate;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.infoBox {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 24px;
+    padding: 1.75rem;
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.infoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoLabel {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+}
+
+.statusBadge {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.errorMsg {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 1.1rem;
+    border-radius: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btnPrimary {
+    background: #fff;
+    color: #000;
+}
+
+.btnSecondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btnPrimary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.btnSecondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shake {
+    from {
+        transform: scale(1) rotate(-5deg);
+    }
+
+    to {
+        transform: scale(1.05) rotate(5deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .failureCard {
+        padding: 2.5rem 2rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 1.85rem;
+    }
+}
