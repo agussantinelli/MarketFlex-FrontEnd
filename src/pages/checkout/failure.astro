@@ -1,0 +1,61 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { HiXCircle, HiArrowLeft, HiChatBubbleLeftRight } from "react-icons/hi2";
+import "./styles/failure.css";
+---
+
+<Layout title="Error en la Compra | MarketFlex" simple>
+    <main class="failure-container">
+        <div class="failure-card">
+            <!-- Icono de Error -->
+            <div class="icon-wrapper">
+                <div class="icon-bg"></div>
+                <HiXCircle className="error-icon" />
+            </div>
+
+            <!-- Título y Descripción -->
+            <h1 class="title">¡Ups! Algo salió mal</h1>
+            <p class="description">
+                No pudimos procesar tu pedido en este momento. Puede deberse a
+                un problema con el método de pago o de conexión.
+            </p>
+
+            <!-- Cuadro de Información (Mock) -->
+            <div class="info-box">
+                <div class="info-item">
+                    <span class="info-label">Estado de la Orden</span>
+                    <span class="status-badge">Rechazada</span>
+                </div>
+                <div
+                    class="info-item"
+                    style="margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;"
+                >
+                    <span class="info-label">Motivo</span>
+                    <span class="error-msg">Transacción interrumpida</span>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="actions">
+                <a href="/checkout" class="btn btn-primary">
+                    <HiArrowLeft />
+                    Reintentar Pago
+                </a>
+                <a href="/soporte" class="btn btn-secondary">
+                    <HiChatBubbleLeftRight />
+                    Contactar Soporte
+                </a>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    import { checkoutStore } from "../../store/checkoutStore";
+
+    // Log the error for future debugging if it existed in the store
+    const { error } = checkoutStore.get();
+    if (error) {
+        console.error("Failure page reached with store error:", error);
+    }
+</script>
