@@ -1,0 +1,209 @@
+/* Order Detail View Styles */
+.ordersContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.orderDetailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ordersTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ordersSubtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
+}
+
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s ease;
+}
+
+.backLink:hover {
+    color: #fff;
+}
+
+.orderDetailGrid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+}
+
+.orderItemsSection {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 28px;
+    padding: 2rem;
+}
+
+.orderItemsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orderItemsTable th {
+    text-align: left;
+    padding-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.orderItemsTable td {
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.productInfoCell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.productName {
+    font-weight: 600;
+    color: #fff;
+}
+
+.orderSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebarCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 1.75rem;
+}
+
+.sidebarCard h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.infoLabel {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.infoValue {
+    color: #fff;
+    font-weight: 500;
+}
+
+.shippingInfo p {
+    margin-bottom: 0.5rem;
+}
+
+.shippingAddress {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.totalSection {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalLabel {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.totalAmount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.statusBadge {
+    background: rgba(34, 197, 94, 0.1);
+    color: #4ade80;
+    padding: 0.5rem 1.25rem;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* Common States */
+.emptyOrders {
+    text-align: center;
+    padding: 6rem 2rem;
+}
+
+.spinnerPremium {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #fff;
+    margin: 0 auto 1.5rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .orderDetailGrid {
+        grid-template-columns: 1fr;
+    }
+}
