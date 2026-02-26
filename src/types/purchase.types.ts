@@ -16,6 +16,13 @@ export interface LineaCompra {
     subtotal: number;
 }
 
+export interface AppliedPromotion {
+    promocionId: string;
+    nombre: string;
+    vecesAplicada: number;
+    montoDescuento: number;
+}
+
 export interface Purchase {
     id: string;
     fechaHora: string;
@@ -25,6 +32,7 @@ export interface Purchase {
     estado: string;
     lineas: LineaCompra[];
     detalleEnvio: DetalleEnvio;
+    promociones?: AppliedPromotion[];
 }
 
 export interface CreatePurchaseRequest {

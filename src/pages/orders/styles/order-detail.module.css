@@ -143,9 +143,24 @@
 }
 
 .totalSection {
-    margin-top: 1rem;
-    padding-top: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
     border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.promoRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: #4ade80;
+    /* Success green for discounts */
+}
+
+.promoLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .totalRow {

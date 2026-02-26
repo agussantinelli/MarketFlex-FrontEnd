@@ -120,6 +120,24 @@ const { id } = Astro.params;
                             >
                         </div>
 
+                        <div
+                            class={styles.totalSection}
+                            style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;"
+                        >
+                            <div class={styles.infoRow}>
+                                <span class={styles.infoLabel}
+                                    >Subtotal prod.</span
+                                >
+                                <span
+                                    class={styles.infoValue}
+                                    id="order-subtotal-amount">$0</span
+                                >
+                            </div>
+                            <div id="promos-container">
+                                <!-- Applied Promos Injected here -->
+                            </div>
+                        </div>
+
                         <div class={styles.totalSection}>
                             <div class={styles.totalRow}>
                                 <span class={styles.totalLabel}

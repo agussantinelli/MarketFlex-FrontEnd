@@ -32,6 +32,27 @@ export async function initOrderDetail() {
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
 
+        // Totals Calculation
+        const itemSubtotal = order.lineas.reduce((acc, line) => acc + Number(line.subtotal), 0);
+        const subtotalEl = document.getElementById('order-subtotal-amount');
+        if (subtotalEl) subtotalEl.textContent = `$${itemSubtotal.toLocaleString('es-AR')}`;
+
+        const promosContainer = document.getElementById('promos-container');
+        if (promosContainer) {
+            if (order.promociones && order.promociones.length > 0) {
+                promosContainer.innerHTML = order.promociones.map(p => `
+                    <div class="${styles.promoRow}">
+                        <span class="${styles.promoLabel}">
+                            <span>🎁 ${p.nombre}</span>
+                        </span>
+                        <span>-$${Number(p.montoDescuento).toLocaleString('es-AR')}</span>
+                    </div>
+                `).join('');
+            } else {
+                promosContainer.innerHTML = '';
+            }
+        }
+
         const totalAmount = document.getElementById('order-total-amount');
         if (totalAmount) totalAmount.textContent = `$${Number(order.total).toLocaleString('es-AR')}`;
 
