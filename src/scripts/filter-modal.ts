@@ -1,4 +1,3 @@
-import type { Category } from "../types/category.types";
 import type { Subcategory } from "../types/subcategory.types";
 
 const initFilterModal = () => {
@@ -8,7 +7,6 @@ const initFilterModal = () => {
     if (!backdrop || !filterBtn) return;
 
     // Recuperar datos y el mapeo de clases de CSS Modules
-    const categories: Category[] = JSON.parse(backdrop.getAttribute("data-categories") || "[]");
     const subcategories: Subcategory[] = JSON.parse(backdrop.getAttribute("data-subcategories") || "[]");
     const styles = JSON.parse(backdrop.getAttribute("data-styles") || "{}");
 

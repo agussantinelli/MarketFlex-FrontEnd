@@ -18,7 +18,7 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
         populateProfile(profile, styles);
     } catch (error) {
         console.error("Error fetching profile:", error);
-        container.classList.add(styles.hasError);
+        if (styles.hasError) container.classList.add(styles.hasError);
     }
 
     // Modal Logic & Event Listeners
@@ -30,8 +30,8 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
         const retryBtn = document.getElementById('retry-btn');
 
 
-        const showModal = () => logoutModal?.classList.add(modalStyles.active);
-        const hideModal = () => logoutModal?.classList.remove(modalStyles.active);
+        const showModal = () => { if (modalStyles.active) logoutModal?.classList.add(modalStyles.active); };
+        const hideModal = () => { if (modalStyles.active) logoutModal?.classList.remove(modalStyles.active); };
 
         logoutBtn?.addEventListener('click', (e) => {
             e.preventDefault();
@@ -60,12 +60,6 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
 function populateProfile(user: User, styles: Record<string, string>) {
     const container = document.getElementById('profile-content');
     if (!container) return;
-
-    // Helper to set text or hide if empty
-    const setText = (id: string, text: string | null | undefined, fallback: string = 'No especificado') => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text || fallback;
-    };
 
     const defaultAvatar = `https://ui-avatars.com/api/?name=${user.nombre}+${user.apellido}&background=7c3aed&color=fff`;
 
@@ -97,10 +91,10 @@ function populateProfile(user: User, styles: Record<string, string>) {
     const editBtn = document.getElementById('edit-profile-btn') as HTMLButtonElement;
     if (editBtn) {
         editBtn.textContent = isIncomplete ? 'Completar Perfil' : 'Editar Perfil';
-        editBtn.className = styles.editBtn;
+        if (styles.editBtn) editBtn.className = styles.editBtn;
     }
 
     // Transition from loading to ready
-    container.classList.remove(styles.loading);
-    container.classList.add(styles.isReady);
+    if (styles.loading) container.classList.remove(styles.loading);
+    if (styles.isReady) container.classList.add(styles.isReady);
 }
