@@ -1,0 +1,66 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { HiCheckCircle, HiHome, HiShoppingBag } from "react-icons/hi2";
+import "./styles/success.css";
+---
+
+<Layout title="Compra Exitosa | MarketFlex" simple>
+    <div class="success-container">
+        <div class="success-card">
+            <div class="icon-wrapper">
+                <HiCheckCircle className="check-icon" />
+            </div>
+
+            <h1 class="success-title">¡Compra Exitosa!</h1>
+            <p class="success-subtitle">
+                Gracias por confiar en MarketFlex. Tu pedido ha sido procesado
+                correctamente.
+            </p>
+
+            <div class="order-info">
+                <div class="info-row">
+                    <span>Estado del Pedido</span>
+                    <span class="status-badge">Confirmado</span>
+                </div>
+                <div class="info-row total-row" id="total-display">
+                    <span>Monto Pagado</span>
+                    <strong id="monto-valor">$0</strong>
+                </div>
+            </div>
+
+            <p class="email-notice">
+                Hemos enviado un correo electrónico con el resumen detallado de
+                tu compra y los pasos a seguir.
+            </p>
+
+            <div class="actions">
+                <a href="/" class="btn-primary">
+                    <HiHome />
+                    Volver al Inicio
+                </a>
+                <a href="/search" class="btn-secondary">
+                    <HiShoppingBag />
+                    Seguir Comprando
+                </a>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { checkoutStore, resetCheckout } from "../../store/checkoutStore";
+
+    // Get total from store
+    const { lastOrderTotal } = checkoutStore.get();
+    const montoValor = document.getElementById("monto-valor");
+
+    if (montoValor && lastOrderTotal > 0) {
+        montoValor.innerText = `$${lastOrderTotal.toLocaleString()}`;
+    }
+
+    // Reset store when leaving or after show (we can let it stay for a while)
+    // For now, we'll reset it after a small delay or on next navigation
+    window.addEventListener("beforeunload", () => {
+        resetCheckout();
+    });
+</script>
