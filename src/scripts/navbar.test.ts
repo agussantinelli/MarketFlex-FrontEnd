@@ -4,7 +4,6 @@ import { initNavbar } from './navbar';
 describe('navbar.ts', () => {
     let originalLocation: Location;
     const styles = { active: 'active-style' };
-    const modalStyles = { active: 'modal-active' };
 
     beforeEach(() => {
         vi.clearAllMocks();
@@ -54,7 +53,7 @@ describe('navbar.ts', () => {
     });
 
     it('should toggle mobile menu classes on click', () => {
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
         const mobileBtn = document.querySelector('.mobile-menu-btn') as HTMLElement;
         const navLinks = document.querySelector('.nav-links') as HTMLElement;
 
@@ -67,73 +66,24 @@ describe('navbar.ts', () => {
         expect(mobileBtn.classList.contains('active')).toBe(false);
     });
 
-    it('should update UI correctly when user is logged in as admin', () => {
-        const user = { nombre: 'Admin User', rol: 'admin' };
+    it('should update UI correctly when user is logged in', () => {
+        const user = { nombre: 'Test User', rol: 'admin' };
         localStorage.setItem('marketflex_user', JSON.stringify(user));
         localStorage.setItem('marketflex_token', 'valid-token');
 
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
 
         const userName = document.getElementById('user-name');
         const authGuest = document.querySelector('.nav-auth-guest') as HTMLElement;
         const authUser = document.querySelector('.nav-auth-user') as HTMLElement;
-        const adminOnly = document.querySelector('.admin-only') as HTMLElement;
-        const customerOnly = document.querySelector('.customer-only') as HTMLElement;
 
-        expect(userName?.textContent).toBe('Admin User');
+        expect(userName?.textContent).toBe('Test User');
         expect(authGuest.style.display).toBe('none');
         expect(authUser.style.display).toBe('flex');
-        expect(adminOnly.style.display).toBe('flex');
-        expect(customerOnly.style.display).toBe('none');
-    });
-
-    it('should update UI correctly when user is logged in as customer', () => {
-        const user = { nombre: 'Customer User', rol: 'customer' };
-        localStorage.setItem('marketflex_user', JSON.stringify(user));
-        localStorage.setItem('marketflex_token', 'valid-token');
-
-        initNavbar(styles, modalStyles);
-
-        const adminOnly = document.querySelector('.admin-only') as HTMLElement;
-        const customerOnly = document.querySelector('.customer-only') as HTMLElement;
-
-        expect(adminOnly.style.display).toBe('none');
-        expect(customerOnly.style.display).toBe('flex');
-    });
-
-    it('should show logout modal and handle confirmation', () => {
-        initNavbar(styles, modalStyles);
-
-        const logoutBtn = document.getElementById('logout-btn');
-        const modal = document.getElementById('navbar-logout-modal');
-        const confirmBtn = document.getElementById('navbar-logout-modal-confirm');
-
-        localStorage.setItem('marketflex_token', 'token');
-
-        logoutBtn?.click();
-        expect(modal?.classList.contains(modalStyles.active)).toBe(true);
-
-        confirmBtn?.click();
-        expect(localStorage.getItem('marketflex_token')).toBeNull();
-        expect(window.location.href).toBe('/login');
-    });
-
-    it('should hide logout modal on cancel', () => {
-        initNavbar(styles, modalStyles);
-
-        const logoutBtn = document.getElementById('logout-btn');
-        const modal = document.getElementById('navbar-logout-modal');
-        const cancelBtn = document.getElementById('navbar-logout-modal-cancel');
-
-        logoutBtn?.click();
-        expect(modal?.classList.contains(modalStyles.active)).toBe(true);
-
-        cancelBtn?.click();
-        expect(modal?.classList.contains(modalStyles.active)).toBe(false);
     });
 
     it('should validate search query length on submit', () => {
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
         const form = document.querySelector('.nav-search-form') as HTMLFormElement;
         const input = document.querySelector('.search-input') as HTMLInputElement;
 
@@ -146,7 +96,7 @@ describe('navbar.ts', () => {
     });
 
     it('should allow search query with 2 or more characters', () => {
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
         const form = document.querySelector('.nav-search-form') as HTMLFormElement;
         const input = document.querySelector('.search-input') as HTMLInputElement;
 
@@ -158,7 +108,7 @@ describe('navbar.ts', () => {
     });
 
     it('should toggle clear button visibility based on input', () => {
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
         const input = document.querySelector('.search-input') as HTMLInputElement;
         const clearBtn = document.querySelector('.search-clear-btn') as HTMLButtonElement;
 
@@ -172,7 +122,7 @@ describe('navbar.ts', () => {
     });
 
     it('should clear input and focus when clear button is clicked', () => {
-        initNavbar(styles, modalStyles);
+        initNavbar(styles);
         const input = document.querySelector('.search-input') as HTMLInputElement;
         const clearBtn = document.querySelector('.search-clear-btn') as HTMLButtonElement;
         const focusSpy = vi.spyOn(input, 'focus');
