@@ -36,6 +36,11 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<script is:inline>
+			if (localStorage.getItem("marketflex_token")) {
+				document.documentElement.classList.add("is-authenticated");
+			}
+		</script>
 	</head>
 	<body>
 		{showToaster && <Notifications client:only="react" />}

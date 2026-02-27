@@ -59,6 +59,14 @@ main {
     flex-direction: column;
 }
 
+html.is-authenticated .nav-auth-guest {
+    display: none !important;
+}
+
+html.is-authenticated .nav-auth-user {
+    display: flex !important;
+}
+
 /* Landing Page Utilities */
 .hero-center {
     flex: 1;
