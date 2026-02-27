@@ -31,7 +31,7 @@ export const api = ky.create({
                 console.log(`🌐 [API] Response received: ${response.status} from ${response.url}`);
 
                 // Handle 401 Unauthorized (Session Expired / Token Invalid)
-                if (response.status === 401 && !request.url.includes('/auth/refresh')) {
+                if (response.status === 401 && !request.url.includes('/auth/refresh') && typeof window !== 'undefined') {
                     console.warn(`🌐 [API] 401 Unauthorized detected. Attempting token refresh...`);
                     const refreshToken = localStorage.getItem('marketflex_refresh_token');
 
