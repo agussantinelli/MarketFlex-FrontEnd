@@ -115,7 +115,11 @@ const DashboardView: React.FC = () => {
 
             <div className={styles.statsGrid}>
                 {stats.map((stat, index) => (
-                    <div key={index} className={styles.statCard}>
+                    <div
+                        key={index}
+                        className={styles.statCard}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                    >
                         <div className={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}>
                             <stat.icon className={styles.statIcon} />
                         </div>
@@ -151,22 +155,25 @@ const DashboardView: React.FC = () => {
                         </thead>
                         <tbody>
                             {recentPurchases.length > 0 ? (
-                                recentPurchases.slice(0, 10).map((purchase) => (
-                                    <tr key={purchase.id}>
-                                        <td className={styles.orderId}>#{purchase.id.substring(0, 8).toUpperCase()}</td>
-                                        <td className={styles.userCell}>
-                                            <div className={styles.userAvatar}>{purchase.usuario.nombre.charAt(0)}</div>
-                                            {purchase.usuario.nombre} {purchase.usuario.apellido}
-                                        </td>
-                                        <td>{formatDate(purchase.fechaHora)}</td>
-                                        <td className={styles.amount}>{formatCurrency(Number(purchase.total))}</td>
-                                        <td>
-                                            <span className={styles[purchase.estado.toLowerCase()] || ""}>
-                                                {purchase.estado}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))
+                                recentPurchases.slice(0, 10).map((purchase) => {
+                                    const statusClass = purchase.estado.toLowerCase();
+                                    return (
+                                        <tr key={purchase.id}>
+                                            <td className={styles.orderId}>#{purchase.id.substring(0, 8).toUpperCase()}</td>
+                                            <td className={styles.userCell}>
+                                                <div className={styles.userAvatar}>{purchase.usuario.nombre.charAt(0)}</div>
+                                                {purchase.usuario.nombre} {purchase.usuario.apellido}
+                                            </td>
+                                            <td>{formatDate(purchase.fechaHora)}</td>
+                                            <td className={styles.amount}>{formatCurrency(Number(purchase.total))}</td>
+                                            <td>
+                                                <span className={styles[statusClass] || styles.badge}>
+                                                    {purchase.estado}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                             ) : (
                                 <tr>
                                     <td colSpan={5} className={styles.emptyTable}>No hay transacciones recientes.</td>
