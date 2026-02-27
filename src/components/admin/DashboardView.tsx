@@ -38,10 +38,12 @@ const DashboardView: React.FC = () => {
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString("es-ES", {
+        return date.toLocaleString("es-AR", {
             day: "2-digit",
-            month: "short",
+            month: "2-digit",
             year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
         });
     };
 
@@ -146,9 +148,8 @@ const DashboardView: React.FC = () => {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>ID Orden</th>
                                 <th>Usuario</th>
-                                <th>Fecha</th>
+                                <th>Fecha y Hora</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
                             </tr>
@@ -159,12 +160,11 @@ const DashboardView: React.FC = () => {
                                     const statusClass = purchase.estado.toLowerCase();
                                     return (
                                         <tr key={purchase.id}>
-                                            <td className={styles.orderId}>#{purchase.id.substring(0, 8).toUpperCase()}</td>
                                             <td className={styles.userCell}>
                                                 <div className={styles.userAvatar}>{purchase.usuario.nombre.charAt(0)}</div>
                                                 {purchase.usuario.nombre} {purchase.usuario.apellido}
                                             </td>
-                                            <td>{formatDate(purchase.fechaHora)}</td>
+                                            <td className={styles.dateCell}>{formatDate(purchase.fechaHora)}h</td>
                                             <td className={styles.amount}>{formatCurrency(Number(purchase.total))}</td>
                                             <td>
                                                 <span className={styles[statusClass] || styles.badge}>
@@ -176,7 +176,7 @@ const DashboardView: React.FC = () => {
                                 })
                             ) : (
                                 <tr>
-                                    <td colSpan={5} className={styles.emptyTable}>No hay transacciones recientes.</td>
+                                    <td colSpan={4} className={styles.emptyTable}>No hay transacciones recientes.</td>
                                 </tr>
                             )}
                         </tbody>
