@@ -1,4 +1,4 @@
-export function initNavbar(_styles: Record<string, string>, modalStyles: Record<string, string>) {
+export function initNavbar(_styles: Record<string, string>) {
     // Mobile Menu Logic
     const mobileBtn = document.querySelector(".mobile-menu-btn");
     const navLinks = document.querySelector(".nav-links");
@@ -140,9 +140,6 @@ export function initNavbar(_styles: Record<string, string>, modalStyles: Record<
     const authGuest = document.querySelector(".nav-auth-guest") as HTMLElement;
     const authUser = document.querySelector(".nav-auth-user") as HTMLElement;
     const userNameSpan = document.getElementById("user-name");
-    const logoutBtn = document.getElementById("logout-btn");
-    const adminLinks = document.querySelectorAll(".admin-only");
-    const customerLinks = document.querySelectorAll(".customer-only");
 
     function updateAuthUI() {
         const userStr = localStorage.getItem("marketflex_user");
@@ -152,23 +149,6 @@ export function initNavbar(_styles: Record<string, string>, modalStyles: Record<
             const user = JSON.parse(userStr);
             if (userNameSpan)
                 userNameSpan.textContent = user.nombre || "Usuario";
-
-            // Role Based Visibility
-            if (user.rol === "admin") {
-                adminLinks.forEach(
-                    (el) => ((el as HTMLElement).style.display = "flex"),
-                );
-                customerLinks.forEach(
-                    (el) => ((el as HTMLElement).style.display = "none"),
-                );
-            } else {
-                adminLinks.forEach(
-                    (el) => ((el as HTMLElement).style.display = "none"),
-                );
-                customerLinks.forEach(
-                    (el) => ((el as HTMLElement).style.display = "flex"),
-                );
-            }
 
             if (authGuest) authGuest.style.display = "none";
             if (authUser) authUser.style.display = "flex";
@@ -182,32 +162,6 @@ export function initNavbar(_styles: Record<string, string>, modalStyles: Record<
     updateAuthUI();
 
     // Logout Handler with Modal
-    const logoutModal = document.getElementById('navbar-logout-modal');
-    const cancelModalBtn = document.getElementById('navbar-logout-modal-cancel');
-    const confirmLogoutBtn = document.getElementById('navbar-logout-modal-confirm');
-
-    if (logoutBtn && logoutModal && modalStyles.active) {
-        logoutBtn.addEventListener("click", () => {
-            logoutModal.classList.add(modalStyles.active as string);
-        });
-
-        cancelModalBtn?.addEventListener('click', () => {
-            logoutModal.classList.remove(modalStyles.active as string);
-        });
-
-        logoutModal.addEventListener('click', (e) => {
-            if (e.target === logoutModal) {
-                logoutModal.classList.remove(modalStyles.active as string);
-            }
-        });
-
-        confirmLogoutBtn?.addEventListener("click", () => {
-            localStorage.removeItem("marketflex_token");
-            localStorage.removeItem("marketflex_refresh_token");
-            localStorage.removeItem("marketflex_user");
-            window.location.href = "/login";
-        });
-    }
 
     // Search Logic (Validation & Clear)
     const searchForm = document.querySelector(
