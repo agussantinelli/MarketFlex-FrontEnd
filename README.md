@@ -473,21 +473,60 @@
 
 <h2>🧪 Testing y Calidad</h2>
 <p>
-  El frontend implementa una estrategia dual de pruebas para asegurar tanto la lógica interna como la experiencia del usuario final.
+  El frontend de <b>MarketFlex</b> implementa una estrategia de prueba robusta y dual, diseñada para garantizar que tanto la lógica de negocio interna como la experiencia del usuario final sean impecables.
 </p>
+
 <ul>
-  <li><b>Pruebas de Lógica & Infraestructura:</b> <a href="https://vitest.dev/">Vitest</a> + Happy DOM + MSW para servicios, interceptores de API y scripts interactivos. Cobertura del 100% en <code>src/scripts</code> y <code>src/services</code>.</li>
-  <li><b>Verificación de Sesión:</b> Tests específicos para asegurar que el <b>Auto-Refresh</b> de JWT y la inyección de tokens en cada request funcionen correctamente.</li>
-  <li><b>Pruebas E2E (Punta a Punta):</b> <a href="https://playwright.dev/">Playwright</a>. Suite consolidada que valida el flujo completo de negocio: **Login → Descubrimiento de Producto → Carrito → Checkout**.</li>
+  <li><b>🛡️ Pruebas Unitarias y de Lógica:</b> Utilizamos <a href="https://vitest.dev/">Vitest</a> junto con Happy DOM y MSW. Esta capa cubre todos los servicios de la API, interceptores de seguridad (Auto-Refresh JWT) y los scripts interactivos extraídos de los componentes Astro. Contamos con una cobertura del 100% en lógica crítica.</li>
+  <li><b>🎭 Pruebas E2E (End-to-End):</b> Implementadas con <a href="https://playwright.dev/">Playwright</a>. Estas pruebas simulan el comportamiento real del usuario en navegadores modernos, validando integraciones complejas que los tests unitarios no pueden capturar.</li>
+  <li><b>🔗 Mocking de API:</b> Mediante Mock Service Worker (MSW), simulamos el comportamiento del backend para realizar pruebas deterministas y rápidas sin depender de una base de datos real.</li>
 </ul>
+
+<hr>
+
+<h3>🎭 Playwright E2E: El Flujo Maestro</h3>
+<p>
+  La joya de nuestra corona en testing es el <code>marketflex.spec.ts</code>. Este test no solo verifica que la página cargue, sino que ejecuta el <b>"Foundational Flow"</b> del negocio, asegurando que un cliente pueda completar su propósito de principio a fin.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fase</th>
+      <th>Descripción del Test</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>1. Autenticación</b></td>
+      <td>Navega al login, ingresa credenciales y verifica el mensaje de bienvenida dinámico.</td>
+    </tr>
+    <tr>
+      <td><b>2. Descubrimiento</b></td>
+      <td>Explora la sección de ofertas, selecciona un producto real y navega a su ficha técnica (PDP).</td>
+    </tr>
+    <tr>
+      <td><b>3. Interacción</b></td>
+      <td>Agrega el producto al carrito y verifica la notificación visual de éxito (Sileo).</td>
+    </tr>
+    <tr>
+      <td><b>4. Transacción</b></td>
+      <td>Revisa el carrito, completa el formulario de checkout con validación en tiempo real y confirma la compra.</td>
+    </tr>
+    <tr>
+      <td><b>5. Fidelización</b></td>
+      <td>Verifica la página de éxito, navega al historial de "Mis Compras" y valida que el detalle de la orden recién creada sea correcto.</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3>Comandos de Test</h3>
 <pre>
-# Ejecutar tests unitarios (Servicios y Scripts)
+# 🧪 Ejecutar tests unitarios (Servicios y Scripts)
 pnpm test
-# Ejecutar suite E2E completa (Headed)
+# 🎭 Ejecutar suite E2E completa (Modo Headed)
 pnpm run test:e2e
-# Abrir entorno interactivo de Playwright
+# 🛠️ Abrir el Playwright Test Runner (Interfaz UI Interactiva)
 pnpm run test:e2e:ui
 </pre>
 
