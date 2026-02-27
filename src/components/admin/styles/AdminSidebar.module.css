@@ -1,0 +1,123 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: var(--card-bg);
+    /* Match global dark green card bg */
+    border-right: 1px solid var(--green-700);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logoContainer {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--green-800);
+    display: flex;
+    align-items: center;
+}
+
+.logoLink {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.logoImg {
+    height: 32px;
+    width: auto;
+}
+
+.logoText {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--foreground);
+}
+
+.navMenu {
+    padding: 1.5rem 1rem;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navSectionTitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: hsl(0, 0%, 80%);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.navItem:hover:not(.disabled) {
+    background-color: var(--green-800);
+    color: var(--foreground);
+}
+
+.navItem.active {
+    background-color: var(--primary);
+    color: var(--green-900);
+    font-weight: 600;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.navItem.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.bottomSection {
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--green-800);
+}
+
+.clientModeBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    justify-content: center;
+}
+
+.clientModeBtn:hover {
+    background-color: var(--primary);
+    color: var(--green-900);
+}
