@@ -238,7 +238,7 @@
   <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
   <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
   <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>116 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>136 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
   <li>🛒 <b>Premium Checkout Experience:</b> Proceso de compra fluido con:
       <ul>
           <li><b>Multi-Sección:</b> División lógica entre Información Personal, Envío y Pago.</li>
