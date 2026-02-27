@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import PageCard from "../../components/common/PageCard.astro";
 import styles from "./styles/dashboard.module.css";
 
-import { AdminService } from "../../services/AdminService";
+import { AdminService } from "../../services/admin.service";
 
 // Fetch Real Data
 const statsData = await AdminService.getStats();
@@ -30,34 +30,46 @@ const stats = [
     {
         title: "Ingresos Totales",
         value: formatCurrency(statsData?.totalRevenue ?? 0),
-        trend: "+12.5%",
+        trend: statsData?.revenueTrend
+            ? `${statsData.revenueTrend > 0 ? "+" : ""}${statsData.revenueTrend}%`
+            : "0%",
         trendLabel: "este mes",
         icon: "lucide:dollar-sign",
         color: "from-green-500 to-green-300",
+        isPositive: (statsData?.revenueTrend ?? 0) >= 0,
     },
     {
         title: "Ventas Totales",
         value: (statsData?.totalSales ?? 0).toLocaleString(),
-        trend: "+8.2%",
-        trendLabel: "vs ayer",
+        trend: statsData?.salesTrend
+            ? `${statsData.salesTrend > 0 ? "+" : ""}${statsData.salesTrend}%`
+            : "0%",
+        trendLabel: "este mes",
         icon: "lucide:shopping-cart",
         color: "from-blue-500 to-blue-300",
+        isPositive: (statsData?.salesTrend ?? 0) >= 0,
     },
     {
         title: "Venta Promedio",
         value: formatCurrency(statsData?.averageTicket ?? 0),
-        trend: "+2.1%",
-        trendLabel: "por compra",
+        trend: statsData?.avgTrend
+            ? `${statsData.avgTrend > 0 ? "+" : ""}${statsData.avgTrend}%`
+            : "0%",
+        trendLabel: "este mes",
         icon: "lucide:trending-up",
         color: "from-purple-500 to-purple-300",
+        isPositive: (statsData?.avgTrend ?? 0) >= 0,
     },
     {
         title: "Usuarios Activos",
         value: (statsData?.activeUsers ?? 0).toLocaleString(),
-        trend: "+5.3%",
-        trendLabel: "últimas 24h",
+        trend: statsData?.userTrend
+            ? `${statsData.userTrend > 0 ? "+" : ""}${statsData.userTrend}%`
+            : "0%",
+        trendLabel: "este mes",
         icon: "lucide:users",
         color: "from-yellow-500 to-yellow-300",
+        isPositive: (statsData?.userTrend ?? 0) >= 0,
     },
 ];
 ---
@@ -102,9 +114,15 @@ const stats = [
                                     {stat.value}
                                 </div>
                                 <span
-                                    class={`${styles.statTrend} ${styles.positive}`}
+                                    class={`${styles.statTrend} ${stat.isPositive ? styles.positive : styles.negative}`}
                                 >
-                                    <Icon name="lucide:arrow-up-right" />{" "}
+                                    <Icon
+                                        name={
+                                            stat.isPositive
+                                                ? "lucide:arrow-up-right"
+                                                : "lucide:arrow-down-right"
+                                        }
+                                    />{" "}
                                     {stat.trend}
                                     <span class={styles.trendLabel}>
                                         {stat.trendLabel}
