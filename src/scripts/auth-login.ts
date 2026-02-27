@@ -19,7 +19,11 @@ const handleFacebookCodeLogin = async (code: string, redirectUri: string) => {
         localStorage.setItem("marketflex_user", JSON.stringify(result.user));
 
         const userName = result.user.nombre || "Usuario";
-        window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}`;
+        const redirectUrl = result.user.rol === "admin" ? "/admin/dashboard" : "/";
+        if (result.user.rol === "admin") {
+            localStorage.setItem("marketflex_admin:isAdminMode", "true");
+        }
+        window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}`;
     } catch (error: any) {
         console.error("❌ [Auth] Facebook code exchange error:", error);
         if (typeof (window as any).triggerSileo === 'function') {
@@ -40,7 +44,11 @@ const handleGoogleLogin = async (credentialResponse: any) => {
 
         const userName = result.user.nombre || "Usuario";
         const newParam = result.isNewUser ? "&new=true" : "";
-        window.location.href = `/?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
+        const redirectUrl = result.user.rol === "admin" ? "/admin/dashboard" : "/";
+        if (result.user.rol === "admin") {
+            localStorage.setItem("marketflex_admin:isAdminMode", "true");
+        }
+        window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
     } catch (error: any) {
         console.error("❌ [Auth] Google login error:", error);
         if (typeof (window as any).triggerSileo === 'function') {
@@ -159,7 +167,11 @@ export function initLogin() {
                 localStorage.setItem("marketflex_refresh_token", response.refreshToken);
                 localStorage.setItem("marketflex_user", JSON.stringify(response.user));
 
-                window.location.href = `/?login_success=true&user=${encodeURIComponent(response.user.nombre || "Usuario")}`;
+                const redirectUrl = response.user.rol === "admin" ? "/admin/dashboard" : "/";
+                if (response.user.rol === "admin") {
+                    localStorage.setItem("marketflex_admin:isAdminMode", "true");
+                }
+                window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(response.user.nombre || "Usuario")}`;
             } catch (error: any) {
                 console.error("❌ Login error:", error);
                 let message = "Ocurrió un error al iniciar sesión";
