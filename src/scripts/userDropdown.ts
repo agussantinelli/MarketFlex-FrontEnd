@@ -1,3 +1,5 @@
+let documentClickInitialized = false;
+
 export function initUserDropdown(modalStyles?: Record<string, string>) {
     const userNameSpans = document.querySelectorAll(".user-name-display");
     const logoutBtns = document.querySelectorAll(".logout-trigger-btn");
@@ -21,6 +23,9 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
             const menu = dropdownMenus[index];
             if (!menu) return;
 
+            if (btn.hasAttribute("data-dropdown-init")) return;
+            btn.setAttribute("data-dropdown-init", "true");
+
             // Toggle menu on click
             const toggleHandler = (e: Event) => {
                 e.preventDefault();
@@ -28,20 +33,30 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                 e.stopPropagation();
             };
 
-            // Re-auth safe listener
-            btn.removeEventListener("click", toggleHandler);
             btn.addEventListener("click", toggleHandler);
+        });
 
-            // Close menu on click outside
+        // Close menu on click outside (Attach only once per document)
+        if (!documentClickInitialized) {
             document.addEventListener("click", (e) => {
-                if (!btn.contains(e.target as Node) && !menu.contains(e.target as Node)) {
-                    menu.classList.remove("active");
+                const currentBtns = document.querySelectorAll(".dropdown-trigger");
+                const currentMenus = document.querySelectorAll(".dropdown-menu");
+
+                let clickedInside = false;
+                currentBtns.forEach((btn, i) => {
+                    const menu = currentMenus[i];
+                    if (btn.contains(e.target as Node) || (menu && menu.contains(e.target as Node))) {
+                        clickedInside = true;
+                    }
+                });
+
+                if (!clickedInside) {
+                    currentMenus.forEach(menu => menu.classList.remove("active"));
                 }
             });
-        });
+            documentClickInitialized = true;
+        }
     }
-
-
 
     // Role state Check
     function updateAuthUI() {
@@ -99,12 +114,14 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
         };
 
         goAdminBtns.forEach(btn => {
-            btn.removeEventListener("click", navigateToAdmin);
+            if (btn.hasAttribute("data-nav-init")) return;
+            btn.setAttribute("data-nav-init", "true");
             btn.addEventListener("click", navigateToAdmin);
         });
 
         goClientBtns.forEach(btn => {
-            btn.removeEventListener("click", navigateToClient);
+            if (btn.hasAttribute("data-nav-init")) return;
+            btn.setAttribute("data-nav-init", "true");
             btn.addEventListener("click", navigateToClient);
         });
     }
@@ -112,41 +129,41 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
     // Connect logout button to local modal
     const logoutModal = document.getElementById('user-logout-modal');
     const cancelModalBtn = document.getElementById('user-logout-modal-cancel');
+
+    // We get the confirm button inside the modal instead of redefining it with `cloneNode` hack
+    const confirmModalBtn = document.getElementById('user-logout-modal-confirm');
+
     if (logoutBtns.length > 0 && logoutModal && modalStyles?.active) {
         logoutBtns.forEach(btn => {
+            if (btn.hasAttribute("data-logout-init")) return;
+            btn.setAttribute("data-logout-init", "true");
+
             btn.addEventListener("click", () => {
                 logoutModal.classList.add(modalStyles.active as string);
                 dropdownMenus.forEach(menu => menu.classList.remove("active"));
             });
         });
 
-        cancelModalBtn?.addEventListener('click', () => {
-            logoutModal.classList.remove(modalStyles.active as string);
-        });
+        // Initialize modal only once
+        if (!logoutModal.hasAttribute("data-modal-init")) {
+            logoutModal.setAttribute("data-modal-init", "true");
 
-        // Ensure we only attach once to the modal
-        const newModal = logoutModal.cloneNode(true);
-        logoutModal.parentNode?.replaceChild(newModal, logoutModal);
+            cancelModalBtn?.addEventListener('click', () => {
+                logoutModal.classList.remove(modalStyles.active as string);
+            });
 
-        const finalModal = document.getElementById('user-logout-modal');
-        const finalCancelBtn = document.getElementById('user-logout-modal-cancel');
-        const finalConfirmBtn = document.getElementById('user-logout-modal-confirm');
+            logoutModal.addEventListener('click', (e) => {
+                if (e.target === logoutModal) {
+                    logoutModal.classList.remove(modalStyles.active as string);
+                }
+            });
 
-        finalCancelBtn?.addEventListener('click', () => {
-            finalModal?.classList.remove(modalStyles.active as string);
-        });
-
-        finalModal?.addEventListener('click', (e) => {
-            if (e.target === finalModal) {
-                finalModal.classList.remove(modalStyles.active as string);
-            }
-        });
-
-        finalConfirmBtn?.addEventListener("click", () => {
-            localStorage.removeItem("marketflex_token");
-            localStorage.removeItem("marketflex_refresh_token");
-            localStorage.removeItem("marketflex_user");
-            window.location.href = "/login";
-        });
+            confirmModalBtn?.addEventListener("click", () => {
+                localStorage.removeItem("marketflex_token");
+                localStorage.removeItem("marketflex_refresh_token");
+                localStorage.removeItem("marketflex_user");
+                window.location.href = "/login";
+            });
+        }
     }
 }
