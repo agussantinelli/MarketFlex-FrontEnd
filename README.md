@@ -479,7 +479,6 @@
 <ul>
   <li><b>🛡️ Unit Testing: Cobertura Total de Componentes</b>
     <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema:</p>
-    
     <table>
       <thead>
         <tr>
