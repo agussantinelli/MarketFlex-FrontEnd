@@ -34,6 +34,6 @@ jobs:
         run: pnpm test
 
       - name: Run E2E Tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e:ci
         # Note: In CI, this might need a different base URL or a running backend
         # For now, we add the command to the flow.
