@@ -145,7 +145,8 @@ const DashboardView: React.FC = () => {
                         <thead>
                             <tr>
                                 <th>Usuario</th>
-                                <th>Fecha y Hora</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
                             </tr>
@@ -160,7 +161,8 @@ const DashboardView: React.FC = () => {
                                                 <div className={styles.userAvatar}>{purchase.usuario.nombre.charAt(0)}</div>
                                                 {purchase.usuario.nombre} {purchase.usuario.apellido}
                                             </td>
-                                            <td className={styles.dateCell}>{formatOrderDate(purchase.fechaHora)}</td>
+                                            <td className={styles.dateCell}>{formatOrderDate(purchase.fechaHora).split(', ')[0]}</td>
+                                            <td className={styles.dateCell}>{formatOrderDate(purchase.fechaHora).split(', ')[1]}</td>
                                             <td className={styles.amount}>{formatCurrency(Number(purchase.total))}</td>
                                             <td>
                                                 <span className={styles[statusClass] || styles.badge}>
