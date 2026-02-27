@@ -30,12 +30,10 @@ export default defineConfig({
        2. Run 'pnpm dev' (BackEnd)
        3. Run 'pnpm test:e2e'
     */
-    /* 
     webServer: {
         command: 'pnpm dev --port 2611',
         url: 'https://localhost:2611',
         reuseExistingServer: true,
-        timeout: 120000,
+        timeout: 30000,
     },
-    */
 });
