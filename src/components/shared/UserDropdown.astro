@@ -15,6 +15,23 @@ import styles from "../../layouts/styles/Navbar.module.css";
         >
         <Icon name="lucide:chevron-down" class={styles.dropdownIcon} />
     </button>
+    <script is:inline>
+        try {
+            const userStr = localStorage.getItem("marketflex_user");
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                if (user && user.nombre) {
+                    const nameSpans =
+                        document.querySelectorAll(".user-name-display");
+                    nameSpans.forEach(
+                        (span) => (span.textContent = user.nombre),
+                    );
+                }
+            }
+        } catch (e) {
+            // Ignore parse errors safely
+        }
+    </script>
 
     <div class={`${styles.dropdownMenu} dropdown-menu`} id="user-dropdown-menu">
         <a href="/profile" class={styles.dropdownItem}>
