@@ -1,0 +1,111 @@
+---
+import "../styles/globals.css";
+import AdminSidebar from "../components/admin/AdminSidebar";
+import UserDropdown from "../components/shared/UserDropdown.astro";
+import { ViewTransitions } from "astro:transitions";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Panel de Administración MarketFlex" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | MarketFlex Admin</title>
+        <ViewTransitions />
+        <style>
+            .admin-container {
+                display: flex;
+                min-height: 100vh;
+                background-color: var(--background);
+            }
+            .admin-main {
+                flex: 1;
+                margin-left: 260px; /* Width of the sidebar */
+                display: flex;
+                flex-direction: column;
+            }
+            .admin-header {
+                height: 70px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 0 2rem;
+                background: var(--foreground);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            .admin-content {
+                flex: 1;
+                padding: 2rem;
+                overflow-y: auto;
+            }
+
+            @media (max-width: 768px) {
+                .admin-main {
+                    margin-left: 0;
+                }
+                .admin-content {
+                    padding: 1rem;
+                    padding-top: 80px; /* Space for mobile header if added later */
+                }
+                /* Note: Sidebar mobile responsiveness handled separately in CSS or React if needed */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="admin-container">
+            <AdminSidebar client:load />
+            <div class="admin-main">
+                <header class="admin-header">
+                    <UserDropdown />
+                </header>
+                <main class="admin-content">
+                    <slot />
+                </main>
+            </div>
+        </div>
+
+        <!-- Sileo Root for notifications -->
+        <span id="sileo-root"></span>
+        <script>
+            const checkAdminAccess = () => {
+                const userStr = localStorage.getItem("marketflex_user");
+                if (!userStr) {
+                    window.location.href = "/login?redirect=/admin/dashboard";
+                    return;
+                }
+
+                try {
+                    const user = JSON.parse(userStr);
+                    if (user.rol !== "admin") {
+                        window.location.href = "/";
+                        return;
+                    }
+
+                    // Check if they explicitly disabled Admin Mode
+                    const adminSettings =
+                        localStorage.getItem("marketflex_admin:");
+                    if (adminSettings) {
+                        const parsedSettings = JSON.parse(adminSettings);
+                        if (parsedSettings.isAdminMode === "false") {
+                            window.location.href = "/";
+                        }
+                    }
+                } catch (e) {
+                    window.location.href = "/login";
+                }
+            };
+
+            // Initialize on first load
+            checkAdminAccess();
+        </script>
+    </body>
+</html>

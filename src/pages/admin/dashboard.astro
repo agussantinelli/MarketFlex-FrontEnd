@@ -1,11 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import PageCard from "../../components/common/PageCard.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
 import DashboardView from "../../components/admin/DashboardView.tsx";
 ---
 
-<Layout title="MarketFlex | Admin Dashboard">
-    <PageCard maxWidth="1400px" variant="dark">
-        <DashboardView client:only="react" />
-    </PageCard>
-</Layout>
+<AdminLayout title="Dashboard">
+    <DashboardView client:only="react" />
+</AdminLayout>

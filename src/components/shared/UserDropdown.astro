@@ -1,0 +1,93 @@
+---
+import { Icon } from "astro-icon/components";
+import ConfirmationModal from "../common/ConfirmationModal.astro";
+import styles from "../../layouts/styles/Navbar.module.css";
+---
+
+<div class={`${styles.userDropdown} user-dropdown`}>
+    <button
+        class={`${styles.dropdownTrigger} dropdown-trigger`}
+        id="user-dropdown-btn"
+    >
+        <span class={styles.userGreeting}
+            >Hola, <span id="user-name">Usuario</span></span
+        >
+        <Icon name="lucide:chevron-down" class={styles.dropdownIcon} />
+    </button>
+
+    <div class={`${styles.dropdownMenu} dropdown-menu`} id="user-dropdown-menu">
+        <a href="/profile" class={styles.dropdownItem}>
+            <Icon name="lucide:user" class={styles.itemIcon} />
+            Mi Perfil
+        </a>
+
+        <!-- Admin Dashboard Link (Only visible in Client Mode via JS if admin) -->
+        <a
+            id="admin-dashboard-link"
+            href="/admin/dashboard"
+            class={`${styles.dropdownItem} admin-only`}
+            style="display: none;"
+        >
+            <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
+            Panel Admin
+        </a>
+
+        <!-- Client Purchases Link (Hidden in Admin Mode via JS) -->
+        <a
+            id="client-purchases-link"
+            href="/orders"
+            class={styles.dropdownItem}
+        >
+            <Icon name="lucide:shopping-bag" class={styles.itemIcon} />
+            Mis Compras
+        </a>
+
+        <div
+            class={`${styles.dropdownDivider} admin-only`}
+            style="display: none;"
+        >
+        </div>
+
+        <!-- Mode Toggle Button (Always visible to admins) -->
+        <button
+            id="admin-mode-toggle"
+            class={`${styles.dropdownItem} admin-only`}
+            style="display: none;"
+        >
+            <Icon name="lucide:refresh-cw" class={styles.itemIcon} />
+            <span id="admin-mode-text">Cambiar a Vista Administrador</span>
+        </button>
+
+        <div class={styles.dropdownDivider}></div>
+
+        <button
+            id="logout-btn"
+            class={`${styles.dropdownItem} ${styles.textRed}`}
+        >
+            <Icon name="lucide:log-out" class={styles.itemIcon} />
+            Cerrar Sesión
+        </button>
+    </div>
+</div>
+
+<ConfirmationModal
+    id="user-logout-modal"
+    title="¿Cerrar sesión?"
+    message="¿Estás seguro que deseas cerrar tu sesión actual? Tendrás que volver a ingresar tus credenciales para acceder de nuevo."
+    confirmText="Cerrar Sesión"
+    cancelText="Cancelar"
+    type="danger"
+/>
+
+<script>
+    import { initUserDropdown } from "../../scripts/userDropdown";
+    import modalStyles from "../common/styles/ConfirmationModal.module.css";
+
+    // Initialize component logic
+    document.addEventListener("astro:page-load", () => {
+        initUserDropdown(modalStyles);
+    });
+
+    // Run once on initial load as well
+    initUserDropdown(modalStyles);
+</script>

@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { getCategories } from "../services/category.service";
 import { getSubcategories } from "../services/subcategory.service";
-import ConfirmationModal from "../components/common/ConfirmationModal.astro";
+import UserDropdown from "../components/shared/UserDropdown.astro";
 import styles from "./styles/Navbar.module.css";
 
 const categories = await getCategories();
@@ -164,78 +164,20 @@ const subcategories = await getSubcategories();
                     <Icon name="lucide:shopping-cart" class={styles.cartIcon} />
                     <span class={`${styles.cartBadge} cart-count`}>0</span>
                 </a>
-                <div class={`${styles.userDropdown} user-dropdown`}>
-                    <button
-                        class={`${styles.dropdownTrigger} dropdown-trigger`}
-                    >
-                        <span class={styles.userGreeting}
-                            >Hola, <span id="user-name">Usuario</span></span
-                        >
-                        <Icon
-                            name="lucide:chevron-down"
-                            class={styles.dropdownIcon}
-                        />
-                    </button>
-                    <div class={`${styles.dropdownMenu} dropdown-menu`}>
-                        <a href="/profile" class={styles.dropdownItem}>
-                            <Icon name="lucide:user" class={styles.itemIcon} />
-                            Mi Perfil
-                        </a>
-                        <a
-                            href="/admin/dashboard"
-                            class={`${styles.dropdownItem} admin-only`}
-                            style="display: none;"
-                        >
-                            <Icon
-                                name="lucide:layout-dashboard"
-                                class={styles.itemIcon}
-                            />
-                            Panel Admin
-                        </a>
-                        <a href="/orders" class={styles.dropdownItem}>
-                            <Icon
-                                name="lucide:shopping-bag"
-                                class={styles.itemIcon}
-                            />
-                            Mis Compras
-                        </a>
-                        <div class={styles.dropdownDivider}></div>
-                        <button
-                            id="logout-btn"
-                            class={`${styles.dropdownItem} ${styles.textRed}`}
-                        >
-                            <Icon
-                                name="lucide:log-out"
-                                class={styles.itemIcon}
-                            />
-                            Cerrar Sesión
-                        </button>
-                    </div>
-                </div>
+                <UserDropdown />
             </div>
         </div>
     </div>
-
-    <ConfirmationModal
-        id="navbar-logout-modal"
-        title="¿Cerrar sesión?"
-        message="¿Estás seguro que deseas cerrar tu sesión actual? Tendrás que volver a ingresar tus credenciales para acceder de nuevo."
-        confirmText="Cerrar Sesión"
-        cancelText="Cancelar"
-        type="danger"
-    />
 </nav>
 
 <script>
     import { initNavbar } from "../scripts/navbar";
     import styles from "./styles/Navbar.module.css";
-    import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
+    // We import modalStyles globally or locally if needed for confirmation modal
 
     // Initialize on load
-    initNavbar(styles, modalStyles);
+    initNavbar(styles);
 
     // Support for View Transitions
-    document.addEventListener("astro:page-load", () =>
-        initNavbar(styles, modalStyles),
-    );
+    document.addEventListener("astro:page-load", () => initNavbar(styles));
 </script>
