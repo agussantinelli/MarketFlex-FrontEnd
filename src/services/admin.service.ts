@@ -4,7 +4,7 @@ import type { AdminStats, AdminPurchase } from '../types/admin.types';
 export const AdminService = {
     async getStats(): Promise<AdminStats | null> {
         try {
-            const result: any = await api.get('admin/stats').json();
+            const result = await api.get('admin/stats').json<{ data: AdminStats }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching admin stats:', error);
@@ -14,7 +14,7 @@ export const AdminService = {
 
     async getAllPurchases(): Promise<AdminPurchase[]> {
         try {
-            const result: any = await api.get('admin/purchases').json();
+            const result = await api.get('admin/purchases').json<{ data: AdminPurchase[] }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching all purchases:', error);

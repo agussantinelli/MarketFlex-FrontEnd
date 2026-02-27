@@ -15,7 +15,16 @@ describe('AdminService', () => {
 
     describe('getStats', () => {
         it('should return stats on success', async () => {
-            const mockStats = { totalRevenue: 1000, totalSales: 10, averageTicket: 100, activeUsers: 5 };
+            const mockStats = {
+                totalRevenue: 1000,
+                totalSales: 10,
+                averageTicket: 100,
+                activeUsers: 5,
+                revenueTrend: 12.5,
+                salesTrend: 8.2,
+                avgTrend: 2.1,
+                userTrend: 5.3
+            };
             (api.get as any).mockReturnValue({
                 json: vi.fn().mockResolvedValue({ data: mockStats })
             });
