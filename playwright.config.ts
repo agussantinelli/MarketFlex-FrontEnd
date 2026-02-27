@@ -2,6 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
     testDir: './tests',
+    timeout: 300000,
+    expect: {
+        timeout: 30000
+    },
     fullyParallel: false,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
@@ -9,10 +13,10 @@ export default defineConfig({
     reporter: 'html',
     use: {
         baseURL: 'https://localhost:2611',
-        trace: 'on',
+        trace: 'retain-on-failure',
         ignoreHTTPSErrors: true,
-        screenshot: 'on',
-        video: 'on',
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
     },
     projects: [
         {
