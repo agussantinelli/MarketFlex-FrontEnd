@@ -1,28 +1,5 @@
 import { api } from '../lib/api';
-
-export interface AdminStats {
-    totalRevenue: number;
-    totalSales: number;
-    averageTicket: number;
-    activeUsers: number;
-}
-
-export interface AdminPurchase {
-    id: string;
-    fechaHora: string;
-    total: number;
-    metodoPago: string;
-    estado: string;
-    usuario: {
-        nombre: string;
-        apellido: string;
-    };
-    lineas: Array<{
-        nombreProducto: string;
-        cantidad: number;
-        subtotal: number;
-    }>;
-}
+import type { AdminStats, AdminPurchase } from '../types/admin.types';
 
 export const AdminService = {
     async getStats(): Promise<AdminStats | null> {
