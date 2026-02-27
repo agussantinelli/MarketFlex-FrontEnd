@@ -255,6 +255,16 @@
 
 <hr>
 
+<h2>👁️ Sistema de Vistas del Administrador</h2>
+<p>Para simplificar y optimizar la experiencia de los administradores de la plataforma, MarketFlex implementa un sistema de <b>Vistas Binarias (Strict Binary Views)</b>. Al iniciar sesión con una cuenta de rol `admin`, el comportamiento es el siguiente:</p>
+<ul>
+    <li><b>Landing por Defecto (Panel Administrador):</b> Todo inicio de sesión de administrador redirige inmediata y automáticamente al <code>/admin/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas sin pasar por el catálogo de ventas.</li>
+    <li><b>Vista Cliente (Tienda):</b> Desde el menú desplegable del perfil en el Panel de Administración, existe un único botón llamado <b>"Volver a Tienda"</b>. Al accionarlo, el administrador se convierte temporalmente en un navegante estándar, pudiendo ver ofertas, agregar al carrito y auditar la experiencia de usuario real en la ruta <code>/</code>.</li>
+    <li><b>Retorno al Panel:</b> Estando en la "Vista Cliente", el menú del perfil adapta dinámicamente sus opciones (ocultando "Mis Compras") y ofrece un único botón de escape llamado <b>"Panel Administrador"</b>, que devuelve al usuario de forma segura a sus métricas, cerrando el ciclo.</li>
+</ul>
+
+<hr>
+
 <h2>🏝️ Arquitectura de Componentes (Astro Islands)</h2>
 <p>Este proyecto se enorgullece de ser súper rápido y eficiente al renderizar gracias a la implementación nativa de la <b>Arquitectura de Islas de Astro</b>. El patrón de diseño sigue estos principios rectores:</p>
 <ul>
