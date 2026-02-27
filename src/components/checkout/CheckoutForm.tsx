@@ -4,28 +4,44 @@ import { HiOutlineUser, HiOutlineTruck, HiExclamationCircle } from 'react-icons/
 import { MdOutlinePayment, MdCreditCard, MdAccountBalance, MdPayments } from 'react-icons/md';
 import styles from './styles/CheckoutForm.module.css';
 import { checkoutStore, updateFormData, updatePaymentMethod } from '../../store/checkoutStore';
+import { getProfile } from '../../services/user.service';
 
 const CheckoutForm: React.FC = () => {
     const { formData, paymentMethod, error } = useStore(checkoutStore);
 
     useEffect(() => {
-        const userStr = localStorage.getItem('marketflex_user');
-        if (userStr) {
-            try {
-                const user = JSON.parse(userStr);
-                updateFormData({
-                    nombre: user.nombre ? `${user.nombre} ${user.apellido || ''}`.trim() : '',
-                    email: user.email || '',
-                    ciudad: user.ciudad || user.ciudadResidencia || '',
-                    cp: user.codigoPostal || '',
-                    telefono: user.telefono || '',
-                    direccion: user.direccion || '',
-                    provincia: user.provincia || ''
-                });
-            } catch (e) {
-                console.error("Error parsing user data for checkout", e);
+        const fetchInitialData = async () => {
+            // 1. Initial pre-fill from localStorage (fast)
+            const userStr = localStorage.getItem('marketflex_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    syncUserToForm(user);
+                } catch (e) { }
             }
-        }
+
+            // 2. Refresh from API (robust)
+            try {
+                const freshUser = await getProfile();
+                syncUserToForm(freshUser);
+            } catch (err) {
+                console.error("Error refreshing profile for checkout", err);
+            }
+        };
+
+        const syncUserToForm = (user: any) => {
+            updateFormData({
+                nombre: user.nombre ? `${user.nombre} ${user.apellido || ''}`.trim() : '',
+                email: user.email || '',
+                ciudad: user.ciudad || user.ciudadResidencia || '',
+                cp: user.codigoPostal || '',
+                telefono: user.telefono || '',
+                direccion: user.direccion || '',
+                provincia: user.provincia || ''
+            });
+        };
+
+        fetchInitialData();
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
