@@ -4,73 +4,60 @@ import { Icon } from "astro-icon/components";
 import PageCard from "../../components/common/PageCard.astro";
 import styles from "./styles/dashboard.module.css";
 
-// Mocked Data
+import { AdminService } from "../../services/AdminService";
+
+// Fetch Real Data
+const statsData = await AdminService.getStats();
+const recentPurchases = await AdminService.getAllPurchases();
+
+const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+    }).format(amount);
+};
+
+const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
+};
+
 const stats = [
     {
         title: "Ingresos Totales",
-        value: "$152,450",
+        value: formatCurrency(statsData?.totalRevenue ?? 0),
         trend: "+12.5%",
+        trendLabel: "este mes",
         icon: "lucide:dollar-sign",
         color: "from-green-500 to-green-300",
     },
     {
         title: "Ventas Totales",
-        value: "1,245",
+        value: (statsData?.totalSales ?? 0).toLocaleString(),
         trend: "+8.2%",
+        trendLabel: "vs ayer",
         icon: "lucide:shopping-cart",
         color: "from-blue-500 to-blue-300",
     },
     {
-        title: "Ticket Promedio",
-        value: "$122.45",
+        title: "Venta Promedio",
+        value: formatCurrency(statsData?.averageTicket ?? 0),
         trend: "+2.1%",
+        trendLabel: "por compra",
         icon: "lucide:trending-up",
         color: "from-purple-500 to-purple-300",
     },
     {
         title: "Usuarios Activos",
-        value: "842",
-        trend: "+15.3%",
+        value: (statsData?.activeUsers ?? 0).toLocaleString(),
+        trend: "+5.3%",
+        trendLabel: "últimas 24h",
         icon: "lucide:users",
         color: "from-yellow-500 to-yellow-300",
-    },
-];
-
-const recentOrders = [
-    {
-        id: "#ORD-7821",
-        user: "Laurent Mekies",
-        date: "19 Feb, 2026",
-        amount: "$350.00",
-        status: "Completado",
-    },
-    {
-        id: "#ORD-7820",
-        user: "Max Verstappen",
-        date: "19 Feb, 2026",
-        amount: "$120.50",
-        status: "Procesando",
-    },
-    {
-        id: "#ORD-7819",
-        user: "Lewis Hamilton",
-        date: "18 Feb, 2026",
-        amount: "$85.00",
-        status: "Completado",
-    },
-    {
-        id: "#ORD-7818",
-        user: "Charles Leclerc",
-        date: "18 Feb, 2026",
-        amount: "$420.00",
-        status: "Cancelado",
-    },
-    {
-        id: "#ORD-7817",
-        user: "Fernando Alonso",
-        date: "17 Feb, 2026",
-        amount: "$210.00",
-        status: "Completado",
     },
 ];
 ---
@@ -119,6 +106,9 @@ const recentOrders = [
                                 >
                                     <Icon name="lucide:arrow-up-right" />{" "}
                                     {stat.trend}
+                                    <span class={styles.trendLabel}>
+                                        {stat.trendLabel}
+                                    </span>
                                 </span>
                             </div>
                         </div>
@@ -146,34 +136,63 @@ const recentOrders = [
                         </thead>
                         <tbody id="transactions-body">
                             {
-                                recentOrders.map((order) => (
+                                recentPurchases.length > 0 ? (
+                                    recentPurchases
+                                        .slice(0, 10)
+                                        .map((purchase) => (
+                                            <tr>
+                                                <td class={styles.orderId}>
+                                                    #
+                                                    {purchase.id
+                                                        .substring(0, 8)
+                                                        .toUpperCase()}
+                                                </td>
+                                                <td class={styles.userCell}>
+                                                    <div
+                                                        class={
+                                                            styles.userAvatar
+                                                        }
+                                                    >
+                                                        {purchase.usuario.nombre.charAt(
+                                                            0,
+                                                        )}
+                                                    </div>
+                                                    {purchase.usuario.nombre}{" "}
+                                                    {purchase.usuario.apellido}
+                                                </td>
+                                                <td>
+                                                    {formatDate(
+                                                        purchase.fechaHora,
+                                                    )}
+                                                </td>
+                                                <td class={styles.amount}>
+                                                    {formatCurrency(
+                                                        purchase.total,
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class={
+                                                            styles[
+                                                                purchase.estado.toLowerCase()
+                                                            ] || ""
+                                                        }
+                                                    >
+                                                        {purchase.estado}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))
+                                ) : (
                                     <tr>
-                                        <td class={styles.orderId}>
-                                            {order.id}
-                                        </td>
-                                        <td class={styles.userCell}>
-                                            <div class={styles.userAvatar}>
-                                                {order.user.charAt(0)}
-                                            </div>
-                                            {order.user}
-                                        </td>
-                                        <td>{order.date}</td>
-                                        <td class={styles.amount}>
-                                            {order.amount}
-                                        </td>
-                                        <td>
-                                            <span
-                                                class={
-                                                    styles[
-                                                        order.status.toLowerCase()
-                                                    ]
-                                                }
-                                            >
-                                                {order.status}
-                                            </span>
+                                        <td
+                                            colspan="5"
+                                            style="text-align: center; padding: 2rem; color: var(--green-cream); opacity: 0.5;"
+                                        >
+                                            No hay transacciones recientes.
                                         </td>
                                     </tr>
-                                ))
+                                )
                             }
                         </tbody>
                     </table>
@@ -182,9 +201,3 @@ const recentOrders = [
         </div>
     </PageCard>
 </Layout>
-
-<script>
-    import { initAdminDashboard } from "../../scripts/admin-dashboard";
-    initAdminDashboard();
-    document.addEventListener("astro:page-load", initAdminDashboard);
-</script>

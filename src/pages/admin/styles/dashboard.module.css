@@ -147,6 +147,13 @@
     color: #f87171;
 }
 
+.trendLabel {
+    color: rgba(255, 255, 255, 0.4);
+    margin-left: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
 /* Recent Activity */
 .recentActivity {
     background: rgba(var(--green-900), 0.2);
