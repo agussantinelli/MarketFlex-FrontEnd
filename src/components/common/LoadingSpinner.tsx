@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './styles/LoadingSpinner.module.css';
 
-interface LoadingSpinnerProps {
+type LoadingSpinnerProps = {
     message?: string;
     fullPage?: boolean;
-}
+};
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     message = 'Cargando...',

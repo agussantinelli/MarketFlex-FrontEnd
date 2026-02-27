@@ -7,20 +7,20 @@ import type { Subcategory } from "../../types/subcategory.types";
 import type { Promotion } from "../../types/promotion.types";
 import type { Brand } from "../../types/brand.types";
 
-interface Props {
+type Props = {
     categories: Category[];
     subcategories: Subcategory[];
     promotions: Promotion[];
     brands: Brand[];
-    currentType?: string;
-    currentCategory?: string;
-    currentPromotion?: string;
-    currentBrands?: string[];
-    currentMinPrice?: string;
-    currentMaxPrice?: string;
+    currentType?: string | undefined;
+    currentCategory?: string | undefined;
+    currentPromotion?: string | undefined;
+    currentBrands?: string[] | undefined;
+    currentMinPrice?: string | undefined;
+    currentMaxPrice?: string | undefined;
     showOnlyOffersFilter?: boolean;
     fixedKeys?: string[];
-}
+};
 
 const {
     categories,

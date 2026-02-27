@@ -1,15 +1,8 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { computed } from 'nanostores';
 import type { Product } from '../types/product.types';
+import type { CartItem, CartStore } from '../types/cart.types';
 import { calculatePromotions } from './promotionEngine.ts';
-
-export interface CartItem extends Product {
-    quantity: number;
-}
-
-export interface CartStore {
-    items: CartItem[];
-}
 
 // Persist cart in localStorage
 export const cart = persistentAtom<CartStore>('marketflex_cart', { items: [] }, {

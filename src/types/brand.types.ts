@@ -1,9 +1,9 @@
-export interface Brand {
+export type Brand = {
     id: string;
     nombre: string;
-}
+};
 
-export interface BrandsResponse {
+export type BrandsResponse = {
     status: string;
     data: Brand[];
-}
+};

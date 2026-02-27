@@ -2,19 +2,19 @@
 import { Icon } from "astro-icon/components";
 import styles from "./styles/ActiveFilters.module.css";
 
-interface Props {
+type Props = {
     baseUrl: string;
     params: URLSearchParams;
     fixedKeys?: string[];
-}
+};
 
 const { baseUrl, params, fixedKeys = [] } = Astro.props;
 
-interface ActiveFilter {
+type ActiveFilter = {
     label: string;
     key: string;
     url: string;
-}
+};
 
 const activeFilters: ActiveFilter[] = [];
 

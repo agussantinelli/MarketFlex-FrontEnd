@@ -2,11 +2,11 @@
 import { Icon } from "astro-icon/components";
 import styles from "./styles/controls.module.css";
 
-interface Props {
+type Props = {
     sort: string;
     baseUrl: string;
     params?: URLSearchParams;
-}
+};
 
 const { sort, baseUrl, params = new URLSearchParams() } = Astro.props;
 

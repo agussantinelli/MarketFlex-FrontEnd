@@ -1,5 +1,5 @@
 import { api } from "../lib/api";
-import type { Product } from '../types/product.types';
+import type { Product, SearchOptions } from '../types/product.types';
 import type { PaginatedResponse } from '../types/common.types';
 
 export const getProducts = async (page: number = 1, limit: number = 20, minPrice?: string, maxPrice?: string, brand?: string): Promise<PaginatedResponse<Product>> => {
@@ -22,24 +22,6 @@ export const getProducts = async (page: number = 1, limit: number = 20, minPrice
         };
     }
 };
-
-interface SearchOptions {
-    query?: string;
-    sort?: string;
-    type?: string;
-    category?: string;
-    offers?: string;
-    page?: number;
-    limit?: number;
-    minPrice?: string;
-    maxPrice?: string;
-    withStock?: string;
-    onlyOffers?: string;
-    brand?: string;
-    promotion?: string;
-}
-
-// Pagination interfaces moved to common.types.ts
 
 export const searchProducts = async (options: SearchOptions): Promise<PaginatedResponse<Product>> => {
     try {
@@ -146,6 +128,7 @@ export const getOffers = async (page: number = 1, limit: number = 20, sort?: str
         };
     }
 };
+
 export const getProductById = async (id: string): Promise<Product | null> => {
     try {
         const response: { data: Product } = await api.get(`products/${id}`).json();

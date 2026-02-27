@@ -1,23 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { cart, clearCart, cartTotals } from './cartStore';
 import { createPurchase } from '../services/purchase.service';
-
-export interface CheckoutState {
-    formData: {
-        nombre: string;
-        email: string;
-        telefono: string;
-        direccion: string;
-        ciudad: string;
-        provincia: string;
-        cp: string;
-    };
-    paymentMethod: 'card' | 'cash' | 'transfer';
-    isSubmitting: boolean;
-    error: string | null;
-    success: boolean;
-    lastOrderTotal: number;
-}
+import type { CheckoutState } from '../types/checkout.types';
 
 export const checkoutStore = persistentAtom<CheckoutState>('marketflex_checkout', {
     formData: {

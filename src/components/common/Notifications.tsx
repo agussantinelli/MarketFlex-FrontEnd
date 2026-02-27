@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { Toaster, sileo } from "sileo";
 
-interface Props {
+type Props = {
     message?: string;
     type?: "success" | "error" | "info" | "warning";
     delay?: number;
     position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
     offset?: number | { top?: number; right?: number; bottom?: number; left?: number };
     requiredQueryParam?: string; // e.g. "success"
-}
+};
 
 export default function Notifications({
     message,

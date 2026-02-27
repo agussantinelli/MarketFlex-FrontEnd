@@ -4,11 +4,11 @@ import type { Product } from "../../types/product.types";
 import styles from "./styles/ProductCard.module.css";
 import AddToCartButton from "./AddToCartButton";
 
-interface Props {
+type Props = {
     product: Product;
     showFeatured?: boolean;
-    rank?: number;
-}
+    rank?: number | undefined;
+};
 
 const { product, showFeatured = false, rank } = Astro.props;
 ---

@@ -1,10 +1,10 @@
 ---
 import styles from "./styles/PageCard.module.css";
 
-interface Props {
+type Props = {
     maxWidth?: string;
     variant?: "light" | "dark";
-}
+};
 
 const { maxWidth = "800px", variant = "light" } = Astro.props;
 ---

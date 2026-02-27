@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import AddToCartModal from './AddToCartModal';
 import type { Product } from '../../types/product.types';
 
-interface AddToCartButtonProps {
+type AddToCartButtonProps = {
     product: Product;
-}
+};
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     product

@@ -27,3 +27,19 @@ export type Product = {
         porcentajeDescuentoSegunda: string | null;
     } | null;
 };
+
+export type SearchOptions = {
+    query?: string;
+    sort?: string;
+    type?: string;
+    category?: string;
+    offers?: string;
+    page?: number;
+    limit?: number;
+    minPrice?: string;
+    maxPrice?: string;
+    withStock?: string;
+    onlyOffers?: string;
+    brand?: string;
+    promotion?: string;
+};

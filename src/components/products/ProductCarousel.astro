@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard.astro";
 import type { Product } from "../../types/product.types";
 import styles from "./styles/ProductCarousel.module.css";
 
-interface Props {
+type Props = {
     title: string;
     titleHighlight?: string;
     icon?: string;
@@ -14,7 +14,7 @@ interface Props {
     showViewMore?: boolean;
     showRank?: boolean;
     id: string;
-}
+};
 
 const {
     title,

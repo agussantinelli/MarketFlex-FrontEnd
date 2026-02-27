@@ -13,3 +13,13 @@ export type Promotion = {
     porcentajeDescuentoSegunda: string | null;
     alcance: string;
 };
+
+export type PromotionResult = {
+    subtotal: number;
+    discount: number;
+    total: number;
+    appliedPromotions: {
+        nombre: string;
+        monto: number;
+    }[];
+};

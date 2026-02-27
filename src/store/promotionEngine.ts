@@ -1,14 +1,5 @@
-import type { CartItem } from './cartStore';
-
-export interface PromotionResult {
-    subtotal: number;
-    discount: number;
-    total: number;
-    appliedPromotions: {
-        nombre: string;
-        monto: number;
-    }[];
-}
+import type { CartItem } from '../types/cart.types';
+import type { PromotionResult } from '../types/promotion.types';
 
 export const calculatePromotions = (items: CartItem[]): PromotionResult => {
     let subtotal = 0;

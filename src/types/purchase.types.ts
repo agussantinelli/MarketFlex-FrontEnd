@@ -1,4 +1,4 @@
-export interface DetalleEnvio {
+export type DetalleEnvio = {
     nombreCompleto: string;
     email: string;
     telefono: string;
@@ -6,25 +6,25 @@ export interface DetalleEnvio {
     ciudad: string;
     provincia: string;
     codigoPostal: string;
-}
+};
 
-export interface LineaCompra {
+export type LineaCompra = {
     productoId: string;
     nombreProducto: string;
     cantidad: number;
     precioUnitario: number;
     subtotal: number;
     promoAplicada?: string;
-}
+};
 
-export interface AppliedPromotion {
+export type AppliedPromotion = {
     promocionId: string;
     nombre: string;
     vecesAplicada: number;
     montoDescuento: number;
-}
+};
 
-export interface Purchase {
+export type Purchase = {
     id: string;
     fechaHora: string;
     total: number;
@@ -34,9 +34,9 @@ export interface Purchase {
     lineas: LineaCompra[];
     detalleEnvio: DetalleEnvio;
     promociones?: AppliedPromotion[];
-}
+};
 
-export interface CreatePurchaseRequest {
+export type CreatePurchaseRequest = {
     metodoPago: 'card' | 'cash' | 'transfer';
     cantCuotas: number;
     items: {
@@ -44,4 +44,4 @@ export interface CreatePurchaseRequest {
         cantidad: number;
     }[];
     envio: DetalleEnvio;
-}
+};

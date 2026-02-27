@@ -5,12 +5,12 @@ import { addItem } from '../../store/cartStore';
 import type { Product } from '../../types/product.types';
 import { HiCheckCircle, HiShoppingBag } from 'react-icons/hi2';
 
-interface AddToCartModalProps {
+type AddToCartModalProps = {
     isOpen: boolean;
     onClose: () => void;
     product: Product;
     onConfirm?: (quantity: number) => void;
-}
+};
 
 const AddToCartModal: React.FC<AddToCartModalProps> = ({
     isOpen,

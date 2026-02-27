@@ -2,9 +2,9 @@
 import { Icon } from "astro-icon/components";
 import styles from "./styles/AuthInputs.module.css";
 
-interface Props {
+type Props = {
     type: "login" | "register";
-}
+};
 
 const { type } = Astro.props;
 ---

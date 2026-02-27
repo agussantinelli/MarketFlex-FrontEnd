@@ -4,9 +4,9 @@ import ProductCard from "./ProductCard.astro";
 import type { Product } from "../../types/product.types";
 import styles from "./styles/FeaturedProducts.module.css";
 
-interface Props {
+type Props = {
     products: Product[];
-}
+};
 
 const { products } = Astro.props;
 ---

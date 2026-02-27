@@ -3,9 +3,9 @@ import { Icon } from "astro-icon/components";
 import type { Promotion } from "../../types/promotion.types";
 import styles from "./styles/PromotionHero.module.css";
 
-interface Props {
+type Props = {
     promotions: Promotion[];
-}
+};
 
 const { promotions } = Astro.props;
 const STATIC_URL = import.meta.env.PUBLIC_API_URL

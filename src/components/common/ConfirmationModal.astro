@@ -2,14 +2,14 @@
 import { Icon } from "astro-icon/components";
 import styles from "./styles/ConfirmationModal.module.css";
 
-interface Props {
+type Props = {
     id: string;
     title: string;
     message: string;
     confirmText?: string;
     cancelText?: string;
     type?: "default" | "danger";
-}
+};
 
 const {
     id,
