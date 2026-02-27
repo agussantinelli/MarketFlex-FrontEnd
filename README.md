@@ -404,6 +404,7 @@
 │   │   ├── search-filters.ts                       # Gestión genérica de estados de filtros
 │   │   └── search-filters.test.ts                  # Test: Filter Modal UI
 │   ├── services/                                   # Capa de API y Pruebas Unitarias
+│   │   ├── AdminService.ts                         # Servicio de métricas administrativas
 │   │   ├── auth.service.ts                         # Login, Registro y Logout
 │   │   ├── product.service.ts                      # Catálogo, Búsqueda y Detalle
 │   │   ├── brand.service.ts                        # Listado de marcas/editoriales
@@ -421,6 +422,7 @@
 │   │   ├── checkoutStore.test.ts                   # Test unitario de checkout
 │   │   └── promotionEngine.ts                      # Motor de cálculo de descuentos complejo
 │   ├── types/                                      # Tipado estricto del dominio
+│   │   ├── admin.types.ts                          # Tipos para dashboard y métricas
 │   │   ├── auth.types.ts                           # Interfaces de sesión
 │   │   ├── product.types.ts                        # Esquema de producto y atributos
 │   │   ├── purchase.types.ts                       # Tipos para compras y envíos
