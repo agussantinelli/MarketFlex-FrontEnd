@@ -2,9 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
     testDir: './tests',
-    timeout: 300000,
+    timeout: 60000,
     expect: {
-        timeout: 30000
+        timeout: 10000
     },
     fullyParallel: false,
     forbidOnly: !!process.env.CI,
@@ -34,6 +34,6 @@ export default defineConfig({
         command: 'pnpm dev --port 2611',
         url: 'https://localhost:2611',
         reuseExistingServer: true,
-        timeout: 30000,
+        timeout: 180000,
     },
 });
