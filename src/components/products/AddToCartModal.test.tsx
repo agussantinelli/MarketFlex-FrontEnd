@@ -85,7 +85,7 @@ describe('AddToCartModal Component', () => {
         fireEvent.click(screen.getByText(/Confirmar y Agregar/i));
 
         expect(cartStore.addItem).toHaveBeenCalledWith(mockProduct, 1);
-        expect((window as any).triggerSileo).toHaveBeenCalledWith('success', expect.any(String));
+        expect((window as any).triggerSileo).toHaveBeenCalledWith('success', expect.any(String), expect.anything());
         expect(mockOnConfirm).toHaveBeenCalledWith(1);
         expect(mockOnClose).toHaveBeenCalled();
     });
