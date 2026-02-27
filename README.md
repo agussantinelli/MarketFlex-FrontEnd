@@ -245,7 +245,7 @@
           <li><b>Breadcrumbs Estilizados:</b> Navegación visual estilo píldora con iconos Lucide.</li>
           <li><b>Validación en Tiempo Real:</b> Feedback inmediato al usuario durante la carga de datos.</li>
           <li><b>Summary Dinámico:</b> Resumen de orden que refleja descuentos y promociones en tiempo real.</li>
-+          <li><b>Pre-filling Inteligente:</b> Los campos de contacto y envío se auto-completan con la información del usuario logueado para una compra ultra-rápida.</li>
+          <li><b>Pre-filling Inteligente:</b> Los campos de contacto y envío se auto-completan con la información del usuario logueado para una compra ultra-rápida.</li>
       </ul>
   </li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
