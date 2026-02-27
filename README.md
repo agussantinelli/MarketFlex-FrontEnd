@@ -477,7 +477,41 @@
 </p>
 
 <ul>
-  <li><b>🛡️ Pruebas Unitarias y de Lógica:</b> Utilizamos <a href="https://vitest.dev/">Vitest</a> junto con Happy DOM y MSW. Esta capa cubre todos los servicios de la API, interceptores de seguridad (Auto-Refresh JWT) y los scripts interactivos extraídos de los componentes Astro. Contamos con una cobertura del 100% en lógica crítica.</li>
+  <li><b>🛡️ Unit Testing: Cobertura Total de Componentes</b>
+    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema:</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Categoría</th>
+          <th>Pruebas Destacadas</th>
+          <th>Objetivo de la Prueba</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>React Components (UI)</b></td>
+          <td><code>CartView</code>, <code>CheckoutForm</code>, <code>CheckoutSummary</code>, <code>AddToCartButton</code>, <code>AddToCartModal</code>, <code>Notifications</code>, <code>LoadingSpinner</code></td>
+          <td>Valida el renderizado correcto, estados de carga, errores y comportamiento de los componentes interactivos de React.</td>
+        </tr>
+        <tr>
+          <td><b>Core Interactive Logic</b></td>
+          <td><code>auth-login</code>, <code>auth-register</code>, <code>navbar</code>, <code>carousel</code>, <code>order-detail</code>, <code>orders-list</code>, <code>search-filters</code>, <code>promotion-hero</code></td>
+          <td>Asegura el funcionamiento de la lógica de cliente extraída de los archivos Astro (Manejo de DOM, Eventos, Animaciones).</td>
+        </tr>
+        <tr>
+          <td><b>State & Engines</b></td>
+          <td><code>checkoutStore</code>, <code>promotionEngine</code></td>
+          <td>Pruebas de alta complejidad sobre el motor de cálculo de descuentos y la coordinación del flujo de compra.</td>
+        </tr>
+        <tr>
+          <td><b>API & Infra Services</b></td>
+          <td><code>auth.service</code>, <code>product.service</code>, <code>purchase.service</code>, <code>category.service</code>, <code>filter.service</code>, <code>brand.service</code></td>
+          <td>Verifica la comunicación con el backend, transformación de datos y el sistema de Auto-Refresh de tokens JWT.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
   <li><b>🎭 Pruebas E2E (End-to-End):</b> Implementadas con <a href="https://playwright.dev/">Playwright</a>. Estas pruebas simulan el comportamiento real del usuario en navegadores modernos, validando integraciones complejas que los tests unitarios no pueden capturar.</li>
   <li><b>🔗 Mocking de API:</b> Mediante Mock Service Worker (MSW), simulamos el comportamiento del backend para realizar pruebas deterministas y rápidas sin depender de una base de datos real.</li>
 </ul>
