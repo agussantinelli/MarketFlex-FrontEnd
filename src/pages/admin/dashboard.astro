@@ -96,7 +96,7 @@ const recentOrders = [
             <!-- Stats Grid -->
             <div class={styles.statsGrid}>
                 {
-                    stats.map((stat) => (
+                    stats.map((stat, index) => (
                         <div class={styles.statCard}>
                             <div
                                 class={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}
@@ -108,7 +108,12 @@ const recentOrders = [
                             </div>
                             <div class={styles.statInfo}>
                                 <h3>{stat.title}</h3>
-                                <div class={styles.statValue}>{stat.value}</div>
+                                <div
+                                    class={styles.statValue}
+                                    id={`stat-value-${index}`}
+                                >
+                                    {stat.value}
+                                </div>
                                 <span
                                     class={`${styles.statTrend} ${styles.positive}`}
                                 >
@@ -139,7 +144,7 @@ const recentOrders = [
                                 <th>Estado</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="transactions-body">
                             {
                                 recentOrders.map((order) => (
                                     <tr>
@@ -177,3 +182,9 @@ const recentOrders = [
         </div>
     </PageCard>
 </Layout>
+
+<script>
+    import { initAdminDashboard } from "../../scripts/admin-dashboard";
+    initAdminDashboard();
+    document.addEventListener("astro:page-load", initAdminDashboard);
+</script>
