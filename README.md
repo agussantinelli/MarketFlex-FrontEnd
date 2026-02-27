@@ -340,120 +340,120 @@
 <h2>📁 Estructura del Proyecto</h2>
 
 <pre><code>MarketFlex-FrontEnd/
-├── .agent/                                         # Configuración del agente inteligente
-│   ├── skills/                                     # Skills de arquitectura y diseño
-│   └── workflows/                                  # Workflows automatizados (E2E, etc.)
-├── .github/
-│   └── workflows/                                  # CI/CD pipelines
-│       └── frontend-tests.yml                       # Workflow de testing unitario y E2E
-├── .astro/                                         # Archivos generados por Astro
-├── public/                                         # Recursos estáticos (Imágenes, Fuentes)
-│   ├── background/
-│   ├── logos/
-│   └── ...
-├── src/
-│   ├── components/                                 # Componentes UI (Modular & Atomic)
-│   │   ├── auth/
-│   │   │   ├── AuthInputs.astro
-│   │   │   ├── Captcha.astro
-│   │   │   └── styles/
-│   │   │       └── AuthInputs.module.css
-│   │   ├── cart/
-│   │   │   ├── CartView.test.tsx
-│   │   │   ├── CartView.tsx
-│   │   │   └── styles/
-│   │   │       └── CartView.module.css
-│   │   ├── checkout/
-│   │   │   ├── CheckoutForm.test.tsx
-│   │   │   ├── CheckoutForm.tsx
-│   │   │   ├── CheckoutSummary.test.tsx
-│   │   │   ├── CheckoutSummary.tsx
-│   │   │   └── styles/
-│   │   │       ├── CheckoutForm.module.css
-│   │   │       └── CheckoutSummary.module.css
-│   │   ├── common/
-│   │   │   ├── ConfirmationModal.astro
-│   │   │   ├── LoadingSpinner.test.tsx
-│   │   │   ├── LoadingSpinner.tsx
-│   │   │   ├── Notifications.test.tsx
-│   │   │   ├── Notifications.tsx
-│   │   │   ├── PageCard.astro
-│   │   │   └── styles/
-│   │   │       ├── ConfirmationModal.module.css
-│   │   │       ├── LoadingSpinner.module.css
-│   │   │       └── PageCard.module.css
-│   │   ├── products/
-│   │   │   ├── ActiveFilters.astro
-│   │   │   ├── AddToCartButton.test.tsx
-│   │   │   ├── AddToCartButton.tsx
-│   │   │   ├── AddToCartModal.test.tsx
-│   │   │   ├── AddToCartModal.tsx
-│   │   │   ├── FeaturedProducts.astro
-│   │   │   ├── FilterButton.astro
-│   │   │   ├── FilterModal.astro
-│   │   │   ├── ProductCard.astro
-│   │   │   ├── ProductCarousel.astro
-│   │   │   ├── ProductControls.astro
-│   │   │   ├── SortSelect.astro
-│   │   │   └── styles/
-│   │   │       ├── ActiveFilters.module.css
-│   │   │       ├── AddToCartModal.module.css
-│   │   │       ├── FeaturedProducts.module.css
-│   │   │       ├── ProductCard.module.css
-│   │   │       ├── ProductCarousel.module.css
-│   │   │       └── controls.module.css
-│   │   └── promotions/
-│   │       ├── PromotionHero.astro
-│   │       └── styles/
-│   │           └── PromotionHero.module.css
-│   ├── layouts/                                    # Estructuras base de página
-│   │   ├── Footer.astro
-│   │   ├── Layout.astro
-│   │   ├── Navbar.astro
-│   │   └── styles/
-│   │       ├── Footer.module.css
-│   │       └── Navbar.module.css
-│   ├── lib/                                        # Utilidades de bajo nivel
-│   │   ├── api.test.ts
-│   │   ├── api.ts
-│   │   ├── dataReset.test.ts
-│   │   └── dataReset.ts
-│   ├── pages/                                      # Sistema de rutas (File-based)
-│   │   ├── about.astro
-│   │   ├── admin/
-│   │   │   ├── dashboard.astro
-│   │   │   └── styles/
-│   │   │       └── dashboard.module.css
-│   │   ├── api/
-│   │   ├── cart.astro
-│   │   ├── checkout/
-│   │   │   ├── failure.astro
-│   │   │   ├── success.astro
-│   │   │   └── styles/
-│   │   │       ├── failure.module.css
-│   │   │       └── success.module.css
-│   │   ├── checkout.astro
-│   │   ├── coming-soon.astro
-│   │   ├── contacto.astro
-│   │   ├── faq.astro
-│   │   ├── index.astro
-│   │   ├── login.astro
-│   │   ├── new-arrivals.astro
-│   │   ├── offers.astro
-│   │   ├── orders/
-│   │   │   ├── index.astro
-│   │   │   ├── [id].astro
-│   │   │   └── styles/
-│   │   │       ├── order-detail.module.css
-│   │   │       └── orders-list.module.css
-│   │   ├── productos/
-│   │   │   ├── [id].astro
-│   │   │   └── styles/
-│   │   │       └── [id].module.css
-│   │   ├── profile.astro
-│   │   ├── register.astro
-│   │   ├── search.astro
-│   │   ├── styles/
+├── .agent/                                         # Configuración del asistente y sus capacidades.
+│   ├── skills/                                     # Guías de arquitectura y desarrollo del proyecto.
+│   └── workflows/                                  # Automatización de tareas complejas (Tests, E2E).
+├── .github/                                        # Ajustes de GitHub y CI/CD global.
+│   └── workflows/                                  # Definición de pipelines automatizados.
+│       └── frontend-tests.yml                      # Ejecución de tests unitarios y suite Playwright.
+├── .astro/                                         # Archivos temporales de compilación de Astro.
+├── public/                                         # Activos estáticos servidos directamente (Iconos, Font).
+│   ├── background/                                 # Galería de texturas térmicas y fondos premium.
+│   ├── logos/                                      # Branding oficial y logotipos sociales.
+│   └── ...                                         # Isotipos y recursos gráficos adicionales.
+├── src/                                            # Núcleo del frontend de la aplicación.
+│   ├── components/                                 # Componentes reutilizables (Arquitectura de Islas).
+│   │   ├── auth/                                   # UI de login, registro y validación social.
+│   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
+│   │   │   ├── Captcha.astro                       # Integración visual de Google reCAPTCHA v3.
+│   │   │   └── styles/                             # Módulos CSS específicos de auth.
+│   │   │       └── AuthInputs.module.css           # Estilos de los inputs de autenticación.
+│   │   ├── cart/                                   # Gestión visual del carrito de compras.
+│   │   │   ├── CartView.test.tsx                   # Test del panel interactivo de carrito.
+│   │   │   ├── CartView.tsx                        # UI de gestión de ítems y totales (React).
+│   │   │   └── styles/                             # Estilos modulares del carrito.
+│   │   │       └── CartView.module.css             # Diseño premium del panel lateral de compra.
+│   │   ├── checkout/                               # Flujo final de transacción.
+│   │   │   ├── CheckoutForm.test.tsx               # Test de validación del formulario de pago.
+│   │   │   ├── CheckoutForm.tsx                    # Formulario multi-paso de envío (React).
+│   │   │   ├── CheckoutSummary.test.tsx            # Test del cálculo de totales finales.
+│   │   │   ├── CheckoutSummary.tsx                 # Resumen de orden y descuentos aplicados (React).
+│   │   │   └── styles/                             # Estilos del flujo de checkout.
+│   │   │       ├── CheckoutForm.module.css         # Diseño del formulario de facturación.
+│   │   │       └── CheckoutSummary.module.css      # Estética del resumen lateral de orden.
+│   │   ├── common/                                 # Componentes transversales del sistema.
+│   │   │   ├── ConfirmationModal.astro             # Ventana emergente de confirmación UI.
+│   │   │   ├── LoadingSpinner.test.tsx             # Test del componente de carga global.
+│   │   │   ├── LoadingSpinner.tsx                  # Animación premium de espera asíncrona.
+│   │   │   ├── Notifications.test.tsx              # Test del sistema de avisos Sileo.
+│   │   │   ├── Notifications.tsx                   # UI de notificaciones estilo push interactiva.
+│   │   │   ├── PageCard.astro                      # Contenedor Glassmorphism para vistas centradas.
+│   │   │   └── styles/                             # Estilos comunes modulares.
+│   │   │       ├── ConfirmationModal.module.css    # Diseño del modal de confirmación.
+│   │   │       ├── LoadingSpinner.module.css       # Animación neón del spinner.
+│   │   │       └── PageCard.module.css             # Estética Glassmorphism de las tarjetas.
+│   │   ├── products/                               # Dominio del catálogo de productos.
+│   │   │   ├── ActiveFilters.astro                 # Tags interactivos de filtrado activo.
+│   │   │   ├── AddToCartButton.test.tsx            # Test del botón de acción principal.
+│   │   │   ├── AddToCartButton.tsx                 # Lógica de adición al carrito (React).
+│   │   │   ├── AddToCartModal.test.tsx             # Test del modal de éxito de adición.
+│   │   │   ├── AddToCartModal.tsx                  # Modal transicional de producto añadido (React).
+│   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para el home.
+│   │   │   ├── FilterButton.astro                  # Disparador del modal de filtros neón.
+│   │   │   ├── FilterModal.astro                   # Panel de filtrado avanzado por marcas/precio.
+│   │   │   ├── ProductCard.astro                   # Tarjeta individual con efectos térmicos.
+│   │   │   ├── ProductCarousel.astro               # Motor de carrusel interactivo neón.
+│   │   │   ├── ProductControls.astro               # Barra de ordenamiento y visualización.
+│   │   │   ├── SortSelect.astro                    # Selector de ordenamiento selectivo.
+│   │   │   └── styles/                             # Estilos del dominio de productos.
+│   │   │       ├── ActiveFilters.module.css        # Diseño de tags de filtros activos.
+│   │   │       ├── AddToCartModal.module.css       # Estética neón del modal de carrito.
+│   │   │       ├── FeaturedProducts.module.css     # Layout de la sección de destacados.
+│   │   │       ├── ProductCard.module.css          # Efectos hover y bordes térmicos neón.
+│   │   │       ├── ProductCarousel.module.css      # Configuración visual del slider neón.
+│   │   │       └── controls.module.css             # Estilos de la barra de herramientas.
+│   │   └── promotions/                             # Gestión de campañas visuales.
+│   │       ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
+│   │       └── styles/                             # Estética de las promociones.
+│   │           └── PromotionHero.module.css        # Animaciones y gradientes del hero.
+│   ├── layouts/                                    # Wrapper y estructuras base.
+│   │   ├── Footer.astro                            # Pie de página responsivo y legal.
+│   │   ├── Layout.astro                            # Estructura HTML5 inicial (SEO & Tipografía).
+│   │   ├── Navbar.astro                            # Navegación jerárquica con buscador unificado.
+│   │   └── styles/                                 # Estilos de la estructura envolvente.
+│   │       ├── Footer.module.css                   # Diseño del pie de página.
+│   │       └── Navbar.module.css                   # Estética de la barra de navegación fija.
+│   ├── lib/                                        # Utilidades y configuración de librerías.
+│   │   ├── api.test.ts                             # Test de interceptores del cliente Ky.
+│   │   ├── api.ts                                  # Cliente fetch centralizado con Auto-Refresh.
+│   │   ├── dataReset.test.ts                       # Test de lógica de limpieza de caché.
+│   │   └── dataReset.ts                            # Herramientas de sincronización con el seed.
+│   ├── pages/                                      # Sistema de rutas basado en archivos (SSR).
+│   │   ├── about.astro                             # Página de información institucional.
+│   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
+│   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
+│   │   │   └── styles/                             # Estética del panel administrativo.
+│   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
+│   │   ├── api/                                    # Puntos de conexión internos del servidor.
+│   │   ├── cart.astro                              # Vista completa del carrito de compras.
+│   │   ├── checkout/                               # Rutas del proceso de pago.
+│   │   │   ├── failure.astro                       # Vista informativa de pago fallido.
+│   │   │   ├── success.astro                       # Vista de confirmación de compra exitosa.
+│   │   │   └── styles/                             # Estilos del checkout.
+│   │   │       ├── failure.module.css              # Estética visual del error.
+│   │   │       └── success.module.css              # Diseño premium de la confirmación.
+│   │   ├── checkout.astro                          # Página maestra de finalización de orden.
+│   │   ├── coming-soon.astro                       # Placeholder para secciones en desarrollo.
+│   │   ├── contacto.astro                          # Formulario de ayuda y soporte técnico.
+│   │   ├── faq.astro                               # Centro de respuestas y preguntas frecuentes.
+│   │   ├── index.astro                             # Home page y portal de entrada.
+│   │   ├── login.astro                             # Portal de ingreso de usuario.
+│   │   ├── new-arrivals.astro                      # Listado dinámico de novedades del mes.
+│   │   ├── offers.astro                            # Catálogo exclusivo de rebajas actuales.
+│   │   ├── orders/                                 # Post-compra y seguimiento de órdenes.
+│   │   │   ├── index.astro                         # Historial completo de compras del usuario.
+│   │   │   ├── [id].astro                          # Detalle técnico de una compra específica.
+│   │   │   └── styles/                             # Estética del historial.
+│   │   │       ├── order-detail.module.css         # Diseño del desglose de orden.
+│   │   │       └── orders-list.module.css          # Estructura del listado de historial.
+│   │   ├── productos/                              # Catálogo dinámico e interactivo.
+│   │   │   ├── [id].astro                          # Ficha técnica individual de producto (PDP).
+│   │   │   └── styles/                             # Estética de la ficha de producto.
+│   │   │       └── [id].module.css                 # Diseño detallado de la página de producto.
+│   │   ├── profile.astro                           # Centro de gestión de cuenta de usuario.
+│   │   ├── register.astro                          # Formulario de creación de cuenta neón.
+│   │   ├── search.astro                            # Resultados de búsqueda con filtros dinámicos.
+│   │   ├── styles/                                 # Módulos CSS de páginas específicas.
 │   │   │   ├── about.module.css
 │   │   │   ├── coming-soon.module.css
 │   │   │   ├── contacto.module.css
@@ -464,85 +464,85 @@
 │   │   │   ├── register.module.css
 │   │   │   ├── search.module.css
 │   │   │   └── terminos.module.css
-│   │   └── terminos.astro
-│   ├── scripts/                                   # Lógica de cliente (Islands)
-│   │   ├── auth-login.test.ts
-│   │   ├── auth-login.ts
-│   │   ├── auth-register.test.ts
-│   │   ├── auth-register.ts
-│   │   ├── carousel.test.ts
-│   │   ├── carousel.ts
-│   │   ├── checkout-failure.test.ts
-│   │   ├── checkout-failure.ts
-│   │   ├── checkout-success.test.ts
-│   │   ├── checkout-success.ts
-│   │   ├── contact.test.ts
-│   │   ├── contact.ts
-│   │   ├── filter-modal.test.ts
-│   │   ├── filter-modal.ts
-│   │   ├── navbar.test.ts
-│   │   ├── navbar.ts
-│   │   ├── order-detail.test.ts
-│   │   ├── order-detail.ts
-│   │   ├── orders-list.test.ts
-│   │   ├── orders-list.ts
-│   │   ├── profile.test.ts
-│   │   ├── profile.ts
-│   │   ├── promotion-hero.test.ts
-│   │   ├── promotion-hero.ts
-│   │   ├── search-filters.test.ts
-│   │   └── search-filters.ts
-│   ├── services/                                  # Capa de datos y API
-│   │   ├── admin.service.test.ts
-│   │   ├── admin.service.ts
-│   │   ├── auth.service.test.ts
-│   │   ├── auth.service.ts
-│   │   ├── brand.service.test.ts
-│   │   ├── brand.service.ts
-│   │   ├── category.service.test.ts
-│   │   ├── category.service.ts
-│   │   ├── filter.service.test.ts
-│   │   ├── filter.service.ts
-│   │   ├── product.service.test.ts
-│   │   ├── product.service.ts
-│   │   ├── promotion.service.test.ts
-│   │   ├── promotion.service.ts
-│   │   ├── purchase.service.test.ts
-│   │   ├── purchase.service.ts
-│   │   ├── subcategory.service.test.ts
-│   │   ├── subcategory.service.ts
-│   │   ├── support.service.test.ts
-│   │   ├── support.service.ts
-│   │   ├── user.service.test.ts
-│   │   └── user.service.ts
-│   ├── store/                                     # Estado Global
-│   │   ├── cartStore.test.ts
-│   │   ├── cartStore.ts
-│   │   ├── checkoutStore.test.ts
-│   │   ├── checkoutStore.ts
-│   │   ├── promotionEngine.test.ts
-│   │   └── promotionEngine.ts
-│   ├── styles/                                    # Design System
-│   │   ├── globals.css
-│   │   └── main.css
-│   ├── types/                                     # Tipado Centralizado
-│   │   ├── admin.types.ts
-│   │   ├── auth.types.ts
-│   │   ├── brand.types.ts
-│   │   ├── cart.types.ts
-│   │   ├── category.types.ts
-│   │   ├── checkout.types.ts
-│   │   ├── common.types.ts
-│   │   ├── product.types.ts
-│   │   ├── promotion.types.ts
-│   │   ├── purchase.types.ts
-│   │   ├── subcategory.types.ts
-│   │   ├── support.types.ts
-│   │   └── user.types.ts
-│   └── env.d.ts
-├── playwright.config.ts
-├── package.json
-└── README.md
+│   │   └── terminos.astro                          # Documentación legal y términos de uso.
+│   ├── scripts/                                    # Lógica interactiva cliente (Islands logic).
+│   │   ├── auth-login.test.ts                      # Test de validación de credenciales.
+│   │   ├── auth-login.ts                           # Lógica de login y manejo de tokens.
+│   │   ├── auth-register.test.ts                   # Test de validación de registro.
+│   │   ├── auth-register.ts                        # Lógica de creación de cuentas y Captcha.
+│   │   ├── carousel.test.ts                        # Test de mecánica del slider.
+│   │   ├── carousel.ts                             # Animaciones del carrusel neón.
+│   │   ├── checkout-failure.test.ts                # Test de flujo de error.
+│   │   ├── checkout-failure.ts                     # Lógica visual tras falla de pago.
+│   │   ├── checkout-success.test.ts                # Test de flujo de éxito.
+│   │   ├── checkout-success.ts                     # Lógica de limpieza y confeti post-compra.
+│   │   ├── contact.test.ts                         # Test de validación de formulario.
+│   │   ├── contact.ts                              # Lógica de envío de tickets de soporte.
+│   │   ├── filter-modal.test.ts                    # Test de apertura/cierre de modal.
+│   │   ├── filter-modal.ts                         # Lógica interactiva de filtros avanzados.
+│   │   ├── navbar.test.ts                          # Test de búsqueda y menús fijos.
+│   │   ├── navbar.ts                               # Navegación y búsqueda predictiva CLIENT-SIDE.
+│   │   ├── order-detail.test.ts                    # Test de visualización de ítems.
+│   │   ├── order-detail.ts                         # Lógica interactiva de detalle de orden.
+│   │   ├── orders-list.test.ts                     # Test de paginación de órdenes.
+│   │   ├── orders-list.ts                          # Inyectado dinámico del historial de compras.
+│   │   ├── profile.test.ts                         # Test de edición de perfil.
+│   │   ├── profile.ts                              # Lógica de gestión de datos de cuenta.
+│   │   ├── promotion-hero.test.ts                  # Test de animación del hero.
+│   │   ├── promotion-hero.ts                       # Control de diapositivas de la sección hero.
+│   │   ├── search-filters.test.ts                  # Test de sincronización de filtros.
+│   │   └── search-filters.ts                       # Coordinación de estados UI de búsqueda.
+│   ├── services/                                   # Abstracción de llamadas a la API (Business Logic).
+│   │   ├── admin.service.test.ts                   # Test de obtención de estadísticas.
+│   │   ├── admin.service.ts                        # Integración con endpoints administrativos.
+│   │   ├── auth.service.test.ts                    # Test unitario de autenticación global.
+│   │   ├── auth.service.ts                         # Gestión central de login/logout/tokens.
+│   │   ├── brand.service.test.ts                   # Test de listado de marcas.
+│   │   ├── brand.service.ts                        # Catálogo de editoriales registradas.
+│   │   ├── category.service.test.ts                # Test de árbol de categorías.
+│   │   ├── category.service.ts                     # Estructura jerárquica de navegación.
+│   │   ├── filter.service.test.ts                  # Test de normalización de filtros.
+│   │   ├── filter.service.ts                       # Adaptador de parámetros de búsqueda.
+│   │   ├── product.service.test.ts                 # Test unitario de catálogo.
+│   │   ├── product.service.ts                      # Gestión de productos, filtros y búsqueda.
+│   │   ├── promotion.service.test.ts               # Test de campañas activas.
+│   │   ├── promotion.service.ts                    # Obtención de banners y descuentos.
+│   │   ├── purchase.service.test.ts                # Test unitario de órdenes.
+│   │   ├── purchase.service.ts                     # Gestión de transacciones y estados.
+│   │   ├── subcategory.service.test.ts             # Test de subcategorías específicas.
+│   │   ├── subcategory.service.ts                  # Clasificación secundaria del catálogo.
+│   │   ├── support.service.test.ts                 # Test de envío de mensajes.
+│   │   ├── support.service.ts                      # Enlace con el módulo de ayuda.
+│   │   ├── user.service.test.ts                    # Test unitario de data de perfil.
+│   │   └── user.service.ts                         # Obtención y actualización de perfiles.
+│   ├── store/                                      # Gestión de estado reactivo global (Nanostores).
+│   │   ├── cartStore.test.ts                       # Test de persistencia y sumatorias.
+│   │   ├── cartStore.ts                            # Estado atomizado del carrito de compras.
+│   │   ├── checkoutStore.test.ts                   # Test de validación de pago.
+│   │   ├── checkoutStore.ts                        # Coordinador del flujo persistente de pago.
+│   │   ├── promotionEngine.test.ts                 # Test de lógica de descuentos neón.
+│   │   └── promotionEngine.ts                      # Motor de cálculo complejo de promociones.
+│   ├── styles/                                     # Sistema de diseño y variables globales.
+│   │   ├── globals.css                             # Tokens neón, tipografía y resets globales.
+│   │   └── main.css                                # Reglas base y utilidades de estilo.
+│   ├── types/                                      # Definiciones estrictas de TypeScript (Domain).
+│   │   ├── admin.types.ts                          # Tipos de métricas y dashboard admin.
+│   │   ├── auth.types.ts                           # Tipos de sesión, JWT e inputs auth.
+│   │   ├── brand.types.ts                          # Esquema de marcas y logotipos.
+│   │   ├── cart.types.ts                           # Estructura de ítems y estado del carrito.
+│   │   ├── category.types.ts                       # Definición de árbol de categorías.
+│   │   ├── checkout.types.ts                       # Tipos de facturación, envío y pago.
+│   │   ├── common.types.ts                         # Errores, paginación y respuestas API.
+│   │   ├── product.types.ts                        # Atributos de producto y variantes.
+│   │   ├── promotion.types.ts                      # Esquema de banners y tipos de rebaja.
+│   │   ├── purchase.types.ts                       # Definición de órdenes y transacciones.
+│   │   ├── subcategory.types.ts                    # Interfaces de clústeres secundarios.
+│   │   ├── support.types.ts                        # Estructura de tickets de contacto.
+│   │   └── user.types.ts                           # Perfil, roles y atributos de usuario.
+│   └── env.d.ts                                    # Tipado estricto para variables de entorno.
+├── playwright.config.ts                            # Configuración de tests E2E con Playwright.
+├── package.json                                    # Scripts, metadata y dependencias (pnpm).
+└── README.md                                       # Documentación principal del frontend.
 </code></pre>
 
 <hr>
