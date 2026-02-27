@@ -8,9 +8,12 @@ export type User = {
     dni?: string | null;
     tipoDni?: string | null;
     fechaNacimiento?: string | null;
-    paisNacimiento?: string | null;
+    pais?: string | null;
+    direccion?: string | null;
+    ciudad?: string | null;
+    provincia?: string | null;
     codigoPostal?: string | null;
-    ciudadResidencia?: string | null;
+    telefono?: string | null;
     logueado_con_google: boolean;
     logueado_con_facebook: boolean;
 };

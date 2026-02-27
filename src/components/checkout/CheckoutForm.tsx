@@ -16,8 +16,11 @@ const CheckoutForm: React.FC = () => {
                 updateFormData({
                     nombre: user.nombre ? `${user.nombre} ${user.apellido || ''}`.trim() : '',
                     email: user.email || '',
-                    ciudad: user.ciudadResidencia || '',
-                    cp: user.codigoPostal || ''
+                    ciudad: user.ciudad || user.ciudadResidencia || '',
+                    cp: user.codigoPostal || '',
+                    telefono: user.telefono || '',
+                    direccion: user.direccion || '',
+                    provincia: user.provincia || ''
                 });
             } catch (e) {
                 console.error("Error parsing user data for checkout", e);

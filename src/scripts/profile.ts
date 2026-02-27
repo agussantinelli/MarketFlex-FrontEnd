@@ -71,8 +71,12 @@ function populateProfile(user: User, styles: Record<string, string>) {
     const emailElement = document.getElementById('user-email');
     const dniElement = document.getElementById('user-dni');
     const birthElement = document.getElementById('user-birth');
+    const phoneElement = document.getElementById('user-phone');
     const nationalityElement = document.getElementById('user-nationality');
-    const residenceElement = document.getElementById('user-residence');
+    const provinceElement = document.getElementById('user-province');
+    const cityElement = document.getElementById('user-city');
+    const addressElement = document.getElementById('user-address');
+    const zipElement = document.getElementById('user-zip');
     const googleElement = document.getElementById('social-google');
     const facebookElement = document.getElementById('social-facebook');
 
@@ -80,14 +84,18 @@ function populateProfile(user: User, styles: Record<string, string>) {
     if (emailElement) emailElement.textContent = user.email;
     if (dniElement) dniElement.textContent = user.dni ? `${user.tipoDni} ${user.dni}` : 'No especificado';
     if (birthElement) birthElement.textContent = user.fechaNacimiento ? new Date(user.fechaNacimiento).toLocaleDateString() : 'No especificado';
-    if (nationalityElement) nationalityElement.textContent = user.paisNacimiento || 'No especificado';
-    if (residenceElement) residenceElement.textContent = user.ciudadResidencia ? `${user.ciudadResidencia} ${user.codigoPostal ? `(${user.codigoPostal})` : ''}` : 'No especificado';
+    if (phoneElement) phoneElement.textContent = user.telefono || 'No especificado';
+    if (nationalityElement) nationalityElement.textContent = user.pais || 'No especificado';
+    if (provinceElement) provinceElement.textContent = user.provincia || 'No especificado';
+    if (cityElement) cityElement.textContent = user.ciudad || 'No especificado';
+    if (addressElement) addressElement.textContent = user.direccion || 'No especificado';
+    if (zipElement) zipElement.textContent = user.codigoPostal || 'No especificado';
 
     if (googleElement) googleElement.style.display = user.logueado_con_google ? 'flex' : 'none';
     if (facebookElement) facebookElement.style.display = user.logueado_con_facebook ? 'flex' : 'none';
 
     // Check for incomplete profile
-    const isIncomplete = !user.dni || !user.fechaNacimiento || !user.paisNacimiento || !user.ciudadResidencia;
+    const isIncomplete = !user.dni || !user.fechaNacimiento || !user.pais || !user.ciudad || !user.direccion || !user.telefono || !user.provincia || !user.codigoPostal;
     const editBtn = document.getElementById('edit-profile-btn') as HTMLButtonElement;
     if (editBtn) {
         editBtn.textContent = isIncomplete ? 'Completar Perfil' : 'Editar Perfil';
