@@ -40,7 +40,7 @@ import styles from "../../layouts/styles/Navbar.module.css";
 
         <!-- Admin Mode Button (Visible to admins when in client mode) -->
         <button
-            class={`${styles.dropdownItem} admin-only go-admin-btn`}
+            class={`${styles.dropdownItem} ${styles.viewToggleBtn} admin-only go-admin-btn`}
             style="display: none;"
         >
             <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
@@ -48,7 +48,7 @@ import styles from "../../layouts/styles/Navbar.module.css";
         </button>
 
         <button
-            class={`${styles.dropdownItem} admin-only go-client-btn`}
+            class={`${styles.dropdownItem} ${styles.viewToggleBtn} admin-only go-client-btn`}
             style="display: none;"
         >
             <Icon name="lucide:store" class={styles.itemIcon} />

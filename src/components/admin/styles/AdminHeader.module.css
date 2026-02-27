@@ -50,8 +50,8 @@
 }
 
 /* Override UserDropdown styles in Admin context */
-.headerRight :global(.user-dropdown) button span,
-.headerRight :global(.user-dropdown) button svg {
+.headerRight :global(.user-dropdown) :global(.dropdown-trigger) span,
+.headerRight :global(.user-dropdown) :global(.dropdown-trigger) svg {
     color: var(--foreground) !important;
 }
 

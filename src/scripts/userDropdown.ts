@@ -71,7 +71,7 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                 });
             }
 
-            // Role Based Visibility
+            // Role Based Visibility - Base State
             if (user.rol === "admin") {
                 adminLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
@@ -80,25 +80,33 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
             }
         }
+
+        // Admin Navigation Logic - strictly path-based (must run after Role based visibility)
+        if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
+            const isAdminRoute = window.location.pathname.startsWith("/admin");
+
+            if (isAdminRoute) {
+                clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
+                goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+                goClientBtns.forEach(btn => {
+                    (btn as HTMLElement).style.display = 'flex';
+                    (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
+                });
+            } else {
+                clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
+                goAdminBtns.forEach(btn => {
+                    (btn as HTMLElement).style.display = 'flex';
+                    (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
+                });
+                goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+            }
+        }
     }
 
     updateAuthUI();
 
-    // Admin Navigation Logic - strictly path-based
+    // Navigation Click Handling
     if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
-        const isAdminRoute = window.location.pathname.startsWith("/admin");
-
-        if (isAdminRoute) {
-            clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
-            goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
-            goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'flex');
-        } else {
-            clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
-            goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'flex');
-            goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
-        }
-
-        // Navigation Click Handling
         const navigateToAdmin = (e: Event) => {
             e.preventDefault();
             e.stopPropagation();
