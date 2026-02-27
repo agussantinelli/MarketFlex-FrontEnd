@@ -246,6 +246,8 @@
           <li><b>Validación en Tiempo Real:</b> Feedback inmediato al usuario durante la carga de datos.</li>
           <li><b>Summary Dinámico:</b> Resumen de orden que refleja descuentos y promociones en tiempo real.</li>
           <li><b>Pre-filling Inteligente:</b> Los campos de contacto y envío se auto-completan con la información del usuario logueado para una compra ultra-rápida.</li>
+          <li><b>Admin Dashboard (Real-Time):</b> Panel administrativo conectado directamente a la API para visualizar métricas reales de ventas, ingresos y usuarios.</li>
+          <li><b>Gestión de Transacciones:</b> Listado dinámico de todas las compras del sistema con detalles de usuario y estados en tiempo real.</li>
       </ul>
   </li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
