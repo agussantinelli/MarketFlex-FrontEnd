@@ -3,6 +3,7 @@ import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuDownload, LuPlus
 import styles from './styles/dashboard.module.css';
 import { AdminService } from '../../services/admin.service';
 import type { AdminStats, AdminPurchase } from '../../types/admin.types';
+import { formatOrderDate } from '../../../utils/dateFormatter';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
@@ -36,16 +37,6 @@ const DashboardView: React.FC = () => {
         }).format(amount);
     };
 
-    const formatDate = (dateStr: string) => {
-        const date = new Date(dateStr);
-        return date.toLocaleString("es-AR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-    };
 
     const stats = [
         {
@@ -169,7 +160,7 @@ const DashboardView: React.FC = () => {
                                                 <div className={styles.userAvatar}>{purchase.usuario.nombre.charAt(0)}</div>
                                                 {purchase.usuario.nombre} {purchase.usuario.apellido}
                                             </td>
-                                            <td className={styles.dateCell}>{formatDate(purchase.fechaHora)}h</td>
+                                            <td className={styles.dateCell}>{formatOrderDate(purchase.fechaHora)}</td>
                                             <td className={styles.amount}>{formatCurrency(Number(purchase.total))}</td>
                                             <td>
                                                 <span className={styles[statusClass] || styles.badge}>
