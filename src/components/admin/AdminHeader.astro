@@ -20,23 +20,6 @@ const { title } = Astro.props;
     </div>
 
     <div class={styles.headerRight}>
-        <div class={styles.searchContainer}>
-            <Icon name="lucide:search" class={styles.searchIcon} />
-            <input 
-                type="text" 
-                placeholder="Buscar (Ctrl+K)" 
-                class={styles.searchInput}
-            />
-            <div class={styles.searchShortcut}>/</div>
-        </div>
-
-        <button class={styles.notificationBtn} aria-label="Notificaciones">
-            <Icon name="lucide:bell" class={styles.bellIcon} />
-            <span class={styles.notificationBadge}></span>
-        </button>
-
-        <div class={styles.divider}></div>
-
         <UserDropdown />
     </div>
 </header>
