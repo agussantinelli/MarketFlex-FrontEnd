@@ -5,8 +5,11 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
     // Role based elements
     const adminLinks = document.querySelectorAll(".admin-only");
     const customerLinks = document.querySelectorAll(".customer-only");
-    const adminModeToggles = document.querySelectorAll(".admin-mode-toggle");
-    const adminModeTexts = document.querySelectorAll(".admin-mode-text");
+
+    // Explicit Admin Navigation Buttons
+    const goAdminBtns = document.querySelectorAll(".go-admin-btn");
+    const goClientBtns = document.querySelectorAll(".go-client-btn");
+
     const clientPurchasesLinks = document.querySelectorAll(".client-purchases-link");
 
     // Dropdown interaction logic
@@ -66,41 +69,43 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
     updateAuthUI();
 
-    // Admin Toggle Mode State Handling
-    if (adminModeToggles.length > 0 && adminModeTexts.length > 0) {
-        import("../store/adminStore").then(({ adminStore, toggleAdminMode }) => {
-            // Subscribe to store changes
-            adminStore.subscribe((state) => {
-                const isAdminMode = state.isAdminMode === 'true';
+    // Admin Navigation Logic - strictly path-based
+    if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
+        const isAdminRoute = window.location.pathname.startsWith("/admin");
 
-                if (isAdminMode) {
-                    adminModeTexts.forEach(text => text.textContent = "Cambiar a Tienda");
-                    clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
-                } else {
-                    adminModeTexts.forEach(text => text.textContent = "Cambiar a Admin");
-                    clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
-                }
-            });
+        if (isAdminRoute) {
+            clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
+            goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+            goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'flex');
+        } else {
+            clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
+            goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'flex');
+            goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+        }
 
-            // Toggle Click Handling
-            adminModeToggles.forEach(toggle => {
-                // Remove older listeners if we are re-initializing over astro:page-load
-                toggle.replaceWith(toggle.cloneNode(true));
-            });
+        // Navigation Click Handling
+        const navigateToAdmin = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            localStorage.setItem("marketflex_admin:isAdminMode", "true");
+            setTimeout(() => { window.location.href = "/admin/dashboard"; }, 50);
+        };
 
-            // Re-select after replacement
-            const newToggles = document.querySelectorAll(".admin-mode-toggle");
-            newToggles.forEach(toggle => {
-                toggle.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const isCurrentlyAdmin = adminStore.get().isAdminMode === 'true';
-                    toggleAdminMode();
+        const navigateToClient = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            localStorage.setItem("marketflex_admin:isAdminMode", "false");
+            setTimeout(() => { window.location.href = "/"; }, 50);
+        };
 
-                    setTimeout(() => {
-                        window.location.href = !isCurrentlyAdmin ? "/admin/dashboard" : "/";
-                    }, 50);
-                });
-            });
+        goAdminBtns.forEach(btn => {
+            btn.removeEventListener("click", navigateToAdmin);
+            btn.addEventListener("click", navigateToAdmin);
+        });
+
+        goClientBtns.forEach(btn => {
+            btn.removeEventListener("click", navigateToClient);
+            btn.addEventListener("click", navigateToClient);
         });
     }
 

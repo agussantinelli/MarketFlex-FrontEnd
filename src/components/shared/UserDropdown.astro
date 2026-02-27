@@ -10,7 +10,8 @@ import styles from "../../layouts/styles/Navbar.module.css";
         id="user-dropdown-btn"
     >
         <span class={styles.userGreeting}
-            >Hola, <span id="user-name">Usuario</span></span
+            >Hola, <span class="user-name-display" id="user-name">Usuario</span
+            ></span
         >
         <Icon name="lucide:chevron-down" class={styles.dropdownIcon} />
     </button>
@@ -25,7 +26,7 @@ import styles from "../../layouts/styles/Navbar.module.css";
         <a
             id="client-purchases-link"
             href="/orders"
-            class={styles.dropdownItem}
+            class={`${styles.dropdownItem} client-purchases-link`}
         >
             <Icon name="lucide:shopping-bag" class={styles.itemIcon} />
             Mis Compras
@@ -37,21 +38,28 @@ import styles from "../../layouts/styles/Navbar.module.css";
         >
         </div>
 
-        <!-- Mode Toggle Button (Always visible to admins) -->
+        <!-- Admin Mode Button (Visible to admins when in client mode) -->
         <button
-            id="admin-mode-toggle"
-            class={`${styles.dropdownItem} admin-only`}
+            class={`${styles.dropdownItem} admin-only go-admin-btn`}
             style="display: none;"
         >
-            <Icon name="lucide:refresh-cw" class={styles.itemIcon} />
-            <span id="admin-mode-text">Cambiar a Vista Administrador</span>
+            <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
+            <span>Cambiar al Panel Administrador</span>
+        </button>
+
+        <button
+            class={`${styles.dropdownItem} admin-only go-client-btn`}
+            style="display: none;"
+        >
+            <Icon name="lucide:store" class={styles.itemIcon} />
+            <span>Cambiar a Vista Cliente</span>
         </button>
 
         <div class={styles.dropdownDivider}></div>
 
         <button
             id="logout-btn"
-            class={`${styles.dropdownItem} ${styles.textRed}`}
+            class={`${styles.dropdownItem} ${styles.textRed} logout-trigger-btn`}
         >
             <Icon name="lucide:log-out" class={styles.itemIcon} />
             Cerrar Sesión

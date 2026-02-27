@@ -90,14 +90,18 @@ const { title } = Astro.props;
                         return;
                     }
 
-                    // Check if they explicitly disabled Admin Mode
-                    const adminSettings =
-                        localStorage.getItem("marketflex_admin:");
-                    if (adminSettings) {
-                        const parsedSettings = JSON.parse(adminSettings);
-                        if (parsedSettings.isAdminMode === "false") {
-                            window.location.href = "/";
-                        }
+                    // Check if they explicitly disabled Admin Mode safely
+                    const isAdminModeStr = localStorage.getItem(
+                        "marketflex_admin:isAdminMode",
+                    );
+                    if (isAdminModeStr === "false") {
+                        window.location.href = "/";
+                        return;
+                    }
+
+                    // Clean up legacy localStorage settings state if present
+                    if (localStorage.getItem("marketflex_admin:")) {
+                        localStorage.removeItem("marketflex_admin:");
                     }
                 } catch (e) {
                     window.location.href = "/login";
