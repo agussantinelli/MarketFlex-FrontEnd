@@ -353,6 +353,10 @@
 │   └── ...                                         # Isotipos y recursos gráficos adicionales.
 ├── src/                                            # Núcleo del frontend de la aplicación.
 │   ├── components/                                 # Componentes reutilizables (Arquitectura de Islas).
+│   │   ├── admin/                                  # Componentes para el panel de administración.
+│   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
+│   │   │   └── styles/                             # Módulos CSS administrativos.
+│   │   │       └── dashboard.module.css            # Estilos dedicados del dashboard.
 │   │   ├── auth/                                   # UI de login, registro y validación social.
 │   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
 │   │   │   ├── Captcha.astro                       # Integración visual de Google reCAPTCHA v3.
