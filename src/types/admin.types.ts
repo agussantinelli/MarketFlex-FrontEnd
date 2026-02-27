@@ -3,6 +3,10 @@ export type AdminStats = {
     totalSales: number;
     averageTicket: number;
     activeUsers: number;
+    revenueTrend: number;
+    salesTrend: number;
+    avgTrend: number;
+    userTrend: number;
 };
 
 export type AdminPurchase = {
