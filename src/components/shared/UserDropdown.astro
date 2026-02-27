@@ -21,17 +21,6 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mi Perfil
         </a>
 
-        <!-- Admin Dashboard Link (Only visible in Client Mode via JS if admin) -->
-        <a
-            id="admin-dashboard-link"
-            href="/admin/dashboard"
-            class={`${styles.dropdownItem} admin-only`}
-            style="display: none;"
-        >
-            <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
-            Panel Admin
-        </a>
-
         <!-- Client Purchases Link (Hidden in Admin Mode via JS) -->
         <a
             id="client-purchases-link"
