@@ -15,6 +15,7 @@ To maintain 100% reliability and prevent visual or logic regressions in the Mark
 4. **Content**:
     - **Logic/Services**: Tests must cover main success paths and edge cases.
     - **Components**: Tests must cover rendering, user interaction, and state changes (using Vitest + React Testing Library).
+5. **Simultaneous Creation/Modification**: If a testable file is created, its corresponding test file MUST be created simultaneously in the same step. If a functional file is modified (logic altered), its corresponding test file MUST be modified simultaneously to reflect those changes. Never leave tests outdated.
 
 ## Examples
 
