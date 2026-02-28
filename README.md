@@ -712,40 +712,40 @@ pnpm dev
   </thead>
   <tbody>
     <tr>
-      <td><code>pnpm dev</code></td>
+      <td><pre><code class="language-bash">pnpm dev</code></pre></td>
       <td>Inicia el servidor de desarrollo local de Astro (por defecto en <code>localhost:2611</code>) con soporte interactivo HMR.</td>
     </tr>
     <tr>
-      <td><code>pnpm build</code></td>
+      <td><pre><code class="language-bash">pnpm build</code></pre></td>
       <td>Construye la aplicación para producción, generando los assets estáticos y preparando la lógica SSR dentro de la carpeta <code>dist/</code>.</td>
     </tr>
     <tr>
-      <td><code>pnpm preview</code></td>
+      <td><pre><code class="language-bash">pnpm preview</code></pre></td>
       <td>Crea un pequeño servidor estático local para previsualizar y testear la aplicación generada por <code>pnpm build</code> tal cual se verá en producción.</td>
     </tr>
     <tr>
-      <td><code>pnpm astro</code></td>
+      <td><pre><code class="language-bash">pnpm astro</code></pre></td>
       <td>Invoca la CLI nativa de Astro para utilizar comandos avanzados (ej. <code>astro check</code>, <code>astro sync</code>, <code>astro add</code>).</td>
     </tr>
     <tr>
-      <td><code>pnpm test</code></td>
-      <td>Ejecuta únicamente una vez toda la suite de pruebas unitarias y de integración de <b>Vitest</b> de inicio a fin.</td>
+      <td><pre><code class="language-bash">pnpm test</code></pre></td>
+      <td>Ejecuta únicamente una vez toda la suite de pruebas unitarias y de integración de Vitest de inicio a fin.</td>
     </tr>
     <tr>
-      <td><code>pnpm test:watch</code></td>
-      <td>Inicia la suite de <b>Vitest</b> en modo <i>watch</i> interactivo. Se reejecutarán automáticamente los tests al guardar un archivo modificado.</td>
+      <td><pre><code class="language-bash">pnpm test:watch</code></pre></td>
+      <td>Inicia la suite de Vitest en modo <i>watch</i> interactivo. Se reejecutarán automáticamente los tests al guardar un archivo modificado.</td>
     </tr>
     <tr>
-      <td><code>pnpm test:e2e</code></td>
-      <td>Ejecuta la suite End-to-End de <b>Playwright</b> mostrando instanciando el navegador activamente en tu pantalla (<i>--headed</i>).</td>
+      <td><pre><code class="language-bash">pnpm run test:e2e</code></pre></td>
+      <td>Ejecuta la suite End-to-End de Playwright instanciando el navegador activamente en tu pantalla (<i>--headed</i>).</td>
     </tr>
     <tr>
-      <td><code>pnpm test:e2e:ci</code></td>
-      <td>Ejecuta la suite de <b>Playwright</b> en modo silencioso o <i>headless</i> (sin UI). Ideal para los pipelines automatizados de GitHub Actions.</td>
+      <td><pre><code class="language-bash">pnpm run test:e2e:ci</code></pre></td>
+      <td>Ejecuta la suite de Playwright en modo silencioso o <i>headless</i> (sin UI). Ideal para los pipelines automatizados de GitHub Actions.</td>
     </tr>
     <tr>
-      <td><code>pnpm test:e2e:ui</code></td>
-      <td>Inicia de forma local el <b>Playwright Test Runner</b> gráfico (en el puerto estándar) para debugear flujos y observar visualmente en detalle la interacciones E2E.</td>
+      <td><pre><code class="language-bash">pnpm run test:e2e:ui</code></pre></td>
+      <td>Inicia de forma local el Playwright Test Runner gráfico (en el puerto estándar) para debugear flujos y observar visualmente en detalle la interacciones E2E.</td>
     </tr>
   </tbody>
 </table>
