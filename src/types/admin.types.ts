@@ -130,3 +130,24 @@ export interface PaginatedResponse<T> {
         totalPages: number;
     };
 }
+
+export interface AdminUser {
+    id: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+    foto: string | null;
+    rol: 'customer' | 'admin';
+    creadoEn: string;
+}
+
+export interface AdminUsersResponse {
+    status: string;
+    data: AdminUser[];
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
+}
