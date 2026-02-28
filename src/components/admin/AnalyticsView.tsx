@@ -62,7 +62,7 @@ const AnalyticsView: React.FC = () => {
         return <div className={styles.errorContainer}>Error al cargar las analíticas.</div>;
     }
 
-    const { monthlySales, categoryDistribution, brandPerformance, paymentMethodDistribution } = data;
+    const { monthlySales, categoryDistribution, brandPerformance, paymentMethodDistribution, salesHeatmap } = data;
 
     const pieData = {
         labels: categoryDistribution.map(c => c.name),
@@ -167,6 +167,103 @@ const AnalyticsView: React.FC = () => {
             }
         },
         legend: { show: false }
+    };
+
+    const heatmapOptions: any = {
+        chart: {
+            type: 'heatmap',
+            toolbar: { show: false },
+            fontFamily: 'inherit',
+            background: 'transparent'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            width: 1,
+            colors: ['#0f172a']
+        },
+        plotOptions: {
+            heatmap: {
+                radius: 2,
+                enableShades: false,
+                colorScale: {
+                    ranges: [{
+                        from: -1,
+                        to: 0,
+                        color: '#1e293b',
+                        name: '0 ventas',
+                    },
+                    {
+                        from: 1,
+                        to: 5,
+                        color: '#075985',
+                        name: 'Bajo',
+                    },
+                    {
+                        from: 6,
+                        to: 15,
+                        color: '#0369a1',
+                        name: 'Medio',
+                    },
+                    {
+                        from: 16,
+                        to: 1000,
+                        color: '#0ea5e9',
+                        name: 'Alto',
+                    }]
+                }
+            }
+        },
+        xaxis: {
+            type: 'category',
+            labels: {
+                style: {
+                    colors: '#94a3b8',
+                    fontSize: '10px'
+                }
+            },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: '#94a3b8',
+                    fontSize: '12px'
+                }
+            }
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (val: number) {
+                    return `${val} ventas`;
+                }
+            }
+        },
+        grid: {
+            show: false
+        },
+        legend: {
+            show: true,
+            position: 'top',
+            horizontalAlign: 'center',
+            labels: {
+                colors: '#cbd5e1',
+                useSeriesColors: false
+            },
+            markers: {
+                width: 12,
+                height: 12,
+                radius: 2,
+                offsetY: 1
+            },
+            itemMargin: {
+                horizontal: 15,
+                vertical: 5
+            }
+        }
     };
 
     const apexSeries = [
@@ -294,6 +391,21 @@ const AnalyticsView: React.FC = () => {
                         <div style={{ width: '80%', height: '100%' }}>
                             <Pie data={paymentPieData} options={pieOptions} />
                         </div>
+                    </div>
+                </div>
+
+                <div className={styles.chartCard}>
+                    <div className={styles.chartHeader}>
+                        <h2>Mapa de Calor de Ventas</h2>
+                        <p>Frecuencia de ventas por día y hora (Últimos 30 días)</p>
+                    </div>
+                    <div style={{ width: '100%', height: 400, marginTop: '1rem' }}>
+                        <Chart
+                            options={heatmapOptions}
+                            series={salesHeatmap}
+                            type="heatmap"
+                            height="100%"
+                        />
                     </div>
                 </div>
             </div>
