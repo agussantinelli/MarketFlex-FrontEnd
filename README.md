@@ -22,7 +22,7 @@
     <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/OpenAPI-Consuming-6BA539?style=for-the-badge&logo=openapiinitiative&logoColor=white" alt="OpenAPI Badge">
     <img src="https://img.shields.io/badge/Zustand-State-764ABC?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand Badge">
-    <img src="https://img.shields.io/badge/Nanostores-React-3178C6?style=for-the-badge&logo=nanostores&logoColor=white" alt="Nanostores Badge">
+    <img src="https://img.shields.io/badge/Nanostores-React-3178C6?style=for-the-badge&logo=atom&logoColor=white" alt="Nanostores Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
     <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
