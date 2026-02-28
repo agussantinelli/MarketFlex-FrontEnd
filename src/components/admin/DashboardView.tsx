@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin.service';
 import StatTable from './StatTable';
 import type { AdminStats, TopSale, TopProduct, TopUser } from '../../types/admin.types';
 import { formatOrderDate } from '../../../utils/dateFormatter';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
@@ -156,12 +157,7 @@ const DashboardView: React.FC = () => {
     ];
 
     if (loading) {
-        return (
-            <div className={styles.loadingContainer}>
-                <div className={styles.spinner}></div>
-                <span>Cargando panel administrativo...</span>
-            </div>
-        );
+        return <LoadingSpinner message="Cargando panel administrativo..." />;
     }
 
     return (
