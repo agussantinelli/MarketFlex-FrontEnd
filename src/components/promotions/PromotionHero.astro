@@ -2,15 +2,13 @@
 import { Icon } from "astro-icon/components";
 import type { Promotion } from "../../types/promotion.types";
 import styles from "./styles/PromotionHero.module.css";
+import { getImageUrl } from "../../lib/url";
 
 type Props = {
     promotions: Promotion[];
 };
 
 const { promotions } = Astro.props;
-const STATIC_URL = import.meta.env.PUBLIC_API_URL
-    ? import.meta.env.PUBLIC_API_URL.replace("/api", "")
-    : "http://localhost:5979";
 
 if (promotions.length === 0) return null;
 ---
@@ -69,7 +67,7 @@ if (promotions.length === 0) return null;
                                 <div class={styles.imageWrapper}>
                                     {promo.foto && (
                                         <img
-                                            src={`${STATIC_URL}/${promo.foto}`}
+                                            src={getImageUrl(promo.foto)}
                                             alt={`Foto de promoción: ${promo.nombre}`}
                                             class={styles.promoImage}
                                             width="800"
