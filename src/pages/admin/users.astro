@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import UsersListView from "../../components/admin/UsersListView.tsx";
+---
+
+<AdminLayout title="Gestión de Usuarios">
+    <UsersListView client:only="react" />
+</AdminLayout>
