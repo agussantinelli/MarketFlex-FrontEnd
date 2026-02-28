@@ -83,6 +83,10 @@ describe('userDropdown', () => {
     });
 
     it('should update route-based visibility for client view correctly', () => {
+        const user = { nombre: 'Admin User', rol: 'admin' };
+        localStorage.setItem('marketflex_user', JSON.stringify(user));
+        localStorage.setItem('marketflex_token', 'valid-token');
+
         (window as any).location.pathname = '/';
         initUserDropdown(modalStyles);
 
