@@ -18,15 +18,15 @@
 <div align="center">
     <img src="https://img.shields.io/badge/Astro-5.17.1-BC52EE?style=for-the-badge&logo=astro&logoColor=white" alt="Astro Badge">
     <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Badge">
-    <img src="https://img.shields.io/badge/Sileo-Notifications-FFD700?style=for-the-badge&logo=vlc&logoColor=black" alt="Sileo Badge">
+    <img src="https://img.shields.io/badge/Sileo-0.1.1-FFD700?style=for-the-badge&logo=vlc&logoColor=black" alt="Sileo Badge">
     <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS Badge">
     <img src="https://img.shields.io/badge/OpenAPI-Consuming-6BA539?style=for-the-badge&logo=openapiinitiative&logoColor=white" alt="OpenAPI Badge">
-    <img src="https://img.shields.io/badge/Zustand-State-764ABC?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand Badge">
-    <img src="https://img.shields.io/badge/Nanostores-React-3178C6?style=for-the-badge&logo=atom&logoColor=white" alt="Nanostores Badge">
+    <img src="https://img.shields.io/badge/Zustand-5.0.11-764ABC?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand Badge">
+    <img src="https://img.shields.io/badge/Nanostores-1.1.0-3178C6?style=for-the-badge&logo=atom&logoColor=white" alt="Nanostores Badge">
     <img src="https://img.shields.io/badge/pnpm-10+-F69220?style=for-the-badge&logo=pnpm&logoColor=white" alt="pnpm Badge">
     <img src="https://img.shields.io/badge/Ky-1.14.3-FF4081?style=for-the-badge&logo=ky&logoColor=white" alt="Ky Badge">
-    <img src="https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
-    <img src="https://img.shields.io/badge/React--Icons-Librería-E91E63?style=for-the-badge&logo=react&logoColor=white" alt="React-Icons Badge">
+    <img src="https://img.shields.io/badge/Lucide_Icons-0.575.0-F56565?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Badge">
+    <img src="https://img.shields.io/badge/React_Icons-5.5.0-E91E63?style=for-the-badge&logo=react&logoColor=white" alt="React-Icons Badge">
     <img src="https://img.shields.io/badge/Google_Sign--In-GSI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Sign-In Badge">
     <img src="https://img.shields.io/badge/Facebook_Login-SDK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Login Badge">
     <img src="https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge">
@@ -143,13 +143,13 @@
         <tr>
             <td><strong>Iconos</strong></td>
             <td>astro-icon, Lucide & react-icons</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^1.1.5 / ^0.575.0 / ^5.5.0</strong></td>
             <td>Iconografía SVG optimizada, librerías modernas para React y animaciones.</td>
         </tr>
         <tr>
             <td><strong>Tipografía</strong></td>
             <td>@fontsource/inter</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^5.2.8</strong></td>
             <td>Gestión de fuentes local (sin llamadas externas).</td>
         </tr>
         <tr>
@@ -203,7 +203,7 @@
         <tr>
             <td><strong>State Management</strong></td>
             <td>Zustand & Nanostores</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^5.0.11 / ^1.1.0</strong></td>
             <td>Gestión de estado global para React Islands y compartida entre frameworks (Astro/React).</td>
         </tr>
     </tbody>
