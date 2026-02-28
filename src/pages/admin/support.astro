@@ -1,0 +1,10 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import SupportListView from "../../components/admin/SupportListView";
+---
+
+<AdminLayout title="Soporte | MarketFlex Admin">
+    <div style="padding: 2rem;">
+        <SupportListView client:only="react" />
+    </div>
+</AdminLayout>
