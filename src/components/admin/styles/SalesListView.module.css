@@ -1,0 +1,152 @@
+.container {
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.titleSection h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, var(--foreground) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.titleSection p {
+    color: var(--foreground);
+    opacity: 0.7;
+    margin: 0.5rem 0 0 0;
+}
+
+.tableContainer {
+    background-color: var(--card-bg);
+    border: 1px solid var(--green-700);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.salesTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.salesTable th {
+    padding: 1.25rem 1.5rem;
+    background-color: var(--green-800);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--green-700);
+}
+
+.salesTable td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--green-800);
+    color: var(--foreground);
+    font-size: 0.95rem;
+}
+
+.salesRow:hover {
+    background-color: rgba(0, 163, 136, 0.05);
+}
+
+.amount {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+}
+
+.date .time {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.buyer {
+    font-weight: 500;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.statusCompleted {
+    background-color: rgba(0, 163, 136, 0.2);
+    color: #4ade80;
+}
+
+.statusPending {
+    background-color: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.statusCancelled {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+}
+
+.loading,
+.error,
+.empty {
+    padding: 4rem;
+    text-align: center;
+    color: var(--foreground);
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--green-800);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
