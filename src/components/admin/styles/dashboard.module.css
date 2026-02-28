@@ -235,9 +235,9 @@
 }
 
 .modalCloseBtn {
-    background: var(--neon-green);
-    color: var(--deep-black);
-    border: none;
+    background: rgba(0, 255, 136, 0.05);
+    color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 136, 0.5);
     padding: 0.8rem 2rem;
     border-radius: 12px;
     font-weight: 700;
@@ -247,7 +247,9 @@
 }
 
 .modalCloseBtn:hover {
-    filter: brightness(1.1);
+    background: var(--neon-green);
+    color: var(--deep-black);
+    border-color: var(--neon-green);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
 }
