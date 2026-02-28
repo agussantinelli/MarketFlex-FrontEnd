@@ -225,7 +225,8 @@
   <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
   <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
   <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
-  <li>⚡ <b>Navbar Inteligente (Contextual):</b> Navegación jerárquica con subcategorías anidadas, triggers de flecha y sistema de *hover delay* (2s) para una navegación fluida.</li>
+  <li>⚡
+ <b>Navbar Inteligente (Contextual):</b> Navegación jerárquica con subcategorías anidadas, triggers de flecha y sistema de *hover delay* (2s) para una navegación fluida.</li>
   <li>🎡 <b>Componentes Visuales Premium:</b> Carruseles interactivos con estados dinámicos, badges sociales oficiales y micro-interacciones neón en toda la UI.</li>
   <li>✨ <b>Páginas de Contexto Curado:</b> Secciones dedicadas para Novedades (`/new-arrivals`) y Ofertas (`/offers`) con filtros pre-configurados y navegación optimizada.</li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
@@ -697,6 +698,57 @@ cd MarketFlex-FrontEnd
 pnpm install
 pnpm dev
 </pre>
+
+<hr>
+
+<h2>💻 Comandos pnpm disponibles</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Comando</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>pnpm dev</code></td>
+      <td>Inicia el servidor de desarrollo local de Astro (por defecto en <code>localhost:2611</code>) con soporte interactivo HMR.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm build</code></td>
+      <td>Construye la aplicación para producción, generando los assets estáticos y preparando la lógica SSR dentro de la carpeta <code>dist/</code>.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm preview</code></td>
+      <td>Crea un pequeño servidor estático local para previsualizar y testear la aplicación generada por <code>pnpm build</code> tal cual se verá en producción.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm astro</code></td>
+      <td>Invoca la CLI nativa de Astro para utilizar comandos avanzados (ej. <code>astro check</code>, <code>astro sync</code>, <code>astro add</code>).</td>
+    </tr>
+    <tr>
+      <td><code>pnpm test</code></td>
+      <td>Ejecuta únicamente una vez toda la suite de pruebas unitarias y de integración de <b>Vitest</b> de inicio a fin.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm test:watch</code></td>
+      <td>Inicia la suite de <b>Vitest</b> en modo <i>watch</i> interactivo. Se reejecutarán automáticamente los tests al guardar un archivo modificado.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm test:e2e</code></td>
+      <td>Ejecuta la suite End-to-End de <b>Playwright</b> mostrando instanciando el navegador activamente en tu pantalla (<i>--headed</i>).</td>
+    </tr>
+    <tr>
+      <td><code>pnpm test:e2e:ci</code></td>
+      <td>Ejecuta la suite de <b>Playwright</b> en modo silencioso o <i>headless</i> (sin UI). Ideal para los pipelines automatizados de GitHub Actions.</td>
+    </tr>
+    <tr>
+      <td><code>pnpm test:e2e:ui</code></td>
+      <td>Inicia de forma local el <b>Playwright Test Runner</b> gráfico (en el puerto estándar) para debugear flujos y observar visualmente en detalle la interacciones E2E.</td>
+    </tr>
+  </tbody>
+</table>
 
 <hr>
 
