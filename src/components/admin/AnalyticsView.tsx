@@ -18,51 +18,23 @@ import {
 import { Pie } from 'react-chartjs-2';
 import Chart from 'react-apexcharts';
 import styles from './styles/dashboard.module.css';
-import { api } from '../../lib/api';
 import LoadingSpinner from '../common/LoadingSpinner';
+import { AdminService } from '../../services/admin.service';
+import type { AnalyticsData } from '../../types/admin.types';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, ChartJSTooltip, Legend, Colors);
 
-interface MonthlyData {
-    month: string;
-    revenue: number;
-}
-
-interface CategoryData {
-    name: string;
-    revenue: number;
-    value: number;
-}
-
-interface BrandData {
-    name: string;
-    revenue: number;
-    count: number;
-}
-
-interface PaymentMethodData {
-    name: string;
-    revenue: number;
-    value: number;
-}
-
 const AnalyticsView: React.FC = () => {
-    const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
-    const [categoryData, setCategoryData] = useState<CategoryData[]>([]);
-    const [brandData, setBrandData] = useState<BrandData[]>([]);
-    const [paymentMethodData, setPaymentMethodData] = useState<PaymentMethodData[]>([]);
+    const [data, setData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchAnalytics = async () => {
             try {
-                const response = await api.get('admin/analytics').json() as any;
-                if (response.status === 'success') {
-                    setMonthlyData(response.data.monthlySales);
-                    setCategoryData(response.data.categoryDistribution);
-                    setBrandData(response.data.brandPerformance);
-                    setPaymentMethodData(response.data.paymentMethodDistribution);
+                const result = await AdminService.getAnalytics();
+                if (result) {
+                    setData(result);
                 }
             } catch (error) {
                 console.error('Error fetching analytics:', error);
@@ -82,11 +54,21 @@ const AnalyticsView: React.FC = () => {
         }).format(value);
     };
 
+    if (loading) {
+        return <LoadingSpinner message="Cargando analíticas..." />;
+    }
+
+    if (!data) {
+        return <div className={styles.errorContainer}>Error al cargar las analíticas.</div>;
+    }
+
+    const { monthlySales, categoryDistribution, brandPerformance, paymentMethodDistribution } = data;
+
     const pieData = {
-        labels: categoryData.map(c => c.name),
+        labels: categoryDistribution.map(c => c.name),
         datasets: [
             {
-                data: categoryData.map(c => c.revenue),
+                data: categoryDistribution.map(c => c.revenue),
                 backgroundColor: [
                     'rgba(65, 163, 255, 0.8)',
                     'rgba(99, 102, 241, 0.8)',
@@ -162,7 +144,7 @@ const AnalyticsView: React.FC = () => {
             colors: ['transparent']
         },
         xaxis: {
-            categories: brandData.map(b => b.name),
+            categories: brandPerformance.map(b => b.name),
             labels: { show: false },
             axisBorder: { show: false },
             axisTicks: { show: false }
@@ -187,14 +169,21 @@ const AnalyticsView: React.FC = () => {
         legend: { show: false }
     };
 
+    const apexSeries = [
+        {
+            name: 'Ingresos',
+            data: brandPerformance.map(b => b.revenue)
+        }
+    ];
+
     const paymentPieData = {
-        labels: paymentMethodData.map(p => {
+        labels: paymentMethodDistribution.map(p => {
             const names: any = { card: 'Tarjeta', cash: 'Efectivo', transfer: 'Transferencia' };
             return names[p.name] || p.name;
         }),
         datasets: [
             {
-                data: paymentMethodData.map(p => p.revenue),
+                data: paymentMethodDistribution.map(p => p.revenue),
                 backgroundColor: [
                     'rgba(139, 92, 246, 0.8)',
                     'rgba(20, 184, 166, 0.8)',
@@ -206,17 +195,6 @@ const AnalyticsView: React.FC = () => {
         ],
     };
 
-    const apexSeries = [
-        {
-            name: 'Ingresos',
-            data: brandData.map(b => b.revenue)
-        }
-    ];
-
-    if (loading) {
-        return <LoadingSpinner message="Cargando analíticas..." />;
-    }
-
     return (
         <div className={styles.analyticsContainer}>
             <div className={styles.chartCard}>
@@ -226,7 +204,7 @@ const AnalyticsView: React.FC = () => {
                 </div>
                 <div style={{ width: '100%', height: 400, marginTop: '2rem' }}>
                     <ResponsiveContainer>
-                        <AreaChart data={monthlyData}>
+                        <AreaChart data={monthlySales}>
                             <defs>
                                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor="#41a3ffff" stopOpacity={0.3} />
@@ -306,7 +284,6 @@ const AnalyticsView: React.FC = () => {
                         />
                     </div>
                 </div>
-
 
                 <div className={styles.chartCard}>
                     <div className={styles.chartHeader}>
