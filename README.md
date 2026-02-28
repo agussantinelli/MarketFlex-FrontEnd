@@ -597,18 +597,18 @@
       <tbody>
         <tr>
           <td><b>React Components (UI)</b></td>
-          <td><code>CartView</code>, <code>CheckoutForm</code>, <code>CheckoutSummary</code>, <code>AddToCartButton</code>, <code>AddToCartModal</code>, <code>Notifications</code>, <code>LoadingSpinner</code></td>
-          <td>Valida el renderizado correcto, estados de carga, errores y comportamiento de los componentes interactivos de React.</td>
+          <td><code>CartView</code>, <code>CheckoutForm</code>, <code>CheckoutSummary</code>, <code>AddToCartButton</code>, <code>AdminSidebar</code>, <code>DashboardView</code>, <code>StatTable</code>, <code>Notifications</code></td>
+          <td>Valida renderizado correcto, estados de carga, manejo de inputs, cruces de vistas (Client/Admin) y comportamiento de componentes interactivos críticos.</td>
         </tr>
         <tr>
           <td><b>Core Interactive Logic</b></td>
-          <td><code>auth-login</code>, <code>auth-register</code>, <code>navbar</code>, <code>carousel</code>, <code>order-detail</code>, <code>orders-list</code>, <code>search-filters</code>, <code>promotion-hero</code></td>
-          <td>Asegura el funcionamiento de la lógica de cliente extraída de los archivos Astro (Manejo de DOM, Eventos, Animaciones).</td>
+          <td><code>auth-login</code>, <code>carousel</code>, <code>order-detail</code>, <code>user-dropdown</code>, <code>filter-modal</code>, <code>checkout-success</code></td>
+          <td>Asegura el funcionamiento aislado de la lógica de cliente de las "Astro Islands" (Manejo de DOM Vanilla, Eventos, Animaciones y Redirects).</td>
         </tr>
         <tr>
           <td><b>State & Engines</b></td>
-          <td><code>checkoutStore</code>, <code>promotionEngine</code></td>
-          <td>Pruebas de alta complejidad sobre el motor de cálculo de descuentos y la coordinación del flujo de compra.</td>
+          <td><code>cartStore</code>, <code>checkoutStore</code>, <code>adminStore</code>, <code>promotionEngine</code></td>
+          <td>Pruebas de alta complejidad sobre el motor de descuentos, coordinación del flujo de compra y persistencia de modos (ej. Vista Administrador).</td>
         </tr>
         <tr>
           <td><b>API & Infra Services</b></td>
@@ -646,16 +646,16 @@
       <td>Explora la sección de ofertas, selecciona un producto real y navega a su ficha técnica (PDP).</td>
     </tr>
     <tr>
-      <td><b>3. Interacción</b></td>
-      <td>Agrega el producto al carrito y verifica la notificación visual de éxito (Sileo).</td>
+      <td><b>3. Interacción y Compra</b></td>
+      <td>Agrega un producto al carrito, verifica la notificación de éxito dinámica y procede al panel lateral emergente.</td>
     </tr>
     <tr>
-      <td><b>4. Transacción</b></td>
-      <td>Revisa el carrito, completa el formulario de checkout con validación en tiempo real y confirma la compra.</td>
+      <td><b>4. Transacción Segura</b></td>
+      <td>Visita el checkout, completa un largo formulario de validación en tiempo real, verifica el coste total con envíos e impacta la compra simulada en la base de datos.</td>
     </tr>
     <tr>
-      <td><b>5. Fidelización</b></td>
-      <td>Verifica la página de éxito, navega al historial de "Mis Compras" y valida que el detalle de la orden recién creada sea correcto.</td>
+      <td><b>5. Fidelización y Tracking</b></td>
+      <td>Verifica la pantalla de "Order Success", la lluvia de confeti (canvas real) y navega al historial de mis compras para rastrear la orden original.</td>
     </tr>
   </tbody>
 </table>
