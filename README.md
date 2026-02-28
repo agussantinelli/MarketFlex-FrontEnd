@@ -243,6 +243,51 @@
   
 <hr>
 
+<h2>📊 Analytics Performance Platform</h2>
+<p align="center">
+  <i>"Donde los datos se transforman en decisiones estratégicas."</i>
+</p>
+<p>
+  MarketFlex integra un motor de analíticas de alto rendimiento diseñado para ofrecer una visión 360° del ecosistema de ventas. Esta plataforma no se limita a mostrar datos; utiliza una arquitectura de <b>Tres Motores de Visualización</b> para adaptar cada métrica a su formato de lectura más eficiente:
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Dashboard</th>
+            <th>Motor Visual</th>
+            <th>Propósito Técnico</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Evolución de Ventas</b></td>
+            <td><b>Recharts</b></td>
+            <td>Áreas suavizadas con gradientes neón para visualización de tendencias de ingresos (12 meses).</td>
+        </tr>
+        <tr>
+            <td><b>Distribución de Categorías</b></td>
+            <td><b>Chart.js</b></td>
+            <td>Gráficos circulares reactivos con cálculos porcentuales automáticos y leyendas dinámicas.</td>
+        </tr>
+        <tr>
+            <td><b>Rendimiento de Marcas</b></td>
+            <td><b>ApexCharts</b></td>
+            <td>Barras horizontales de alta precisión para el Top 10 de marcas con mayores ingresos.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>🚀 Características de la Plataforma Analytics</h3>
+<ul>
+    <li><b>Arquitectura Zero-Delay:</b> Consumo directo de la API mediante Ky con tipado estricto para una respuesta instantánea.</li>
+    <li><b>Visualización Neo-Dark:</b> Diseño optimizado para el tema oscuro con tooltips translúcidos y efectos de desenfoque.</li>
+    <li><b>Detección de Métricas Clave:</b> Cálculo en tiempo real de ingresos liquidados, volumen por categoría y engagement de marca.</li>
+    <li><b>Formatos Inteligentes:</b> Localización automática de moneda (USD/ARS) y fechas formateadas dinámicamente según el dispositivo.</li>
+</ul>
+
+<hr>
+
 <h2>🎨 Experiencia Visual y Filosofía de Diseño</h2>
 <p>
   La interfaz de MarketFlex no es solo estética; es una declaración de principios sobre cómo debe sentirse una aplicación moderna de alta gama. Hemos fusionado un rendimiento extremo con un acabado visual que denominamos <b>"Neo-Premium"</b>.
