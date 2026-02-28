@@ -364,8 +364,14 @@
 ├── src/                                            # Núcleo del frontend de la aplicación.
 │   ├── components/                                 # Componentes reutilizables (Arquitectura de Islas).
 │   │   ├── admin/                                  # Componentes para el panel de administración.
+│   │   │   ├── AdminHeader.astro                   # Barra superior administrativa con buscador y usuario.
+│   │   │   ├── AdminSidebar.test.tsx               # Test de renderizado y lógica del sidebar.
+│   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
+│   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
 │   │   │   └── styles/                             # Módulos CSS administrativos.
+│   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
+│   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
 │   │   │       └── dashboard.module.css            # Estilos dedicados del dashboard.
 │   │   ├── auth/                                   # UI de login, registro y validación social.
 │   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
@@ -421,6 +427,7 @@
 │   │       └── styles/                             # Estética de las promociones.
 │   │           └── PromotionHero.module.css        # Animaciones y gradientes del hero.
 │   ├── layouts/                                    # Wrapper y estructuras base.
+│   │   ├── AdminLayout.astro                       # Esqueleto de visualización para páginas /admin.
 │   │   ├── Footer.astro                            # Pie de página responsivo y legal.
 │   │   ├── Layout.astro                            # Estructura HTML5 inicial (SEO & Tipografía).
 │   │   ├── Navbar.astro                            # Navegación jerárquica con buscador unificado.
@@ -505,7 +512,9 @@
 │   │   ├── promotion-hero.test.ts                  # Test de animación del hero.
 │   │   ├── promotion-hero.ts                       # Control de diapositivas de la sección hero.
 │   │   ├── search-filters.test.ts                  # Test de sincronización de filtros.
-│   │   └── search-filters.ts                       # Coordinación de estados UI de búsqueda.
+│   │   ├── search-filters.ts                       # Coordinación de estados UI de búsqueda.
+│   │   ├── user-dropdown.test.ts                   # Tests del componente menú de opciones de usuario.
+│   │   └── user-dropdown.ts                        # Lógica interactiva del menú de opciones y vistas de rol.
 │   ├── services/                                   # Abstracción de llamadas a la API (Business Logic).
 │   │   ├── admin.service.test.ts                   # Test de obtención de estadísticas.
 │   │   ├── admin.service.ts                        # Integración con endpoints administrativos.
@@ -530,6 +539,8 @@
 │   │   ├── user.service.test.ts                    # Test unitario de data de perfil.
 │   │   └── user.service.ts                         # Obtención y actualización de perfiles.
 │   ├── store/                                      # Gestión de estado reactivo global (Nanostores).
+│   │   ├── adminStore.test.ts                      # Tests unitarios del estado de entorno de administración.
+│   │   ├── adminStore.ts                           # Estado de persistencia nativo para vista binaria.
 │   │   ├── cartStore.test.ts                       # Test de persistencia y sumatorias.
 │   │   ├── cartStore.ts                            # Estado atomizado del carrito de compras.
 │   │   ├── checkoutStore.test.ts                   # Test de validación de pago.
