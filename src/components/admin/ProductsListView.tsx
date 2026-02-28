@@ -11,6 +11,7 @@ const ProductsListView: React.FC = () => {
     const [products, setProducts] = useState<AdminProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [sort, setSort] = useState('relevance');
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [featuredCount, setFeaturedCount] = useState(0);
@@ -30,7 +31,7 @@ const ProductsListView: React.FC = () => {
     const fetchProducts = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await AdminService.getProducts(page, limit, searchTerm);
+            const response = await AdminService.getProducts(page, limit, searchTerm, sort);
             if (response) {
                 setProducts(response.data);
                 setTotal(response.pagination.total);
@@ -40,7 +41,7 @@ const ProductsListView: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    }, [page, searchTerm]);
+    }, [page, searchTerm, sort]);
 
     useEffect(() => {
         fetchProducts();
@@ -200,6 +201,33 @@ const ProductsListView: React.FC = () => {
                     onPageChange: setPage
                 }}
                 searchPlaceholder="Buscar por nombre o tag..."
+                customFilters={
+                    <select
+                        style={{
+                            padding: '8px 12px',
+                            background: 'var(--surface2)',
+                            color: 'var(--text-color)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            borderRadius: '6px',
+                            outline: 'none',
+                            cursor: 'pointer',
+                            fontSize: '0.9rem',
+                            fontWeight: '500'
+                        }}
+                        value={sort}
+                        onChange={(e) => {
+                            setSort(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="relevance">Por Relevancia</option>
+                        <option value="bestselling">Más Vendidos</option>
+                        <option value="stock_desc">Más Stock</option>
+                        <option value="stock_asc">Menos Stock</option>
+                        <option value="price_asc">Menor Precio</option>
+                        <option value="price_desc">Mayor Precio</option>
+                    </select>
+                }
             />
         </div>
     );

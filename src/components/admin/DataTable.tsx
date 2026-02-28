@@ -29,6 +29,7 @@ interface DataTableProps<T> {
     searchPlaceholder?: string;
     onSearch?: (term: string) => void;
     searchTerm?: string;
+    customFilters?: React.ReactNode;
 }
 
 function DataTable<T extends { id: string | number }>({
@@ -42,7 +43,8 @@ function DataTable<T extends { id: string | number }>({
     pagination,
     searchPlaceholder = 'Buscar...',
     onSearch,
-    searchTerm = ''
+    searchTerm = '',
+    customFilters
 }: DataTableProps<T>) {
 
     const totalPages = pagination ? Math.ceil(pagination.total / pagination.limit) : 0;
@@ -63,6 +65,7 @@ function DataTable<T extends { id: string | number }>({
                             />
                         </div>
                     )}
+                    {customFilters}
                 </div>
                 {onAdd && (
                     <button className={styles.addBtn} onClick={onAdd}>
