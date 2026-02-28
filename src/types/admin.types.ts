@@ -11,6 +11,12 @@ export type AdminStats = {
     recurrentBuyers: number;
     conversionTrend: number;
     recurrentTrend: number;
+    averageItems: number;
+    totalDiscount: number;
+    cancelRate: number;
+    itemsTrend: number;
+    discountTrend: number;
+    cancelTrend: number;
 };
 
 export type AdminPurchase = {
