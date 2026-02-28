@@ -3,13 +3,8 @@ import { AdminService } from '../../services/admin.service';
 import type { AdminPurchase } from '../../types/admin.types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import {
-    CheckCircle2,
-    Clock,
-    XCircle,
-    Search,
-    RefreshCcw
-} from 'lucide-react';
+import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert } from 'react-icons/lu';
+import DataTable, { type Column } from './DataTable';
 import styles from './styles/SalesListView.module.css';
 
 const SalesListView = () => {
@@ -43,13 +38,13 @@ const SalesListView = () => {
     const getStatusIcon = (estado: string) => {
         switch (estado.toUpperCase()) {
             case 'COMPLETADO':
-                return <CheckCircle2 size={16} />;
+                return <LuCheck size={16} />;
             case 'PENDIENTE':
-                return <Clock size={16} />;
+                return <LuClock size={16} />;
             case 'CANCELADO':
-                return <XCircle size={16} />;
+                return <LuCircleAlert size={16} />;
             case 'PROCESANDO':
-                return <RefreshCcw size={16} className={styles.spin} />;
+                return <LuRefreshCcw size={16} className={styles.spin} />;
             default:
                 return null;
         }
@@ -70,17 +65,71 @@ const SalesListView = () => {
         }
     };
 
+    const columns: Column<AdminPurchase>[] = [
+        {
+            header: 'Fecha y Hora',
+            accessor: (sale: AdminPurchase) => (
+                <div className={styles.date}>
+                    <span>{format(new Date(sale.fechaHora), 'dd MMM, yyyy', { locale: es })}</span>
+                    <span className={styles.time}>{format(new Date(sale.fechaHora), 'HH:mm')} hs</span>
+                </div>
+            )
+        },
+        {
+            header: 'Comprador',
+            accessor: (sale: AdminPurchase) => (
+                <div className={styles.buyer}>
+                    {sale.usuario.nombre} {sale.usuario.apellido}
+                </div>
+            )
+        },
+        {
+            header: 'Monto',
+            accessor: (sale: AdminPurchase) => (
+                <span className={styles.amount}>
+                    ${sale.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
+                </span>
+            )
+        },
+        {
+            header: 'Estado',
+            accessor: (sale: AdminPurchase) => (
+                <span className={`${styles.status} ${getStatusClass(sale.estado)}`}>
+                    {getStatusIcon(sale.estado)}
+                    {sale.estado}
+                </span>
+            )
+        },
+        {
+            header: 'Acciones',
+            accessor: () => (
+                <div className={styles.actions}>
+                    <button className={styles.actionBtn} title="Ver detalles">
+                        <LuEye size={18} />
+                    </button>
+                    <button className={styles.actionBtn} title="Editar">
+                        <LuPencil size={18} />
+                    </button>
+                    <button className={styles.actionBtn} title="Borrar">
+                        <LuTrash2 size={18} />
+                    </button>
+                </div>
+            )
+        }
+    ];
+
+    if (error) return (
+        <div className={styles.error}>
+            <LuCircleAlert size={48} color="#f87171" strokeWidth={1} />
+            <p>{error}</p>
+        </div>
+    );
+
+
     if (loading) return (
         <div className={styles.loading}>
             <div className={styles.loadingSpinner}></div>
             <p>Cargando listado de ventas...</p>
-        </div>
-    );
-
-    if (error) return (
-        <div className={styles.error}>
-            <XCircle size={48} color="#f87171" strokeWidth={1} />
-            <p>{error}</p>
         </div>
     );
 
@@ -91,83 +140,16 @@ const SalesListView = () => {
                     <h1>Listado de Ventas</h1>
                     <p>Gestiona y visualiza todas las transacciones del sistema</p>
                 </div>
-                <div className={styles.searchSection}>
-                    <div className={styles.searchInputWrapper}>
-                        <Search size={18} className={styles.searchIcon} />
-                        <input
-                            type="text"
-                            placeholder="Buscar por comprador..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className={styles.searchInput}
-                        />
-                    </div>
-                </div>
             </header>
 
-            <div className={styles.tableContainer}>
-                <div className={styles.tableWrapper}>
-                    <table className={styles.salesTable}>
-                        <thead>
-                            <tr>
-                                <th>Fecha y Hora</th>
-                                <th>Comprador</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredSales.map((sale) => (
-                                <tr key={sale.id} className={styles.salesRow}>
-                                    <td>
-                                        <div className={styles.date}>
-                                            <span>{format(new Date(sale.fechaHora), 'dd MMM, yyyy', { locale: es })}</span>
-                                            <span className={styles.time}>{format(new Date(sale.fechaHora), 'HH:mm')} hs</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className={styles.buyer}>
-                                            {sale.usuario.nombre} {sale.usuario.apellido}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span className={styles.amount}>
-                                            ${sale.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span className={`${styles.status} ${getStatusClass(sale.estado)}`}>
-                                            {getStatusIcon(sale.estado)}
-                                            {sale.estado}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div className={styles.actions}>
-                                            <button className={styles.actionBtn} title="Ver detalles">
-                                                👁️
-                                            </button>
-                                            <button className={styles.actionBtn} title="Editar">
-                                                📝
-                                            </button>
-                                            <button className={styles.actionBtn} title="Borrar">
-                                                🗑️
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {filteredSales.length === 0 && (
-                                <tr>
-                                    <td colSpan={5} className={styles.empty}>
-                                        No se encontraron ventas.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <DataTable
+                data={filteredSales}
+                columns={columns}
+                loading={loading}
+                onSearch={setSearchQuery}
+                searchTerm={searchQuery}
+                searchPlaceholder="Buscar por comprador..."
+            />
         </div>
     );
 };

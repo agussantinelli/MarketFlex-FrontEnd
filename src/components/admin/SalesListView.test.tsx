@@ -45,6 +45,8 @@ describe('SalesListView Component', () => {
     it('renders loading state initially', () => {
         (AdminService.getAllPurchases as any).mockReturnValue(new Promise(() => { }));
         render(<SalesListView />);
+        // DataTable might wrap content, but the component should still show loading feedback
+        // If we kept the loading div in SalesListView before returning DataTable
         expect(screen.getByText(/Cargando listado de ventas/i)).toBeDefined();
     });
 
@@ -91,7 +93,7 @@ describe('SalesListView Component', () => {
         render(<SalesListView />);
 
         await waitFor(() => {
-            expect(screen.getByText('No se encontraron ventas.')).toBeDefined();
+            expect(screen.getByText(/No se encontraron/i)).toBeDefined();
         });
     });
 });
