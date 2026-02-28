@@ -11,7 +11,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
     fullPage = false
 }) => {
     return (
-        <div className={`${styles.loadingContainer} ${fullPage ? styles.fullPage : ''}`}>
+        <div className={`${styles.loadingContainer} ${fullPage ? styles.fullPage : ''}`} role="status">
             <div className={styles.spinner}></div>
             {message && <p className={styles.message}>{message}</p>}
         </div>
