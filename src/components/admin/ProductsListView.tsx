@@ -4,9 +4,7 @@ import type { Column } from './DataTable';
 import { AdminService } from '../../services/admin.service';
 import type { AdminProduct } from '../../types/admin.types';
 import { LuImage, LuCircleCheck, LuCircleX } from 'react-icons/lu';
-
-const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:5979/api';
-const API_BASE_URL = API_URL.replace('/api', '');
+import { getImageUrl } from '../../lib/url';
 
 const ProductsListView: React.FC = () => {
     const [products, setProducts] = useState<AdminProduct[]>([]);
@@ -49,7 +47,7 @@ const ProductsListView: React.FC = () => {
                 <div style={{ width: '40px', height: '40px', borderRadius: '4px', overflow: 'hidden', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {p.foto ? (
                         <img
-                            src={p.foto.startsWith('http') ? p.foto : `${API_BASE_URL}/${p.foto}`}
+                            src={getImageUrl(p.foto)}
                             alt={p.nombre}
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />

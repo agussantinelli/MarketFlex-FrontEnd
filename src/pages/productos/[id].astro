@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getProductById } from "../../services/product.service";
 import { Icon } from "astro-icon/components";
 import styles from "./styles/[id].module.css";
+import { getImageUrl } from "../../lib/url";
 
 const { id } = Astro.params;
 
@@ -61,9 +62,7 @@ const hasDiscount = product.precioConDescuento !== null;
             <div class={styles.imageSection}>
                 <div class={styles.imageWrapper}>
                     <img
-                        src={product.foto
-                            ? `http://localhost:5979/${product.foto}`
-                            : "/placeholder.png"}
+                        src={getImageUrl(product.foto)}
                         alt={product.nombre}
                         class={styles.mainImage}
                     />

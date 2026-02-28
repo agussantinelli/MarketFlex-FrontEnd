@@ -4,6 +4,7 @@ import { HiArrowRight, HiOutlineShoppingBag } from 'react-icons/hi2';
 import { cartItems, cartTotals } from '../../store/cartStore';
 import { checkoutStore, submitPurchase } from '../../store/checkoutStore';
 import styles from './styles/CheckoutSummary.module.css';
+import { getImageUrl } from '../../lib/url';
 
 const CheckoutSummary: React.FC = () => {
     const items = useStore(cartItems);
@@ -46,7 +47,7 @@ const CheckoutSummary: React.FC = () => {
                 {items.map((item) => (
                     <div key={item.id} className={styles.item}>
                         <img
-                            src={item.foto ? `http://localhost:5979/${item.foto}` : '/placeholder-product.png'}
+                            src={getImageUrl(item.foto)}
                             alt={item.nombre}
                             className={styles.image}
                         />

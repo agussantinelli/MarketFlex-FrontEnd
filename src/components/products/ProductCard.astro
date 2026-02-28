@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import type { Product } from "../../types/product.types";
 import styles from "./styles/ProductCard.module.css";
 import AddToCartButton from "./AddToCartButton";
+import { getImageUrl } from "../../lib/url";
 
 type Props = {
     product: Product;
@@ -17,9 +18,7 @@ const { product, showFeatured = false, rank } = Astro.props;
     <a href={`/productos/${product.id}`} class={styles.mainLink}>
         <div class={styles.imageContainer}>
             <img
-                src={product.foto
-                    ? `http://localhost:5979/${product.foto}`
-                    : "/placeholder.png"}
+                src={getImageUrl(product.foto)}
                 alt={`Imagen del producto: ${product.nombre}`}
                 class={styles.productImage}
                 loading="lazy"

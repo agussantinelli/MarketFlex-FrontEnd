@@ -3,6 +3,7 @@ import { useStore } from '@nanostores/react';
 import { cartItems, cartTotals, updateQuantity, removeItem, clearCart } from '../../store/cartStore';
 import LoadingSpinner from '../common/LoadingSpinner';
 import styles from './styles/CartView.module.css';
+import { getImageUrl } from '../../lib/url';
 
 const CartView: React.FC = () => {
     const items = useStore(cartItems);
@@ -76,7 +77,7 @@ const CartView: React.FC = () => {
 
                             <div className={styles.itemImageContainer}>
                                 <img
-                                    src={item.foto ? `http://localhost:5979/${item.foto}` : '/placeholder.png'}
+                                    src={getImageUrl(item.foto)}
                                     alt={item.nombre}
                                     className={styles.itemImage}
                                 />
