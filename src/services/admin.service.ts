@@ -42,5 +42,20 @@ export const AdminService = {
             console.error('Error fetching admin products:', error);
             return null;
         }
+    },
+
+    async toggleFeature(productId: string, esDestacado: boolean): Promise<{ status: string; message: string } | null> {
+        try {
+            const result = await api.patch(`admin/products/${productId}/feature`, {
+                json: { esDestacado }
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar el estado destacado'
+            };
+        }
     }
 };
