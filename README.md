@@ -29,6 +29,9 @@
     <img src="https://img.shields.io/badge/React_Icons-5.5.0-E91E63?style=for-the-badge&logo=react&logoColor=white" alt="React-Icons Badge">
     <img src="https://img.shields.io/badge/Google_Sign--In-GSI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Sign-In Badge">
     <img src="https://img.shields.io/badge/Facebook_Login-SDK-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Login Badge">
+    <img src="https://img.shields.io/badge/Recharts-3.7.0-22B573?style=for-the-badge&logo=recharts&logoColor=white" alt="Recharts Badge">
+    <img src="https://img.shields.io/badge/ApexCharts-5.6.0-008FFB?style=for-the-badge&logo=apexcharts&logoColor=white" alt="ApexCharts Badge">
+    <img src="https://img.shields.io/badge/Chart.js-4.5.1-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" alt="Chart.js Badge">
     <img src="https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT Badge">
     <img src="https://img.shields.io/badge/reCAPTCHA-v3-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="reCAPTCHA Badge">
     <img src="https://img.shields.io/badge/HTTPS-mkcert-003666?style=for-the-badge&logo=letsencrypt&logoColor=white" alt="mkcert Badge">
