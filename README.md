@@ -560,16 +560,20 @@
 <hr>
 
 <h2>📚 Skills y Directrices</h2>
-<p>Este proyecto se rige por un conjunto de reglas arquitectónicas y de calidad de código denominadas <b>Skills</b>. Podés consultar el catálogo completo en:</p>
+<p>Este proyecto se rige por un estricto conjunto de reglas arquitectónicas y de calidad de código denominadas <b>Skills</b>, ubicadas en el directorio <code>.agent/skills/</code>. Podés consultar el catálogo maestro en:</p>
 <ul>
-    <li><b><a href=".agent/skills/global-skills/SKILL.md">Global Skills Catalog (Frontend)</a></b></li>
-    <li><b><a href=".agent/skills/test-enforcement/SKILL.md">Test Enforcement Rule</a></b></li>
+    <li><b><a href=".agent/skills/global-skills/SKILL.md">Global Skills Catalog (Frontend)</a></b>: Visión arquitectónica y registro maestro de todas las convenciones del repositorio.</li>
 </ul>
-<p>Las directrices más críticas incluyen:</p>
+
+<h3>Directrices Clave de Desarrollo</h3>
+<p>El incumplimiento de cualquiera de estas directrices resultará en un rechazo de PR:</p>
 <ul>
-    <li><code>css-modules</code>: Todo CSS complejo debe vivir en su propio archivo modular.</li>
-    <li><code>test-enforcement</code>: Regla obligatoria de "Un test por archivo" para componentes y servicios.</li>
-    <li><code>astro-scripts</code>: La lógica compleja de scripts debe extraerse de los archivos Astro.</li>
+    <li><b><a href=".agent/skills/astro/SKILL.md">astro</a></b> & <b><a href=".agent/skills/astro-scripts/SKILL.md">astro-scripts</a></b>: Uso correcto de Islands Architecture, hidratación diferida (<code>client:visible</code>/<code>client:load</code>) y extracción obligatoria de TS complejo fuera de los archivos <code>.astro</code>.</li>
+    <li><b><a href=".agent/skills/sileo-notifications/SKILL.md">sileo-notifications</a></b>: Única vía aceptada para lanzar feedback visual (<code>window.triggerSileo</code>). Prohibidos los <code>alert()</code> nativos.</li>
+    <li><b><a href=".agent/skills/test-enforcement/SKILL.md">test-enforcement</a></b> & <b><a href=".agent/skills/test/SKILL.md">test</a></b>: Cobertura obligatoria. Cada componente visual o de lógica de negocio (<code>.ts</code>, <code>.tsx</code>) debe ser acompañado por su gemelo <code>.test.ts(x)</code> en la misma ubicación.</li>
+    <li><b><a href=".agent/skills/css-modules/SKILL.md">css-modules</a></b> & <b><a href=".agent/skills/responsive-design/SKILL.md">responsive-design</a></b>: Enfoque colaborativo sin colisiones de clases globales. Diseño siempre <i>Mobile-First</i>, evitando magic numbers.</li>
+    <li><b><a href=".agent/skills/modular-architecture/SKILL.md">modular-architecture</a></b> & <b><a href=".agent/skills/clean-structure/SKILL.md">clean-structure</a></b>: Separación de dominios estricta. Nunca acoplar lógica de consumo de API (<code>services/</code>) directamente al Virtual DOM de React.</li>
+    <li><b><a href=".agent/skills/performance/SKILL.md">performance</a></b>: Mandato sobre Core Web Vitals. Optimización estricta del <i>Largest Contentful Paint</i> y <i>Cumulative Layout Shift</i>.</li>
 </ul>
 
 <hr>
