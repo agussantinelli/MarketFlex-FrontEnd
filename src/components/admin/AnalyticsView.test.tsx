@@ -51,6 +51,9 @@ describe('AnalyticsView Component', () => {
             paymentMethodDistribution: [
                 { name: 'card', revenue: 6000, value: 12 },
                 { name: 'cash', revenue: 4000, value: 5 }
+            ],
+            salesHeatmap: [
+                { name: 'Lunes', data: [{ x: '00:00', y: 10 }] }
             ]
         }
     };
@@ -83,12 +86,14 @@ describe('AnalyticsView Component', () => {
         expect(screen.getByText('Distribución por Categorías')).toBeInTheDocument();
         expect(screen.getByText('Métodos de Pago')).toBeInTheDocument();
         expect(screen.getByText('Rendimiento por Marcas')).toBeInTheDocument();
+        expect(screen.getByText('Mapa de Calor de Ventas')).toBeInTheDocument();
 
         // Check if chart mocks are rendered
         expect(screen.getByTestId('area-chart')).toBeInTheDocument();
         const pieCharts = screen.getAllByTestId('pie-chart');
         expect(pieCharts).toHaveLength(2);
-        expect(screen.getByTestId('apex-chart')).toBeInTheDocument();
+        const apexCharts = screen.getAllByTestId('apex-chart');
+        expect(apexCharts).toHaveLength(2);
     });
 
     it('should handle API error gracefully', async () => {
