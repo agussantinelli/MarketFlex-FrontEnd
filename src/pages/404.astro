@@ -1,0 +1,135 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { LuArrowLeft, LuSearchX } from "react-icons/lu";
+---
+
+<Layout title="Página no encontrada">
+    <div class="error-container">
+        <div class="error-card">
+            <div class="icon-wrapper">
+                <LuSearchX size={80} />
+            </div>
+            <h1>404</h1>
+            <h2>Página no encontrada</h2>
+            <p>
+                Lo sentimos, la página que estás buscando no existe o ha sido
+                movida.
+            </p>
+
+            <button onclick="history.back()" class="back-btn">
+                <LuArrowLeft size={20} />
+                <span>Volver a la página anterior</span>
+            </button>
+
+            <a href="/" class="home-link">Ir al Inicio</a>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .error-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: radial-gradient(
+            circle at center,
+            rgba(30, 41, 59, 1) 0%,
+            rgba(15, 23, 42, 1) 100%
+        );
+    }
+
+    .error-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 4rem 3rem;
+        border-radius: 24px;
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .icon-wrapper {
+        color: var(--neon-green, #00ff9d);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: center;
+        filter: drop-shadow(0 0 15px rgba(0, 255, 157, 0.3));
+    }
+
+    h1 {
+        font-size: 6rem;
+        font-weight: 900;
+        margin: 0;
+        line-height: 1;
+        background: linear-gradient(to bottom, #fff, #64748b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -2px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #fff;
+        margin: 1rem 0;
+    }
+
+    p {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+    }
+
+    .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 1rem;
+        background: var(--neon-green, #00ff9d);
+        color: #0f172a;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+    }
+
+    .back-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 255, 157, 0.4);
+    }
+
+    .home-link {
+        color: var(--neon-green, #00ff9d);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+
+    .home-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+</style>
