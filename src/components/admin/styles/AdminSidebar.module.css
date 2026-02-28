@@ -49,6 +49,17 @@
     gap: 0.5rem;
 }
 
+.navGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.navGroup:last-child {
+    margin-bottom: 0;
+}
+
 .navSectionTitle {
     font-size: 0.75rem;
     text-transform: uppercase;
