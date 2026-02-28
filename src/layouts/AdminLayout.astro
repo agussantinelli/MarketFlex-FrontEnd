@@ -2,6 +2,7 @@
 import "../styles/globals.css";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import AdminHeader from "../components/admin/AdminHeader.astro";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import { ViewTransitions } from "astro:transitions";
 
 interface Props {
@@ -66,6 +67,9 @@ const { title } = Astro.props;
     </head>
     <body>
         <div class="admin-container">
+            <div id="nav-loading-overlay" class="nav-loading-overlay">
+                <LoadingSpinner fullPage message="Cargando sección..." />
+            </div>
             <AdminSidebar client:load />
             <div class="admin-main">
                 <AdminHeader title={title} />
@@ -74,6 +78,27 @@ const { title } = Astro.props;
                 </main>
             </div>
         </div>
+
+        <style is:global>
+            .nav-loading-overlay {
+                display: none;
+            }
+            .nav-loading-overlay.active {
+                display: block;
+            }
+        </style>
+
+        <script>
+            document.addEventListener("astro:before-preparation", () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.add("active");
+            });
+
+            document.addEventListener("astro:page-load", () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.remove("active");
+            });
+        </script>
 
         <!-- Sileo Root for notifications -->
         <span id="sileo-root"></span>
