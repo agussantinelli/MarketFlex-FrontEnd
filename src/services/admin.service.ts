@@ -2,9 +2,9 @@ import { api } from '../lib/api';
 import type { AdminStats, AdminPurchase } from '../types/admin.types';
 
 export const AdminService = {
-    async getStats(): Promise<AdminStats | null> {
+    async getStats(period: 'month' | 'historical' = 'month'): Promise<AdminStats | null> {
         try {
-            const result = await api.get('admin/stats').json<{ data: AdminStats }>();
+            const result = await api.get(`admin/stats?period=${period}`).json<{ data: AdminStats }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching admin stats:', error);
