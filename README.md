@@ -243,6 +243,7 @@
   <li><b>Estética Neón & Dark Mode:</b> El modo oscuro es nativo y prioritario, utilizando una paleta de contrastes altos con acentos neón que guían la mirada del usuario hacia los puntos de acción (CTA).</li>
   <li><b>Micro-animaciones de Estado:</b> Cada interacción (un hover en el Navbar, una eliminación del carrito, una rotación de flecha) está acompañada de transiciones suaves de 0.2s - 0.3s que refuerzan la sensación de fluidez y reactividad.</li>
   <li><b>Feedback Visual Gooey (Sileo):</b> Las notificaciones y alertas utilizan efectos de "viscosidad" visual (Gooey effect) para dar una sensación orgánica y moderna lejos de los popups convencionales.</li>
+  <li><b>Diseño Fluid & Mobile-First:</b> La experiencia en dispositivos móviles está tratada como una prioridad. Patrones de layout <i>grid/flexbox</i> dinámicos adaptan desde la grilla de productos hasta el panel del carrito de compras para mantener la elegancia y operabilidad táctil usando una sola mano.</li>
 </ul>
 
 <hr>
