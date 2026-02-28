@@ -28,14 +28,16 @@ export default function UsersListView() {
     const handleEdit = (user: AdminUser) => {
         // Placeholder for edit functionality
         console.log('Edit user:', user.id);
-        alert(`Editar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
+        if (window.triggerSileo) {
+            window.triggerSileo('info', `Editar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
+        }
     };
 
     const handleDelete = (user: AdminUser) => {
         // Placeholder for delete functionality
         console.log('Delete user:', user.id);
-        if (confirm(`¿Estás seguro que deseas eliminar al usuario ${user.nombre} ${user.apellido}?`)) {
-            alert(`Eliminar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
+        if (window.triggerSileo) {
+            window.triggerSileo('error', `Eliminar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
         }
     };
 

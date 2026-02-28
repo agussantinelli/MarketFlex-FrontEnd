@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import type { SupportMessageOutput } from '../../types/support.types';
 import { getSupportMessages } from '../../services/support.service';
 import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight } from 'react-icons/lu';
+import LoadingSpinner from '../common/LoadingSpinner';
 import styles from './styles/SalesListView.module.css';
 
 const SupportListView: React.FC = () => {
@@ -49,15 +50,7 @@ const SupportListView: React.FC = () => {
     };
 
     if (loading) {
-        return (
-            <div style={{ padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <div style={{ color: 'var(--neon-blue)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div className="spinner" style={{ width: '24px', height: '24px', border: '3px solid rgba(0,255,157,0.3)', borderTopColor: 'var(--neon-green)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                    Cargando mensajes...
-                </div>
-                <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
-            </div>
-        );
+        return <LoadingSpinner message="Cargando mensajes..." />;
     }
 
     if (messages.length === 0) {

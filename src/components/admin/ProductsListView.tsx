@@ -169,15 +169,15 @@ const ProductsListView: React.FC = () => {
     };
 
     const handleDelete = (product: AdminProduct) => {
-        if (window.confirm(`¿Estás seguro de eliminar "${product.nombre}"?`)) {
-            console.log('Delete product:', product.id);
-            // TODO: Call delete service
+        if (window.triggerSileo) {
+            window.triggerSileo('error', `Eliminar producto funcionalmente no implementado aún para: ${product.nombre}`);
         }
     };
 
     const handleAdd = () => {
-        console.log('Add product');
-        // TODO: Open add modal
+        if (window.triggerSileo) {
+            window.triggerSileo('info', 'Agregar producto funcionalmente no implementado aún');
+        }
     };
 
     return (
