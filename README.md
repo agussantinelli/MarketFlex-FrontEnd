@@ -67,13 +67,19 @@
 <table>
     <thead>
         <tr>
-            <th>Componente</th>
+            <th>Capa / Área</th>
             <th>Tecnología</th>
             <th>Versión / Detalle</th>
             <th>Uso Principal</th>
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td><strong>Runtime</strong></td>
+            <td>Node.js</td>
+            <td><strong>20+</strong> (LTS)</td>
+            <td>Entorno de ejecución y construcción del proyecto.</td>
+        </tr>
         <tr>
             <td><strong>Framework</strong></td>
             <td>Astro</td>
@@ -83,7 +89,7 @@
         <tr>
             <td><strong>Lenguaje</strong></td>
             <td>TypeScript</td>
-            <td><strong>5.x</strong></td>
+            <td><strong>^5.9.3</strong></td>
             <td>Tipado estricto para componentes y lógica de negocio.</td>
         </tr>
         <tr>
@@ -95,7 +101,7 @@
         <tr>
             <td><strong>E2E Testing</strong></td>
             <td>Playwright</td>
-            <td><strong>Latest</strong></td>
+            <td><strong>^1.58.2</strong></td>
             <td>Pruebas de punta a punta en navegadores reales.</td>
         </tr>
         <tr>
@@ -117,7 +123,7 @@
             <td>Pruebas de comportamiento para componentes React.</td>
         </tr>
         <tr>
-            <td><strong>Paquetes</strong></td>
+            <td><strong>Dependency Manager</strong></td>
             <td>pnpm</td>
             <td><strong>Latest</strong></td>
             <td>Gestión de dependencias eficiente y veloz.</td>
@@ -195,7 +201,7 @@
             <td>Generación de certificados SSL (HTTPS Local) para OAuth.</td>
         </tr>
         <tr>
-            <td><strong>Estado Global</strong></td>
+            <td><strong>State Management</strong></td>
             <td>Zustand & Nanostores</td>
             <td><strong>Latest</strong></td>
             <td>Gestión de estado global para React Islands y compartida entre frameworks (Astro/React).</td>
