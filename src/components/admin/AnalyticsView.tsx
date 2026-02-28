@@ -16,6 +16,7 @@ import {
     Colors
 } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import Chart from 'react-apexcharts';
 import styles from './styles/dashboard.module.css';
 import { api } from '../../lib/api';
 
@@ -33,9 +34,16 @@ interface CategoryData {
     value: number;
 }
 
+interface BrandData {
+    name: string;
+    revenue: number;
+    count: number;
+}
+
 const AnalyticsView: React.FC = () => {
     const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
     const [categoryData, setCategoryData] = useState<CategoryData[]>([]);
+    const [brandData, setBrandData] = useState<BrandData[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -45,6 +53,7 @@ const AnalyticsView: React.FC = () => {
                 if (response.status === 'success') {
                     setMonthlyData(response.data.monthlySales);
                     setCategoryData(response.data.categoryDistribution);
+                    setBrandData(response.data.brandPerformance);
                 }
             } catch (error) {
                 console.error('Error fetching analytics:', error);
@@ -108,6 +117,73 @@ const AnalyticsView: React.FC = () => {
         },
         maintainAspectRatio: false
     };
+
+    const apexOptions: any = {
+        chart: {
+            toolbar: { show: false },
+            fontFamily: 'inherit',
+            background: 'transparent'
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                horizontal: true,
+                distributed: true,
+                barHeight: '60%',
+                dataLabels: {
+                    position: 'top'
+                }
+            }
+        },
+        colors: ['#41a3ff', '#6366f1', '#8b5cf6', '#ec4899', '#14b8a6', '#f59e0b', '#ef4444'],
+        dataLabels: {
+            enabled: true,
+            formatter: function (val: number) {
+                return `$${val.toLocaleString()}`;
+            },
+            offsetX: -6,
+            style: {
+                fontSize: '12px',
+                colors: ['#fff']
+            }
+        },
+        stroke: {
+            show: true,
+            width: 1,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: brandData.map(b => b.name),
+            labels: { show: false },
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            labels: {
+                style: {
+                    colors: '#94a3b8',
+                    fontSize: '12px'
+                }
+            }
+        },
+        grid: { show: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (val: number) {
+                    return formatCurrency(val);
+                }
+            }
+        },
+        legend: { show: false }
+    };
+
+    const apexSeries = [
+        {
+            name: 'Ingresos',
+            data: brandData.map(b => b.revenue)
+        }
+    ];
 
     if (loading) {
         return <div className={styles.loadingContainer}>Cargando analíticas...</div>;
@@ -185,6 +261,21 @@ const AnalyticsView: React.FC = () => {
                         <div style={{ width: '80%', height: '100%' }}>
                             <Pie data={pieData} options={pieOptions} />
                         </div>
+                    </div>
+                </div>
+
+                <div className={styles.chartCard}>
+                    <div className={styles.chartHeader}>
+                        <h2>Rendimiento por Marcas</h2>
+                        <p>Top 10 marcas con mayores ingresos brutos</p>
+                    </div>
+                    <div style={{ width: '100%', height: 400, marginTop: '1rem' }}>
+                        <Chart
+                            options={apexOptions}
+                            series={apexSeries}
+                            type="bar"
+                            height="100%"
+                        />
                     </div>
                 </div>
             </div>
