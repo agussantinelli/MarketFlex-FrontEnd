@@ -307,35 +307,23 @@
 
 <h2>🔐 Seguridad y Autenticación</h2>
 <p>
-  El sistema implementa múltiples capas de seguridad para proteger el acceso y los datos de los usuarios.
+  El sistema implementa sólidas capas de seguridad, gestionadas a través del script unificado <code>auth-login.ts</code>, que centraliza toda la lógica de sesión:
 </p>
 <ul>
   <li>
-    <b>Sesiones Persistentes (Refresh Tokens):</b> Manejo seguro de sesiones duales. El <code>marketflex_token</code> (15 min) se usa para peticiones, mientras que el <code>marketflex_refresh_token</code> (7 días) permite renovar la sesión sin que el usuario tenga que volver a loguearse.
+    <b>Sesiones Persistentes (Refresh Tokens):</b> Manejo seguro de sesiones duales. El <code>marketflex_token</code> (Access Token) se utiliza para peticiones, mientras que el <code>marketflex_refresh_token</code> permite renovar la sesión de forma transparente (vía el interceptor de Ky) sin requerir re-logueos. La metadata (nombre, rol) se cachea en <code>marketflex_user</code>.
   </li>
   <li>
-    <b>JWT (Json Web Tokens):</b> Los tokens se almacenan en <code>localStorage</code> con el prefijo <code>marketflex_</code> para evitar colisiones y se inyectan automáticamente en cada petición HTTP saliente.
+    <b>Autenticación Clásica (Email/Password):</b> Formulario tradicional protegido, integrando transiciones visuales, checkboxes de "Recordar Email" (persistido en localStorage) y feedback de errores de servidor parseados directamente a notificaciones "Gooey" en pantalla mediante Sileo.
   </li>
   <li>
-    <b>Login Tradicional:</b> Formulario de email/contraseña con validación en tiempo real de complejidad (Mayúsculas, Números, Longitud) y persistencia en el backend.
+    <b>Login Social — Google GSI:</b> Integración con la librería moderna <b>Google Identity Services</b>. El botón se renderiza de manera nativa utilizando la API <code>google.accounts.id.renderButton</code> y se re-dibuja dinámicamente mediante un <code>ResizeObserver</code> para preservar proporciones visuales perfectas. Tras un callback exitoso, la aserción JWT de Google es validada unívocamente en el backend.
   </li>
   <li>
-    <b>reCAPTCHA v3 (Invisible):</b> Verificación automática de "humanidad" basada en comportamiento, eliminando la necesidad de seleccionar imágenes o checkboxes manuales.
+    <b>Login Social — Facebook OAuth (Redirect Flow):</b> En lugar de depender de pesados y problemáticos popups del SDK mediante <code>FB.login</code>, la plataforma utiliza el <b>Flujo Directo de Redirección OAuth</b>. Al hacer click, el usuario viaja a Facebook, y al autorizar, MarketFlex captura el <code>?code=</code> directamente en la ruta de origen, procesándolo <i>silentamente</i> por detrás mientras se delega la obtención del token definitivo al backend (Auth Code Exchange), minimizando bloqueos por parte del navegador.
   </li>
   <li>
-    <b>Login Social — Google:</b> Integración con <b>Google Identity Services (GSI)</b>. El usuario hace click → popup de Google → se obtiene un <code>ID Token</code> → se verifica en el backend con <code>google-auth-library</code>.
-  </li>
-  <li>
-    <b>Login Social — Facebook:</b> Integración con <b>Facebook JS SDK (v21.0)</b>. El usuario hace click → ventana de Facebook → se obtiene un <code>Access Token</code> → se verifica en el backend vía <code>Graph API</code>.
-  </li>
-  <li>
-    <b>Creación automática de cuenta:</b> Si el usuario social no existe, se crea automáticamente. Si ya existe, se vincula. Se diferencia con mensajes: <b>"¡Bienvenido!"</b> vs <b>"Bienvenido de nuevo"</b>.
-  </li>
-  <li>
-    <b>HTTPS en Desarrollo:</b> Uso de <code>vite-plugin-mkcert</code> para generar una Autoridad Certificadora (CA) local y certificados confiables. Esto elimina la advertencia de "Conexión no privada" en el navegador y es un requisito estricto del SDK de Facebook para <code>FB.login()</code>. <i>Nota: La primera vez que ejecutes <code>pnpm dev</code>, tu sistema operativo podría solicitar permisos de administrador para instalar la CA.</i>
-  </li>
-  <li>
-    <b>Logos locales:</b> Los logos de Google y Facebook se sirven desde <code>public/logos/</code> para evitar dependencias externas.
+    <b>HTTPS en Desarrollo:</b> Uso de <code>vite-plugin-mkcert</code> para generar una Autoridad Certificadora (CA) local y certificados confiables. Esto elimina la advertencia de "Conexión no privada" en el navegador y es un requisito estricto para probar configuraciones complejas de cookies <code>Secure</code> o probar el redirect de Facebook localmente sin fallos.
   </li>
 </ul>
 
