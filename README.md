@@ -496,7 +496,9 @@
 │   │   ├── api.test.ts                             # Test de interceptores del cliente Ky.
 │   │   ├── api.ts                                  # Cliente fetch centralizado con Auto-Refresh.
 │   │   ├── dataReset.test.ts                       # Test de lógica de limpieza de caché.
-│   │   └── dataReset.ts                            # Herramientas de sincronización con el seed.
+│   │   ├── dataReset.ts                            # Herramientas de sincronización con el seed.
+│   │   ├── url.test.ts                             # Test unitario de la utilidad de URLs de imagen.
+│   │   └── url.ts                                  # Utilidad centralizada para el manejo de URLs de imágenes.
 │   ├── pages/                                      # Sistema de rutas basado en archivos (SSR).
 │   │   ├── about.astro                             # Página de información institucional.
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
