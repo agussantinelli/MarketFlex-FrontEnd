@@ -30,7 +30,16 @@ describe('DashboardView Component', () => {
         cancelRate: 1.5,
         itemsTrend: 1.5,
         discountTrend: -5.0,
-        cancelTrend: -0.2
+        cancelTrend: -0.2,
+        lastRevenue: 1200,
+        lastSales: 10,
+        lastAverageTicket: 120,
+        lastActiveUsers: 30,
+        lastConversionRate: 20,
+        lastRecurrentBuyers: 10,
+        lastAverageItems: 4,
+        lastTotalDiscount: 2000,
+        lastCancelRate: 1.0
     };
 
     const mockPurchases = [
