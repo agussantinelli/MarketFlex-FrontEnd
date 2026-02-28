@@ -140,7 +140,7 @@ const DashboardView: React.FC = () => {
             icon: LuTags,
             color: "from-indigo-500 to-indigo-300",
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) >= 0
         },
         {
             title: "Tasa de Cancelación",
