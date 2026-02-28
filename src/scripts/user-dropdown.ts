@@ -83,21 +83,31 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
         // Admin Navigation Logic - strictly path-based (must run after Role based visibility)
         if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
-            const isAdminRoute = window.location.pathname.startsWith("/admin");
+            const userStr = localStorage.getItem("marketflex_user");
+            const user = userStr ? JSON.parse(userStr) : null;
+            const isAdmin = user && user.rol === "admin";
 
-            if (isAdminRoute) {
-                clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
-                goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
-                goClientBtns.forEach(btn => {
-                    (btn as HTMLElement).style.display = 'flex';
-                    (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
-                });
+            if (isAdmin) {
+                const isAdminRoute = window.location.pathname.startsWith("/admin");
+
+                if (isAdminRoute) {
+                    clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
+                    goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+                    goClientBtns.forEach(btn => {
+                        (btn as HTMLElement).style.display = 'flex';
+                        (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
+                    });
+                } else {
+                    clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
+                    goAdminBtns.forEach(btn => {
+                        (btn as HTMLElement).style.display = 'flex';
+                        (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
+                    });
+                    goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+                }
             } else {
-                clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
-                goAdminBtns.forEach(btn => {
-                    (btn as HTMLElement).style.display = 'flex';
-                    (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
-                });
+                // Not an admin, ensure neither button is shown
+                goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
             }
         }
