@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import ProductsListView from "../../components/admin/ProductsListView.tsx";
+---
+
+<AdminLayout title="Gestión de Productos">
+    <ProductsListView client:only="react" />
+</AdminLayout>

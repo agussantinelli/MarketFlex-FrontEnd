@@ -1,0 +1,257 @@
+.tableWrapper {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: var(--green-cream);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.tableHeader h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.searchBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 1rem;
+    color: rgba(148, 163, 184, 0.6);
+    font-size: 1.1rem;
+}
+
+.searchBar input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.searchBar input:focus {
+    outline: none;
+    border-color: var(--neon-green);
+    background: rgba(30, 41, 59, 1);
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.1);
+}
+
+.addBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, var(--neon-green), #059669);
+    border: none;
+    border-radius: 10px;
+    color: #064e3b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.addBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3);
+}
+
+.tableContainer {
+    position: relative;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.table th {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 1rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    vertical-align: middle;
+}
+
+.table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.emptyCell {
+    text-align: center;
+    padding: 3rem !important;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.actionsHeader {
+    text-align: right;
+}
+
+.actionsCell {
+    text-align: right;
+}
+
+.actionsWrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.editBtn,
+.deleteBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(30, 41, 59, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.editBtn {
+    color: #60a5fa;
+}
+
+.editBtn:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: #60a5fa;
+}
+
+.deleteBtn {
+    color: #f87171;
+}
+
+.deleteBtn:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: #f87171;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.paginationInfo {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.paginationInfo b {
+    color: white;
+}
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.paginationControls button {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(30, 41, 59, 0.5);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.paginationControls button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.paginationControls button:not(:disabled):hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--neon-green);
+}
+
+.pageNum {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+    .tableHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .headerLeft {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .searchBar {
+        min-width: 0;
+    }
+}
