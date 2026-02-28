@@ -644,12 +644,15 @@
 <h3>Directrices Clave de Desarrollo</h3>
 <p>El incumplimiento de cualquiera de estas directrices resultará en un rechazo de PR:</p>
 <ul>
-    <li><b><a href=".agent/skills/astro/SKILL.md">astro</a></b> & <b><a href=".agent/skills/astro-scripts/SKILL.md">astro-scripts</a></b>: Uso correcto de Islands Architecture, hidratación diferida (<code>client:visible</code>/<code>client:load</code>) y extracción obligatoria de TS complejo fuera de los archivos <code>.astro</code>.</li>
-    <li><b><a href=".agent/skills/sileo-notifications/SKILL.md">sileo-notifications</a></b>: Única vía aceptada para lanzar feedback visual (<code>window.triggerSileo</code>). Prohibidos los <code>alert()</code> nativos.</li>
-    <li><b><a href=".agent/skills/test-enforcement/SKILL.md">test-enforcement</a></b> & <b><a href=".agent/skills/test/SKILL.md">test</a></b>: Cobertura obligatoria. Cada componente visual o de lógica de negocio (<code>.ts</code>, <code>.tsx</code>) debe ser acompañado por su gemelo <code>.test.ts(x)</code> en la misma ubicación.</li>
-    <li><b><a href=".agent/skills/css-modules/SKILL.md">css-modules</a></b> & <b><a href=".agent/skills/responsive-design/SKILL.md">responsive-design</a></b>: Enfoque colaborativo sin colisiones de clases globales. Diseño siempre <i>Mobile-First</i>, evitando magic numbers.</li>
-    <li><b><a href=".agent/skills/modular-architecture/SKILL.md">modular-architecture</a></b> & <b><a href=".agent/skills/clean-structure/SKILL.md">clean-structure</a></b>: Separación de dominios estricta. Nunca acoplar lógica de consumo de API (<code>services/</code>) directamente al Virtual DOM de React.</li>
-    <li><b><a href=".agent/skills/performance/SKILL.md">performance</a></b>: Mandato sobre Core Web Vitals. Optimización estricta del <i>Largest Contentful Paint</i> y <i>Cumulative Layout Shift</i>.</li>
+    <li><b><a href=".agent/skills/astro/SKILL.md">astro</a></b> & <b><a href=".agent/skills/astro-scripts/SKILL.md">astro-scripts</a></b>: Uso estricto de Islands Architecture, hidratación diferida (<code>client:visible</code>/<code>client:load</code>) y extracción obligatoria de TS complejo fuera de los archivos <code>.astro</code>.</li>
+    <li><b><a href=".agent/skills/clean-structure/SKILL.md">clean-structure</a></b> & <b><a href=".agent/skills/modular-architecture/SKILL.md">modular-architecture</a></b>: Separación de dominios estricta, organización atómica de componentes y prohibición de acoplar lógica de API directamente al Virtual DOM de React.</li>
+    <li><b><a href=".agent/skills/code-quality/SKILL.md">code-quality</a></b>: Impone lineamientos de código limpio, legibilidad extrema y la política estricta de "Cero Comentarios Innecesarios" (el código debe documentarse a sí mismo).</li>
+    <li><b><a href=".agent/skills/css-modules/SKILL.md">css-modules</a></b> & <b><a href=".agent/skills/responsive-design/SKILL.md">responsive-design</a></b>: Enfoque colaborativo sin colisiones de clases globales y diseño <i>Mobile-First</i> evitando magic numbers.</li>
+    <li><b><a href=".agent/skills/performance/SKILL.md">performance</a></b>: Mandato sobre Core Web Vitals, optimizando estrictamente el <i>Largest Contentful Paint</i> y <i>Cumulative Layout Shift</i>.</li>
+    <li><b><a href=".agent/skills/readme-auto-sync/SKILL.md">readme-auto-sync</a></b>: Reglas obligatorias para sincronizar automáticamente el README.md al modificar la estructura del proyecto o añadir tests.</li>
+    <li><b><a href=".agent/skills/sileo-notifications/SKILL.md">sileo-notifications</a></b>: Única vía aceptada en toda la UI para lanzar feedback visual (<code>window.triggerSileo</code>). Prohibidos los alertas genéricos nativos.</li>
+    <li><b><a href=".agent/skills/skill-generator/SKILL.md">skill-generator</a></b>: Herramienta interna para orquestar y generar nuevas directrices manteniendo la cohesión e integridad del ecosistema MarketFlex.</li>
+    <li><b><a href=".agent/skills/test-enforcement/SKILL.md">test-enforcement</a></b> & <b><a href=".agent/skills/test/SKILL.md">test</a></b>: Testeo de componentes UI y lógica aislada (<code>.ts</code>, <code>.tsx</code>). Deben estar acompañados forzosamente por su archivo <code>.test.ts(x)</code>.</li>
 </ul>
 
 <hr>
