@@ -229,6 +229,17 @@
   <li>🎡 <b>Componentes Visuales Premium:</b> Carruseles interactivos con estados dinámicos, badges sociales oficiales y micro-interacciones neón en toda la UI.</li>
   <li>✨ <b>Páginas de Contexto Curado:</b> Secciones dedicadas para Novedades (`/new-arrivals`) y Ofertas (`/offers`) con filtros pre-configurados y navegación optimizada.</li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
+<hr>
+
+<h2>🎨 Experiencia Visual y Filosofía de Diseño</h2>
+<p>
+  La interfaz de MarketFlex no es solo estética; es una declaración de principios sobre cómo debe sentirse una aplicación moderna de alta gama. Hemos fusionado un rendimiento extremo con un acabado visual que denominamos <b>"Neo-Premium"</b>.
+</p>
+<ul>
+  <li><b>Glassmorphism de Alta Densidad:</b> Uso extensivo de desenfoques de fondo (backdrop-filter) y bordes translúcidos con brillos sutiles que generan una sensación de profundidad y capas reales.</li>
+  <li><b>Estética Neón & Dark Mode:</b> El modo oscuro es nativo y prioritario, utilizando una paleta de contrastes altos con acentos neón que guían la mirada del usuario hacia los puntos de acción (CTA).</li>
+  <li><b>Micro-animaciones de Estado:</b> Cada interacción (un hover en el Navbar, una eliminación del carrito, una rotación de flecha) está acompañada de transiciones suaves de 0.2s - 0.3s que refuerzan la sensación de fluidez y reactividad.</li>
+  <li><b>Feedback Visual Gooey (Sileo):</b> Las notificaciones y alertas utilizan efectos de "viscosidad" visual (Gooey effect) para dar una sensación orgánica y moderna lejos de los popups convencionales.</li>
 </ul>
 
 <hr>
