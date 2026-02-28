@@ -19,6 +19,7 @@ import { Pie } from 'react-chartjs-2';
 import Chart from 'react-apexcharts';
 import styles from './styles/dashboard.module.css';
 import { api } from '../../lib/api';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, ChartJSTooltip, Legend, Colors);
@@ -213,7 +214,7 @@ const AnalyticsView: React.FC = () => {
     ];
 
     if (loading) {
-        return <div className={styles.loadingContainer}>Cargando analíticas...</div>;
+        return <LoadingSpinner message="Cargando analíticas..." />;
     }
 
     return (
