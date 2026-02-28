@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { AdminUser, PaginatedResponse } from '../../types/admin.types';
 import { AdminService } from '../../services/admin.service';
+import { LuUser } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
 import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
@@ -50,11 +51,11 @@ export default function UsersListView() {
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             onError={(e) => {
                                 e.currentTarget.style.display = 'none';
-                                e.currentTarget.parentElement!.innerHTML = '<span style="color: var(--text-muted); font-size: 1.2rem;">👤</span>';
+                                e.currentTarget.parentElement!.innerHTML = '<div style="color: var(--text-muted); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>';
                             }}
                         />
                     ) : (
-                        <span style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>👤</span>
+                        <LuUser style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }} />
                     )}
                 </div>
             ),
