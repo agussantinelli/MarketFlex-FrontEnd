@@ -418,12 +418,17 @@
 │   │   │   ├── AnalyticsView.tsx                   # Vista de gráficos y reportes de ventas (React).
 │   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
+│   │   │   ├── DataTable.test.tsx                  # Test unitario del componente de tabla universal.
+│   │   │   ├── DataTable.tsx                       # Tabla reutilizable y personalizable para CRUDs.
+│   │   │   ├── ProductsListView.test.tsx           # Test integral de la gestión de productos.
+│   │   │   ├── ProductsListView.tsx                # Vista de administración del catálogo de productos.
 │   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
 │   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
 │   │   │   └── styles/                             # Módulos CSS administrativos.
 │   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
 │   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
-│   │   │       └── dashboard.module.css            # Estilos dedicados del dashboard.
+│   │   │       ├── dashboard.module.css            # Estilos dedicados del dashboard.
+│   │   │       └── DataTable.module.css            # Estilos premium para la tabla universal.
 │   │   ├── auth/                                   # UI de login, registro y validación social.
 │   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
 │   │   │   ├── Captcha.astro                       # Integración visual de Google reCAPTCHA v3.
@@ -497,6 +502,7 @@
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
+│   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
 │   │   │   └── styles/                             # Estética del panel administrativo.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
 │   │   ├── api/                                    # Puntos de conexión internos del servidor.
