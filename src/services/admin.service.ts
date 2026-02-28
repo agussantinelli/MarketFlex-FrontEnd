@@ -32,11 +32,11 @@ export const AdminService = {
         }
     },
 
-    async getProducts(page: number = 1, limit: number = 10, search?: string): Promise<PaginatedResponse<AdminProduct> | null> {
+    async getProducts(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<AdminProduct> | null> {
         try {
             const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
-            const endpoint = search ? 'products/search' : 'products';
-            const result = await api.get(`${endpoint}?page=${page}&limit=${limit}${searchParam}`).json<PaginatedResponse<AdminProduct>>();
+            const sortParam = sort ? `&sort=${sort}` : '';
+            const result = await api.get(`admin/products?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<AdminProduct>>();
             return result;
         } catch (error) {
             console.error('Error fetching admin products:', error);
