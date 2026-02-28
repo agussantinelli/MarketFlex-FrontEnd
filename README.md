@@ -424,6 +424,8 @@
 │   │   │   ├── ProductsListView.tsx                # Vista de administración del catálogo de productos.
 │   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
 │   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
+│   │   │   ├── SupportListView.test.tsx            # Test integral de la gestión de mensajes de soporte.
+│   │   │   ├── SupportListView.tsx                 # Vista de administración de mensajes de soporte. 
 │   │   │   ├── UserListView.test.tsx               # Pruebas de la tabla de usuarios.
 │   │   │   ├── UserListView.tsx                    # Componente reactivo para listar usuarios.
 │   │   │   └── styles/                             # Módulos CSS administrativos.
@@ -507,6 +509,7 @@
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
+│   │   │   ├── support.astro                       # Gestión de tickets de soporte y consultas.
 │   │   │   ├── users.astro                         # Gestión del catálogo de usuarios (CRUD).
 │   │   │   └── styles/                             # Estética del panel administrativo.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
