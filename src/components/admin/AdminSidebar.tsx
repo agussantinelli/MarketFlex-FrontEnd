@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, Package, Users, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, Package, Users, MessageSquare, BarChart3 } from 'lucide-react';
 import styles from './styles/AdminSidebar.module.css';
 
 const AdminSidebar = () => {
@@ -26,6 +26,13 @@ const AdminSidebar = () => {
                         <LayoutDashboard size={20} />
                     </span>
                     Dashboard
+                </a>
+
+                <a href="/admin/charts" className={`${styles.navItem} ${styles.disabled}`}>
+                    <span className={styles.iconWrapper}>
+                        <BarChart3 size={20} />
+                    </span>
+                    Gráficos (Próximamente)
                 </a>
 
                 {/* Future Links - Add as needed */}
