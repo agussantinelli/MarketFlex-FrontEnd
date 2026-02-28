@@ -2,8 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import DataTable from './DataTable';
 import type { Column } from './DataTable';
 import { AdminService } from '../../services/admin.service';
+import { getFeaturedProducts } from '../../services/product.service';
 import type { AdminProduct } from '../../types/admin.types';
-import { LuImage, LuCircleCheck, LuCircleX } from 'react-icons/lu';
+import { LuImage, LuStar } from 'react-icons/lu';
 import { getImageUrl } from '../../lib/url';
 
 const ProductsListView: React.FC = () => {
@@ -12,7 +13,19 @@ const ProductsListView: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [featuredCount, setFeaturedCount] = useState(0);
     const limit = 10;
+
+    const fetchFeaturedCount = async () => {
+        try {
+            const response = await getFeaturedProducts();
+            if (response) {
+                setFeaturedCount(response.length);
+            }
+        } catch (error) {
+            console.error('Error fetching featured count:', error);
+        }
+    };
 
     const fetchProducts = useCallback(async () => {
         setLoading(true);
@@ -31,6 +44,7 @@ const ProductsListView: React.FC = () => {
 
     useEffect(() => {
         fetchProducts();
+        fetchFeaturedCount();
     }, [fetchProducts]);
 
     const formatCurrency = (amount: number) => {
@@ -38,6 +52,28 @@ const ProductsListView: React.FC = () => {
             style: "currency",
             currency: "USD",
         }).format(amount);
+    };
+
+    const handleToggleFeatured = async (product: AdminProduct) => {
+        const newStatus = !product.esDestacado;
+        const result = await AdminService.toggleFeature(product.id, newStatus);
+
+        if (result?.status === 'success') {
+            // Update local state
+            setProducts(prev => prev.map(p =>
+                p.id === product.id ? { ...p, esDestacado: newStatus } : p
+            ));
+
+            if (window.triggerSileo) {
+                window.triggerSileo('success', `Producto ${newStatus ? 'destacado' : 'quitado de destacados'} correctamente.`);
+            }
+            // Update global count
+            setFeaturedCount(prev => newStatus ? prev + 1 : prev - 1);
+        } else {
+            if (window.triggerSileo) {
+                window.triggerSileo('error', result?.message || 'Error al actualizar destacados');
+            }
+        }
     };
 
     const columns: Column<AdminProduct>[] = [
@@ -87,9 +123,40 @@ const ProductsListView: React.FC = () => {
         },
         {
             header: 'Destacado',
-            accessor: (p) => (
-                p.esDestacado ? <LuCircleCheck style={{ color: 'var(--neon-green)' }} /> : <LuCircleX style={{ opacity: 0.3 }} />
-            ),
+            accessor: (p) => {
+                const isLimitReached = featuredCount >= 4;
+                const canToggle = p.esDestacado || !isLimitReached;
+
+                return (
+                    <button
+                        onClick={() => canToggle && handleToggleFeatured(p)}
+                        disabled={!canToggle}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: canToggle ? 'pointer' : 'not-allowed',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '4px',
+                            transition: 'transform 0.2s ease',
+                            color: p.esDestacado ? 'var(--neon-blue)' : (canToggle ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)'),
+                            opacity: canToggle ? 1 : 0.5
+                        }}
+                        onMouseEnter={(e) => canToggle && (e.currentTarget.style.transform = 'scale(1.2)')}
+                        onMouseLeave={(e) => canToggle && (e.currentTarget.style.transform = 'scale(1)')}
+                        title={p.esDestacado ? "Quitar de destacados" : (isLimitReached ? "Límite de 4 alcanzado" : "Marcar como destacado")}
+                    >
+                        <LuStar
+                            fill={p.esDestacado ? 'var(--neon-blue)' : 'transparent'}
+                            style={{
+                                fontSize: '1.2rem',
+                                filter: p.esDestacado ? 'drop-shadow(0 0 5px var(--neon-blue))' : 'none'
+                            }}
+                        />
+                    </button>
+                );
+            },
             width: '100px'
         }
     ];
