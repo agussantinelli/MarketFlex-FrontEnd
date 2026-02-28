@@ -40,10 +40,17 @@ interface BrandData {
     count: number;
 }
 
+interface PaymentMethodData {
+    name: string;
+    revenue: number;
+    value: number;
+}
+
 const AnalyticsView: React.FC = () => {
     const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
     const [categoryData, setCategoryData] = useState<CategoryData[]>([]);
     const [brandData, setBrandData] = useState<BrandData[]>([]);
+    const [paymentMethodData, setPaymentMethodData] = useState<PaymentMethodData[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -54,6 +61,7 @@ const AnalyticsView: React.FC = () => {
                     setMonthlyData(response.data.monthlySales);
                     setCategoryData(response.data.categoryDistribution);
                     setBrandData(response.data.brandPerformance);
+                    setPaymentMethodData(response.data.paymentMethodDistribution);
                 }
             } catch (error) {
                 console.error('Error fetching analytics:', error);
@@ -178,6 +186,25 @@ const AnalyticsView: React.FC = () => {
         legend: { show: false }
     };
 
+    const paymentPieData = {
+        labels: paymentMethodData.map(p => {
+            const names: any = { card: 'Tarjeta', cash: 'Efectivo', transfer: 'Transferencia' };
+            return names[p.name] || p.name;
+        }),
+        datasets: [
+            {
+                data: paymentMethodData.map(p => p.revenue),
+                backgroundColor: [
+                    'rgba(139, 92, 246, 0.8)',
+                    'rgba(20, 184, 166, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                ],
+                borderColor: 'rgba(255, 255, 255, 0.1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
     const apexSeries = [
         {
             name: 'Ingresos',
@@ -276,6 +303,19 @@ const AnalyticsView: React.FC = () => {
                             type="bar"
                             height="100%"
                         />
+                    </div>
+                </div>
+
+
+                <div className={styles.chartCard}>
+                    <div className={styles.chartHeader}>
+                        <h2>Métodos de Pago</h2>
+                        <p>Distribución de ingresos por medio de pago</p>
+                    </div>
+                    <div style={{ width: '100%', height: 400, marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ width: '80%', height: '100%' }}>
+                            <Pie data={paymentPieData} options={pieOptions} />
+                        </div>
                     </div>
                 </div>
             </div>
