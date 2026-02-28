@@ -35,12 +35,11 @@ const AdminSidebar = () => {
                     Analíticas
                 </a>
 
-                {/* Future Links - Add as needed */}
-                <a href="/admin/products" className={`${styles.navItem} ${styles.disabled}`}>
+                <a href="/admin/products" className={`${styles.navItem} ${currentPath === '/admin/products' ? styles.active : ''}`}>
                     <span className={styles.iconWrapper}>
                         <Package size={20} />
                     </span>
-                    Productos (Próximamente)
+                    Productos
                 </a>
 
                 <a href="/admin/users" className={`${styles.navItem} ${styles.disabled}`}>
