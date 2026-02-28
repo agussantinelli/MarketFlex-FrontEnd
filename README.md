@@ -291,14 +291,14 @@
 <hr>
 
 <h2>📑 Sistema de Paginación</h2>
-<p>El marketplace utiliza un sistema de paginación tradicional basado en URL para el catálogo y resultados de búsqueda, lo que garantiza que los usuarios no pierdan su posición y puedan compartir enlaces a páginas específicas.</p>
+<p>El marketplace utiliza un avanzado sistema de paginación renderizado en servidor (SSR) basado intrínsecamente en la URL. Esto garantiza indexación SEO perfecta, que los usuarios no pierdan su estado y puedan compartir enlaces directos a resultados específicos.</p>
 <ul>
-    <li><b>Navegación Persistente:</b> Los filtros de búsqueda, categorías y ordenamiento se preservan automáticamente al cambiar de página.</li>
-    <li><b>Metadatos de Navegación:</b> Los usuarios reciben feedback claro sobre su ubicación (ej: <i>"Página 2 de 10, viendo 21-40 de 200 productos"</i>).</li>
-    <li><b>UI Premium:</b> Componente de navegación con efecto <i>glassmorphism</i> y optimización responsive:
+    <li><b>Generación Dinámica (Astro):</b> La paginación extrae parámetros complejos (como <code>?q=...&category=...&minPrice=...</code>) y los clona automáticamente al generar los links HTTP de tipo <code>&lt;a href="..."&gt;</code> para las páginas colindantes, asegurando una <i>Navegación Persistente</i> donde jamás perdés tus filtros activos.</li>
+    <li><b>Metadatos Precisos:</b> Bloque informativo de ubicación renderizando el rango y recuento exacto devuelto por la API. (Ej: <i>"Página <b>2</b> de <b>10</b>, viendo los productos <b>21-40</b> de <b>200</b>"</i>).</li>
+    <li><b>UI Premium Glassmorphism:</b> Estructurado internamente en dos bloques semánticos (<code>.paginationControls</code> y <code>.paginationPages</code>) que interactúan con media queries:
         <ul>
-            <li><b>Desktop:</b> Barra horizontal completa con números y navegación directa.</li>
-            <li><b>Mobile:</b> Diseño compacto con botones de navegación adyacentes ("Anterior/Siguiente") para una mejor usabilidad táctil.</li>
+            <li><b>Desktop:</b> Despliega la barra horizontal completa ofreciendo salto directo a páginas numéricas y botones perimetrales con iconos <i>Lucide</i>.</li>
+            <li><b>Mobile:</b> El diseño colapsa inteligentemente la matriz numérica, dándole preponderancia visual a los botones táctiles adyacentes ("Anterior / Siguiente") para prevenir toques fantasma o errores de dedo.</li>
         </ul>
     </li>
 </ul>
