@@ -74,3 +74,25 @@ export type AdminPurchase = {
         subtotal: number;
     }>;
 };
+
+export type AnalyticsData = {
+    monthlySales: Array<{
+        month: string;
+        revenue: number;
+    }>;
+    categoryDistribution: Array<{
+        name: string;
+        revenue: number;
+        value: number;
+    }>;
+    brandPerformance: Array<{
+        name: string;
+        revenue: number;
+        count: number;
+    }>;
+    paymentMethodDistribution: Array<{
+        name: string;
+        revenue: number;
+        value: number;
+    }>;
+};
