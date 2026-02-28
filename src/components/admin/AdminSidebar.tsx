@@ -42,11 +42,11 @@ const AdminSidebar = () => {
                     Productos
                 </a>
 
-                <a href="/admin/users" className={`${styles.navItem} ${styles.disabled}`}>
+                <a href="/admin/users" className={`${styles.navItem} ${currentPath === '/admin/users' ? styles.active : ''}`}>
                     <span className={styles.iconWrapper}>
                         <Users size={20} />
                     </span>
-                    Usuarios (Próximamente)
+                    Usuarios
                 </a>
 
                 <a href="/admin/messages" className={`${styles.navItem} ${styles.disabled}`}>
