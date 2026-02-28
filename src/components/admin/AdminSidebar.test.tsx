@@ -38,15 +38,21 @@ describe('AdminSidebar Component', () => {
         expect(dashboardLink?.className).toMatch(/active/);
     });
 
+    it('should set active class on the Productos link when path is /admin/products', () => {
+        (window as any).location.pathname = '/admin/products';
+        render(<AdminSidebar />);
+        const productsLink = screen.getByText('Productos').closest('a');
+
+        expect(productsLink).toBeInTheDocument();
+        expect(productsLink?.getAttribute('href')).toBe('/admin/products');
+        expect(productsLink?.className).toMatch(/active/);
+    });
+
     it('should render "Próximamente" placeholder links showing disabled state', () => {
         render(<AdminSidebar />);
 
-        const productsLink = screen.getByText('Productos (Próximamente)').closest('a');
         const usersLink = screen.getByText('Usuarios (Próximamente)').closest('a');
         const messagesLink = screen.getByText('Mensajes (Próximamente)').closest('a');
-
-        expect(productsLink).toBeInTheDocument();
-        expect(productsLink?.className).toMatch(/disabled/);
 
         expect(usersLink).toBeInTheDocument();
         expect(usersLink?.className).toMatch(/disabled/);
