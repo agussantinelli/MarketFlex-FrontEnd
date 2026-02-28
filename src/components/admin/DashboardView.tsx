@@ -35,6 +35,15 @@ const DashboardView: React.FC = () => {
     };
 
 
+    const statusMap: Record<string, string> = {
+        'COMPLETADO': 'COMPLETADO',
+        'COMPLETED': 'COMPLETADO',
+        'PENDING': 'PENDIENTE',
+        'PENDIENTE': 'PENDIENTE',
+        'CANCELLED': 'CANCELADO',
+        'CANCELADO': 'CANCELADO'
+    };
+
     const stats = [
         {
             title: "Ingresos Totales",
@@ -216,13 +225,20 @@ const DashboardView: React.FC = () => {
                     title="Últimas 5 Ventas"
                     headers={['Usuario', 'Monto', 'Estado']}
                     data={statsData?.latestSales || []}
-                    renderRow={(sale: TopSale) => (
-                        <tr key={sale.id}>
-                            <td className={styles.userCell}>{sale.usuarioNombre}</td>
-                            <td className={styles.amount}>{formatCurrency(sale.total)}</td>
-                            <td><span className={styles[sale.estado.toLowerCase()] || styles.badge}>{sale.estado}</span></td>
-                        </tr>
-                    )}
+                    renderRow={(sale: TopSale) => {
+                        const normalizedStatus = (statusMap[sale.estado] || sale.estado).toLowerCase();
+                        return (
+                            <tr key={sale.id}>
+                                <td className={styles.userCell}>{sale.usuarioNombre}</td>
+                                <td className={styles.amount}>{formatCurrency(sale.total)}</td>
+                                <td>
+                                    <span className={styles[normalizedStatus] || styles.badge}>
+                                        {statusMap[sale.estado] || sale.estado}
+                                    </span>
+                                </td>
+                            </tr>
+                        );
+                    }}
                 />
 
                 {/* 2. Las 5 ventas más caras */}
