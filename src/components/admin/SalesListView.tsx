@@ -6,7 +6,9 @@ import { es } from 'date-fns/locale';
 import {
     CheckCircle2,
     Clock,
-    XCircle
+    XCircle,
+    Search,
+    RefreshCcw
 } from 'lucide-react';
 import styles from './styles/SalesListView.module.css';
 
@@ -14,6 +16,7 @@ const SalesListView = () => {
     const [sales, setSales] = useState<AdminPurchase[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
 
     useEffect(() => {
@@ -32,7 +35,10 @@ const SalesListView = () => {
         fetchSales();
     }, []);
 
-    const filteredSales = sales;
+    const filteredSales = sales.filter(sale => {
+        const fullName = `${sale.usuario.nombre} ${sale.usuario.apellido}`.toLowerCase();
+        return fullName.includes(searchQuery.toLowerCase());
+    });
 
     const getStatusIcon = (estado: string) => {
         switch (estado.toUpperCase()) {
@@ -42,6 +48,8 @@ const SalesListView = () => {
                 return <Clock size={16} />;
             case 'CANCELADO':
                 return <XCircle size={16} />;
+            case 'PROCESANDO':
+                return <RefreshCcw size={16} className={styles.spin} />;
             default:
                 return null;
         }
@@ -55,6 +63,8 @@ const SalesListView = () => {
                 return styles.statusPending;
             case 'CANCELADO':
                 return styles.statusCancelled;
+            case 'PROCESANDO':
+                return styles.statusProcessing;
             default:
                 return '';
         }
@@ -80,6 +90,18 @@ const SalesListView = () => {
                 <div className={styles.titleSection}>
                     <h1>Listado de Ventas</h1>
                     <p>Gestiona y visualiza todas las transacciones del sistema</p>
+                </div>
+                <div className={styles.searchSection}>
+                    <div className={styles.searchInputWrapper}>
+                        <Search size={18} className={styles.searchIcon} />
+                        <input
+                            type="text"
+                            placeholder="Buscar por comprador..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className={styles.searchInput}
+                        />
+                    </div>
                 </div>
             </header>
 
@@ -121,9 +143,17 @@ const SalesListView = () => {
                                         </span>
                                     </td>
                                     <td>
-                                        <button className={styles.viewBtn} title="Ver detalles (Próximamente)" disabled>
-                                            Ver Detalles
-                                        </button>
+                                        <div className={styles.actions}>
+                                            <button className={styles.actionBtn} title="Ver detalles">
+                                                👁️
+                                            </button>
+                                            <button className={styles.actionBtn} title="Editar">
+                                                📝
+                                            </button>
+                                            <button className={styles.actionBtn} title="Borrar">
+                                                🗑️
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

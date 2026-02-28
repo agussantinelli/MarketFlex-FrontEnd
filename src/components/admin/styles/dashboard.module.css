@@ -535,6 +535,36 @@
 }
 
 /* Analytics Performance Platform */
+.analyticsContainer,
+.dashboardContainer,
+.container {
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.titleSection h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, var(--foreground) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.titleSection p {
+    color: var(--foreground);
+    opacity: 0.7;
+    margin: 0.5rem 0 0 0;
+}
+
 .analyticsContainer {
     display: flex;
     flex-direction: column;

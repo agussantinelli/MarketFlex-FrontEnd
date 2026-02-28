@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import type { SupportMessageOutput } from '../../types/support.types';
 import { getSupportMessages } from '../../services/support.service';
 import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight } from 'react-icons/lu';
+import styles from './styles/SalesListView.module.css';
 
 const SupportListView: React.FC = () => {
     const [messages, setMessages] = useState<SupportMessageOutput[]>([]);
@@ -70,17 +71,13 @@ const SupportListView: React.FC = () => {
     }
 
     return (
-        <div style={{ padding: '1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
-                <div>
-                    <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#fff' }}>
-                        <LuMail style={{ color: 'var(--neon-blue)' }} /> Mensajes de Soporte
-                    </h2>
-                    <p style={{ color: '#94a3b8', margin: '0.25rem 0 0 0', fontSize: '0.95rem' }}>
-                        Bandeja de gestión de tickets y consultas de usuarios
-                    </p>
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.titleSection}>
+                    <h1>Mensajes de Soporte</h1>
+                    <p>Bandeja de gestión de tickets y consultas de usuarios</p>
                 </div>
-            </div>
+            </header>
 
             <div style={{
                 display: 'grid',

@@ -6,6 +6,7 @@ import { getFeaturedProducts } from '../../services/product.service';
 import type { AdminProduct } from '../../types/admin.types';
 import { LuImage, LuStar } from 'react-icons/lu';
 import { getImageUrl } from '../../lib/url';
+import styles from './styles/SalesListView.module.css';
 
 const ProductsListView: React.FC = () => {
     const [products, setProducts] = useState<AdminProduct[]>([]);
@@ -180,9 +181,16 @@ const ProductsListView: React.FC = () => {
     };
 
     return (
-        <div style={{ padding: '0 1rem' }}>
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.titleSection}>
+                    <h1>Gestión de Productos</h1>
+                    <p>Administra el catálogo completo, stock y destacados</p>
+                </div>
+            </header>
+
             <DataTable
-                title="Gestión de Productos"
+                title=""
                 data={products}
                 columns={columns}
                 loading={loading}

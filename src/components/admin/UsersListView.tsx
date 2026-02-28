@@ -3,6 +3,7 @@ import type { AdminUser, PaginatedResponse } from '../../types/admin.types';
 import { AdminService } from '../../services/admin.service';
 import DataTable, { type Column } from './DataTable';
 import { getImageUrl } from '../../lib/url';
+import styles from './styles/SalesListView.module.css';
 
 
 export default function UsersListView() {
@@ -97,55 +98,64 @@ export default function UsersListView() {
     ];
 
     return (
-        <DataTable
-            title="Gestión de Usuarios"
-            data={usersData?.data || []}
-            columns={columns}
-            loading={loading}
-            searchPlaceholder="Buscar por nombre o email..."
-            onSearch={(term) => {
-                setSearch(term);
-                setPage(1);
-            }}
-            customFilters={
-                <select
-                    style={{
-                        padding: '10px 16px',
-                        paddingRight: '40px',
-                        width: '210px',
-                        background: '#1e293b url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2300ff9d\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 16px center',
-                        backgroundSize: '16px',
-                        appearance: 'none',
-                        WebkitAppearance: 'none',
-                        MozAppearance: 'none',
-                        color: '#00ff9d',
-                        border: '1px solid #00ff9d',
-                        borderRadius: '8px',
-                        outline: 'none',
-                        cursor: 'pointer',
-                        fontSize: '0.95rem',
-                        fontWeight: '600',
-                        boxShadow: '0 0 10px rgba(0, 255, 157, 0.1)'
-                    }}
-                    value={sort}
-                    onChange={(e) => {
-                        setSort(e.target.value);
-                        setPage(1);
-                    }}
-                >
-                    {sortOptions.map(option => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-            }
-            pagination={{
-                total: usersData?.pagination.total || 0,
-                page: page,
-                limit: 10,
-                onPageChange: setPage,
-            }}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-        />
+        <div className={styles.container}>
+            <header className={styles.header}>
+                <div className={styles.titleSection}>
+                    <h1>Gestión de Usuarios</h1>
+                    <p>Controla las cuentas, roles y actividad de los usuarios</p>
+                </div>
+            </header>
+
+            <DataTable
+                title=""
+                data={usersData?.data || []}
+                columns={columns}
+                loading={loading}
+                searchPlaceholder="Buscar por nombre o email..."
+                onSearch={(term) => {
+                    setSearch(term);
+                    setPage(1);
+                }}
+                customFilters={
+                    <select
+                        style={{
+                            padding: '10px 16px',
+                            paddingRight: '40px',
+                            width: '210px',
+                            background: '#1e293b url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2300ff9d\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 16px center',
+                            backgroundSize: '16px',
+                            appearance: 'none',
+                            WebkitAppearance: 'none',
+                            MozAppearance: 'none',
+                            color: '#00ff9d',
+                            border: '1px solid #00ff9d',
+                            borderRadius: '8px',
+                            outline: 'none',
+                            cursor: 'pointer',
+                            fontSize: '0.95rem',
+                            fontWeight: '600',
+                            boxShadow: '0 0 10px rgba(0, 255, 157, 0.1)'
+                        }}
+                        value={sort}
+                        onChange={(e) => {
+                            setSort(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        {sortOptions.map(option => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                }
+                pagination={{
+                    total: usersData?.pagination.total || 0,
+                    page: page,
+                    limit: 10,
+                    onPageChange: setPage,
+                }}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+            />
+        </div>
     );
 }

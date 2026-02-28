@@ -172,10 +172,10 @@ const DashboardView: React.FC = () => {
 
     return (
         <div className={styles.dashboardContainer}>
-            <header className={styles.dashboardHeader}>
-                <div>
+            <header className={styles.header}>
+                <div className={styles.titleSection}>
                     <h1>Panel Administrativo</h1>
-                    <p>Resumen de actividad y métricas clave.</p>
+                    <p>Resumen de actividad y métricas clave del sistema</p>
                 </div>
                 <div className={styles.headerActions}>
                     <div className={styles.periodToggleWrapper}>

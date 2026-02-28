@@ -294,6 +294,13 @@ const AnalyticsView: React.FC = () => {
 
     return (
         <div className={styles.analyticsContainer}>
+            <header className={styles.header}>
+                <div className={styles.titleSection}>
+                    <h1>Analíticas Avanzadas</h1>
+                    <p>Reportes detallados y tendencias de rendimiento del sistema</p>
+                </div>
+            </header>
+
             <div className={styles.chartCard}>
                 <div className={styles.chartHeader}>
                     <h2>Evolución Mensual de Ventas</h2>
