@@ -7,6 +7,10 @@ export type AdminStats = {
     salesTrend: number;
     avgTrend: number;
     userTrend: number;
+    conversionRate: number;
+    recurrentBuyers: number;
+    conversionTrend: number;
+    recurrentTrend: number;
 };
 
 export type AdminPurchase = {
