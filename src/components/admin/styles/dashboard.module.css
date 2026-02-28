@@ -71,9 +71,9 @@
 /* Stats Grid */
 .statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 @keyframes cardEnter {
@@ -121,9 +121,9 @@
 }
 
 .statIconWrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,12 +132,12 @@
 }
 
 .statIcon {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: var(--deep-black);
 }
 
 .statInfo h3 {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -147,7 +147,7 @@
 }
 
 .statValue {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 800;
     margin: 0.2rem 0;
     color: #fff;
@@ -331,7 +331,17 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
     .dashboardHeader {
         flex-direction: column;
         align-items: flex-start;

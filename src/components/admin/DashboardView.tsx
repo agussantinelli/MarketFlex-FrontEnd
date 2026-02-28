@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuDownload, LuPlus, LuArrowUpRight, LuArrowDownRight } from 'react-icons/lu';
+import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuDownload, LuPlus, LuArrowUpRight, LuArrowDownRight, LuTarget, LuRotateCw, LuPackage, LuTags, LuTriangleAlert } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { AdminService } from '../../services/admin.service';
 import type { AdminStats, AdminPurchase } from '../../types/admin.types';
@@ -83,6 +83,63 @@ const DashboardView: React.FC = () => {
             color: "from-yellow-500 to-yellow-300",
             isPositive: (statsData?.userTrend ?? 0) >= 0,
         },
+        {
+            title: "Tasa de Conversión",
+            value: `${statsData?.conversionRate ?? 0}%`,
+            trend: statsData?.conversionTrend !== undefined
+                ? `${statsData.conversionTrend > 0 ? "+" : ""}${statsData.conversionTrend}%`
+                : "0%",
+            trendLabel: "este mes",
+            icon: LuTarget,
+            color: "from-pink-500 to-pink-300",
+            isPositive: (statsData?.conversionTrend ?? 0) >= 0,
+        },
+        {
+            title: "Compradores Recurrentes",
+            value: `${statsData?.recurrentBuyers ?? 0}%`,
+            trend: statsData?.recurrentTrend !== undefined
+                ? `${statsData.recurrentTrend > 0 ? "+" : ""}${statsData.recurrentTrend}%`
+                : "0%",
+            trendLabel: "este mes",
+            icon: LuRotateCw,
+            color: "from-orange-500 to-orange-300",
+            isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
+        },
+        {
+            title: "Promedio de Productos por Venta",
+            value: `${statsData?.averageItems ?? 0}`,
+            trend: statsData?.itemsTrend !== undefined
+                ? `${statsData.itemsTrend > 0 ? "+" : ""}${statsData.itemsTrend}%`
+                : "0%",
+            trendLabel: "este mes",
+            icon: LuPackage,
+            color: "from-cyan-500 to-cyan-300",
+            isPositive: (statsData?.itemsTrend ?? 0) >= 0,
+        },
+        {
+            title: "Total Descontado",
+            value: formatCurrency(statsData?.totalDiscount ?? 0),
+            trend: statsData?.discountTrend !== undefined
+                ? `${statsData.discountTrend > 0 ? "+" : ""}${statsData.discountTrend}%`
+                : "0%",
+            trendLabel: "este mes",
+            icon: LuTags,
+            color: "from-indigo-500 to-indigo-300",
+            // For discount trend, a negative trend (less discount) could be positive for profit, but let's stick to absolute growth meaning positive for now.
+            isPositive: (statsData?.discountTrend ?? 0) >= 0,
+        },
+        {
+            title: "Tasa de Cancelación",
+            value: `${statsData?.cancelRate ?? 0}%`,
+            trend: statsData?.cancelTrend !== undefined
+                ? `${statsData.cancelTrend > 0 ? "+" : ""}${statsData.cancelTrend}%`
+                : "0%",
+            trendLabel: "este mes",
+            icon: LuTriangleAlert,
+            color: "from-red-500 to-red-300",
+            // For cancel trend, a lower trend is better, so 'positive' UI color means it went down
+            isPositive: (statsData?.cancelTrend ?? 0) <= 0,
+        }
     ];
 
     if (loading) {
@@ -133,6 +190,7 @@ const DashboardView: React.FC = () => {
                     </div>
                 ))}
             </div>
+
 
             <div className={styles.recentActivity}>
                 <div className={styles.sectionHeader}>
