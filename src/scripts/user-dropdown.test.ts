@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { initUserDropdown } from './userDropdown';
+import { initUserDropdown } from './user-dropdown';
 
 describe('userDropdown', () => {
     let originalLocation: Location;
