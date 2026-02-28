@@ -72,7 +72,7 @@ describe('DashboardView Component', () => {
         expect(screen.getByText('12.5%')).toBeInTheDocument();
 
         // Assert New Metrics
-        expect(screen.getByText('Promedio de Productos por Venta')).toBeInTheDocument();
+        expect(screen.getByText('Promedio de Productos')).toBeInTheDocument();
         expect(screen.getByText('4.5')).toBeInTheDocument();
         expect(screen.getByText('Total Descontado')).toBeInTheDocument();
         expect(screen.getByText('$2,500.00')).toBeInTheDocument();

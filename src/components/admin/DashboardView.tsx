@@ -106,7 +106,7 @@ const DashboardView: React.FC = () => {
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
         },
         {
-            title: "Promedio de Productos por Venta",
+            title: "Promedio de Productos",
             value: `${statsData?.averageItems ?? 0}`,
             trend: statsData?.itemsTrend !== undefined
                 ? `${statsData.itemsTrend > 0 ? "+" : ""}${statsData.itemsTrend}%`
