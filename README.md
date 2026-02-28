@@ -259,12 +259,12 @@
 <hr>
 
 <h2>🏝️ Arquitectura de Componentes (Astro Islands)</h2>
-<p>Este proyecto se enorgullece de ser súper rápido y eficiente al renderizar gracias a la implementación nativa de la <b>Arquitectura de Islas de Astro</b>. El patrón de diseño sigue estos principios rectores:</p>
+<p>Este proyecto exhibe un rendimiento excepcional gracias a la implementación nativa y rigurosa de la <b>Arquitectura de Islas de Astro</b>. El patrón de diseño se estructura en las siguientes directrices operativas:</p>
 <ul>
-  <li><b>Modularización de Estilos (CSS Modules):</b> Siguiendo las directrices de la skill <code>css-modules</code>, todos los estilos complejos se extraen a archivos <code>.module.css</code> dentro de subdirectorios <code>styles/</code> locales al componente o página. Esto elimina colisiones de nombres y asegura que cada archivo de estilo solo afecte a su dueño.</li>
-  <li><b>Esqueleto y Contenidos Estáticos (Astro Puro):</b> La inmensa mayoría de la UI (Barra de Navegación, Pie de Página, Tarjetas de Producto, e incluso la lógica pesada de <code>login.astro</code>) es renderizada en el servidor empleando exclusivamente componentes <code>.astro</code>. Esto expone un HTML súper ligero sin un gramo innecesario de JavaScript al cliente.</li>
-  <li><b>Islas Interactivas (React):</b> Únicamente los micro-componentes que de verdad demandan reactividad o gestión de estado compleja en el cliente se escriben en React. El mejor ejemplo en este ecosistema es el sistema de notificaciones Sileo (<code>&lt;Notifications client:only="react" /&gt;</code>), que se hidrata de forma aislada sin afectar el rendimiento global del sitio restante.</li>
-  <li><b>Cero Dependencias Obesas:</b> Separar de manera tan quirúrgica el contenido inerte del interactivo permite que el marketplace escale para manejar catálogos enormes sin comprometer jamás las métricas de carga del navegador o el TTI (<i>Time To Interactive</i>).</li>
+  <li><b>Esqueleto y Estructura (Astro Puro):</b> La inmensa mayoría de la UI (Barra de Navegación, Pie de Página, Tarjetas de Producto, Grillas y Formularios Estáticos) se renderiza en el servidor vía componentes <code>.astro</code>. Esto expone un HTML súper ligero con cero JavaScript bloqueante.</li>
+  <li><b>Micro-Aislamiento Reactivo (React Islands):</b> Únicamente los componentes que exigen interactividad de alta frecuencia, re-renderizado condicional o gestión de estado compleja se construyen como Islas de React. Ejemplos críticos de esto son: <code>&lt;CartView client:load /&gt;</code>, los flujos multi-paso de <code>&lt;CheckoutForm client:idle /&gt;</code>, el tablero interactivo <code>&lt;DashboardView client:only="react" /&gt;</code> y el sistema visual <code>&lt;Notifications /&gt;</code>.</li>
+  <li><b>Scripts Locales (Vanilla TypeScript):</b> Para interactividad ligera que no justifica importar React (ej., abrir menús superpuestos, manejar carruseles o peticiones de login), se emplea JavaScript/TypeScript vainilla encapsulado en etiquetas <code>&lt;script&gt;</code> y abstraído físicamente en la carpeta <code>src/scripts/</code>, manteniendo el DOM libre de Virtual DOM overhead.</li>
+  <li><b>Estilos Scoped (CSS Modules):</b> Siguiendo la skill de la arquitectura, cualquier CSS propio de un componente aislado se desarrolla mediante <code>.module.css</code>; asegurando que las reglas de diseño jamás colisionen fuera del ámbito de esa Isla o componente.</li>
 </ul>
 
 <hr>
