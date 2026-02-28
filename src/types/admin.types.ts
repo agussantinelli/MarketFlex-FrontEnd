@@ -103,3 +103,30 @@ export type AnalyticsData = {
         }>;
     }>;
 };
+
+export interface AdminProduct {
+    id: string;
+    nombre: string;
+    descripcion: string | null;
+    foto: string | null;
+    esDestacado: boolean;
+    categoria: string | null;
+    subcategoria: string | null;
+    marca: string | null;
+    precioActual: number;
+    precioConDescuento: number | null;
+    stock: number;
+    envioGratis: boolean;
+    fechaLlegada: string | null;
+}
+
+export interface PaginatedResponse<T> {
+    status: string;
+    data: T[];
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
+}
