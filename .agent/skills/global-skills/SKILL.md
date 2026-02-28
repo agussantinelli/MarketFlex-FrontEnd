@@ -17,6 +17,7 @@ This skill serves as a central index for all architectural and development guide
 - **[responsive-design](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/responsive-design/SKILL.md)**: Mobile-first and fluid layout best practices.
 - **[sileo-notifications](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/sileo-notifications/SKILL.md)**: Mandatory rules for visual notifications using Sileo.
 - **[test-enforcement](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/test-enforcement/SKILL.md)**: Mandatory rule requiring one test per file.
+- **[readme-auto-sync](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/readme-auto-sync/SKILL.md)**: Mandatory automated README syncing for project structure and tests.
 
 ## ⚙️ Backend Skills (`MarketFlex-BackEnd`)
 
