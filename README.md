@@ -351,6 +351,8 @@
 │   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
 │   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
+│   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
+│   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
 │   │   │   └── styles/                             # Módulos CSS administrativos.
 │   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
 │   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
@@ -408,6 +410,8 @@
 │   │       ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
 │   │       └── styles/                             # Estética de las promociones.
 │   │           └── PromotionHero.module.css        # Animaciones y gradientes del hero.
+│   │   └── shared/                                 # Componentes compartidos por todo el sistema.
+│   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Wrapper y estructuras base.
 │   │   ├── AdminLayout.astro                       # Esqueleto de visualización para páginas /admin.
 │   │   ├── Footer.astro                            # Pie de página responsivo y legal.
@@ -546,7 +550,8 @@
 │   │   ├── subcategory.types.ts                    # Interfaces de clústeres secundarios.
 │   │   ├── support.types.ts                        # Estructura de tickets de contacto.
 │   │   └── user.types.ts                           # Perfil, roles y atributos de usuario.
-│   └── env.d.ts                                    # Tipado estricto para variables de entorno.
+│   ├── env.d.ts                                    # Tipado estricto para variables de entorno.
+│   └── middleware.ts                               # Middleware global de autenticación e interceptores Astro.
 ├── playwright.config.ts                            # Configuración de tests E2E con Playwright.
 ├── package.json                                    # Scripts, metadata y dependencias (pnpm).
 └── README.md                                       # Documentación principal del frontend.
