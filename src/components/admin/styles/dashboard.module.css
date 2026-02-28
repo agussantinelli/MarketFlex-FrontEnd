@@ -93,14 +93,15 @@
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    min-height: 120px;
 }
 
 .statCard::before {
@@ -121,9 +122,9 @@
 }
 
 .statIconWrapper {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,34 +133,46 @@
 }
 
 .statIcon {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--deep-black);
 }
 
+.statInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
 .statInfo h3 {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     opacity: 0.6;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.3rem 0;
     color: var(--green-cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .statValue {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     font-weight: 800;
-    margin: 0.2rem 0;
+    margin: 0 0 0.2rem 0;
     color: #fff;
     letter-spacing: -0.5px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .statTrend {
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
 }
 
