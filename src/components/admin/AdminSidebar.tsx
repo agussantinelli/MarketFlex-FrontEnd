@@ -28,11 +28,11 @@ const AdminSidebar = () => {
                     Dashboard
                 </a>
 
-                <a href="/admin/charts" className={`${styles.navItem} ${styles.disabled}`}>
+                <a href="/admin/analytics" className={`${styles.navItem} ${currentPath === '/admin/analytics' ? styles.active : ''}`}>
                     <span className={styles.iconWrapper}>
                         <BarChart3 size={20} />
                     </span>
-                    Gráficos (Próximamente)
+                    Analíticas
                 </a>
 
                 {/* Future Links - Add as needed */}
