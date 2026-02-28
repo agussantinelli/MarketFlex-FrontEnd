@@ -49,11 +49,11 @@ const AdminSidebar = () => {
                     Usuarios
                 </a>
 
-                <a href="/admin/messages" className={`${styles.navItem} ${styles.disabled}`}>
+                <a href="/admin/support" className={`${styles.navItem} ${currentPath === '/admin/support' ? styles.active : ''}`}>
                     <span className={styles.iconWrapper}>
                         <MessageSquare size={20} />
                     </span>
-                    Mensajes (Próximamente)
+                    Mensajes
                 </a>
             </nav>
         </aside>
