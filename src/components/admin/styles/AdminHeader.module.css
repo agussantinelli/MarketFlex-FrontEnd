@@ -30,6 +30,11 @@
 .breadcrumbText {
     color: var(--primary);
     font-weight: 500;
+    text-decoration: none;
+}
+
+.breadcrumbText:hover {
+    text-decoration: underline;
 }
 
 .breadcrumbIcon {

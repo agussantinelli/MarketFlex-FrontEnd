@@ -12,7 +12,7 @@ const AdminSidebar = () => {
     return (
         <aside className={styles.sidebar}>
             <div className={styles.logoContainer}>
-                <a href="/" className={styles.logoLink}>
+                <a href="/admin/dashboard" className={styles.logoLink}>
                     <img src="/logo-marketflex-letters.png" alt="MarketFlex Logo" className={styles.logoImg} />
                     <span className={styles.logoText}>Administración</span>
                 </a>
