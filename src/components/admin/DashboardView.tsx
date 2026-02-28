@@ -11,6 +11,7 @@ const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
     const [loading, setLoading] = useState(true);
     const [period, setPeriod] = useState<'month' | 'historical'>('month');
+    const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -204,11 +205,11 @@ const DashboardView: React.FC = () => {
                         <div className={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}>
                             <stat.icon className={styles.statIcon} />
                         </div>
-                        <button className={styles.infoBtn} title={stat.description}>
+                        <button
+                            className={styles.infoBtn}
+                            onClick={() => setInfoModal({ title: stat.title, text: stat.description })}
+                        >
                             <LuInfo />
-                            <div className={styles.infoTooltip}>
-                                {stat.description}
-                            </div>
                         </button>
                         <div className={styles.statInfo}>
                             <h3>{stat.title}</h3>
@@ -323,6 +324,24 @@ const DashboardView: React.FC = () => {
                     )}
                 />
             </div>
+
+            {/* Metric Info Modal */}
+            {infoModal && (
+                <div className={styles.modalOverlay} onClick={() => setInfoModal(null)}>
+                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                        <div className={styles.modalHeader}>
+                            <LuInfo className={styles.modalIcon} />
+                            <h2>{infoModal.title}</h2>
+                        </div>
+                        <div className={styles.modalBody}>
+                            <p>{infoModal.text}</p>
+                        </div>
+                        <button className={styles.modalCloseBtn} onClick={() => setInfoModal(null)}>
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
