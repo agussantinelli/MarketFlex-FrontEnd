@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuDownload, LuPlus, LuArrowUpRight, LuArrowDownRight, LuTarget, LuRotateCw, LuPackage, LuTags, LuTriangleAlert } from 'react-icons/lu';
+import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuArrowUpRight, LuArrowDownRight, LuTarget, LuRotateCw, LuPackage, LuTags, LuTriangleAlert } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { AdminService } from '../../services/admin.service';
 import type { AdminStats, AdminPurchase } from '../../types/admin.types';
@@ -9,13 +9,14 @@ const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
     const [recentPurchases, setRecentPurchases] = useState<AdminPurchase[]>([]);
     const [loading, setLoading] = useState(true);
+    const [period, setPeriod] = useState<'month' | 'historical'>('month');
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
                 const [stats, purchases] = await Promise.all([
-                    AdminService.getStats(),
+                    AdminService.getStats(period),
                     AdminService.getAllPurchases()
                 ]);
                 setStatsData(stats);
@@ -28,7 +29,7 @@ const DashboardView: React.FC = () => {
         };
 
         fetchData();
-    }, []);
+    }, [period]);
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat("en-US", {
@@ -45,10 +46,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.revenueTrend !== undefined
                 ? `${statsData.revenueTrend > 0 ? "+" : ""}${statsData.revenueTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: formatCurrency(statsData?.lastRevenue ?? 0),
             icon: LuDollarSign,
             color: "from-green-500 to-green-300",
             isPositive: (statsData?.revenueTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Ventas Totales",
@@ -56,10 +58,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.salesTrend !== undefined
                 ? `${statsData.salesTrend > 0 ? "+" : ""}${statsData.salesTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: (statsData?.lastSales ?? 0).toLocaleString(),
             icon: LuShoppingCart,
             color: "from-blue-500 to-blue-300",
             isPositive: (statsData?.salesTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Venta Promedio",
@@ -67,10 +70,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.avgTrend !== undefined
                 ? `${statsData.avgTrend > 0 ? "+" : ""}${statsData.avgTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: formatCurrency(statsData?.lastAverageTicket ?? 0),
             icon: LuTrendingUp,
             color: "from-purple-500 to-purple-300",
             isPositive: (statsData?.avgTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Usuarios Activos",
@@ -78,10 +82,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.userTrend !== undefined
                 ? `${statsData.userTrend > 0 ? "+" : ""}${statsData.userTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: (statsData?.lastActiveUsers ?? 0).toLocaleString(),
             icon: LuUsers,
             color: "from-yellow-500 to-yellow-300",
             isPositive: (statsData?.userTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Tasa de Conversión",
@@ -89,10 +94,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.conversionTrend !== undefined
                 ? `${statsData.conversionTrend > 0 ? "+" : ""}${statsData.conversionTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: `${statsData?.lastConversionRate ?? 0}%`,
             icon: LuTarget,
             color: "from-pink-500 to-pink-300",
             isPositive: (statsData?.conversionTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Compradores Recurrentes",
@@ -100,10 +106,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.recurrentTrend !== undefined
                 ? `${statsData.recurrentTrend > 0 ? "+" : ""}${statsData.recurrentTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: `${statsData?.lastRecurrentBuyers ?? 0}%`,
             icon: LuRotateCw,
             color: "from-orange-500 to-orange-300",
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Promedio de Productos",
@@ -111,10 +118,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.itemsTrend !== undefined
                 ? `${statsData.itemsTrend > 0 ? "+" : ""}${statsData.itemsTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: `${statsData?.lastAverageItems ?? 0}`,
             icon: LuPackage,
             color: "from-cyan-500 to-cyan-300",
             isPositive: (statsData?.itemsTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Total Descontado",
@@ -122,11 +130,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.discountTrend !== undefined
                 ? `${statsData.discountTrend > 0 ? "+" : ""}${statsData.discountTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: formatCurrency(statsData?.lastTotalDiscount ?? 0),
             icon: LuTags,
             color: "from-indigo-500 to-indigo-300",
-            // For discount trend, a negative trend (less discount) could be positive for profit, but let's stick to absolute growth meaning positive for now.
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
+            showTrend: period === 'month'
         },
         {
             title: "Tasa de Cancelación",
@@ -134,11 +142,11 @@ const DashboardView: React.FC = () => {
             trend: statsData?.cancelTrend !== undefined
                 ? `${statsData.cancelTrend > 0 ? "+" : ""}${statsData.cancelTrend}%`
                 : "0%",
-            trendLabel: "este mes",
+            lastValueStr: `${statsData?.lastCancelRate ?? 0}%`,
             icon: LuTriangleAlert,
             color: "from-red-500 to-red-300",
-            // For cancel trend, a lower trend is better, so 'positive' UI color means it went down
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
+            showTrend: period === 'month'
         }
     ];
 
@@ -159,12 +167,20 @@ const DashboardView: React.FC = () => {
                     <p>Resumen de actividad y métricas clave.</p>
                 </div>
                 <div className={styles.headerActions}>
-                    <button className={styles.btnSecondary}>
-                        <LuDownload /> Exportar
-                    </button>
-                    <button className={styles.btnPrimary}>
-                        <LuPlus /> Nuevo Producto
-                    </button>
+                    <div className={styles.periodToggleWrapper}>
+                        <button
+                            className={`${styles.toggleBtn} ${period === 'month' ? styles.active : ''}`}
+                            onClick={() => setPeriod('month')}
+                        >
+                            Este Mes
+                        </button>
+                        <button
+                            className={`${styles.toggleBtn} ${period === 'historical' ? styles.active : ''}`}
+                            onClick={() => setPeriod('historical')}
+                        >
+                            Histórico
+                        </button>
+                    </div>
                 </div>
             </header>
 
@@ -181,11 +197,15 @@ const DashboardView: React.FC = () => {
                         <div className={styles.statInfo}>
                             <h3>{stat.title}</h3>
                             <div className={styles.statValue}>{stat.value}</div>
-                            <span className={`${styles.statTrend} ${stat.isPositive ? styles.positive : styles.negative}`}>
-                                {stat.isPositive ? <LuArrowUpRight /> : <LuArrowDownRight />}
-                                {stat.trend}
-                                <span className={styles.trendLabel}>{stat.trendLabel}</span>
-                            </span>
+                            {stat.showTrend && (
+                                <span className={`${styles.statTrend} ${stat.isPositive ? styles.positive : styles.negative}`}>
+                                    <span className={styles.trendArrowValue}>
+                                        {stat.isPositive ? <LuArrowUpRight /> : <LuArrowDownRight />}
+                                        {stat.trend}
+                                    </span>
+                                    <span className={styles.trendLabel}>vs {stat.lastValueStr} el mes pasado</span>
+                                </span>
+                            )}
                         </div>
                     </div>
                 ))}
