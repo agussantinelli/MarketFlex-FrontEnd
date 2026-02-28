@@ -349,6 +349,8 @@
 │   │   │   ├── AdminHeader.astro                   # Barra superior administrativa con buscador y usuario.
 │   │   │   ├── AdminSidebar.test.tsx               # Test de renderizado y lógica del sidebar.
 │   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
+│   │   │   ├── AnalyticsView.test.tsx              # Pruebas de la vista de analíticas.
+│   │   │   ├── AnalyticsView.tsx                   # Vista de gráficos y reportes de ventas (React).
 │   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
 │   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
@@ -406,10 +408,10 @@
 │   │   │       ├── ProductCard.module.css          # Efectos hover y bordes térmicos neón.
 │   │   │       ├── ProductCarousel.module.css      # Configuración visual del slider neón.
 │   │   │       └── controls.module.css             # Estilos de la barra de herramientas.
-│   │   └── promotions/                             # Gestión de campañas visuales.
-│   │       ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
-│   │       └── styles/                             # Estética de las promociones.
-│   │           └── PromotionHero.module.css        # Animaciones y gradientes del hero.
+│   │   ├── promotions/                             # Gestión de campañas visuales.
+│   │   │   ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
+│   │   │   └── styles/                             # Estética de las promociones.
+│   │   │       └── PromotionHero.module.css        # Animaciones y gradientes del hero.
 │   │   └── shared/                                 # Componentes compartidos por todo el sistema.
 │   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Wrapper y estructuras base.
@@ -428,6 +430,7 @@
 │   ├── pages/                                      # Sistema de rutas basado en archivos (SSR).
 │   │   ├── about.astro                             # Página de información institucional.
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
+│   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   └── styles/                             # Estética del panel administrativo.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
