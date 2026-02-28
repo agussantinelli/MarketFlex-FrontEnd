@@ -1,5 +1,5 @@
 import { api } from '../lib/api';
-import type { AdminStats, AdminPurchase } from '../types/admin.types';
+import type { AdminStats, AdminPurchase, AdminProduct, PaginatedResponse } from '../types/admin.types';
 
 export const AdminService = {
     async getStats(period: 'month' | 'historical' = 'month'): Promise<AdminStats | null> {
@@ -28,6 +28,18 @@ export const AdminService = {
             return result.data;
         } catch (error) {
             console.error('Error fetching analytics:', error);
+            return null;
+        }
+    },
+
+    async getProducts(page: number = 1, limit: number = 10, search?: string): Promise<PaginatedResponse<AdminProduct> | null> {
+        try {
+            const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
+            const endpoint = search ? 'products/search' : 'products';
+            const result = await api.get(`${endpoint}?page=${page}&limit=${limit}${searchParam}`).json<PaginatedResponse<AdminProduct>>();
+            return result;
+        } catch (error) {
+            console.error('Error fetching admin products:', error);
             return null;
         }
     }
