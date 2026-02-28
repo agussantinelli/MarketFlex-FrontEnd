@@ -271,9 +271,19 @@
             <td>Gráficos circulares reactivos con cálculos porcentuales automáticos y leyendas dinámicas.</td>
         </tr>
         <tr>
-            <td><b>Rendimiento de Marcas</b></td>
+            <td><b>Rendimiento por Marcas</b></td>
             <td><b>ApexCharts</b></td>
-            <td>Barras horizontales de alta precisión para el Top 10 de marcas con mayores ingresos.</td>
+            <td>Top 10 marcas con mayores ingresos brutos (Barras Horizontales).</td>
+        </tr>
+        <tr>
+            <td><b>Métodos de Pago</b></td>
+            <td><b>Chart.js</b></td>
+            <td>Distribución de ingresos según el medio de pago (Tarjeta, Efectivo, Transferencia).</td>
+        </tr>
+        <tr>
+            <td><b>Mapa de Calor de Ventas</b></td>
+            <td><b>ApexCharts</b></td>
+            <td>Análisis de densidad por día/hora (Últimos 30 días) para identificar picos de demanda.</td>
         </tr>
     </tbody>
 </table>
@@ -283,7 +293,8 @@
     <li><b>Arquitectura Zero-Delay:</b> Consumo directo de la API mediante Ky con tipado estricto para una respuesta instantánea.</li>
     <li><b>Visualización Neo-Dark:</b> Diseño optimizado para el tema oscuro con tooltips translúcidos y efectos de desenfoque.</li>
     <li><b>Detección de Métricas Clave:</b> Cálculo en tiempo real de ingresos liquidados, volumen por categoría y engagement de marca.</li>
-    <li><b>Formatos Inteligentes:</b> Localización automática de moneda (USD/ARS) y fechas formateadas dinámicamente según el dispositivo.</li>
+    <li><b>Mini-Modales Informativos:</b> Sistema de iconos `(i)` que despliegan modales centrados con la explicación técnica de cada indicador (Ratio de Conversión, Recurrencia, etc.).</li>
+    <li><b>Formatos Inteligentes:</b> Localización dinámica de moneda (ARS) y ajuste de zona horaria (ART) para una precisión absoluta en el mercado local.</li>
 </ul>
 
 <hr>
