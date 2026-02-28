@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuArrowUpRight, LuArrowDownRight, LuTarget, LuRotateCw, LuPackage, LuTags, LuTriangleAlert } from 'react-icons/lu';
+import { LuDollarSign, LuShoppingCart, LuTrendingUp, LuUsers, LuArrowUpRight, LuArrowDownRight, LuTarget, LuRotateCw, LuPackage, LuTags, LuTriangleAlert, LuInfo } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { AdminService } from '../../services/admin.service';
 import StatTable from './StatTable';
@@ -56,7 +56,8 @@ const DashboardView: React.FC = () => {
             icon: LuDollarSign,
             color: "from-green-500 to-green-300",
             isPositive: (statsData?.revenueTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastRevenue ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastRevenue ?? 0) > 0,
+            description: "Suma total facturada por ventas completadas (sin incluir impuestos o extras si no están en el total)."
         },
         {
             title: "Ventas Totales",
@@ -68,7 +69,8 @@ const DashboardView: React.FC = () => {
             icon: LuShoppingCart,
             color: "from-blue-500 to-blue-300",
             isPositive: (statsData?.salesTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastSales ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastSales ?? 0) > 0,
+            description: "Número total de órdenes que han llegado al estado final de 'COMPLETADO'."
         },
         {
             title: "Venta Promedio",
@@ -80,7 +82,8 @@ const DashboardView: React.FC = () => {
             icon: LuTrendingUp,
             color: "from-purple-500 to-purple-300",
             isPositive: (statsData?.avgTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastAverageTicket ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastAverageTicket ?? 0) > 0,
+            description: "Ingreso total dividido por la cantidad de ventas. Indica cuánto gasta el cliente en promedio por pedido."
         },
         {
             title: "Usuarios Activos",
@@ -92,7 +95,8 @@ const DashboardView: React.FC = () => {
             icon: LuUsers,
             color: "from-yellow-500 to-yellow-300",
             isPositive: (statsData?.userTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastActiveUsers ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastActiveUsers ?? 0) > 0,
+            description: "Total de usuarios registrados en el sistema hasta la fecha."
         },
         {
             title: "Tasa de Conversión",
@@ -104,7 +108,8 @@ const DashboardView: React.FC = () => {
             icon: LuTarget,
             color: "from-pink-500 to-pink-300",
             isPositive: (statsData?.conversionTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastConversionRate ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastConversionRate ?? 0) > 0,
+            description: "Porcentaje de usuarios registrados que han realizado al menos una compra completada."
         },
         {
             title: "Compradores Recurrentes",
@@ -116,7 +121,8 @@ const DashboardView: React.FC = () => {
             icon: LuRotateCw,
             color: "from-orange-500 to-orange-300",
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastRecurrentBuyers ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastRecurrentBuyers ?? 0) > 0,
+            description: "Porcentaje de clientes que compraron este mes y ya eran clientes, o que tienen más de una compra (Histórico)."
         },
         {
             title: "Promedio de Productos",
@@ -128,7 +134,8 @@ const DashboardView: React.FC = () => {
             icon: LuPackage,
             color: "from-cyan-500 to-cyan-300",
             isPositive: (statsData?.itemsTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastAverageItems ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastAverageItems ?? 0) > 0,
+            description: "Cantidad media de unidades de producto por cada orden de compra."
         },
         {
             title: "Total Descontado",
@@ -140,7 +147,8 @@ const DashboardView: React.FC = () => {
             icon: LuTags,
             color: "from-indigo-500 to-indigo-300",
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) >= 0
+            showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) >= 0,
+            description: "Ahorro total aplicado a los clientes mediante promociones NxM y descuentos directos."
         },
         {
             title: "Tasa de Cancelación",
@@ -152,7 +160,8 @@ const DashboardView: React.FC = () => {
             icon: LuTriangleAlert,
             color: "from-red-500 to-red-300",
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
-            showTrend: period === 'month' && (statsData?.lastCancelRate ?? 0) > 0
+            showTrend: period === 'month' && (statsData?.lastCancelRate ?? 0) > 0,
+            description: "Porcentaje de órdenes canceladas sobre el total de órdenes (Completadas + Canceladas + Pendientes)."
         }
     ];
 
@@ -195,6 +204,12 @@ const DashboardView: React.FC = () => {
                         <div className={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}>
                             <stat.icon className={styles.statIcon} />
                         </div>
+                        <button className={styles.infoBtn} title={stat.description}>
+                            <LuInfo />
+                            <div className={styles.infoTooltip}>
+                                {stat.description}
+                            </div>
+                        </button>
                         <div className={styles.statInfo}>
                             <h3>{stat.title}</h3>
                             <div className={styles.statValue}>{stat.value}</div>

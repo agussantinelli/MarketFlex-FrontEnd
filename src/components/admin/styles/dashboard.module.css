@@ -153,6 +153,60 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.infoBtn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    color: var(--green-cream);
+    opacity: 0.3;
+    font-size: 1.1rem;
+    cursor: help;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.infoBtn:hover {
+    opacity: 1;
+    color: var(--neon-green);
+}
+
+.infoTooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    width: 200px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--green-cream);
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: left;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    word-wrap: break-word;
+    white-space: normal;
+    text-transform: none;
+}
+
+.infoBtn:hover .infoTooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .statIconWrapper {
     width: 44px;
     height: 44px;
