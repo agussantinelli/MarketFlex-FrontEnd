@@ -25,16 +25,16 @@ const AdminSidebar = () => {
         { href: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
         { href: '/admin/analytics', icon: BarChart3, label: 'Analíticas', section: 'Principal' },
 
-        { href: '/admin/products', icon: Package, label: 'Productos', section: 'Catálogo' },
-        { href: '/admin/categories', icon: Tags, label: 'Categorías', section: 'Catálogo' },
-        { href: '/admin/brands', icon: Award, label: 'Marcas', section: 'Catálogo' },
-        { href: '/admin/features', icon: ListTree, label: 'Características', section: 'Catálogo' },
-
         { href: '/admin/users', icon: Users, label: 'Usuarios', section: 'Gestión' },
         { href: '/admin/sales', icon: ShoppingCart, label: 'Ventas', section: 'Gestión' },
         { href: '/admin/promotions', icon: TicketPercent, label: 'Promociones', section: 'Gestión' },
         { href: '/admin/support', icon: MessageSquare, label: 'Mensajes', section: 'Gestión' },
         { href: '/admin/claims', icon: AlertCircle, label: 'Reclamos', section: 'Gestión' },
+
+        { href: '/admin/products', icon: Package, label: 'Productos', section: 'Catálogo' },
+        { href: '/admin/categories', icon: Tags, label: 'Categorías', section: 'Catálogo' },
+        { href: '/admin/brands', icon: Award, label: 'Marcas', section: 'Catálogo' },
+        { href: '/admin/features', icon: ListTree, label: 'Características', section: 'Catálogo' },
     ];
 
     const sections = [...new Set(navItems.map(item => item.section))];
