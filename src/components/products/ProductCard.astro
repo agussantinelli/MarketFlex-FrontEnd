@@ -20,9 +20,11 @@ const { product, showFeatured = false, rank } = Astro.props;
                 src={product.foto
                     ? `http://localhost:5979/${product.foto}`
                     : "/placeholder.png"}
-                alt={product.nombre}
+                alt={`Imagen del producto: ${product.nombre}`}
                 class={styles.productImage}
                 loading="lazy"
+                width="300"
+                height="300"
             />
             <div class={styles.priceTag}>${product.precioActual || "0.00"}</div>
 

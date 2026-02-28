@@ -54,9 +54,14 @@ if (promotions.length === 0) return null;
                                 <a
                                     href={`/offers?promotion=${encodeURIComponent(promo.nombre)}&fixedKeys=promotion`}
                                     class={styles.ctaButton}
+                                    aria-label={`Ver productos de la promoción: ${promo.nombre}`}
                                 >
                                     Ver Productos
-                                    <Icon name="lucide:arrow-right" size={20} />
+                                    <Icon
+                                        name="lucide:arrow-right"
+                                        size={20}
+                                        aria-hidden="true"
+                                    />
                                 </a>
                             </div>
 
@@ -65,8 +70,11 @@ if (promotions.length === 0) return null;
                                     {promo.foto && (
                                         <img
                                             src={`${STATIC_URL}/${promo.foto}`}
-                                            alt={promo.nombre}
+                                            alt={`Foto de promoción: ${promo.nombre}`}
                                             class={styles.promoImage}
+                                            width="800"
+                                            height="600"
+                                            loading="eager"
                                         />
                                     )}
                                 </div>

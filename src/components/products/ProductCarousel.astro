@@ -66,11 +66,18 @@ const displayProducts = products.slice(0, limit);
                             class={`${styles.carouselItem} ${styles.viewMoreCard}`}
                             data-carousel-item
                         >
-                            <a href={viewMoreHref} class={styles.viewMoreBtn}>
-                                <div class={styles.iconWrapper}>
+                            <a
+                                href={viewMoreHref}
+                                class={styles.viewMoreBtn}
+                                aria-label={`Ver más productos de la sección ${title}`}
+                            >
+                                <div
+                                    class={styles.iconWrapper}
+                                    aria-hidden="true"
+                                >
                                     <Icon name="lucide:arrow-right" size={32} />
                                 </div>
-                                <span>Ver más</span>
+                                <span aria-hidden="true">Ver más</span>
                             </a>
                         </div>
                     )

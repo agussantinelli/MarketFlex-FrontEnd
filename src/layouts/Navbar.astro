@@ -47,18 +47,29 @@ const subcategories = await getSubcategories();
         <a
             href="/cart"
             class={`${styles.mobileCartLink} mobile-cart-link`}
-            aria-label="Carrito de compras"
+            aria-label="Ver carrito de compras"
         >
-            <Icon name="lucide:shopping-cart" class={styles.cartIcon} />
-            <span class={`${styles.cartBadge} cart-count`}>0</span>
+            <Icon
+                name="lucide:shopping-cart"
+                class={styles.cartIcon}
+                aria-hidden="true"
+            />
+            <span class={`${styles.cartBadge} cart-count`} aria-hidden="true"
+                >0</span
+            >
         </a>
 
         <button
             class={`${styles.mobileMenuBtn} mobile-menu-btn`}
-            aria-label="Toggle menu"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
         >
-            <Icon name="lucide:menu" class={styles.iconMenu} />
-            <Icon name="lucide:x" class={styles.iconClose} />
+            <Icon
+                name="lucide:menu"
+                class={styles.iconMenu}
+                aria-hidden="true"
+            />
+            <Icon name="lucide:x" class={styles.iconClose} aria-hidden="true" />
         </button>
 
         <div class={`${styles.navLinks} nav-links`}>
