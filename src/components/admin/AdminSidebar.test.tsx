@@ -58,13 +58,11 @@ describe('AdminSidebar Component', () => {
         expect(usersLink?.className).toMatch(/active/);
     });
 
-    it('should render "Próximamente" placeholder links showing disabled state', () => {
+    it('should render Mensajes link correctly', () => {
         render(<AdminSidebar />);
-
-        const messagesLink = screen.getByText('Mensajes (Próximamente)').closest('a');
-
+        const messagesLink = screen.getByText('Mensajes').closest('a');
         expect(messagesLink).toBeInTheDocument();
-        expect(messagesLink?.className).toMatch(/disabled/);
+        expect(messagesLink?.getAttribute('href')).toBe('/admin/support');
     });
 
     it('should not set active class on the Dashboard link for other paths', () => {
