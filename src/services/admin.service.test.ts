@@ -31,7 +31,7 @@ describe('AdminService', () => {
 
             const result = await AdminService.getStats();
             expect(result).toEqual(mockStats);
-            expect(api.get).toHaveBeenCalledWith('admin/stats');
+            expect(api.get).toHaveBeenCalledWith('admin/stats?period=month');
         });
 
         it('should return null on failure', async () => {

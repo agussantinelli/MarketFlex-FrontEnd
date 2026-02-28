@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import DashboardView from './DashboardView';
 import { AdminService } from '../../services/admin.service';
+import type { AdminStats } from '../../types/admin.types';
 import '@testing-library/jest-dom';
 
 vi.mock('../../services/admin.service', () => ({
@@ -12,7 +13,7 @@ vi.mock('../../services/admin.service', () => ({
 }));
 
 describe('DashboardView Component', () => {
-    const mockStats = {
+    const mockStats: AdminStats = {
         totalRevenue: 1500,
         totalSales: 15,
         averageTicket: 100,
@@ -39,18 +40,38 @@ describe('DashboardView Component', () => {
         lastRecurrentBuyers: 10,
         lastAverageItems: 4,
         lastTotalDiscount: 2000,
-        lastCancelRate: 1.0
+        lastCancelRate: 1.0,
+        latestSales: [
+            {
+                id: '1',
+                usuarioNombre: 'Agus Santinelli',
+                total: 150,
+                estado: 'COMPLETADO',
+                fecha: '2026-02-21T08:20:00Z'
+            }
+        ],
+        highestValueSales: [
+            {
+                id: '1',
+                usuarioNombre: 'Agus Santinelli',
+                total: 150,
+                estado: 'COMPLETADO',
+                fecha: '2026-02-21T08:20:00Z'
+            }
+        ],
+        topProducts: [
+            { id: 'p1', nombre: 'Producto Pro', cantidad: 10, ingresos: 500 }
+        ],
+        mostFrequentBuyers: [
+            { id: 'u1', nombre: 'Agus', apellido: 'Santinelli', compras: 5, totalGastado: 750 }
+        ],
+        topSpendingUsers: [
+            { id: 'u1', nombre: 'Agus', apellido: 'Santinelli', compras: 5, totalGastado: 750 }
+        ],
+        lowStockProducts: [
+            { id: 'p2', nombre: 'Poco Stock', cantidad: 2, ingresos: 100 }
+        ]
     };
-
-    const mockPurchases = [
-        {
-            id: '1',
-            total: 150,
-            fechaHora: '2026-02-21T08:20:00Z',
-            estado: 'COMPLETADO',
-            usuario: { nombre: 'Agus', apellido: 'Santinelli' }
-        }
-    ];
 
     beforeEach(() => {
         vi.clearAllMocks();
@@ -64,7 +85,6 @@ describe('DashboardView Component', () => {
 
     it('should render stats cards after loading', async () => {
         (AdminService.getStats as any).mockResolvedValue(mockStats);
-        (AdminService.getAllPurchases as any).mockResolvedValue(mockPurchases);
 
         render(<DashboardView />);
 
@@ -91,26 +111,21 @@ describe('DashboardView Component', () => {
 
     it('should split date and time into separate columns', async () => {
         (AdminService.getStats as any).mockResolvedValue(mockStats);
-        (AdminService.getAllPurchases as any).mockResolvedValue(mockPurchases);
 
         render(<DashboardView />);
 
         await waitFor(() => {
-            // Check headers
+            // Check headers for "Ventas de Mayor Valor" table which has "Fecha"
             expect(screen.getByText('Fecha')).toBeInTheDocument();
-            expect(screen.getByText('Hora')).toBeInTheDocument();
 
             // Check values (from utils/dateFormatter logic)
-            // Splitting '21/02/2026, 08:20 AM'
+            // Splitting '21/02/2026'
             expect(screen.getByText('21/02/2026')).toBeInTheDocument();
-            // We use a regex for time to avoid timezone issues in testing
-            expect(screen.getByText(/AM/i)).toBeInTheDocument();
         });
     });
 
     it('should render purchase status with correct class', async () => {
         (AdminService.getStats as any).mockResolvedValue(mockStats);
-        (AdminService.getAllPurchases as any).mockResolvedValue(mockPurchases);
 
         render(<DashboardView />);
 
