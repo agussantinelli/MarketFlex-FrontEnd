@@ -672,6 +672,19 @@ pnpm run test:e2e:ui
 
 <hr>
 
+<h2>⚡ Rendimiento y SEO (Core Web Vitals)</h2>
+<p>
+  El frontend fue construido con una fuerte obsesión por el rendimiento, asegurando una experiencia de usuario instantánea y métricas perfectas para motores de búsqueda.
+</p>
+<ul>
+  <li><b>Zero JS por defecto:</b> Gracias al compilador de Astro, las páginas como el Catálogo, el Home, o el Detalle de Producto se envían al navegador como HTML puro de carga inicial instantánea.</li>
+  <li><b>Hidratación Diferida:</b> Solo los componentes estrictamente interactivos (<code>CartView</code>, <code>CheckoutForm</code>) envían JavaScript usando la directiva <code>client:load</code> o <code>client:visible</code> (cargan el script sólo cuando el usuario hace scroll hasta ellos).</li>
+  <li><b>Optimización SEO Semántica:</b> Uso estricto de etiquetas meta en <code>Layout.astro</code>, URLs amigables pre-generadas (ej. <code>/productos/123</code> en vez de <code>/product?id=123</code>) para correcta indexación orgánica.</li>
+  <li><b>Assets Premium:</b> Tipografía <i>Inter</i> optimizada localmente vía <code>@fontsource/inter</code> y recursos servidos desde caché.</li>
+</ul>
+
+<hr>
+
 <h2>🔐 Variables de Entorno</h2>
 <p>Crea un archivo <code>.env</code> en la raíz del proyecto con las siguientes variables:</p>
 <pre>
