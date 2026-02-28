@@ -47,6 +47,10 @@ describe('AnalyticsView Component', () => {
             brandPerformance: [
                 { name: 'Sony', revenue: 4000, count: 8 },
                 { name: 'Samsung', revenue: 3500, count: 5 }
+            ],
+            paymentMethodDistribution: [
+                { name: 'card', revenue: 6000, value: 12 },
+                { name: 'cash', revenue: 4000, value: 5 }
             ]
         }
     };
@@ -77,11 +81,13 @@ describe('AnalyticsView Component', () => {
         // Check headers
         expect(screen.getByText('Evolución Mensual de Ventas')).toBeInTheDocument();
         expect(screen.getByText('Distribución por Categorías')).toBeInTheDocument();
+        expect(screen.getByText('Métodos de Pago')).toBeInTheDocument();
         expect(screen.getByText('Rendimiento por Marcas')).toBeInTheDocument();
 
         // Check if chart mocks are rendered
         expect(screen.getByTestId('area-chart')).toBeInTheDocument();
-        expect(screen.getByTestId('pie-chart')).toBeInTheDocument();
+        const pieCharts = screen.getAllByTestId('pie-chart');
+        expect(pieCharts).toHaveLength(2);
         expect(screen.getByTestId('apex-chart')).toBeInTheDocument();
     });
 
