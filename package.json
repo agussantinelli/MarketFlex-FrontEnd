@@ -46,5 +46,13 @@
     "msw": "^2.12.10",
     "vite-plugin-mkcert": "^1.17.9",
     "vitest": "^4.0.18"
+  },
+  "pnpm": {
+    "overrides": {
+      "tar": ">=7.5.8",
+      "rollup": ">=4.59.0",
+      "lodash": ">=4.17.23",
+      "devalue": ">=5.6.3"
+    }
   }
 }
