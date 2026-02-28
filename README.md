@@ -230,7 +230,7 @@
   <li>🏝️ <b>Arquitectura de Islas (Astro):</b> Hidratación selectiva de componentes React solo cuando es necesario, garantizando tiempos de carga ínfimos y un rendimiento excepcional.</li>
   <li>🔍 <b>Sistema de Filtrado Editorial:</b> Buscador avanzado con filtros multi-selección, persistencia en URL y soporte para claves fijas (`fixedKeys`) en contextos específicos.</li>
   <li>🧮 <b>Motor de Descuentos Sincronizado:</b> Lógica de promociones NxM (3x2, 2x1) calculada en el cliente con precisión absoluta respecto a las reglas del backend.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de **164 tests unitarios** que cubren el 100% de la lógica de servicios, scripts y estados globales.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de **173 tests unitarios** que cubren el 100% de la lógica de servicios, scripts y estados globales.</li>
   <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
   <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
   <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
@@ -659,7 +659,7 @@
 
 <ul>
   <li><b>🛡️ Unit Testing: Cobertura Total de Componentes</b>
-    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema:</p>
+    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema (44 archivos de test):</p>
     <table>
       <thead>
         <tr>
