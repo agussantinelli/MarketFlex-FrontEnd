@@ -68,7 +68,33 @@ function DataTable<T extends { id: string | number }>({
                     {customFilters}
                 </div>
                 {onAdd && (
-                    <button className={styles.addBtn} onClick={onAdd}>
+                    <button
+                        className={styles.addBtn}
+                        onClick={onAdd}
+                        style={{
+                            border: '1px solid var(--neon-green)',
+                            background: 'rgba(0, 255, 157, 0.05)',
+                            color: 'var(--neon-green)',
+                            padding: '10px 16px',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontWeight: '600',
+                            fontSize: '0.95rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            boxShadow: '0 0 10px rgba(0, 255, 157, 0.1)'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(0, 255, 157, 0.15)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'rgba(0, 255, 157, 0.05)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                        }}
+                    >
                         <LuPlus />
                         <span>Nuevo</span>
                     </button>

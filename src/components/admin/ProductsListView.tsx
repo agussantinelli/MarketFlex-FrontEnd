@@ -204,15 +204,16 @@ const ProductsListView: React.FC = () => {
                 customFilters={
                     <select
                         style={{
-                            padding: '8px 12px',
-                            background: 'var(--surface2)',
-                            color: 'var(--text-color)',
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '6px',
+                            padding: '10px 16px',
+                            background: '#1e293b',
+                            color: '#f8fafc',
+                            border: '1px solid var(--neon-green)',
+                            borderRadius: '8px',
                             outline: 'none',
                             cursor: 'pointer',
-                            fontSize: '0.9rem',
-                            fontWeight: '500'
+                            fontSize: '0.95rem',
+                            fontWeight: '600',
+                            boxShadow: '0 0 10px rgba(0, 255, 157, 0.1)'
                         }}
                         value={sort}
                         onChange={(e) => {
