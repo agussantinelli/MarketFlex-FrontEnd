@@ -1,4 +1,7 @@
 ﻿<h1 align="center">🚀 MarketFlex - FrontEnd</h1>
+<p align="center">
+  <img src="./public/logo-marketflex-circle.png" alt="MarketFlex Logo" width="150" height="150">
+</p>
 
 <p align="center">
     <a href="https://github.com/agussantinelli/MarketFlex-FrontEnd" target="_blank">
