@@ -20,5 +20,15 @@ export const AdminService = {
             console.error('Error fetching all purchases:', error);
             return [];
         }
+    },
+
+    async getAnalytics(): Promise<import('../types/admin.types').AnalyticsData | null> {
+        try {
+            const result = await api.get('admin/analytics').json<{ status: string; data: import('../types/admin.types').AnalyticsData }>();
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching analytics:', error);
+            return null;
+        }
     }
 };
