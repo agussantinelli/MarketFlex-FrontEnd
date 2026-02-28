@@ -147,6 +147,12 @@
             <td>Iconografía SVG optimizada, librerías modernas para React y animaciones.</td>
         </tr>
         <tr>
+            <td><strong>Visualización</strong></td>
+            <td>Recharts, ApexCharts & Chart.js</td>
+            <td><strong>^3.7.0 / ^5.6.0 / ^4.5.1</strong></td>
+            <td>Gráficos dinámicos y reportes administrativos interactivos.</td>
+        </tr>
+        <tr>
             <td><strong>Tipografía</strong></td>
             <td>@fontsource/inter</td>
             <td><strong>^5.2.8</strong></td>
