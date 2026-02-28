@@ -1,3 +1,26 @@
+export type TopProduct = {
+    id: string;
+    nombre: string;
+    cantidad: number;
+    ingresos: number;
+};
+
+export type TopUser = {
+    id: string;
+    nombre: string;
+    apellido: string;
+    compras: number;
+    totalGastado: number;
+};
+
+export type TopSale = {
+    id: string;
+    usuarioNombre: string;
+    total: number;
+    estado: string;
+    fecha: string;
+};
+
 export type AdminStats = {
     totalRevenue: number;
     totalSales: number;
@@ -26,6 +49,13 @@ export type AdminStats = {
     lastAverageItems?: number;
     lastTotalDiscount?: number;
     lastCancelRate?: number;
+    // New statistical lists
+    latestSales: TopSale[];
+    highestValueSales: TopSale[];
+    topProducts: TopProduct[];
+    mostFrequentBuyers: TopUser[];
+    topSpendingUsers: TopUser[];
+    lowStockProducts: TopProduct[];
 };
 
 export type AdminPurchase = {
