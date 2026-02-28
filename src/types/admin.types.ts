@@ -95,4 +95,11 @@ export type AnalyticsData = {
         revenue: number;
         value: number;
     }>;
+    salesHeatmap: Array<{
+        name: string;
+        data: Array<{
+            x: string;
+            y: number;
+        }>;
+    }>;
 };
