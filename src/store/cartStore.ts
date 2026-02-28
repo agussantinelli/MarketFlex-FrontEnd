@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { computed } from 'nanostores';
 import type { Product } from '../types/product.types';
-import type { CartItem, CartStore } from '../types/cart.types';
+import type { CartStore } from '../types/cart.types';
 import { calculatePromotions } from './promotionEngine.ts';
 
 // Persist cart in localStorage
