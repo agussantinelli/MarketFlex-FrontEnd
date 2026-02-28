@@ -57,5 +57,16 @@ export const AdminService = {
                 message: errorData?.message || 'Error al actualizar el estado destacado'
             };
         }
+    },
+    async getUsers(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<import('../types/admin.types').AdminUser> | null> {
+        try {
+            const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
+            const sortParam = sort ? `&sort=${sort}` : '';
+            const result = await api.get(`admin/users?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<import('../types/admin.types').AdminUser>>();
+            return result;
+        } catch (error) {
+            console.error('Error fetching admin users:', error);
+            return null;
+        }
     }
 };
