@@ -248,12 +248,12 @@
 
 <hr>
 
-<h2>👁️ Sistema de Vistas del Administrador</h2>
-<p>Para simplificar y optimizar la experiencia de los administradores de la plataforma, MarketFlex implementa un sistema de <b>Vistas Binarias (Strict Binary Views)</b> integradas directamente en el menú de usuario. Al iniciar sesión con una cuenta de rol `admin`, el comportamiento es el siguiente:</p>
+<h2>👁️ Sistema de Vistas Binarias (Administrador)</h2>
+<p>Para simplificar y optimizar la experiencia de gestión técnica, MarketFlex implementa un sistema robusto de <b>Vistas Binarias</b> gestionado vía <code>localStorage</code> (<code>marketflex_admin:isAdminMode</code>) encapsulado en el menú de usuario. El comportamiento para las cuentas con el rol <code>admin</code> es el siguiente:</p>
 <ul>
-    <li><b>Landing por Defecto (Panel Administrador):</b> Todo inicio de sesión de administrador redirige inmediata y automáticamente al <code>/admin/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas sin pasar por el catálogo de ventas y la web deshabilita temporalmente el CSS global para evitar colisiones con la UI administrativa.</li>
-    <li><b>Vista Cliente (Tienda):</b> Desde el menú desplegable del perfil superior (el cual mantiene un estilo oscuro `theme="dark"` unificado), existe un botón verde llamado <b>"Cambiar a Vista Cliente"</b>. Al accionarlo, el administrador es redirigido a la tienda (`/`) y puede navegar como un usuario estándar (ej. auditar productos o promociones). Las rutas administrativas quedan inaccesibles en este estado.</li>
-    <li><b>Retorno al Panel:</b> Mientras se navega en la "Vista Cliente", el menú del perfil inteligente oculta las opciones comerciales (como "Mis Compras") y expone un botón estratégico (también verde oscuro) llamado <b>"Cambiar al Panel Administrador"</b>, devolviendo al staff a sus métricas con un clic y cerrando el ciclo.</li>
+    <li><b>Landing por Defecto (Panel de Administración):</b> Todo inicio de sesión de administrador activa el modo admin por defecto y redirige inmediata y automáticamente a <code>/admin/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas de forma fluida.</li>
+    <li><b>Vista Cliente:</b> Estando en el panel, el menú desplegable del perfil superior expone un botón dedicado llamado <b>"Cambiar a Vista Cliente"</b>. Al accionarlo, el estado administrativo se pausa temporalmente (<code>isAdminMode="false"</code>), redirigiendo al usuario a la ruta raíz (<code>/</code>). Esto permite navegar y auditar la tienda (productos, carritos, promociones) exactamente como un usuario estándar.</li>
+    <li><b>Retorno al Panel de Administración:</b> Mientras se audita la "Vista Cliente", el menú inteligente reestructura sus opciones: expone el botón <b>"Cambiar al Panel Administrador"</b> y las rutas típicas de cliente. Al accionarlo, se restaura el entorno administrativo devolviendo al staff a sus métricas con un clic y cerrando el ciclo.</li>
 </ul>
 
 <hr>
