@@ -280,10 +280,12 @@
 <hr>
 
 <h2>🔔 Manejo de Estados y Notificaciones</h2>
-<p>Dada la naturaleza estática principal de Astro, la comunicación de estados entre distintas páginas (por ejemplo, informar si un Login fue exitoso o falló tras una redirección) se resuelve de un modo limpio y sin estado global pesado:</p>
+<p>Dada la arquitectura híbrida de Astro, la gestión del estado se divide estratégicamente según el contexto y el alcance temporal de los datos, garantizando rendimiento y reactividad instantánea:</p>
 <ul>
-  <li><b>Query Parameters como Estado:</b> La aplicación aprovecha activamente los parámetros de la URL (ej. <code>?error=true</code> o <code>?login_success=true&user=...</code>) para pasar contexto a la siguiente vista sin saturar el almacenamiento local o requerir librerías de estado complejas como Redux o Zustand.</li>
-  <li><b>Notificaciones Reactivas (Sileo):</b> El componente de React <code>&lt;Notifications /&gt;</code> se inicializa verificando estos <i>query params</i>. Si detecta el parámetro requerido (ej. <code>requiredQueryParam="error"</code>), monta de inmediato el <i>toast notification</i> con animaciones "gooey" hermosas de la librería Sileo, proporcionando una experiencia reactiva instantánea sobre un esqueleto pre-renderizado.</li>
+  <li><b>Zustand (Micro-Estados Complejos):</b> Se utiliza para manejar el estado altamente interactivo y persistente de características críticas del lado del cliente, como el <code>cartStore</code> y el <code>checkoutStore</code>. Al ser ágil y libre de boilerplate, permite sincronizar las React Islands encargadas de las compras con <code>localStorage</code> sin esfuerzo.</li>
+  <li><b>Nanostores (Puente Multi-Framework):</b> Utilizado primordialmente en utilidades como <code>adminStore</code>. Su naturaleza agnóstica al framework facilita cruzar la frontera de hidratación, permitiendo que tanto el código estático (Astro vanilla) como el interactivo (React) lean y muten el mismo estado base.</li>
+  <li><b>Query Parameters (Estado Transitorio):</b> Para flujos de navegación que no ameritan un store en memoria (ej. informar si un Login fue exitoso), el sistema sigue confiando fuertemente en URLs limpias (ej. <code>?login_success=true&user=...</code>).</li>
+  <li><b>Sistema Global de Notificaciones (Sileo):</b> Lejos de atar las notificaciones visuales al Virtual DOM completo, la app cuenta con un único listener global de Sileo. Todos los scripts estáticos, páginas Astro o interceptores de API pueden invocar un popup visual moderno simplemente ejecutando <code>window.triggerSileo('success' | 'error', mensaje)</code> sin depender de React Context o grandes proveedores globales.</li>
 </ul>
 
 <hr>
