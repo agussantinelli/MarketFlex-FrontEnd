@@ -17,6 +17,15 @@ export type AdminStats = {
     itemsTrend: number;
     discountTrend: number;
     cancelTrend: number;
+    lastRevenue?: number;
+    lastSales?: number;
+    lastAverageTicket?: number;
+    lastActiveUsers?: number;
+    lastConversionRate?: number;
+    lastRecurrentBuyers?: number;
+    lastAverageItems?: number;
+    lastTotalDiscount?: number;
+    lastCancelRate?: number;
 };
 
 export type AdminPurchase = {
