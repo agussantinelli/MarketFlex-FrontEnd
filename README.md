@@ -270,12 +270,11 @@
 <hr>
 
 <h2>🌐 Flujo de Datos y Consumo de API</h2>
-<p>La comunicación con el backend (Hono/Node.js) se gestiona centralizadamente utilizando <b>Ky</b>, una librería cliente HTTP moderna y ligera basada en la API Fetch nativa. El corazón de este flujo se encuentra en <code>src/lib/api.ts</code>.</p>
+<p>La comunicación con el backend se gestiona de forma robusta e interceptada utilizando <b>Ky</b>. Toda la configuración del cliente HTTP reside centralizada en <code>src/lib/api.ts</code>, garantizando un comportamiento predictible para todos los <code>services</code>.</p>
 <ul>
-  <li><b>Instancia Centralizada:</b> Todos los servicios (como <code>auth.service.ts</code> o <code>product.service.ts</code>) utilizan la misma instancia pre-configurada de Ky. Esto garantiza consistencia en las URLs, headers comunes y tiempos de espera (<i>timeouts</i>).</li>
-  <li><b>Reset de Datos (Auto-Invalidation):</b> Utilidad <code>dataReset.ts</code> que sincroniza el estado local con la versión del servidor, integrada globalmente en el <code>Layout.astro</code>.</li>
-  <li><b>Intercepción de Salida (JWT):</b> Mediante un <i>hook</i> <code>beforeRequest</code>, la API inyecta automáticamente el encabezado <code>Authorization: Bearer [accessToken]</code>.</li>
-  <li><b>Intercepción de Entrada (Auto-Refresh):</b> Se implementó un interceptor <code>afterResponse</code> que detecta errores <code>401 Unauthorized</code>. Si el token expiró, el interceptor solicita un nuevo par de tokens al backend usando el <code>marketflex_refresh_token</code> y reintenta la petición original de forma transparente para el usuario.</li>
+  <li><b>Intercepción de Salida (JWT Injector):</b> El hook <code>beforeRequest</code> inyecta automáticamente el <code>marketflex_token</code> (Bearer) en los headers de toda petición saliente, exceptuando de forma inteligente las rutas públicas de autenticación (<code>/auth/</code>) para evitar colisiones.</li>
+  <li><b>Intercepción de Entrada (Auto-Refresh):</b> Un hook <code>afterResponse</code> vigila por errores <code>401 Unauthorized</code>. Si ocurren, el cliente pausa la ejecución, solicita transparentemente un nuevo par de tokens usando el <code>marketflex_refresh_token</code>, reescribe el localStorage y reintenta la petición original (clonada) sin que el usuario lo note o pierda su contexto (e.g. llenar un carrito).</li>
+  <li><b>Manejo Global de Errores (Sileo Linked):</b> El mismo interceptor evalúa cualquier respuesta fallida (`!response.ok`), extrae el mensaje de error normalizado provisto por el backend, lo mapea usando un diccionario de errores amigables (e.g. <code>insufficient stock</code> → "Stock insuficiente para uno o más productos") y lo dispara directamente a la UI llamando a <code>window.triggerSileo('error', ...)</code>, centralizando así el feedback visual sin tener que rodear cada llamada de servicio en bloques `try/catch` manuales.</li>
 </ul>
 
 <hr>
