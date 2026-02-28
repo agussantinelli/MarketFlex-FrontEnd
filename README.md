@@ -1,4 +1,4 @@
-﻿<h1 align="center">🚀 MarketFlex - FrontEnd</h1>
+<h1 align="center">🚀 MarketFlex - FrontEnd</h1>
 <p align="center">
   <img src="./public/logo-marketflex-circle.png" alt="MarketFlex Logo" width="150" height="150">
 </p>
@@ -230,7 +230,7 @@
   <li>🏝️ <b>Arquitectura de Islas (Astro):</b> Hidratación selectiva de componentes React solo cuando es necesario, garantizando tiempos de carga ínfimos y un rendimiento excepcional.</li>
   <li>🔍 <b>Sistema de Filtrado Editorial:</b> Buscador avanzado con filtros multi-selección, persistencia en URL y soporte para claves fijas (`fixedKeys`) en contextos específicos.</li>
   <li>🧮 <b>Motor de Descuentos Sincronizado:</b> Lógica de promociones NxM (3x2, 2x1) calculada en el cliente con precisión absoluta respecto a las reglas del backend.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de <b>181 tests unitarios</b> que cubren el 100% de la lógica de servicios, scripts, utilidades de imagen y estados globales.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de <b>191 tests unitarios</b> que cubren el 100% de la lógica de servicios, scripts, utilidades de imagen y estados globales.</li>
   <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
   <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
   <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
@@ -422,6 +422,8 @@
 │   │   │   ├── DataTable.tsx                       # Tabla reutilizable y personalizable para CRUDs.
 │   │   │   ├── ProductsListView.test.tsx           # Test integral de la gestión de productos.
 │   │   │   ├── ProductsListView.tsx                # Vista de administración del catálogo de productos.
+│   │   │   ├── SalesListView.test.tsx              # Pruebas del listado de ventas administrativas.
+│   │   │   ├── SalesListView.tsx                   # Vista de administración de transacciones y ventas.
 │   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
 │   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
 │   │   │   ├── SupportListView.test.tsx            # Test integral de la gestión de mensajes de soporte.
@@ -432,7 +434,8 @@
 │   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
 │   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
 │   │   │       ├── dashboard.module.css            # Estilos dedicados del dashboard.
-│   │   │       └── DataTable.module.css            # Estilos premium para la tabla universal.
+│   │   │       ├── DataTable.module.css            # Estilos premium para la tabla universal.
+│   │   │       └── SalesListView.module.css        # Estilos dedicados de la vista de ventas.
 │   │   ├── auth/                                   # UI de login, registro y validación social.
 │   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
 │   │   │   ├── Captcha.astro                       # Integración visual de Google reCAPTCHA v3.
