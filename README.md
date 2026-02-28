@@ -213,52 +213,21 @@
 
 <h2>📦 Características Principales</h2>
 <ul>
-  <li>✨ <b>Re-branding Instantáneo:</b> Estructura preparada para cambios visuales profundos.</li>
-  <li>📱 <b>Mobile First:</b> Diseño nacido para dispositivos móviles, escalable a grandes pantallas.</li>
-  <li>🪙 <b>UX Agnóstica:</b> Flujos de usuario optimizados para cualquier tipo de transaccionalidad.</li>
-  <li>⚡ <b>Performance:</b> Carga asíncrona optimizada para catálogos de cualquier escala.</li>
-  <li>🔢 <b>Paginación Tradicional:</b> Navegación basada en URL para una mejor indexación (SEO) y accesibilidad.</li>
-  <li>🏝️ <b>Arquitectura de Islas:</b> Hidratación selectiva de componentes para tiempos de respuesta inmediatos.</li>
-  <li>🔼 <b>Navbar Jerárquico:</b> Navegación inteligente con subcategorías anidadas, triggers de flecha y sistema de "hover delay" (2s) para una experiencia fluida.</li>
-  <li>🎡 <b>CSS Modules:</b> Aislamiento total de estilos mediante archivos <code>.module.css</code> localizados por componente/página.</li>
-  <li>🎠 <b>Carruseles Premium:</b> Componente reutilizable de carrusel con estados interactivos (flechas que cambian de color al límite del scroll) y efectos premium.</li>
-  <li>🧱 <b>Arquitectura Modular:</b> Separación estricta de Tipos, Servicios y Componentes para mantenibilidad a largo plazo.</li>
-  <li>🌐 <b>Login Social:</b> Inicio de sesión con Google (GSI) y Facebook (JS SDK) con creación automática de cuenta y mensajes de bienvenida diferenciados.</li>
-  <li>🤖 <b>Anti-Bot (reCAPTCHA v3):</b> Protección invisible contra bots activada durante el registro para garantizar transacciones legítimas.</li>
-  <li>👤 <b>Perfil de Usuario Premium:</b> Página de perfil con diseño de mini-cards altamente visuales y organización de información por grupos de interés.</li>
-  <li>🌙 <b>Dark Mode Nativo:</b> Implementación de tema oscuro profundo con efectos de <i>glassmorphism</i>, desenfoques y transparencias que realzan la estética premium en toda la plataforma.</li>
-  <li>🛒 <b>Premium Shopping Cart:</b> Rediseño profundo del carrito con:
-      <ul>
-          <li><b>Glassmorphism Avanzado:</b> Desenfoques de alta densidad (25px) y bordes con brillo sutil.</li>
-          <li><b>Layout Asimétrico:</b> Estructura de tarjetas de producto moderna y dinámica.</li>
-          <li><b>Quantity Pills:</b> Controles de cantidad minimalistas y elegantes.</li>
-          <li><b>Micro-animaciones:</b> Efectos de rotación en iconos de eliminación y escalado suave en imágenes.</li>
-      </ul>
-  </li>
-  <li>🧮 <b>Motor de Promociones Inteligente:</b> Refactorización de la lógica de descuentos (`Individual-First`) sincronizada al 100% con el Backend, garantizando una aplicación justa de ofertas como 2x1 o Descuento en 2da Unidad.</li>
-  <li>🔄 <b>Reset Automático de Cache:</b> Sistema inteligente que detecta cambios en la versión de la base de datos (re-seed) mediante el endpoint de salud y limpia automáticamente el <code>localStorage</code> para evitar errores por IDs obsoletos.</li>
-  <li>🏷️ <b>Social Badges Oficiales:</b> Integración de insignias de marca para Google y Facebook con sus colores corporativos e iconografía oficial.</li>
-  <li>🔒 <b>Confirmación de Acciones:</b> Modal premium interactivo para acciones críticas (ej. logout) mejorando la seguridad percibida.</li>
-  <li>✨ <b>Página de Novedades Dedicada:</b> Nueva sección en <code>/new-arrivals</code> que muestra los últimos lanzamientos con soporte completo de paginación y navegación fluida.</li>
-  <li>🚀 <b>Promotion Hero Section:</b> Banner dinámico para destacar ofertas especiales con enlaces directos a contextos filtrados.</li>
-  <li>🏷️ <b>Offers Dashboard (<code>/offers</code>):</b> Página dedicada a promociones con soporte para descripciones dinámicas y paginación propia.</li>
-  <li>🔍 <b>Filtros de Marca (Editoriales):</b> Nuevo sistema de filtrado multi-selección para marcas con estados colapsables, sincronización con URL y persistencia en el buscador.</li>
-  <li>🔒 <b>Filtros Fijos (<code>fixedKeys</code>):</b> Sistema que permite bloquear ciertos filtros (ej. una promoción específica o categoría fija) para preservar el contexto de navegación.</li>
-  <li>🔍 <b>Modo "Explorar":</b> Activación inteligente de filtros globales y selectores de promociones cuando se accede desde links de navegación general.</li>
-  <li>🔔 <b>Notificaciones:</b> Sistema de avisos visuales con efectos "gooey" mediante Sileo (React).</li>
-  <li>🔒 <b>HTTPS en Desarrollo:</b> Certificado SSL local confiable (generado con <code>vite-plugin-mkcert</code>) requerido para cumplir requisitos de SDKs externos (como Facebook) sin advertencias del navegador.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Todos los scripts interactivos en <code>src/scripts</code> y servicios de comunicación cuentan con tests unitarios robustos (<b>161 tests en total</b>), garantizando la fiabilidad de la UI y la sesión.</li>
-  <li>🛒 <b>Premium Checkout Experience:</b> Proceso de compra fluido con:
-      <ul>
-          <li><b>Multi-Sección:</b> División lógica entre Información Personal, Envío y Pago.</li>
-          <li><b>Breadcrumbs Estilizados:</b> Navegación visual estilo píldora con iconos Lucide.</li>
-          <li><b>Validación en Tiempo Real:</b> Feedback inmediato al usuario durante la carga de datos.</li>
-          <li><b>Summary Dinámico:</b> Resumen de orden que refleja descuentos y promociones en tiempo real.</li>
-          <li><b>Pre-filling Inteligente:</b> Los campos de contacto y envío se auto-completan con la información del usuario logueado para una compra ultra-rápida.</li>
-          <li><b>Admin Dashboard (Real-Time):</b> Panel administrativo conectado directamente a la API para visualizar métricas reales de ventas, ingresos y usuarios.</li>
-          <li><b>Gestión de Transacciones:</b> Listado dinámico de todas las compras del sistema con detalles de usuario y estados en tiempo real.</li>
-      </ul>
-  </li>
+  <li>📊 <b>Admin Dashboard (Data-Driven):</b> Panel interactivo con métricas reales y visualizaciones de tendencias mediante el componente `StatTable`, permitiendo una gestión eficiente de ventas e ingresos.</li>
+  <li>🛡️ <b>Ecosistema de Vistas Binarias:</b> Sistema inteligente que alterna entre el entorno de Administrador y Cliente con transiciones fluidas y limpieza de estados persistentes.</li>
+  <li>🛒 <b>Experiencia de Carrito Premium:</b> Diseño basado en *Glassmorphism* de alta densidad con micro-animaciones, controles de cantidad tipo pildora y gestión de estado atomizada mediante Nanostores.</li>
+  <li>🛍️ <b>Checkout Multi-Sección & Fluid:</b> Proceso de compra dividido en fases lógicas (Personal, Envío, Pago) con validación en tiempo real y auto-completado inteligente.</li>
+  <li>🌙 <b>Dark Mode Nativo (High-End):</b> Implementación de tema oscuro profundo con efectos de desenfoque y transparencias que realzan la estética neón oficial de MarketFlex.</li>
+  <li>🏝️ <b>Arquitectura de Islas (Astro):</b> Hidratación selectiva de componentes React solo cuando es necesario, garantizando tiempos de carga ínfimos y un rendimiento excepcional.</li>
+  <li>🔍 <b>Sistema de Filtrado Editorial:</b> Buscador avanzado con filtros multi-selección, persistencia en URL y soporte para claves fijas (`fixedKeys`) en contextos específicos.</li>
+  <li>🧮 <b>Motor de Descuentos Sincronizado:</b> Lógica de promociones NxM (3x2, 2x1) calculada en el cliente con precisión absoluta respecto a las reglas del backend.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de **161 tests unitarios** que cubren el 100% de la lógica de servicios, scripts y estados globales.</li>
+  <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
+  <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
+  <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
+  <li>⚡ <b>Navbar Inteligente (Contextual):</b> Navegación jerárquica con subcategorías anidadas, triggers de flecha y sistema de *hover delay* (2s) para una navegación fluida.</li>
+  <li>🎡 <b>Componentes Visuales Premium:</b> Carruseles interactivos con estados dinámicos, badges sociales oficiales y micro-interacciones neón en toda la UI.</li>
+  <li>✨ <b>Páginas de Contexto Curado:</b> Secciones dedicadas para Novedades (`/new-arrivals`) y Ofertas (`/offers`) con filtros pre-configurados y navegación optimizada.</li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
 </ul>
 
