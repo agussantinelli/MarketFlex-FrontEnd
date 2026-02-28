@@ -19,7 +19,7 @@ describe('contact.ts', () => {
                 <input id="email" name="email" />
                 <input id="subject" name="subject" />
                 <textarea name="message"></textarea>
-                <button class="submit-btn">Enviar</button>
+                <button type="submit" class="submit-btn">Enviar</button>
             </form>
         `;
 
