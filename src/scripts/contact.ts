@@ -33,8 +33,14 @@ export function initContactForm() {
             e.preventDefault();
 
             const submitBtn = supportForm.querySelector(
-                ".submit-btn",
+                'button[type="submit"]',
             ) as HTMLButtonElement;
+
+            if (!submitBtn) {
+                console.error("Submit button not found in support form");
+                return;
+            }
+
             const originalText = submitBtn.innerText;
             submitBtn.innerText = "Enviando...";
             submitBtn.disabled = true;
