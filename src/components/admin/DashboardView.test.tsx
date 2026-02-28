@@ -20,7 +20,17 @@ describe('DashboardView Component', () => {
         revenueTrend: 12.5,
         salesTrend: 5.2,
         avgTrend: 2.1,
-        userTrend: -3.4
+        userTrend: -3.4,
+        conversionRate: 25.5,
+        recurrentBuyers: 12.5,
+        conversionTrend: 5.5,
+        recurrentTrend: 2.5,
+        averageItems: 4.5,
+        totalDiscount: 2500,
+        cancelRate: 1.5,
+        itemsTrend: 1.5,
+        discountTrend: -5.0,
+        cancelTrend: -0.2
     };
 
     const mockPurchases = [
@@ -56,6 +66,18 @@ describe('DashboardView Component', () => {
         expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
         expect(screen.getByText('$1,500.00')).toBeInTheDocument();
         expect(screen.getByText('Usuarios Activos')).toBeInTheDocument();
+        expect(screen.getByText('Tasa de Conversión')).toBeInTheDocument();
+        expect(screen.getByText('25.5%')).toBeInTheDocument();
+        expect(screen.getByText('Compradores Recurrentes')).toBeInTheDocument();
+        expect(screen.getByText('12.5%')).toBeInTheDocument();
+
+        // Assert New Metrics
+        expect(screen.getByText('Promedio de Productos')).toBeInTheDocument();
+        expect(screen.getByText('4.5')).toBeInTheDocument();
+        expect(screen.getByText('Total Descontado')).toBeInTheDocument();
+        expect(screen.getByText('$2,500.00')).toBeInTheDocument();
+        expect(screen.getByText('Tasa de Cancelación')).toBeInTheDocument();
+        expect(screen.getByText('1.5%')).toBeInTheDocument();
     });
 
     it('should split date and time into separate columns', async () => {
