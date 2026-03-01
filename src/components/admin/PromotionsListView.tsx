@@ -16,7 +16,15 @@ const PromotionsListView: React.FC = () => {
         try {
             const response = await getAllPromotionsAdmin();
             const data = (response as any).data || (response as any).promotions || [];
-            setPromotions(data);
+
+            // Sort: Featured promotions first
+            const sortedData = [...data].sort((a, b) => {
+                if (a.destacado && !b.destacado) return -1;
+                if (!a.destacado && b.destacado) return 1;
+                return 0;
+            });
+
+            setPromotions(sortedData);
             setLoading(false);
             if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
         } catch (error) {
