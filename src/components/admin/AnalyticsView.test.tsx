@@ -62,13 +62,6 @@ describe('AnalyticsView Component', () => {
         vi.clearAllMocks();
     });
 
-    it('should show loading state initially', () => {
-        (api.get as any).mockReturnValue({
-            json: () => new Promise(() => { }) // Never resolves
-        });
-        render(<AnalyticsView />);
-        expect(screen.getByText(/Cargando analíticas.../i)).toBeInTheDocument();
-    });
 
     it('should render all chart headers and containers after loading', async () => {
         (api.get as any).mockReturnValue({

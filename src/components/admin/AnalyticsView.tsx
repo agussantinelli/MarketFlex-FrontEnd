@@ -56,8 +56,7 @@ const AnalyticsView: React.FC = () => {
     };
 
     if (loading && !data) {
-        // We let the global loader handle this, but we don't return null 
-        // to avoid blank pages if the global loader is hidden prematurely.
+        // Handled by global loader
     }
 
     if (!data) {

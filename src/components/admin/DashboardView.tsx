@@ -167,7 +167,7 @@ const DashboardView: React.FC = () => {
     ];
 
     if (loading && !statsData) {
-        // Let global loader handle initial state
+        // Handled by global loader
     }
 
     return (

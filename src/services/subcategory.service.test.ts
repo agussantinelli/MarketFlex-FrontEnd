@@ -17,7 +17,7 @@ describe('SubcategoryService', () => {
     it('should fetch subcategories successfully', async () => {
         const mockSub = [{ id: '1', name: 'Tech' }];
         (api.get as any).mockReturnValue({
-            json: vi.fn().mockResolvedValueOnce({ data: mockSub })
+            json: vi.fn().mockResolvedValueOnce({ status: 'success', data: mockSub })
         });
 
         const result = await getSubcategories();

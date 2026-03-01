@@ -111,8 +111,8 @@ const ClaimsListView = () => {
         return matchesSearch && matchesFilter;
     });
 
-    if (loading) {
-        return <div className={styles.loading}>Cargando reclamos...</div>;
+    if (loading && claims.length === 0) {
+        // Handled by global loader
     }
 
     return (

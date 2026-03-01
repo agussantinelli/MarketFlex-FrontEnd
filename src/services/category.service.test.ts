@@ -16,7 +16,7 @@ describe('CategoryService', () => {
 
     it('should fetch categories successfully', async () => {
         const mockCategories = [{ id: '1', name: 'Electronics' }, { id: '2', name: 'Books' }];
-        const mockJson = vi.fn().mockResolvedValue({ data: mockCategories });
+        const mockJson = vi.fn().mockResolvedValue({ status: 'success', data: mockCategories });
         (api.get as any).mockReturnValue({ json: mockJson });
 
         const categories = await getCategories();

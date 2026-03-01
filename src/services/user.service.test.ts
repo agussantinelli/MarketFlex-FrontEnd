@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as userService from './user.service';
 import { api } from '../lib/api';
 
 vi.mock('../lib/api', () => ({
@@ -9,6 +8,8 @@ vi.mock('../lib/api', () => ({
         json: vi.fn()
     }
 }));
+
+import { UserService } from './user.service';
 
 describe('UserService', () => {
     beforeEach(() => {
@@ -21,9 +22,9 @@ describe('UserService', () => {
             json: vi.fn().mockResolvedValueOnce(mockUser)
         });
 
-        const result = await userService.getProfile();
+        const result = await UserService.getProfile();
 
-        expect(api.get).toHaveBeenCalledWith('user/me');
+        expect(api.get).toHaveBeenCalledWith('user/profile');
         expect(result).toEqual(mockUser);
     });
 
@@ -34,9 +35,10 @@ describe('UserService', () => {
             json: vi.fn().mockResolvedValueOnce(mockUser)
         });
 
-        const result = await userService.updateProfile(updateData);
+        const result = await UserService.updateProfile(updateData);
 
-        expect(api.patch).toHaveBeenCalledWith('user/me', expect.objectContaining({ json: updateData }));
+        expect(api.patch).toHaveBeenCalledWith('user/profile', expect.objectContaining({ json: updateData }));
         expect(result).toEqual(mockUser);
     });
 });
+

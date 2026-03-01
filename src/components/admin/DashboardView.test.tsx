@@ -77,20 +77,12 @@ describe('DashboardView Component', () => {
         vi.clearAllMocks();
     });
 
-    it('should show loading spinner initially', () => {
-        (AdminService.getStats as any).mockReturnValue(new Promise(() => { })); // Never resolves
-        render(<DashboardView />);
-        expect(screen.getByText(/Cargando panel administrativo/i)).toBeInTheDocument();
-    });
 
     it('should render stats cards after loading', async () => {
         (AdminService.getStats as any).mockResolvedValue(mockStats);
 
         render(<DashboardView />);
 
-        await waitFor(() => {
-            expect(screen.queryByText(/Cargando panel administrativo/i)).not.toBeInTheDocument();
-        });
 
         expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
         expect(screen.getByText('$1,500.00')).toBeInTheDocument();

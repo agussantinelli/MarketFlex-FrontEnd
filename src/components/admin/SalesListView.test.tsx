@@ -42,13 +42,6 @@ describe('SalesListView Component', () => {
         vi.clearAllMocks();
     });
 
-    it('renders loading state initially', () => {
-        (AdminService.getAllPurchases as any).mockReturnValue(new Promise(() => { }));
-        render(<SalesListView />);
-        // DataTable might wrap content, but the component should still show loading feedback
-        // If we kept the loading div in SalesListView before returning DataTable
-        expect(screen.getByText(/Cargando listado de ventas/i)).toBeDefined();
-    });
 
     it('fetches and renders sales data on mount', async () => {
         (AdminService.getAllPurchases as any).mockResolvedValue(mockSales);

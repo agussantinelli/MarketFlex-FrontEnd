@@ -15,19 +15,11 @@ describe('SupportListView', () => {
         window.triggerSileo = vi.fn();
     });
 
-    it('should render loading state initially', () => {
-        (getSupportMessages as any).mockImplementation(() => new Promise(resolve => setTimeout(resolve, 100)));
-        render(<SupportListView />);
-        expect(screen.getByText(/Cargando mensajes/i)).toBeInTheDocument();
-    });
 
     it('should render empty state if no messages', async () => {
         (getSupportMessages as any).mockResolvedValue([]);
         render(<SupportListView />);
 
-        await waitFor(() => {
-            expect(screen.queryByText(/Cargando mensajes/i)).not.toBeInTheDocument();
-        });
 
         expect(screen.getByText(/Bandeja de entrada vacía/i)).toBeInTheDocument();
     });
