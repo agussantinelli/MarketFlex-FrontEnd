@@ -18,7 +18,7 @@ export const getFeaturedPromotions = async (): Promise<Promotion[]> => {
 
 export const promotionService = {
     getAll: async (page: number = 1, limit: number = 10): Promise<PromotionsResponse> => {
-        return await api.get(`promotions?page=${page}&limit=${limit}`).json<PromotionsResponse>();
+        return await api.get(`promotions/admin?page=${page}&limit=${limit}`).json<PromotionsResponse>();
     },
 
     getById: async (id: string): Promise<SinglePromotionResponse> => {
