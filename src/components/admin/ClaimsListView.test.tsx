@@ -59,7 +59,7 @@ describe('ClaimsListView', () => {
         render(<ClaimsListView />);
         await waitFor(() => screen.getByText('Producto roto'));
 
-        const searchInput = screen.getByPlaceholderText('Buscar por motivo, cliente o nro de compra...');
+        const searchInput = screen.getByPlaceholderText('Motivo, cliente o nro de compra...');
         fireEvent.change(searchInput, { target: { value: 'Demora' } });
 
         expect(screen.queryByText('Producto roto')).toBeNull();
@@ -81,7 +81,7 @@ describe('ClaimsListView', () => {
         render(<ClaimsListView />);
         await waitFor(() => screen.getByText('Producto roto'));
 
-        const searchInput = screen.getByPlaceholderText('Buscar por motivo, cliente o nro de compra...');
+        const searchInput = screen.getByPlaceholderText('Motivo, cliente o nro de compra...');
         fireEvent.change(searchInput, { target: { value: 'NoExiste' } });
 
         expect(screen.getByText('No se encontraron reclamos que coincidan con los criterios.')).toBeDefined();
