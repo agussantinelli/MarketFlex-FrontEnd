@@ -179,10 +179,9 @@ const CharacteristicsListView: React.FC = () => {
                                             <LuPencil size={18} />
                                         </button>
                                         <button
-                                            className={styles.actionBtn}
+                                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
                                             onClick={() => handleDeleteClick(char)}
                                             title="Eliminar"
-                                            style={{ color: '#ef4444' }}
                                         >
                                             <LuTrash2 size={18} />
                                         </button>
@@ -197,34 +196,39 @@ const CharacteristicsListView: React.FC = () => {
             {/* Modal: View Products */}
             {viewProductsModal && (
                 <div className={styles.modalOverlay} onClick={() => setViewProductsModal(false)}>
-                    <div className={styles.modalContent} style={{ maxWidth: '600px' }} onClick={e => e.stopPropagation()}>
+                    <div className={styles.modalContent} style={{ maxWidth: '500px', width: '95%' }} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <LuPackage className={styles.modalIcon} />
-                            <h2>Productos con {selectedChar?.nombre}</h2>
+                            <h2>{selectedChar?.nombre}</h2>
+                            <p style={{ margin: 0, opacity: 0.6 }}>Total: {products.length} productos</p>
                         </div>
-                        <div className={styles.modalBody}>
+                        <div className={`${styles.modalBody} ${styles.modalScrollList}`}>
                             {modalLoading ? (
                                 <p>Cargando productos...</p>
                             ) : products.length > 0 ? (
-                                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                     {products.map(p => (
-                                        <li key={p.id} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                                        <div key={p.id} className={styles.productItem}>
                                             {p.foto ? (
-                                                <img src={p.foto} alt={p.nombre} style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
+                                                <img src={p.foto} alt={p.nombre} style={{ width: '45px', height: '45px', borderRadius: '8px', objectFit: 'cover' }} />
                                             ) : (
-                                                <div style={{ width: '40px', height: '40px', borderRadius: '4px', background: '#334155', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <LuPackage size={16} />
+                                                <div style={{ width: '45px', height: '45px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.1)' }}>
+                                                    <LuPackage size={18} style={{ opacity: 0.4 }} />
                                                 </div>
                                             )}
-                                            <div style={{ flex: 1 }}>
-                                                <div style={{ fontWeight: '500' }}>{p.nombre}</div>
-                                                {p.valor && <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Valor: {p.valor}</div>}
+                                            <div style={{ flex: 1, textAlign: 'left' }}>
+                                                <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{p.nombre}</div>
+                                                {p.valor && (
+                                                    <div style={{ fontSize: '0.8rem', color: 'var(--neon-green)', opacity: 0.8, marginTop: '2px' }}>
+                                                        {selectedChar?.nombre}: <span style={{ color: '#fff', opacity: 0.7 }}>{p.valor}</span>
+                                                    </div>
+                                                )}
                                             </div>
-                                        </li>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
-                                <p>No hay productos asociados a esta característica.</p>
+                                <p>No hay productos asociados.</p>
                             )}
                         </div>
                         <button className={styles.modalCloseBtn} onClick={() => setViewProductsModal(false)}>Cerrar</button>

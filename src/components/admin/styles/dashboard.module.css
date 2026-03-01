@@ -648,3 +648,94 @@
         font-size: 1.3rem;
     }
 }
+
+/* Premium UI Enhancements */
+.createButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    background: var(--neon-green);
+    color: var(--deep-black);
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+}
+
+.createButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+    filter: brightness(1.1);
+}
+
+.actionButtons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actionBtn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--green-cream);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--neon-green);
+    color: var(--neon-green);
+    transform: translateY(-2px);
+}
+
+.deleteBtn:hover {
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+}
+
+/* Modal Scroll Styling */
+.modalScrollList {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin: 1rem 0;
+}
+
+.modalScrollList::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modalScrollList::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.modalScrollList::-webkit-scrollbar-thumb {
+    background: var(--neon-green);
+    border-radius: 10px;
+}
+
+.productItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.productItem:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(0, 255, 136, 0.2);
+}
