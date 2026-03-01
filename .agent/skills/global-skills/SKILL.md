@@ -9,6 +9,7 @@ This skill serves as a central index for all architectural and development guide
 
 ## 🏎️ Frontend Skills (`MarketFlex-FrontEnd`)
 
+- **[api-communication](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/api-communication/SKILL.md)**: Mandatory rules for API communication using the central `api` client.
 - **[astro](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/astro/SKILL.md)**: Guidelines for Astro development, islands architecture, and performance.
 - **[astro-scripts](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/astro-scripts/SKILL.md)**: JS/TS management in Astro components.
 - **[clean-structure](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-FrontEnd/.agent/skills/clean-structure/SKILL.md)**: Component organization and atomic design principles for the FrontEnd.
