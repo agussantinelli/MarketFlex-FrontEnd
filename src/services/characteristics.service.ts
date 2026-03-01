@@ -7,6 +7,13 @@ export const characteristicsService = {
         return response.data;
     },
 
+    async create(nombre: string): Promise<Characteristic> {
+        const response = await api.post('characteristics', {
+            json: { nombre }
+        }).json<{ data: Characteristic }>();
+        return response.data;
+    },
+
     async getProducts(id: string): Promise<ProductSummary[]> {
         const response = await api.get(`characteristics/${id}/products`).json<{ data: ProductSummary[] }>();
         return response.data;
