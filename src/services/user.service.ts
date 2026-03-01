@@ -1,24 +1,22 @@
 import { api } from "../lib/api";
-import type { User } from '../types/user.types';
+import type { UserResponse, UpdateUserInput } from "../types/user.types";
 
+export const UserService = {
+    async getProfile(): Promise<UserResponse | null> {
+        try {
+            return await api.get('user/profile').json<UserResponse>();
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+            return null;
+        }
+    },
 
-export const getProfile = async (): Promise<User> => {
-    const profile: User = await api.get('user/me').json();
-
-    // Side effect: update localStorage to keep UI in sync
-    if (typeof window !== 'undefined') {
-        localStorage.setItem('marketflex_user', JSON.stringify(profile));
+    async updateProfile(data: UpdateUserInput): Promise<UserResponse | null> {
+        try {
+            return await api.patch('user/profile', { json: data }).json<UserResponse>();
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+            return null;
+        }
     }
-
-    return profile;
-};
-
-export const updateProfile = async (userData: Partial<User>): Promise<User> => {
-    const profile: User = await api.patch('user/me', { json: userData }).json();
-
-    if (typeof window !== 'undefined') {
-        localStorage.setItem('marketflex_user', JSON.stringify(profile));
-    }
-
-    return profile;
 };

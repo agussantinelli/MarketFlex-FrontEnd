@@ -1,12 +1,12 @@
 import { api } from "../lib/api";
-import type { Category } from '../types/category.types';
+import type { CategoriesResponse, Category } from "../types/category.types";
 
-export const getCategories = async (): Promise<Category[]> => {
+export async function getCategories(): Promise<Category[]> {
     try {
-        const response: { data: Category[] } = await api.get('categories').json();
-        return response.data;
+        const data = await api.get('categories').json<CategoriesResponse>();
+        return data.status === "success" ? data.data : [];
     } catch (error) {
         console.error("Error fetching categories:", error);
         return [];
     }
-};
+}
