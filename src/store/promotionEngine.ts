@@ -38,7 +38,7 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
             const itemDiscount = (pActual - pDesc) * qty;
             totalDiscount += itemDiscount;
             appliedPromotions.push({
-                nombre: `Descuento ${item.descuentoActivo?.nombre || 'Directo'}: ${item.nombre}`,
+                nombre: `Descuento ${item.descuentoActivo?.nombre || 'Directo'}: ${item.nombre} `,
                 monto: itemDiscount
             });
         }
@@ -100,5 +100,15 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
         }
     });
 
-    return { subtotal, discount: totalDiscount, total: subtotal - totalDiscount, appliedPromotions };
+    const total = subtotal - totalDiscount;
+    return {
+        subtotal,
+        discount: totalDiscount,
+        total,
+        appliedPromotions,
+        originalPrice: subtotal,
+        discountedPrice: total,
+        appliedPromotion: appliedPromotions.length > 0 ? ({} as any) : null, // Fallback for compatibility
+        savings: totalDiscount
+    };
 };
