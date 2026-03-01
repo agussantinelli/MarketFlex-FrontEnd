@@ -416,6 +416,10 @@
 │   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
 │   │   │   ├── AnalyticsView.test.tsx              # Pruebas de la vista de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Vista de gráficos y reportes de ventas (React).
+│   │   │   ├── CharacteristicsListView.test.tsx    # Test de la gestión de características.
+│   │   │   ├── CharacteristicsListView.tsx         # Vista de administración de atributos dinámicos.
+│   │   │   ├── ClaimsListView.test.tsx             # Test de la gestión de reclamos.
+│   │   │   ├── ClaimsListView.tsx                  # Vista de administración de incidencias de clientes.
 │   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
 │   │   │   ├── DataTable.test.tsx                  # Test unitario del componente de tabla universal.
@@ -429,8 +433,8 @@
 │   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
 │   │   │   ├── SupportListView.test.tsx            # Test integral de la gestión de mensajes de soporte.
 │   │   │   ├── SupportListView.tsx                 # Vista de administración de mensajes de soporte. 
-│   │   │   ├── UserListView.test.tsx               # Pruebas de la tabla de usuarios.
-│   │   │   ├── UserListView.tsx                    # Componente reactivo para listar usuarios.
+│   │   │   ├── UsersListView.test.tsx              # Pruebas de la tabla de usuarios.
+│   │   │   ├── UsersListView.tsx                   # Componente reactivo para listar usuarios.
 │   │   │   └── styles/                             # Módulos CSS administrativos.
 │   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
 │   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
@@ -511,9 +515,12 @@
 │   │   ├── about.astro                             # Página de información institucional.
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
+│   │   │   ├── characteristics.astro               # Gestión de atributos de producto (CRUD).
+│   │   │   ├── claims.astro                        # Gestión de reclamos e incidencias (CRUD).
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
 │   │   │   ├── promotions.astro                    # Gestión de campañas y ofertas (Cards).
+│   │   │   ├── sales.astro                         # Gestión y auditoría de ventas globales.
 │   │   │   ├── support.astro                       # Gestión de tickets de soporte y consultas.
 │   │   │   ├── users.astro                         # Gestión del catálogo de usuarios (CRUD).
 │   │   │   └── styles/                             # Estética del panel administrativo.
@@ -597,6 +604,10 @@
 │   │   ├── brand.service.ts                        # Catálogo de editoriales registradas.
 │   │   ├── category.service.test.ts                # Test de árbol de categorías.
 │   │   ├── category.service.ts                     # Estructura jerárquica de navegación.
+│   │   ├── characteristics.service.test.ts         # Test de persistencia de atributos.
+│   │   ├── characteristics.service.ts              # Integración con el módulo de características.
+│   │   ├── claims.service.test.ts                  # Test de gestión de reclamos.
+│   │   ├── claims.service.ts                       # Integración con el módulo de soporte post-venta.
 │   │   ├── filter.service.test.ts                  # Test de normalización de filtros.
 │   │   ├── filter.service.ts                       # Adaptador de parámetros de búsqueda.
 │   │   ├── product.service.test.ts                 # Test unitario de catálogo.
@@ -630,8 +641,10 @@
 │   │   ├── brand.types.ts                          # Esquema de marcas y logotipos.
 │   │   ├── cart.types.ts                           # Estructura de ítems y estado del carrito.
 │   │   ├── category.types.ts                       # Definición de árbol de categorías.
+│   │   ├── characteristics.types.ts                # Tipos de atributos dinámicos (M:N).
 │   │   ├── checkout.types.ts                       # Tipos de facturación, envío y pago.
 │   │   ├── common.types.ts                         # Errores, paginación y respuestas API.
+│   │   ├── claims.types.ts                         # Estructura de reclamos e incidencias.
 │   │   ├── product.types.ts                        # Atributos de producto y variantes.
 │   │   ├── promotion.types.ts                      # Esquema de banners y tipos de rebaja.
 │   │   ├── promotions.types.ts                     # Tipos para el módulo de promociones admin.
@@ -678,7 +691,7 @@
 
 <ul>
   <li><b>🛡️ Unit Testing: Cobertura Total de Componentes</b>
-    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema (46 archivos de test):</p>
+    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema (53 archivos de test):</p>
     <table>
       <thead>
         <tr>
