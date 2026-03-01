@@ -8,7 +8,8 @@ type Props = {
     promotions: Promotion[];
 };
 
-const { promotions } = Astro.props;
+const { promotions: promotionsProp } = Astro.props;
+const promotions = Array.isArray(promotionsProp) ? promotionsProp : [];
 
 if (promotions.length === 0) return null;
 ---
