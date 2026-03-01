@@ -422,6 +422,7 @@
 │   │   │   ├── DataTable.tsx                       # Tabla reutilizable y personalizable para CRUDs.
 │   │   │   ├── ProductsListView.test.tsx           # Test integral de la gestión de productos.
 │   │   │   ├── ProductsListView.tsx                # Vista de administración del catálogo de productos.
+│   │   │   ├── PromotionsListView.tsx              # Vista de administración de promociones (Cards).
 │   │   │   ├── SalesListView.test.tsx              # Pruebas del listado de ventas administrativas.
 │   │   │   ├── SalesListView.tsx                   # Vista de administración de transacciones y ventas.
 │   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
@@ -512,6 +513,7 @@
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
+│   │   │   ├── promotions.astro                    # Gestión de campañas y ofertas (Cards).
 │   │   │   ├── support.astro                       # Gestión de tickets de soporte y consultas.
 │   │   │   ├── users.astro                         # Gestión del catálogo de usuarios (CRUD).
 │   │   │   └── styles/                             # Estética del panel administrativo.
@@ -601,6 +603,7 @@
 │   │   ├── product.service.ts                      # Gestión de productos, filtros y búsqueda.
 │   │   ├── promotion.service.test.ts               # Test de campañas activas.
 │   │   ├── promotion.service.ts                    # Obtención de banners y descuentos.
+│   │   ├── promotions.service.ts                   # Servicio CRUD de promociones para admin.
 │   │   ├── purchase.service.test.ts                # Test unitario de órdenes.
 │   │   ├── purchase.service.ts                     # Gestión de transacciones y estados.
 │   │   ├── subcategory.service.test.ts             # Test de subcategorías específicas.
@@ -631,6 +634,7 @@
 │   │   ├── common.types.ts                         # Errores, paginación y respuestas API.
 │   │   ├── product.types.ts                        # Atributos de producto y variantes.
 │   │   ├── promotion.types.ts                      # Esquema de banners y tipos de rebaja.
+│   │   ├── promotions.types.ts                     # Tipos para el módulo de promociones admin.
 │   │   ├── purchase.types.ts                       # Definición de órdenes y transacciones.
 │   │   ├── subcategory.types.ts                    # Interfaces de clústeres secundarios.
 │   │   ├── support.types.ts                        # Estructura de tickets de contacto.
