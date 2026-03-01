@@ -34,7 +34,7 @@ const AdminSidebar = () => {
         { href: '/admin/products', icon: Package, label: 'Productos', section: 'Catálogo' },
         { href: '/admin/categories', icon: Tags, label: 'Categorías', section: 'Catálogo' },
         { href: '/admin/brands', icon: Award, label: 'Marcas', section: 'Catálogo' },
-        { href: '/admin/features', icon: ListTree, label: 'Características', section: 'Catálogo' },
+        { href: '/admin/characteristics', icon: ListTree, label: 'Características', section: 'Catálogo' },
     ];
 
     const sections = [...new Set(navItems.map(item => item.section))];

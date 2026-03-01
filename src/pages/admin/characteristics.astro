@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import CharacteristicsListView from "../../components/admin/CharacteristicsListView";
+---
+
+<AdminLayout title="Gestión de Características">
+    <CharacteristicsListView client:only="react" />
+</AdminLayout>
