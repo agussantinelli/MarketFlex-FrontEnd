@@ -38,6 +38,11 @@
     font-weight: 500;
 }
 
+.searchInput::placeholder {
+    color: #64748b;
+    opacity: 0.8;
+}
+
 .controls {
     display: flex;
     gap: 1.5rem;
@@ -49,7 +54,7 @@
 
 .searchWrapper {
     position: relative;
-    flex: 1;
+    flex: 2;
     min-width: 320px;
 }
 
@@ -87,7 +92,8 @@
 
 .filterWrapper {
     position: relative;
-    min-width: 240px;
+    flex: 1;
+    min-width: 200px;
 }
 
 .filterIcon {

@@ -133,7 +133,7 @@ const ClaimsListView = () => {
                     <LuSearch className={styles.searchIcon} size={22} />
                     <input
                         type="text"
-                        placeholder="Buscar por motivo, cliente o nro de compra..."
+                        placeholder="Motivo, cliente o nro de compra..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className={styles.searchInput}
@@ -147,10 +147,10 @@ const ClaimsListView = () => {
                         onChange={(e) => setFilterStatus(e.target.value)}
                         className={styles.filterSelect}
                     >
-                        <option value="ALL">Todos los estados</option>
-                        <option value="PENDIENTE">📌 Pendientes</option>
-                        <option value="EN_PROCESO">⚙️ En Proceso</option>
-                        <option value="RESUELTO">✅ Resueltos</option>
+                        <option value="ALL">Cualquier estado</option>
+                        <option value="PENDIENTE">Pendientes</option>
+                        <option value="EN_PROCESO">En Proceso</option>
+                        <option value="RESUELTO">Resueltos</option>
                     </select>
                 </div>
             </div>
