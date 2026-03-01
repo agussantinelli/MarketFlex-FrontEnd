@@ -7,13 +7,23 @@ import type {
 } from "../types/promotion.types";
 
 export const getActivePromotions = async (): Promise<Promotion[]> => {
-    const response = await api.get("promotions/active").json<any>();
-    return Array.isArray(response) ? response : (response.data || []);
+    try {
+        const response = await api.get("promotions/active").json<any>();
+        return Array.isArray(response) ? response : (response.data || []);
+    } catch (error) {
+        console.error('Error fetching active promotions:', error);
+        return [];
+    }
 };
 
 export const getFeaturedPromotions = async (): Promise<Promotion[]> => {
-    const response = await api.get("promotions/featured").json<any>();
-    return Array.isArray(response) ? response : (response.data || []);
+    try {
+        const response = await api.get("promotions/featured").json<any>();
+        return Array.isArray(response) ? response : (response.data || []);
+    } catch (error) {
+        console.error('Error fetching featured promotions:', error);
+        return [];
+    }
 };
 
 export const promotionService = {
