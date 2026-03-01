@@ -26,6 +26,35 @@ const { title } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title} | MarketFlex Admin</title>
         <ViewTransitions />
+        <script is:inline>
+            window.showAdminLoader = () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.add("active");
+            };
+
+            window.hideAdminLoader = () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.remove("active");
+            };
+
+            // Start loader on transition
+            document.addEventListener("astro:before-preparation", () => {
+                window.showAdminLoader();
+            });
+
+            // Fallback: hide loader after 15 seconds if no component signals
+            document.addEventListener("astro:page-load", () => {
+                setTimeout(() => {
+                    const overlay = document.getElementById(
+                        "nav-loading-overlay",
+                    );
+                    if (overlay && overlay.classList.contains("active")) {
+                        console.warn("Loader fallback triggered");
+                        window.hideAdminLoader();
+                    }
+                }, 15000);
+            });
+        </script>
         <style>
             .admin-container {
                 display: flex;
@@ -87,18 +116,6 @@ const { title } = Astro.props;
                 display: block;
             }
         </style>
-
-        <script>
-            document.addEventListener("astro:before-preparation", () => {
-                const overlay = document.getElementById("nav-loading-overlay");
-                if (overlay) overlay.classList.add("active");
-            });
-
-            document.addEventListener("astro:page-load", () => {
-                const overlay = document.getElementById("nav-loading-overlay");
-                if (overlay) overlay.classList.remove("active");
-            });
-        </script>
 
         <!-- Sileo Root for notifications -->
         <span id="sileo-root"></span>

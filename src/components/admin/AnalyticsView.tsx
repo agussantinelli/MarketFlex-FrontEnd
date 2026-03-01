@@ -18,7 +18,6 @@ import {
 import { Pie } from 'react-chartjs-2';
 import Chart from 'react-apexcharts';
 import styles from './styles/dashboard.module.css';
-import LoadingSpinner from '../common/LoadingSpinner';
 import { AdminService } from '../../services/admin.service';
 import type { AnalyticsData } from '../../types/admin.types';
 
@@ -31,6 +30,7 @@ const AnalyticsView: React.FC = () => {
 
     useEffect(() => {
         const fetchAnalytics = async () => {
+            if ((window as any).showAdminLoader) (window as any).showAdminLoader();
             try {
                 const result = await AdminService.getAnalytics();
                 if (result) {
@@ -40,6 +40,7 @@ const AnalyticsView: React.FC = () => {
                 console.error('Error fetching analytics:', error);
             } finally {
                 setLoading(false);
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
             }
         };
 
@@ -54,8 +55,9 @@ const AnalyticsView: React.FC = () => {
         }).format(value);
     };
 
-    if (loading) {
-        return <LoadingSpinner message="Cargando analíticas..." />;
+    if (loading && !data) {
+        // We let the global loader handle this, but we don't return null 
+        // to avoid blank pages if the global loader is hidden prematurely.
     }
 
     if (!data) {

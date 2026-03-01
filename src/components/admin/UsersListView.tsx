@@ -7,6 +7,8 @@ import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
 
 
+
+
 export default function UsersListView() {
     const [usersData, setUsersData] = useState<PaginatedResponse<AdminUser> | null>(null);
     const [loading, setLoading] = useState(true);
@@ -15,10 +17,12 @@ export default function UsersListView() {
     const [sort, setSort] = useState('newest');
 
     const fetchUsers = async () => {
+        if ((window as any).showAdminLoader) (window as any).showAdminLoader();
         setLoading(true);
         const data = await AdminService.getUsers(page, 10, search, sort);
         setUsersData(data);
         setLoading(false);
+        if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
     };
 
     useEffect(() => {
@@ -28,16 +32,16 @@ export default function UsersListView() {
     const handleEdit = (user: AdminUser) => {
         // Placeholder for edit functionality
         console.log('Edit user:', user.id);
-        if (window.triggerSileo) {
-            window.triggerSileo('info', `Editar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('info', `Editar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
         }
     };
 
     const handleDelete = (user: AdminUser) => {
         // Placeholder for delete functionality
         console.log('Delete user:', user.id);
-        if (window.triggerSileo) {
-            window.triggerSileo('error', `Eliminar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('error', `Eliminar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
         }
     };
 

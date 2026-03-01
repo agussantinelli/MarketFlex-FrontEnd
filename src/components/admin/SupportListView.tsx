@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import type { SupportMessageOutput } from '../../types/support.types';
 import { getSupportMessages } from '../../services/support.service';
 import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight } from 'react-icons/lu';
-import LoadingSpinner from '../common/LoadingSpinner';
 import styles from './styles/SalesListView.module.css';
 
 const SupportListView: React.FC = () => {
@@ -11,16 +10,19 @@ const SupportListView: React.FC = () => {
 
     const fetchMessages = useCallback(async () => {
         setLoading(true);
+        if ((window as any).showAdminLoader) (window as any).showAdminLoader();
         try {
             const data = await getSupportMessages();
             setMessages(data);
+            setLoading(false);
+            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
         } catch (error) {
             console.error('Error al cargar los mensajes de soporte:', error);
-            if (window.triggerSileo) {
-                window.triggerSileo('error', 'Error al cargar los mensajes.');
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'No se pudieron cargar los mensajes');
             }
-        } finally {
-            setLoading(false);
+            setLoading(false); // Ensure loading is set to false even on error
+            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader(); // Ensure loader is hidden even on error
         }
     }, []);
 
@@ -49,8 +51,8 @@ const SupportListView: React.FC = () => {
         }
     };
 
-    if (loading) {
-        return <LoadingSpinner message="Cargando mensajes..." />;
+    if (loading && messages.length === 0) {
+        // Let global loader handle
     }
 
     if (messages.length === 0) {

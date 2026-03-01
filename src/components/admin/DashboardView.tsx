@@ -5,7 +5,6 @@ import { AdminService } from '../../services/admin.service';
 import StatTable from './StatTable';
 import type { AdminStats, TopSale, TopProduct, TopUser } from '../../types/admin.types';
 import { formatOrderDate } from '../../../utils/dateFormatter';
-import LoadingSpinner from '../common/LoadingSpinner';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
@@ -15,14 +14,15 @@ const DashboardView: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
                 const stats = await AdminService.getStats(period);
                 setStatsData(stats);
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
                 setLoading(false);
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
             }
         };
 
@@ -166,8 +166,8 @@ const DashboardView: React.FC = () => {
         }
     ];
 
-    if (loading) {
-        return <LoadingSpinner message="Cargando panel administrativo..." />;
+    if (loading && !statsData) {
+        // Let global loader handle initial state
     }
 
     return (

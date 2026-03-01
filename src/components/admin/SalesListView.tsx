@@ -16,14 +16,19 @@ const SalesListView = () => {
 
     useEffect(() => {
         const fetchSales = async () => {
+            if ((window as any).showAdminLoader) (window as any).showAdminLoader();
             try {
                 const data = await AdminService.getAllPurchases();
                 setSales(data);
             } catch (err) {
                 setError('No se pudieron cargar las ventas.');
                 console.error(err);
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'No se pudieron cargar las ventas del sistema');
+                }
             } finally {
                 setLoading(false);
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
             }
         };
 
@@ -126,12 +131,8 @@ const SalesListView = () => {
     );
 
 
-    if (loading) return (
-        <div className={styles.loading}>
-            <div className={styles.loadingSpinner}></div>
-            <p>Cargando listado de ventas...</p>
-        </div>
-    );
+    // No longer return null, allow the component to render so the DataTable
+    // can show its own internal loading state if the global loader is hidden.
 
     return (
         <div className={styles.container}>

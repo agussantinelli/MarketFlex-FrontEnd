@@ -30,6 +30,7 @@ const ProductsListView: React.FC = () => {
     };
 
     const fetchProducts = useCallback(async () => {
+        if ((window as any).showAdminLoader) (window as any).showAdminLoader();
         setLoading(true);
         try {
             const response = await AdminService.getProducts(page, limit, searchTerm, sort);
@@ -41,6 +42,7 @@ const ProductsListView: React.FC = () => {
             console.error('Error fetching products:', error);
         } finally {
             setLoading(false);
+            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
         }
     }, [page, searchTerm, sort]);
 
@@ -66,14 +68,14 @@ const ProductsListView: React.FC = () => {
                 p.id === product.id ? { ...p, esDestacado: newStatus } : p
             ));
 
-            if (window.triggerSileo) {
-                window.triggerSileo('success', `Producto ${newStatus ? 'destacado' : 'quitado de destacados'} correctamente.`);
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('success', `Producto ${newStatus ? 'destacado' : 'quitado de destacados'} correctamente.`);
             }
             // Update global count
             setFeaturedCount(prev => newStatus ? prev + 1 : prev - 1);
         } else {
-            if (window.triggerSileo) {
-                window.triggerSileo('error', result?.message || 'Error al actualizar destacados');
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', result?.message || 'Error al actualizar destacados');
             }
         }
     };
@@ -169,14 +171,14 @@ const ProductsListView: React.FC = () => {
     };
 
     const handleDelete = (product: AdminProduct) => {
-        if (window.triggerSileo) {
-            window.triggerSileo('error', `Eliminar producto funcionalmente no implementado aún para: ${product.nombre}`);
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('error', `Eliminar producto funcionalmente no implementado aún para: ${product.nombre}`);
         }
     };
 
     const handleAdd = () => {
-        if (window.triggerSileo) {
-            window.triggerSileo('info', 'Agregar producto funcionalmente no implementado aún');
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('info', 'Agregar producto funcionalmente no implementado aún');
         }
     };
 
