@@ -1,0 +1,10 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import PromotionsListView from "../../components/admin/PromotionsListView";
+---
+
+<AdminLayout title="Gestión de Promociones">
+    <div style="padding: 2rem;">
+        <PromotionsListView client:only="react" />
+    </div>
+</AdminLayout>
