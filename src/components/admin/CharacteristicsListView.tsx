@@ -196,30 +196,30 @@ const CharacteristicsListView: React.FC = () => {
             {/* Modal: View Products */}
             {viewProductsModal && (
                 <div className={styles.modalOverlay} onClick={() => setViewProductsModal(false)}>
-                    <div className={styles.modalContent} style={{ maxWidth: '500px', width: '95%' }} onClick={e => e.stopPropagation()}>
+                    <div className={styles.modalContent} style={{ maxWidth: '400px', width: '95%' }} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <LuPackage className={styles.modalIcon} />
                             <h2>{selectedChar?.nombre}</h2>
-                            <p style={{ margin: 0, opacity: 0.6 }}>Total: {products.length} productos</p>
+                            <p style={{ margin: 0, opacity: 0.6, fontSize: '0.85rem' }}>Total: {products.length} productos</p>
                         </div>
                         <div className={`${styles.modalBody} ${styles.modalScrollList}`}>
                             {modalLoading ? (
                                 <p>Cargando productos...</p>
                             ) : products.length > 0 ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                                     {products.map(p => (
                                         <div key={p.id} className={styles.productItem}>
                                             {p.foto ? (
-                                                <img src={p.foto} alt={p.nombre} style={{ width: '45px', height: '45px', borderRadius: '8px', objectFit: 'cover' }} />
+                                                <img src={p.foto} alt={p.nombre} style={{ width: '35px', height: '35px', borderRadius: '6px', objectFit: 'cover' }} />
                                             ) : (
-                                                <div style={{ width: '45px', height: '45px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.1)' }}>
-                                                    <LuPackage size={18} style={{ opacity: 0.4 }} />
+                                                <div style={{ width: '35px', height: '35px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.1)' }}>
+                                                    <LuPackage size={14} style={{ opacity: 0.4 }} />
                                                 </div>
                                             )}
                                             <div style={{ flex: 1, textAlign: 'left' }}>
-                                                <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{p.nombre}</div>
+                                                <div style={{ fontWeight: '600', fontSize: '0.9rem' }}>{p.nombre}</div>
                                                 {p.valor && (
-                                                    <div style={{ fontSize: '0.8rem', color: 'var(--neon-green)', opacity: 0.8, marginTop: '2px' }}>
+                                                    <div style={{ fontSize: '0.75rem', color: 'var(--neon-green)', opacity: 0.8, marginTop: '1px' }}>
                                                         {selectedChar?.nombre}: <span style={{ color: '#fff', opacity: 0.7 }}>{p.valor}</span>
                                                     </div>
                                                 )}
@@ -231,7 +231,7 @@ const CharacteristicsListView: React.FC = () => {
                                 <p>No hay productos asociados.</p>
                             )}
                         </div>
-                        <button className={styles.modalCloseBtn} onClick={() => setViewProductsModal(false)}>Cerrar</button>
+                        <button className={styles.modalCloseBtn} style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }} onClick={() => setViewProductsModal(false)}>Cerrar</button>
                     </div>
                 </div>
             )}

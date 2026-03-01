@@ -196,11 +196,13 @@
 .modalContent {
     background: #0f172a;
     border: 1px solid rgba(0, 255, 136, 0.2);
-    border-radius: 24px;
-    padding: 2rem;
+    border-radius: 20px;
+    padding: 1.5rem;
     max-width: 400px;
     width: 90%;
-    position: relative;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 25px 50px -12px rgba(0, 255, 136, 0.1);
     animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
@@ -210,12 +212,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .modalIcon {
-    font-size: 3rem;
+    font-size: 2rem;
     color: var(--neon-green);
     opacity: 0.8;
 }
@@ -705,10 +707,10 @@
 
 /* Modal Scroll Styling */
 .modalScrollList {
-    max-height: 400px;
+    max-height: 50vh;
     overflow-y: auto;
     padding-right: 0.5rem;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
 }
 
 .modalScrollList::-webkit-scrollbar {
@@ -727,11 +729,11 @@
 .productItem {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0.75rem;
+    gap: 0.75rem;
+    padding: 0.6rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 10px;
     transition: all 0.2s ease;
 }
 
