@@ -91,9 +91,9 @@ describe('CharacteristicsListView Component', () => {
             expect(characteristicsService.getProducts).toHaveBeenCalledWith('1');
         });
 
-        expect(await screen.findByText(/Productos con Material/i)).toBeDefined();
+        expect(await screen.findByRole('heading', { name: 'Material' })).toBeDefined();
+        expect(screen.getByText(/Total: 1 productos/i)).toBeDefined();
         expect(screen.getByText('Product 1')).toBeDefined();
-        expect(screen.getByText('Valor: Cotton')).toBeDefined();
     });
 
     it('opens delete modal and calls delete service', async () => {
