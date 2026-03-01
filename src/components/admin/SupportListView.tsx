@@ -19,7 +19,7 @@ const SupportListView: React.FC = () => {
         } catch (error) {
             console.error('Error al cargar los mensajes de soporte:', error);
             if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'No se pudieron cargar los mensajes');
+                (window as any).triggerSileo('error', 'Error al cargar los mensajes.');
             }
             setLoading(false); // Ensure loading is set to false even on error
             if ((window as any).hideAdminLoader) (window as any).hideAdminLoader(); // Ensure loader is hidden even on error

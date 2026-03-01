@@ -4,7 +4,7 @@ import { HiOutlineUser, HiOutlineTruck, HiExclamationCircle } from 'react-icons/
 import { MdOutlinePayment, MdCreditCard, MdAccountBalance, MdPayments } from 'react-icons/md';
 import styles from './styles/CheckoutForm.module.css';
 import { checkoutStore, updateFormData, updatePaymentMethod } from '../../store/checkoutStore';
-import { getProfile } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
 
 const CheckoutForm: React.FC = () => {
     const { formData, paymentMethod, error } = useStore(checkoutStore);
@@ -22,7 +22,7 @@ const CheckoutForm: React.FC = () => {
 
             // 2. Refresh from API (robust)
             try {
-                const freshUser = await getProfile();
+                const freshUser = await UserService.getProfile();
                 syncUserToForm(freshUser);
             } catch (err) {
                 console.error("Error refreshing profile for checkout", err);
