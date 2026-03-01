@@ -84,21 +84,23 @@ describe('DashboardView Component', () => {
         render(<DashboardView />);
 
 
-        expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
-        expect(screen.getByText('$1,500.00')).toBeInTheDocument();
-        expect(screen.getByText('Usuarios Activos')).toBeInTheDocument();
-        expect(screen.getByText('Tasa de Conversión')).toBeInTheDocument();
-        expect(screen.getByText('25.5%')).toBeInTheDocument();
-        expect(screen.getByText('Compradores Recurrentes')).toBeInTheDocument();
-        expect(screen.getByText('12.5%')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText('Ingresos Totales')).toBeInTheDocument();
+            expect(screen.getByText('$1,500.00')).toBeInTheDocument();
+            expect(screen.getByText('Usuarios Activos')).toBeInTheDocument();
+            expect(screen.getByText('Tasa de Conversión')).toBeInTheDocument();
+            expect(screen.getByText('25.5%')).toBeInTheDocument();
+            expect(screen.getByText('Compradores Recurrentes')).toBeInTheDocument();
+            expect(screen.getByText('12.5%')).toBeInTheDocument();
 
-        // Assert New Metrics
-        expect(screen.getByText('Promedio de Productos')).toBeInTheDocument();
-        expect(screen.getByText('4.5')).toBeInTheDocument();
-        expect(screen.getByText('Total Descontado')).toBeInTheDocument();
-        expect(screen.getByText('$2,500.00')).toBeInTheDocument();
-        expect(screen.getByText('Tasa de Cancelación')).toBeInTheDocument();
-        expect(screen.getByText('1.5%')).toBeInTheDocument();
+            // Assert New Metrics
+            expect(screen.getByText('Promedio de Productos')).toBeInTheDocument();
+            expect(screen.getByText('4.5')).toBeInTheDocument();
+            expect(screen.getByText('Total Descontado')).toBeInTheDocument();
+            expect(screen.getByText('$2,500.00')).toBeInTheDocument();
+            expect(screen.getByText('Tasa de Cancelación')).toBeInTheDocument();
+            expect(screen.getByText('1.5%')).toBeInTheDocument();
+        });
     });
 
     it('should split date and time into separate columns', async () => {

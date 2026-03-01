@@ -1,6 +1,22 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import CheckoutForm from './CheckoutForm';
+import { vi } from 'vitest';
+
+vi.mock('../../services/user.service', () => ({
+    UserService: {
+        getProfile: vi.fn().mockResolvedValue({
+            nombre: 'Juan',
+            apellido: 'Pérez',
+            email: 'juan@ejemplo.com',
+            telefono: '+54 11 1234-5678',
+            direccion: 'Av. Siempre Viva 742',
+            ciudad: 'CABA',
+            provincia: 'Buenos Aires',
+            codigoPostal: '1425'
+        })
+    }
+}));
 
 describe('CheckoutForm Component', () => {
     afterEach(() => {
