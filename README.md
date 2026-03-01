@@ -657,6 +657,7 @@
 <h3>Directrices Clave de Desarrollo</h3>
 <p>El incumplimiento de cualquiera de estas directrices resultará en un rechazo de PR:</p>
 <ul>
+    <li><b><a href=".agent/skills/api-communication/SKILL.md">api-communication</a></b>: Reglas mandatorias para la comunicación con la API usando el cliente central `api`.</li>
     <li><b><a href=".agent/skills/astro/SKILL.md">astro</a></b> & <b><a href=".agent/skills/astro-scripts/SKILL.md">astro-scripts</a></b>: Uso estricto de Islands Architecture, hidratación diferida (<code>client:visible</code>/<code>client:load</code>) y extracción obligatoria de TS complejo fuera de los archivos <code>.astro</code>.</li>
     <li><b><a href=".agent/skills/clean-structure/SKILL.md">clean-structure</a></b> & <b><a href=".agent/skills/modular-architecture/SKILL.md">modular-architecture</a></b>: Separación de dominios estricta, organización atómica de componentes y prohibición de acoplar lógica de API directamente al Virtual DOM de React.</li>
     <li><b><a href=".agent/skills/code-quality/SKILL.md">code-quality</a></b>: Impone lineamientos de código limpio, legibilidad extrema y la política estricta de "Cero Comentarios Innecesarios" (el código debe documentarse a sí mismo).</li>
