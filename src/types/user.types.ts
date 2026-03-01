@@ -17,3 +17,10 @@ export type User = {
     logueado_con_google: boolean;
     logueado_con_facebook: boolean;
 };
+
+export type UserResponse = {
+    status: string;
+    data: User;
+};
+
+export type UpdateUserInput = Partial<Omit<User, 'id' | 'email' | 'rol' | 'logueado_con_google' | 'logueado_con_facebook'>>;

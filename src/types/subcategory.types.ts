@@ -3,3 +3,8 @@ export type Subcategory = {
     nroSubcategoria: number;
     nombre: string;
 };
+
+export type SubcategoriesResponse = {
+    status: string;
+    data: Subcategory[];
+};
