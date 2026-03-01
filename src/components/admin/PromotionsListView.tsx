@@ -4,6 +4,7 @@ import { promotionService } from '../../services/promotion.service';
 const { getAll: getAllPromotionsAdmin, delete: deletePromotion } = promotionService;
 import { LuPlus, LuPencil, LuTrash2, LuClock, LuCalendar, LuTag, LuStar, LuInbox } from 'react-icons/lu';
 import styles from './styles/SalesListView.module.css';
+import { getImageUrl } from '../../lib/url';
 
 const PromotionsListView: React.FC = () => {
     const [promotions, setPromotions] = useState<Promotion[]>([]);
@@ -149,6 +150,24 @@ const PromotionsListView: React.FC = () => {
                         >
                             {/* Accent line */}
                             <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: status.color }}></div>
+
+                            {/* Image Section */}
+                            {promo.foto && (
+                                <div style={{
+                                    width: '100%',
+                                    height: '160px',
+                                    borderRadius: '12px',
+                                    overflow: 'hidden',
+                                    marginBottom: '0.5rem',
+                                    border: '1px solid rgba(255, 255, 255, 0.05)'
+                                }}>
+                                    <img
+                                        src={getImageUrl(promo.foto)}
+                                        alt={promo.nombre}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                </div>
+                            )}
 
                             {/* Header: Status and Type */}
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
