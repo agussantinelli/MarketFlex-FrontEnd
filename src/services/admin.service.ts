@@ -68,5 +68,19 @@ export const AdminService = {
             console.error('Error fetching admin users:', error);
             return null;
         }
+    },
+    async createUser(data: any): Promise<{ status: string; data?: import('../types/admin.types').AdminUser; message?: string }> {
+        try {
+            const result = await api.post('admin/users', {
+                json: data
+            }).json<{ status: string; data: import('../types/admin.types').AdminUser }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al crear el usuario'
+            };
+        }
     }
 };
