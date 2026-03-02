@@ -1,11 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
-import { getCategories } from "../services/category.service";
+import { categoryService } from "../services/category.service";
 import { getSubcategories } from "../services/subcategory.service";
 import UserDropdown from "../components/shared/UserDropdown.astro";
 import styles from "./styles/Navbar.module.css";
+import type { CategoryWithCount } from "../types/category.types";
 
-const categories = await getCategories();
+const categories = await categoryService.getCategories();
 const subcategories = await getSubcategories();
 ---
 
@@ -95,7 +96,7 @@ const subcategories = await getSubcategories();
                 </button>
                 <div class={`${styles.navDropdownMenu} nav-dropdown-menu`}>
                     {
-                        categories.map((cat) => {
+                        categories.map((cat: CategoryWithCount) => {
                             const catSubcategories = subcategories.filter(
                                 (s) => s.categoriaId === cat.id,
                             );
