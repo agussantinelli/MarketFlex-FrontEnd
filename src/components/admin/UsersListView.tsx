@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { AdminUser, PaginatedResponse } from '../../types/admin.types';
 import { AdminService } from '../../services/admin.service';
-import { LuUser } from 'react-icons/lu';
+import { LuUser, LuPlus } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
 import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
+import dashboardStyles from './styles/dashboard.module.css';
 
 
 
@@ -15,6 +16,7 @@ export default function UsersListView() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('newest');
+    const [createModal, setCreateModal] = useState(false);
 
     const fetchUsers = async () => {
         if ((window as any).showAdminLoader) (window as any).showAdminLoader();
@@ -108,7 +110,12 @@ export default function UsersListView() {
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <h1>Gestión de Usuarios</h1>
+                    <div className={dashboardStyles.dashboardHeader}>
+                        <h1>Gestión de Usuarios</h1>
+                        <button className={dashboardStyles.createButton} onClick={() => setCreateModal(true)}>
+                            <LuPlus /> Nuevo Usuario
+                        </button>
+                    </div>
                     <p>Controla las cuentas, roles y actividad de los usuarios</p>
                 </div>
             </header>
@@ -163,6 +170,29 @@ export default function UsersListView() {
                 onEdit={handleEdit}
                 onDelete={handleDelete}
             />
+
+            {/* Modal: Create (Placeholder) */}
+            {createModal && (
+                <div className={dashboardStyles.modalOverlay} onClick={() => setCreateModal(false)}>
+                    <div className={dashboardStyles.modalContent} onClick={e => e.stopPropagation()}>
+                        <div className={dashboardStyles.modalHeader}>
+                            <LuPlus className={dashboardStyles.modalIcon} />
+                            <h2>Nuevo Usuario</h2>
+                        </div>
+                        <div className={dashboardStyles.modalBody}>
+                            <p>La funcionalidad para crear usuarios manualmente está en desarrollo.</p>
+                            <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>
+                                Por ahora, los usuarios se registran vía el flujo de Registro público o Google/Facebook.
+                            </p>
+                        </div>
+                        <div className={dashboardStyles.modalFooter}>
+                            <button className={dashboardStyles.modalCloseBtn} onClick={() => setCreateModal(false)}>
+                                Entendido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
