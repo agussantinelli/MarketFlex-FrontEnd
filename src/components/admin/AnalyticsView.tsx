@@ -294,9 +294,9 @@ const AnalyticsView: React.FC = () => {
     };
 
     return (
-        <div className={styles.analyticsContainer}>
-            <header className={styles.header}>
-                <div className={styles.titleSection}>
+        <div className={styles.dashboardContainer}>
+            <header className={styles.dashboardHeader}>
+                <div>
                     <h1>Analíticas Avanzadas</h1>
                     <p>Reportes detallados y tendencias de rendimiento del sistema</p>
                 </div>
@@ -307,7 +307,7 @@ const AnalyticsView: React.FC = () => {
                     <h2>Evolución Mensual de Ventas</h2>
                     <p>Ingresos liquidados de los últimos 12 meses</p>
                 </div>
-                <div style={{ width: '100%', height: 400, marginTop: '2rem' }}>
+                <div className={styles.chartAreaWrapper}>
                     <ResponsiveContainer>
                         <AreaChart data={monthlySales}>
                             <defs>
@@ -368,7 +368,7 @@ const AnalyticsView: React.FC = () => {
                         <h2>Distribución por Categorías</h2>
                         <p>Porcentaje de ingresos según categoría de producto</p>
                     </div>
-                    <div style={{ width: '100%', height: 400, marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+                    <div className={styles.chartAreaWrapper} style={{ display: 'flex', justifyContent: 'center' }}>
                         <div style={{ width: '80%', height: '100%' }}>
                             <Pie data={pieData} options={pieOptions} />
                         </div>
@@ -380,7 +380,7 @@ const AnalyticsView: React.FC = () => {
                         <h2>Rendimiento por Marcas</h2>
                         <p>Top 10 marcas con mayores ingresos brutos</p>
                     </div>
-                    <div style={{ width: '100%', height: 400, marginTop: '1rem' }}>
+                    <div className={styles.chartAreaWrapper}>
                         <Chart
                             options={apexOptions}
                             series={apexSeries}
@@ -395,7 +395,7 @@ const AnalyticsView: React.FC = () => {
                         <h2>Métodos de Pago</h2>
                         <p>Distribución de ingresos por medio de pago</p>
                     </div>
-                    <div style={{ width: '100%', height: 400, marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+                    <div className={styles.chartAreaWrapper} style={{ display: 'flex', justifyContent: 'center' }}>
                         <div style={{ width: '80%', height: '100%' }}>
                             <Pie data={paymentPieData} options={pieOptions} />
                         </div>
@@ -407,7 +407,7 @@ const AnalyticsView: React.FC = () => {
                         <h2>Mapa de Calor de Ventas</h2>
                         <p>Frecuencia de ventas por día y hora (Últimos 30 días)</p>
                     </div>
-                    <div style={{ width: '100%', height: 400, marginTop: '1rem' }}>
+                    <div className={styles.chartAreaWrapper}>
                         <Chart
                             options={heatmapOptions}
                             series={salesHeatmap}
