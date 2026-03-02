@@ -5,9 +5,11 @@ import styles from "./styles/AdminHeader.module.css";
 
 interface Props {
     title: string;
+    parentTitle?: string | undefined;
+    parentUrl?: string | undefined;
 }
 
-const { title } = Astro.props;
+const { title, parentTitle, parentUrl } = Astro.props;
 ---
 
 <header class={styles.adminHeader}>
@@ -24,6 +26,22 @@ const { title } = Astro.props;
                 >Administración</a
             >
             <Icon name="lucide:chevron-right" class={styles.breadcrumbIcon} />
+            {
+                parentTitle && (
+                    <>
+                        <a
+                            href={parentUrl || "#"}
+                            class={styles.breadcrumbText}
+                        >
+                            {parentTitle}
+                        </a>
+                        <Icon
+                            name="lucide:chevron-right"
+                            class={styles.breadcrumbIcon}
+                        />
+                    </>
+                )
+            }
             <span class={styles.breadcrumbTitle}>{title}</span>
         </div>
     </div>
