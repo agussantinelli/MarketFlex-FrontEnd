@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LuPlus, LuEye, LuPencil, LuTrash2, LuTriangleAlert, LuPackage, LuLayers } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
-import * as categoryService from '../../services/category.service';
+import { categoryService } from '../../services/category.service';
 import type { Category, CategoryWithCount, CategoryProductSummary } from '../../types/category.types';
 import StatTable from './StatTable';
 
