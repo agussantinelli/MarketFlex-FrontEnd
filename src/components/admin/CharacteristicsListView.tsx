@@ -140,12 +140,14 @@ const CharacteristicsListView: React.FC = () => {
         <div className={styles.dashboardContainer}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <h1>Gestión de Características</h1>
+                    <div className={styles.dashboardHeader}>
+                        <h1>Gestión de Características</h1>
+                        <button className={styles.createButton} onClick={() => setCreateModal(true)}>
+                            <LuPlus /> Nueva Característica
+                        </button>
+                    </div>
                     <p>Administra los atributos de tus productos y sus asociaciones</p>
                 </div>
-                <button className={styles.createButton} onClick={() => setCreateModal(true)}>
-                    <LuPlus /> Nueva Característica
-                </button>
             </header>
 
             <div className={styles.statsGrid} style={{ gridTemplateColumns: '1fr', marginTop: '1rem' }}>
