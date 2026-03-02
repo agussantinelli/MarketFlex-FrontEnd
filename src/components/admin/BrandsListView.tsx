@@ -154,10 +154,10 @@ const BrandsListView: React.FC = () => {
                         data={brands}
                         renderRow={(brand) => (
                             <tr key={brand.id}>
-                                <td className={styles.userCell} style={{ fontWeight: '600' }}>{brand.nombre}</td>
+                                <td><span className={styles.userCell}>{brand.nombre}</span></td>
                                 <td className={styles.amount}>{brand.productCount || 0} productos</td>
                                 <td>
-                                    <div className={styles.actionButtons} style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <div className={styles.actionButtons}>
                                         <button
                                             className={styles.actionBtn}
                                             onClick={() => handleViewProducts(brand)}
