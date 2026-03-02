@@ -16,7 +16,6 @@ export default function UsersListView() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('newest');
-    const [createModal, setCreateModal] = useState(false);
 
     const fetchUsers = async () => {
         if ((window as any).showAdminLoader) (window as any).showAdminLoader();
@@ -112,9 +111,9 @@ export default function UsersListView() {
                 <div className={styles.titleSection}>
                     <div className={dashboardStyles.dashboardHeader}>
                         <h1>Gestión de Usuarios</h1>
-                        <button className={dashboardStyles.createButton} onClick={() => setCreateModal(true)}>
+                        <a href="/admin/users/new" className={dashboardStyles.createButton} style={{ textDecoration: 'none' }}>
                             <LuPlus /> Nuevo Usuario
-                        </button>
+                        </a>
                     </div>
                     <p>Controla las cuentas, roles y actividad de los usuarios</p>
                 </div>
@@ -170,29 +169,6 @@ export default function UsersListView() {
                 onEdit={handleEdit}
                 onDelete={handleDelete}
             />
-
-            {/* Modal: Create (Placeholder) */}
-            {createModal && (
-                <div className={dashboardStyles.modalOverlay} onClick={() => setCreateModal(false)}>
-                    <div className={dashboardStyles.modalContent} onClick={e => e.stopPropagation()}>
-                        <div className={dashboardStyles.modalHeader}>
-                            <LuPlus className={dashboardStyles.modalIcon} />
-                            <h2>Nuevo Usuario</h2>
-                        </div>
-                        <div className={dashboardStyles.modalBody}>
-                            <p>La funcionalidad para crear usuarios manualmente está en desarrollo.</p>
-                            <p style={{ fontSize: '0.9rem', opacity: 0.6 }}>
-                                Por ahora, los usuarios se registran vía el flujo de Registro público o Google/Facebook.
-                            </p>
-                        </div>
-                        <div className={dashboardStyles.modalFooter}>
-                            <button className={dashboardStyles.modalCloseBtn} onClick={() => setCreateModal(false)}>
-                                Entendido
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
