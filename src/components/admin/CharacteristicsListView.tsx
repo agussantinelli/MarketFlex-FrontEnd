@@ -162,13 +162,15 @@ const CharacteristicsListView: React.FC = () => {
                                 <td className={styles.amount}>{char.productCount || 0} productos</td>
                                 <td>
                                     <div className={styles.actionButtons}>
-                                        <button
-                                            className={styles.actionBtn}
-                                            onClick={() => handleViewProducts(char)}
-                                            title="Ver productos"
-                                        >
-                                            <LuEye size={18} />
-                                        </button>
+                                        {char.productCount !== undefined && char.productCount > 0 && (
+                                            <button
+                                                className={styles.actionBtn}
+                                                onClick={() => handleViewProducts(char)}
+                                                title="Ver productos"
+                                            >
+                                                <LuEye size={18} />
+                                            </button>
+                                        )}
                                         <button
                                             className={styles.actionBtn}
                                             onClick={() => handleEdit(char)}
