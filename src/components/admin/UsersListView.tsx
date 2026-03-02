@@ -83,11 +83,11 @@ export default function UsersListView() {
                     fontSize: '0.85rem',
                     fontWeight: 600,
                     textTransform: 'uppercase',
-                    backgroundColor: user.rol === 'admin' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                    color: user.rol === 'admin' ? 'var(--neon-green)' : 'var(--text-muted)',
-                    border: user.rol === 'admin' ? '1px solid rgba(0, 255, 136, 0.2)' : '1px solid rgba(255, 255, 255, 0.1)'
+                    backgroundColor: user.rol === 'admin' ? 'rgba(0, 255, 136, 0.1)' : user.rol === 'seller' ? 'rgba(168, 85, 247, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                    color: user.rol === 'admin' ? 'var(--neon-green)' : user.rol === 'seller' ? '#a855f7' : 'var(--text-muted)',
+                    border: user.rol === 'admin' ? '1px solid rgba(0, 255, 136, 0.2)' : user.rol === 'seller' ? '1px solid rgba(168, 85, 247, 0.2)' : '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
-                    {user.rol}
+                    {user.rol === 'seller' ? 'Vendedor' : user.rol}
                 </span>
             ),
         },
