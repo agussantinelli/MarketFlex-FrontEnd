@@ -5,7 +5,7 @@ import FilterModal from "./FilterModal.astro";
 import styles from "./styles/controls.module.css";
 import { filterService } from "../../services/filter.service";
 import { getActivePromotions } from "../../services/promotion.service";
-import { getBrands } from "../../services/brand.service";
+import { brandService } from "../../services/brand.service";
 
 type Props = {
     sort: string;
@@ -32,7 +32,7 @@ const {
 // Fetch filter data for the modal
 const categories = await filterService.getCategories();
 const subcategories = await filterService.getSubcategories();
-const brands = await getBrands();
+const brands = await brandService.getAll();
 const promotions = showPromotions ? await getActivePromotions() : [];
 
 const currentType = params.get("type") || undefined;
