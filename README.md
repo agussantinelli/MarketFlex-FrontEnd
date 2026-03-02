@@ -230,7 +230,7 @@
   <li>🏝️ <b>Arquitectura de Islas (Astro):</b> Hidratación selectiva de componentes React solo cuando es necesario, garantizando tiempos de carga ínfimos y un rendimiento excepcional.</li>
   <li>🔍 <b>Sistema de Filtrado Editorial:</b> Buscador avanzado con filtros multi-selección, persistencia en URL y soporte para claves fijas (`fixedKeys`) en contextos específicos.</li>
   <li>🧮 <b>Motor de Descuentos Sincronizado:</b> Lógica de promociones NxM (3x2, 2x1) calculada en el cliente con precisión absoluta respecto a las reglas del backend.</li>
-  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de <b>206 tests unitarios</b> que cubren el 100% de la lógica de servicios, scripts, utilidades de imagen y estados globales.</li>
+  <li>🧪 <b>100% Logic Coverage:</b> Suite robusta de <b>210 tests unitarios</b> que cubren el 100% de la lógica de servicios, scripts, utilidades de imagen y estados globales.</li>
   <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
   <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
   <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
@@ -239,6 +239,7 @@
   <li>🎡 <b>Componentes Visuales Premium:</b> Carruseles interactivos con estados dinámicos, badges sociales oficiales y micro-interacciones neón en toda la UI.</li>
   <li>✨ <b>Páginas de Contexto Curado:</b> Secciones dedicadas para Novedades (`/new-arrivals`) y Ofertas (`/offers`) con filtros pre-configurados y navegación optimizada.</li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
+  <li>🏷️ <b>Gestión de Marcas & Editoriales:</b> Módulo administrativo completo para el control de marcas, con visualización de productos asociados y validaciones integrales.</li>
 </ul>
   
 <hr>
@@ -416,6 +417,8 @@
 │   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
 │   │   │   ├── AnalyticsView.test.tsx              # Pruebas de la vista de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Vista de gráficos y reportes de ventas (React).
+│   │   │   ├── BrandsListView.test.tsx             # Test de la gestión de marcas y editoriales.
+│   │   │   ├── BrandsListView.tsx                  # Vista de administración de marcas (CRUD).
 │   │   │   ├── CharacteristicsListView.test.tsx    # Test de la gestión de características.
 │   │   │   ├── CharacteristicsListView.tsx         # Vista de administración de atributos dinámicos.
 │   │   │   ├── ClaimsListView.test.tsx             # Test de la gestión de reclamos.
@@ -691,7 +694,7 @@
 
 <ul>
   <li><b>🛡️ Unit Testing: Cobertura Total de Componentes</b>
-    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema (53 archivos de test):</p>
+    <p>Nuestra arquitectura de testing garantiza que ningún fragmento de lógica de negocio o interacción visual llegue a producción sin ser validado. Contamos con una cobertura del 100% en todos los dominios críticos del sistema (55 archivos de test):</p>
     <table>
       <thead>
         <tr>
@@ -703,7 +706,7 @@
       <tbody>
         <tr>
           <td><b>React Components (UI)</b></td>
-          <td><code>CartView</code>, <code>CheckoutForm</code>, <code>CheckoutSummary</code>, <code>AddToCartButton</code>, <code>AdminSidebar</code>, <code>DashboardView</code>, <code>StatTable</code>, <code>Notifications</code></td>
+          <td><code>CartView</code>, <code>CheckoutForm</code>, <code>CheckoutSummary</code>, <code>AddToCartButton</code>, <code>AdminSidebar</code>, <code>DashboardView</code>, <code>StatTable</code>, <code>Notifications</code>, <code>BrandsListView</code></td>
           <td>Valida renderizado correcto, estados de carga, manejo de inputs, cruces de vistas (Client/Admin) y comportamiento de componentes interactivos críticos.</td>
         </tr>
         <tr>
