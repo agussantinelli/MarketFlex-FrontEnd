@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import CategoriesListView from "../../components/admin/CategoriesListView";
+---
+
+<AdminLayout title="Gestión de Categorías | MarketFlex Admin">
+    <CategoriesListView client:only="react" />
+</AdminLayout>
