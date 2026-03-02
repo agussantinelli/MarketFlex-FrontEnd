@@ -485,8 +485,7 @@
 /* Table Styles */
 .tableContainer {
     overflow-x: auto;
-    margin: 0 -1rem;
-    padding: 0 1rem;
+    margin: 0 -1.5rem;
 }
 
 .table {
@@ -494,48 +493,40 @@
     border-collapse: collapse;
     text-align: left;
     min-width: 450px;
-    table-layout: fixed;
-    /* Forzado de anchos iguales */
 }
 
 .table th,
 .table td {
-    padding: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding: 1rem 0.5rem;
+    vertical-align: middle;
 }
 
-.table th:nth-child(1),
-.table td:nth-child(1) {
-    width: 50%;
+.table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.table th:nth-child(2),
-.table td:nth-child(2) {
-    width: 25%;
+.table th:first-child,
+.table td:first-child {
+    padding-left: 1.5rem;
 }
 
-.table th:nth-child(3),
-.table td:nth-child(3) {
-    width: 25%;
+.table th:last-child,
+.table td:last-child {
+    padding-right: 1.5rem;
 }
 
 .table th {
-    padding: 1rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     opacity: 0.5;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .table td {
-    padding: 1.2rem 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    font-size: 0.95rem;
-    vertical-align: middle;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    font-size: 0.85rem;
 }
 
 .orderId {
@@ -606,12 +597,12 @@
 .completado,
 .procesando,
 .cancelado {
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0;
 }
 
 .completado {
