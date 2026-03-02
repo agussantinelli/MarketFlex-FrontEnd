@@ -1,12 +1,32 @@
-import { api } from "../lib/api";
-import type { BrandsResponse, Brand } from "../types/brand.types";
+import { api } from '../lib/api';
+import type { Brand, BrandWithCount, BrandProductSummary, BrandsResponse, BrandProductsResponse } from '../types/brand.types';
 
-export async function getBrands(): Promise<Brand[]> {
-    try {
-        const data = await api.get('brands').json<BrandsResponse>();
-        return data.status === "success" ? data.data : [];
-    } catch (error) {
-        console.error("error fetching brands:", error);
-        return [];
+export const brandService = {
+    async getAll(): Promise<BrandWithCount[]> {
+        const response = await api.get('brands').json<BrandsResponse>();
+        return response.data;
+    },
+
+    async create(nombre: string): Promise<Brand> {
+        const response = await api.post('brands', {
+            json: { nombre }
+        }).json<{ status: string, data: Brand }>();
+        return response.data;
+    },
+
+    async update(id: string, nombre: string): Promise<Brand> {
+        const response = await api.patch(`brands/${id}`, {
+            json: { nombre }
+        }).json<{ status: string, data: Brand }>();
+        return response.data;
+    },
+
+    async delete(id: string): Promise<void> {
+        await api.delete(`brands/${id}`);
+    },
+
+    async getProducts(id: string): Promise<BrandProductSummary[]> {
+        const response = await api.get(`brands/${id}/products`).json<BrandProductsResponse>();
+        return response.data;
     }
-}
+};
