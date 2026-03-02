@@ -137,7 +137,7 @@ export interface AdminUser {
     apellido: string;
     email: string;
     foto: string | null;
-    rol: 'customer' | 'admin';
+    rol: 'customer' | 'admin' | 'seller';
     creadoEn: string;
 }
 
