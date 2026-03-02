@@ -1,0 +1,12 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import CreateUserView from "../../../components/admin/CreateUserView.tsx";
+---
+
+<AdminLayout
+    title="Nuevo Usuario"
+    parentTitle="Usuarios"
+    parentUrl="/admin/users"
+>
+    <CreateUserView client:only="react" />
+</AdminLayout>
