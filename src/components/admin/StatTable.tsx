@@ -10,9 +10,9 @@ interface StatTableProps<T> {
 
 const StatTable = <T,>({ title, headers, data, renderRow }: StatTableProps<T>) => {
     return (
-        <div className={styles.recentActivity} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div className={styles.recentActivity}>
             <div className={styles.sectionHeader}>
-                <h2 style={{ fontSize: '1.2rem' }}>{title}</h2>
+                <h2>{title}</h2>
             </div>
 
             <div className={styles.tableContainer} style={{ flex: 1 }}>

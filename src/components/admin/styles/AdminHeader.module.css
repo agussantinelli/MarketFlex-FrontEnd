@@ -18,6 +18,29 @@
 .headerLeft {
     display: flex;
     align-items: center;
+    gap: 1rem;
+}
+
+.mobileMenuBtn {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mobileMenuBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.menuIcon {
+    width: 24px;
+    height: 24px;
 }
 
 .breadcrumb {
@@ -68,19 +91,32 @@
     margin: 0 0.5rem;
 }
 
+@media (max-width: 1024px) {
+    .mobileMenuBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .adminHeader {
+        padding: 0 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     .adminHeader {
         padding: 0 1rem;
-        flex-direction: column-reverse;
-        /* In mobile we could break it or hide search */
-        height: auto;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        gap: 1rem;
+        flex-direction: row;
+        /* Fixed: no column-reverse */
+        height: 70px;
+        gap: 0.5rem;
     }
 
     .headerRight {
-        width: 100%;
-        justify-content: flex-end;
+        width: auto;
+    }
+
+    .breadcrumb {
+        display: none;
     }
 }

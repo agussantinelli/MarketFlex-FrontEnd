@@ -60,37 +60,72 @@ const { title } = Astro.props;
                 display: flex;
                 min-height: 100vh;
                 background-color: var(--background);
+                position: relative;
             }
             .admin-main {
                 flex: 1;
                 margin-left: 260px; /* Width of the sidebar */
                 display: flex;
                 flex-direction: column;
-            }
-            .admin-header {
-                height: 70px;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                padding: 0 2rem;
-                background: var(--foreground);
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                min-width: 0;
+                transition: margin-left 0.3s ease;
             }
             .admin-content {
                 flex: 1;
                 padding: 2rem;
                 overflow-y: auto;
+                overflow-x: hidden; /* Evitar scroll horizontal global */
+                min-width: 0;
             }
 
-            @media (max-width: 768px) {
+            @media (max-width: 1440px) {
+                .admin-main {
+                    margin-left: 260px; /* Mantener fijo hasta 1024 */
+                }
+            }
+
+            @media (max-width: 1366px) {
+                /* Ajuste sutil para laptops si fuera necesario, por ahora 260 esta ok */
+            }
+
+            @media (max-width: 1024px) {
                 .admin-main {
                     margin-left: 0;
                 }
                 .admin-content {
-                    padding: 1rem;
-                    padding-top: 80px; /* Space for mobile header if added later */
+                    padding: 1.5rem;
                 }
-                /* Note: Sidebar mobile responsiveness handled separately in CSS or React if needed */
+            }
+
+            @media (max-width: 768px) {
+                .admin-content {
+                    padding: 1rem;
+                }
+            }
+
+            /* Neon Variables for Admin context */
+            :root {
+                --neon-green: #00ff88;
+                --light-green: #34d399;
+                --deep-black: #0f172a;
+            }
+
+            .nav-loading-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(15, 23, 42, 0.8);
+                backdrop-filter: blur(8px);
+                z-index: 9999;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-loading-overlay.active {
+                display: flex;
             }
         </style>
     </head>
@@ -108,17 +143,9 @@ const { title } = Astro.props;
             </div>
         </div>
 
-        <style is:global>
-            .nav-loading-overlay {
-                display: none;
-            }
-            .nav-loading-overlay.active {
-                display: block;
-            }
-        </style>
-
         <!-- Sileo Root for notifications -->
         <span id="sileo-root"></span>
+
         <script>
             const checkAdminAccess = () => {
                 const userStr = localStorage.getItem("marketflex_user");
@@ -134,7 +161,6 @@ const { title } = Astro.props;
                         return;
                     }
 
-                    // Check if they explicitly disabled Admin Mode safely
                     const isAdminModeStr = localStorage.getItem(
                         "marketflex_admin:isAdminMode",
                     );
@@ -143,7 +169,6 @@ const { title } = Astro.props;
                         return;
                     }
 
-                    // Clean up legacy localStorage settings state if present
                     if (localStorage.getItem("marketflex_admin:")) {
                         localStorage.removeItem("marketflex_admin:");
                     }
@@ -152,8 +177,10 @@ const { title } = Astro.props;
                 }
             };
 
-            // Initialize on first load
             checkAdminAccess();
+
+            // Support for View Transitions
+            document.addEventListener("astro:after-swap", checkAdminAccess);
         </script>
     </body>
 </html>

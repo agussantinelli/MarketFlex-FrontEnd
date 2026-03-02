@@ -8,7 +8,6 @@ import { formatOrderDate } from '../../../utils/dateFormatter';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
-    const [loading, setLoading] = useState(true);
     const [period, setPeriod] = useState<'month' | 'historical'>('month');
     const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);
 
@@ -21,7 +20,6 @@ const DashboardView: React.FC = () => {
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
-                setLoading(false);
                 if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
             }
         };
@@ -55,7 +53,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: formatCurrency(statsData?.lastRevenue ?? 0),
             icon: LuDollarSign,
-            color: "from-green-500 to-green-300",
+            color: styles.colorGreen,
             isPositive: (statsData?.revenueTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastRevenue ?? 0) > 0,
             description: "Suma total facturada por ventas completadas (sin incluir impuestos o extras si no están en el total)."
@@ -68,7 +66,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: (statsData?.lastSales ?? 0).toLocaleString(),
             icon: LuShoppingCart,
-            color: "from-blue-500 to-blue-300",
+            color: styles.colorBlue,
             isPositive: (statsData?.salesTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastSales ?? 0) > 0,
             description: "Número total de órdenes que han llegado al estado final de 'COMPLETADO'."
@@ -81,7 +79,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: formatCurrency(statsData?.lastAverageTicket ?? 0),
             icon: LuTrendingUp,
-            color: "from-purple-500 to-purple-300",
+            color: styles.colorPurple,
             isPositive: (statsData?.avgTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastAverageTicket ?? 0) > 0,
             description: "Ingreso total dividido por la cantidad de ventas. Indica cuánto gasta el cliente en promedio por pedido."
@@ -94,7 +92,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: (statsData?.lastActiveUsers ?? 0).toLocaleString(),
             icon: LuUsers,
-            color: "from-yellow-500 to-yellow-300",
+            color: styles.colorYellow,
             isPositive: (statsData?.userTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastActiveUsers ?? 0) > 0,
             description: "Total de usuarios registrados en el sistema hasta la fecha."
@@ -107,7 +105,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: `${statsData?.lastConversionRate ?? 0}%`,
             icon: LuTarget,
-            color: "from-pink-500 to-pink-300",
+            color: styles.colorPink,
             isPositive: (statsData?.conversionTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastConversionRate ?? 0) > 0,
             description: "Porcentaje de usuarios registrados que han realizado al menos una compra completada."
@@ -120,7 +118,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: `${statsData?.lastRecurrentBuyers ?? 0}%`,
             icon: LuRotateCw,
-            color: "from-orange-500 to-orange-300",
+            color: styles.colorOrange,
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastRecurrentBuyers ?? 0) > 0,
             description: "Porcentaje de clientes que compraron este mes y ya eran clientes, o que tienen más de una compra (Histórico)."
@@ -133,7 +131,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: `${statsData?.lastAverageItems ?? 0}`,
             icon: LuPackage,
-            color: "from-cyan-500 to-cyan-300",
+            color: styles.colorCyan,
             isPositive: (statsData?.itemsTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastAverageItems ?? 0) > 0,
             description: "Cantidad media de unidades de producto por cada orden de compra."
@@ -146,7 +144,7 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: formatCurrency(statsData?.lastTotalDiscount ?? 0),
             icon: LuTags,
-            color: "from-indigo-500 to-indigo-300",
+            color: styles.colorIndigo,
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
             showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) >= 0,
             description: "Ahorro total aplicado a los clientes mediante promociones NxM y descuentos directos."
@@ -159,21 +157,17 @@ const DashboardView: React.FC = () => {
                 : "0%",
             lastValueStr: `${statsData?.lastCancelRate ?? 0}%`,
             icon: LuTriangleAlert,
-            color: "from-red-500 to-red-300",
+            color: styles.colorRed,
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
             showTrend: period === 'month' && (statsData?.lastCancelRate ?? 0) > 0,
             description: "Porcentaje de órdenes canceladas sobre el total de órdenes (Completadas + Canceladas + Pendientes)."
         }
     ];
 
-    if (loading && !statsData) {
-        // Handled by global loader
-    }
-
     return (
         <div className={styles.dashboardContainer}>
-            <header className={styles.header}>
-                <div className={styles.titleSection}>
+            <header className={styles.dashboardHeader}>
+                <div>
                     <h1>Panel Administrativo</h1>
                     <p>Resumen de actividad y métricas clave del sistema</p>
                 </div>
@@ -202,7 +196,7 @@ const DashboardView: React.FC = () => {
                         className={styles.statCard}
                         style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                        <div className={`${styles.statIconWrapper} bg-gradient-to-br ${stat.color}`}>
+                        <div className={`${styles.statIconWrapper} ${stat.color}`}>
                             <stat.icon className={styles.statIcon} />
                         </div>
                         <button
@@ -231,7 +225,7 @@ const DashboardView: React.FC = () => {
             </div>
 
 
-            <div className={styles.statsGrid} style={{ gridTemplateColumns: 'repeat(2, 1fr)', marginTop: '2rem' }}>
+            <div className={styles.tablesGrid}>
                 {/* 1. Las últimas 5 ventas */}
                 <StatTable
                     title="Últimas 5 Ventas"
