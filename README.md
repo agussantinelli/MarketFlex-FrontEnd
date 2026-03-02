@@ -519,6 +519,7 @@
 │   │   ├── about.astro                             # Página de información institucional.
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
+│   │   │   ├── categories.astro                    # Gestión jerárquica de categorías (CRUD).
 │   │   │   ├── characteristics.astro               # Gestión de atributos de producto (CRUD).
 │   │   │   ├── claims.astro                        # Gestión de reclamos e incidencias (CRUD).
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
