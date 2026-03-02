@@ -140,14 +140,12 @@ const CharacteristicsListView: React.FC = () => {
         <div className={styles.dashboardContainer}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <div className={styles.dashboardHeader}>
-                        <h1>Gestión de Características</h1>
-                        <button className={styles.createButton} onClick={() => setCreateModal(true)}>
-                            <LuPlus /> Nueva Característica
-                        </button>
-                    </div>
+                    <h1>Gestión de Características</h1>
                     <p>Administra los atributos de tus productos y sus asociaciones</p>
                 </div>
+                <button className={styles.createButton} onClick={() => setCreateModal(true)}>
+                    <LuPlus /> Nueva Característica
+                </button>
             </header>
 
             <div className={styles.statsGrid} style={{ gridTemplateColumns: '1fr', marginTop: '1rem' }}>
@@ -160,10 +158,10 @@ const CharacteristicsListView: React.FC = () => {
                         data={characteristics}
                         renderRow={(char) => (
                             <tr key={char.id}>
-                                <td className={styles.userCell} style={{ fontWeight: '600' }}>{char.nombre}</td>
+                                <td><span className={styles.userCell}>{char.nombre}</span></td>
                                 <td className={styles.amount}>{char.productCount || 0} productos</td>
                                 <td>
-                                    <div className={styles.actionButtons} style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <div className={styles.actionButtons}>
                                         <button
                                             className={styles.actionBtn}
                                             onClick={() => handleViewProducts(char)}
