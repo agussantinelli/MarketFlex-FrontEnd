@@ -144,12 +144,14 @@ const CategoriesListView: React.FC = () => {
         <div className={styles.dashboardContainer}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <h1>Gestión de Categorías</h1>
+                    <div className={styles.dashboardHeader}>
+                        <h1>Gestión de Categorías</h1>
+                        <button className={styles.createButton} onClick={() => setCreateModal(true)}>
+                            <LuPlus /> Nueva Categoría
+                        </button>
+                    </div>
                     <p>Administra las categorías principales de tu catálogo</p>
                 </div>
-                <button className={styles.createButton} onClick={() => setCreateModal(true)}>
-                    <LuPlus /> Nueva Categoría
-                </button>
             </header>
 
             <div className={styles.statsGrid} style={{ gridTemplateColumns: '1fr', marginTop: '1rem' }}>
