@@ -37,9 +37,16 @@ const ProductsListView: React.FC = () => {
             if (response) {
                 setProducts(response.data);
                 setTotal(response.pagination.total);
+            } else {
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'Error al cargar la lista de productos');
+                }
             }
         } catch (error) {
             console.error('Error fetching products:', error);
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Error de conexión al cargar productos');
+            }
         } finally {
             setLoading(false);
             if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
@@ -213,24 +220,7 @@ const ProductsListView: React.FC = () => {
                 searchPlaceholder="Buscar por nombre o tag..."
                 customFilters={
                     <select
-                        style={{
-                            padding: '10px 16px',
-                            paddingRight: '40px',
-                            width: '210px',
-                            background: '#1e293b url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2300ff9d\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 16px center',
-                            backgroundSize: '16px',
-                            appearance: 'none',
-                            WebkitAppearance: 'none',
-                            MozAppearance: 'none',
-                            color: '#00ff9d',
-                            border: '1px solid #00ff9d',
-                            borderRadius: '8px',
-                            outline: 'none',
-                            cursor: 'pointer',
-                            fontSize: '0.95rem',
-                            fontWeight: '600',
-                            boxShadow: '0 0 10px rgba(0, 255, 157, 0.1)'
-                        }}
+                        className={styles.sortSelect}
                         value={sort}
                         onChange={(e) => {
                             setSort(e.target.value);

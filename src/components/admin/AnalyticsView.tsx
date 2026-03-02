@@ -35,9 +35,16 @@ const AnalyticsView: React.FC = () => {
                 const result = await AdminService.getAnalytics();
                 if (result) {
                     setData(result);
+                } else {
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', 'Error al cargar los datos analíticos');
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching analytics:', error);
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'Error inesperado al cargar analíticas');
+                }
             } finally {
                 setLoading(false);
                 if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();

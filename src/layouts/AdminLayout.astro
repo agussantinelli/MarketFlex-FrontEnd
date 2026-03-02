@@ -3,7 +3,9 @@ import "../styles/globals.css";
 import AdminSidebar from "../components/admin/AdminSidebar";
 import AdminHeader from "../components/admin/AdminHeader.astro";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import Notifications from "../components/common/Notifications";
 import { ViewTransitions } from "astro:transitions";
+import "sileo/styles.css";
 
 interface Props {
     title: string;
@@ -188,5 +190,6 @@ const { title, parentTitle, parentUrl } = Astro.props;
             // Support for View Transitions
             document.addEventListener("astro:after-swap", checkAdminAccess);
         </script>
+        <Notifications client:only="react" />
     </body>
 </html>

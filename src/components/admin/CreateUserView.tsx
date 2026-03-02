@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminAuthInputs from './AdminAuthInputs';
 import { AdminService } from '../../services/admin.service';
 import styles from './styles/dashboard.module.css';
@@ -21,6 +21,13 @@ const CreateUserView: React.FC = () => {
 
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        // Optional hint on mount
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('info', 'Completá los campos para crear un nuevo usuario. Recordá que el DNI debe ser único.');
+        }
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -29,15 +36,27 @@ const CreateUserView: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Manual validation to trigger Sileo before browser bubble (optional but more premium)
+        if (!formData.nombre || !formData.apellido || !formData.email || !formData.dni) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('warning', 'Por favor, completá todos los campos obligatorios.');
+            }
+            return;
+        }
+
         try {
             setLoading(true);
             if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('info', 'Iniciando creación de usuario...');
+            }
 
             const result = await AdminService.createUser(formData);
 
             if (result.status === 'success') {
                 if ((window as any).triggerSileo) {
-                    (window as any).triggerSileo('success', 'Usuario creado exitosamente');
+                    (window as any).triggerSileo('success', '¡Usuario creado con éxito!');
                 }
                 setTimeout(() => {
                     window.location.href = '/admin/users';
@@ -50,7 +69,7 @@ const CreateUserView: React.FC = () => {
         } catch (error) {
             console.error('Error in handleSubmit:', error);
             if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'Error inesperado al procesar la solicitud');
+                (window as any).triggerSileo('error', 'Error crítico al procesar la solicitud');
             }
         } finally {
             setLoading(false);
