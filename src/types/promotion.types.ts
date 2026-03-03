@@ -10,7 +10,7 @@ export interface Promotion {
     activo: boolean;
     prioridad: number;
     // UI Fields from plural version
-    estado: 'ACTIVO' | 'PENDIENTE' | 'VENCIDO' | 'CANCELADO';
+    estado: 'ACTIVO' | 'PENDIENTE' | 'VENCIDO' | 'CANCELADO' | 'INACTIVO' | 'BORRADO';
     fechaInicio: string;
     fechaFin: string;
     tipoPromocion: string;

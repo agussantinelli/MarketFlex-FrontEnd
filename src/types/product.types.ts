@@ -26,6 +26,7 @@ export type Product = {
         cantPaga: number | null;
         porcentajeDescuentoSegunda: string | null;
     } | null;
+    estado: 'ACTIVO' | 'INACTIVO' | 'BORRADO';
 };
 
 export type SearchOptions = {
