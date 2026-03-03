@@ -133,9 +133,14 @@ const SalesListView = () => {
                     >
                         <LuEye size={18} />
                     </button>
-                    <button className={styles.actionBtn} title="Editar">
+                    <a
+                        className={styles.actionBtn}
+                        title="Editar"
+                        href={`/admin/sales/edit?id=${sale.id}`}
+                        style={{ textDecoration: 'none' }}
+                    >
                         <LuPencil size={18} />
-                    </button>
+                    </a>
                     <button className={styles.actionBtn} title="Borrar">
                         <LuTrash2 size={18} />
                     </button>
