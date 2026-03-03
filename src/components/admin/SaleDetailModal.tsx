@@ -256,16 +256,33 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                     borderTop: '1px solid rgba(255,255,255,0.05)',
                     display: 'flex',
                     justifyContent: 'flex-end',
-                    background: 'rgba(0,0,0,0.15)'
+                    background: 'rgba(0,0,0,0.2)'
                 }}>
                     <button
                         onClick={onClose}
-                        className="admin-button secondary"
                         style={{
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            color: 'var(--text-muted)',
                             padding: '12px 32px',
                             borderRadius: '12px',
+                            fontSize: '0.9rem',
                             fontWeight: 600,
-                            letterSpacing: '0.2px'
+                            cursor: 'pointer',
+                            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                            letterSpacing: '0.3px'
+                        }}
+                        onMouseEnter={e => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                            e.currentTarget.style.color = 'var(--text-main)';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                            e.currentTarget.style.transform = 'translateY(-1px)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                            e.currentTarget.style.color = 'var(--text-muted)';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                            e.currentTarget.style.transform = 'translateY(0)';
                         }}
                     >
                         Cerrar Ventana
