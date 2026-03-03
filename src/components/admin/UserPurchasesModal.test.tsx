@@ -10,6 +10,9 @@ vi.mock('../../services/admin.service', () => ({
     }
 }));
 
+// Mock window globals
+(window as any).triggerSileo = vi.fn();
+
 const mockPurchases = [
     {
         id: 'p-1',
@@ -75,5 +78,15 @@ describe('UserPurchasesModal Component', () => {
 
         // Check if SaleDetailModal elements appear
         expect(screen.getByText(/Detalle de Venta/i)).toBeDefined();
+    });
+
+    it('triggers Sileo error notification when fetch fails', async () => {
+        (AdminService.getUserPurchases as any).mockRejectedValue(new Error('Network Error'));
+
+        render(<UserPurchasesModal userId="u-1" userName="Juan" onClose={() => { }} />);
+
+        await waitFor(() => {
+            expect((window as any).triggerSileo).toHaveBeenCalledWith('error', expect.stringContaining('No se pudieron cargar'));
+        });
     });
 });

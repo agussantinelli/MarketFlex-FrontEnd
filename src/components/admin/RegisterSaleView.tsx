@@ -48,9 +48,17 @@ const RegisterSaleView: React.FC = () => {
         }
         setSearching(true);
         // Simulate search for now, will integrate with product.service later
-        const results = await AdminService.searchProducts(query);
-        setSearchResults(results || []);
-        setSearching(false);
+        try {
+            const results = await AdminService.searchProducts(query);
+            setSearchResults(results || []);
+        } catch (error) {
+            console.error('Search error:', error);
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Error al buscar productos');
+            }
+        } finally {
+            setSearching(false);
+        }
     };
 
     const addProduct = (product: any) => {
@@ -69,10 +77,18 @@ const RegisterSaleView: React.FC = () => {
                 foto: product.foto
             }]);
         }
+
+        if ((window as any).triggerSileo) {
+            (window as any).triggerSileo('info', `¡${product.nombre} añadido!`);
+        }
     };
 
     const removeProduct = (productId: string) => {
+        const product = selectedProducts.find(p => p.id === productId);
         setSelectedProducts(selectedProducts.filter(p => p.id !== productId));
+        if (product && (window as any).triggerSileo) {
+            (window as any).triggerSileo('info', `Producto eliminado: ${product.nombre}`);
+        }
     };
 
     const updateQuantity = (productId: string, delta: number) => {

@@ -17,9 +17,17 @@ const UserPurchasesModal: React.FC<UserPurchasesModalProps> = ({ userId, userNam
 
     useEffect(() => {
         const fetchPurchases = async () => {
-            const data = await AdminService.getUserPurchases(userId);
-            setPurchases(data);
-            setLoading(false);
+            try {
+                const data = await AdminService.getUserPurchases(userId);
+                setPurchases(data || []);
+            } catch (error) {
+                console.error('Error fetching purchases:', error);
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'No se pudieron cargar las compras del usuario');
+                }
+            } finally {
+                setLoading(false);
+            }
         };
         fetchPurchases();
     }, [userId]);

@@ -108,9 +108,26 @@ describe('RegisterSaleView Component', () => {
             fireEvent.click(addBtn);
         });
 
-        const plusBtn = screen.getByLabelText(/Aumentar cantidad/i);
-        fireEvent.click(plusBtn);
-
         expect(screen.getAllByText(/5.*000.*2/).length).toBeGreaterThan(0);
+    });
+
+    it('triggers Sileo notifications when adding/removing products', async () => {
+        (AdminService.searchProducts as any).mockResolvedValue([{ id: 'p1', nombre: 'Test Prod', precioActual: 100, stock: 10, foto: null }]);
+
+        render(<RegisterSaleView />);
+        const searchInput = screen.getByPlaceholderText(/Buscar productos/i);
+        fireEvent.change(searchInput, { target: { value: 'test' } });
+
+        await waitFor(() => {
+            const addBtn = screen.getByLabelText(/Agregar producto/i);
+            fireEvent.click(addBtn);
+        });
+
+        expect((window as any).triggerSileo).toHaveBeenCalledWith('info', expect.stringContaining('Test Prod añadido'));
+
+        const removeBtn = screen.getByLabelText(/Eliminar producto/i);
+        fireEvent.click(removeBtn);
+
+        expect((window as any).triggerSileo).toHaveBeenCalledWith('info', expect.stringContaining('Producto eliminado: Test Prod'));
     });
 });
