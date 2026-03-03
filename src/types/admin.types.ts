@@ -151,6 +151,7 @@ export interface AdminUser {
     email: string;
     foto: string | null;
     rol: 'customer' | 'admin' | 'seller';
+    estado: 'ACTIVO' | 'INACTIVO';
     creadoEn: string;
 }
 
