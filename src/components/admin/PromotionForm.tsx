@@ -371,6 +371,40 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                                 </div>
                             </div>
                         )}
+
+                        {/* Selected Items Summary */}
+                        {formData.alcance === 'POR_PRODUCTO' && formData.productIds && formData.productIds.length > 0 && (
+                            <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px dashed rgba(255, 255, 255, 0.1)' }}>
+                                <h4 style={{ fontSize: '0.9rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1rem', fontWeight: '800' }}>
+                                    Productos Seleccionados ({formData.productIds.length})
+                                </h4>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                                    {products.filter(p => formData.productIds?.includes(p.id)).map(p => (
+                                        <div key={p.id} style={{
+                                            background: 'rgba(0, 163, 136, 0.1)',
+                                            border: '1px solid rgba(0, 163, 136, 0.2)',
+                                            padding: '6px 12px',
+                                            borderRadius: '8px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            fontSize: '0.85rem',
+                                            color: 'var(--primary)',
+                                            fontWeight: '600'
+                                        }}>
+                                            <span>{p.nombre}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleToggleId('productIds', p.id)}
+                                                style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', padding: '2px', display: 'flex' }}
+                                            >
+                                                <LuX size={14} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
