@@ -2,31 +2,25 @@ export interface Promotion {
     id: string;
     nombre: string;
     descripcion: string | null;
-    tipo: 'NXM' | 'DESCUENTO_2DA' | 'PORCENTAJE';
-    valor: number | null;
+    tipoPromocion: 'NxM' | 'DESCUENTO_SEGUNDA_UNIDAD' | 'PORCENTAJE';
     alcance: 'GLOBAL' | 'POR_TIPO' | 'POR_PRODUCTO';
     foto: string | null;
-    destacado: boolean;
-    activo: boolean;
-    prioridad: number;
-    // UI Fields from plural version
-    estado: 'ACTIVO' | 'PENDIENTE' | 'VENCIDO' | 'CANCELADO' | 'INACTIVO' | 'BORRADO';
+    esDestacado: boolean;
+    estado: 'ACTIVO' | 'INACTIVO' | 'PENDIENTE' | 'VENCIDO' | 'CANCELADO' | 'BORRADO';
     fechaInicio: string;
     fechaFin: string;
-    tipoPromocion: string;
     cantCompra: number | null;
     cantPaga: number | null;
+    porcentajeDescuentoSegunda: string | null;
+    // Relation IDs for POR_TIPO / POR_PRODUCTO
+    categoryIds?: string[];
+    productIds?: string[];
 }
 
-export interface CreatePromotionInput {
-    nombre: string;
-    descripcion?: string;
-    tipo: 'NXM' | 'DESCUENTO_2DA' | 'PORCENTAJE';
-    valor?: number;
-    alcance: 'GLOBAL' | 'POR_TIPO' | 'POR_PRODUCTO';
-    foto?: string;
-    destacado?: boolean;
-    prioridad?: number;
+export interface CreatePromotionInput extends Omit<Promotion, 'id' | 'estado' | 'categoryIds' | 'productIds'> {
+    estado?: Promotion['estado'];
+    categoryIds?: string[];
+    productIds?: string[];
 }
 
 export interface PromotionsResponse {
