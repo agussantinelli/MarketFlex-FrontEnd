@@ -108,5 +108,14 @@ export const AdminService = {
                 message: errorData?.message || 'Error al actualizar el usuario'
             };
         }
+    },
+    async getUserPurchases(id: string): Promise<AdminPurchase[]> {
+        try {
+            const result = await api.get(`admin/users/${id}/purchases`).json<{ data: AdminPurchase[] }>();
+            return result.data;
+        } catch (error) {
+            console.error('Error fetching user purchases:', error);
+            return [];
+        }
     }
 };
