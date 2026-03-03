@@ -82,7 +82,6 @@ const PromotionsListView: React.FC = () => {
             fetchPromotions();
         } catch (error) {
             console.error('Error saving promotion:', error);
-            if (window.triggerSileo) window.triggerSileo('error', 'Error al guardar la promoción');
         } finally {
             setFormLoading(false);
         }
@@ -96,7 +95,7 @@ const PromotionsListView: React.FC = () => {
                     setPromotions(prev => prev.filter(p => p.id !== promo.id));
                     if (window.triggerSileo) window.triggerSileo('success', 'Promoción eliminada');
                 } catch (error) {
-                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo eliminar la promoción');
+                    console.error('Error deleting promotion:', error);
                 }
             });
         }
