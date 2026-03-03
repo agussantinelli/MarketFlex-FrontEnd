@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles/RegisterSaleView.module.css';
 import dashboardStyles from './styles/dashboard.module.css';
-import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPackage, LuDollarSign, LuCreditCard, LuRepeat, LuStore, LuTruck, LuTag, LuClock, LuCircleAlert, LuRefreshCcw } from 'react-icons/lu';
+import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPackage, LuDollarSign, LuCreditCard, LuRepeat, LuStore, LuTruck, LuTag, LuClock, LuCircleAlert } from 'react-icons/lu';
 import { AdminService } from '../../services/admin.service';
 import type { AdminPurchase } from '../../types/admin.types';
 
@@ -140,14 +140,18 @@ const EditSaleView: React.FC = () => {
 
                         <h4 className={styles.sectionLabel}>Nuevo Estado</h4>
                         <div className={styles.selectionGrid} style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                            {ESTADO_OPTIONS.map(opt => {
+                            {ESTADO_OPTIONS.map((opt, index) => {
                                 const Icon = opt.icon;
+                                const isLastCentered = ESTADO_OPTIONS.length % 2 !== 0 && index === ESTADO_OPTIONS.length - 1;
                                 return (
                                     <div
                                         key={opt.value}
                                         className={`${styles.selectionTile} ${estado === opt.value ? styles.active : ''}`}
                                         onClick={() => setEstado(opt.value)}
-                                        style={estado === opt.value ? { borderColor: opt.color } : {}}
+                                        style={{
+                                            ...(estado === opt.value ? { borderColor: opt.color } : {}),
+                                            ...(isLastCentered ? { gridColumn: 'span 2', justifySelf: 'center', width: '50%' } : {})
+                                        }}
                                     >
                                         <Icon className={styles.tileIcon} style={{ color: opt.color }} />
                                         <span className={styles.tileLabel}>{opt.label}</span>
