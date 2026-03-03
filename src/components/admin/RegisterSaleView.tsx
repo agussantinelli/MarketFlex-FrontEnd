@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styles from './styles/RegisterSaleView.module.css';
 import dashboardStyles from './styles/dashboard.module.css';
-import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus } from 'react-icons/lu';
+import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus, LuPackage, LuMinus, LuTrash2 } from 'react-icons/lu';
 import { api } from '../../lib/api';
 import { AdminService } from '../../services/admin.service';
+import { getImageUrl } from '../../lib/url';
 
 // Types
 export interface SelectedProduct {
@@ -12,6 +13,7 @@ export interface SelectedProduct {
     precio: number;
     cantidad: number;
     stock: number;
+    foto: string | null;
 }
 
 const RegisterSaleView: React.FC = () => {
@@ -63,7 +65,8 @@ const RegisterSaleView: React.FC = () => {
                 nombre: product.nombre,
                 precio: parseFloat(product.precioActual),
                 cantidad: 1,
-                stock: product.stock
+                stock: product.stock,
+                foto: product.foto
             }]);
         }
     };
@@ -100,11 +103,27 @@ const RegisterSaleView: React.FC = () => {
                             {searchResults.length > 0 && (
                                 <div className={styles.searchResults}>
                                     {searchResults.map(p => (
-                                        <div key={p.id} className={styles.resultItem} onClick={() => addProduct(p)}>
-                                            <span>{p.nombre}</span>
-                                            <span className={styles.resultPrice}>${p.precioActual}</span>
-                                            <button className={dashboardStyles.btnPrimary} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
-                                                <LuPlus />
+                                        <div key={p.id} className={styles.productCard}>
+                                            <div className={styles.productImage}>
+                                                {p.foto ? (
+                                                    <img src={getImageUrl(p.foto)} alt={p.nombre} />
+                                                ) : (
+                                                    <div className={styles.productImagePlaceholder}>
+                                                        <LuPackage size={20} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className={styles.productInfo}>
+                                                <span className={styles.productName}>{p.nombre}</span>
+                                                <span className={styles.productPrice}>${p.precioActual.toLocaleString()}</span>
+                                            </div>
+                                            <button
+                                                onClick={() => addProduct(p)}
+                                                className={styles.smallActionBtn}
+                                                title="Agregar a la venta"
+                                                aria-label="Agregar producto"
+                                            >
+                                                <LuPlus size={18} />
                                             </button>
                                         </div>
                                     ))}
@@ -119,18 +138,47 @@ const RegisterSaleView: React.FC = () => {
                             ) : (
                                 <div className={styles.selectedList}>
                                     {selectedProducts.map(p => (
-                                        <div key={p.id} className={styles.selectedItem}>
-                                            <div className={styles.itemInfo}>
-                                                <span className={styles.itemName}>{p.nombre}</span>
-                                                <span className={styles.itemPrice}>${p.precio} c/u</span>
+                                        <div key={p.id} className={styles.productCard}>
+                                            <div className={styles.productImage}>
+                                                {p.foto ? (
+                                                    <img src={getImageUrl(p.foto)} alt={p.nombre} />
+                                                ) : (
+                                                    <div className={styles.productImagePlaceholder}>
+                                                        <LuPackage size={20} />
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className={styles.itemActions}>
-                                                <div className={styles.qtyControls}>
-                                                    <button onClick={() => updateQuantity(p.id, -1)}>-</button>
-                                                    <span>{p.cantidad}</span>
-                                                    <button onClick={() => updateQuantity(p.id, 1)}>+</button>
+                                            <div className={styles.productInfo}>
+                                                <span className={styles.productName}>{p.nombre}</span>
+                                                <span className={styles.productPrice}>${p.precio.toLocaleString()} × {p.cantidad}</span>
+                                            </div>
+                                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                                <div style={{ display: 'flex', gap: '4px' }}>
+                                                    <button
+                                                        onClick={() => updateQuantity(p.id, -1)}
+                                                        className={styles.smallActionBtn}
+                                                        style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', color: 'white' }}
+                                                        aria-label="Disminuir cantidad"
+                                                    >
+                                                        <LuMinus size={14} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => updateQuantity(p.id, 1)}
+                                                        className={styles.smallActionBtn}
+                                                        style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', color: 'white' }}
+                                                        aria-label="Aumentar cantidad"
+                                                    >
+                                                        <LuPlus size={14} />
+                                                    </button>
                                                 </div>
-                                                <button onClick={() => removeProduct(p.id)} className={styles.removeBtn}>Eliminar</button>
+                                                <button
+                                                    onClick={() => removeProduct(p.id)}
+                                                    className={styles.smallActionBtn}
+                                                    style={{ background: 'rgba(239, 68, 68, 0.1)', borderColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+                                                    title="Eliminar producto"
+                                                >
+                                                    <LuTrash2 size={14} />
+                                                </button>
                                             </div>
                                         </div>
                                     ))}

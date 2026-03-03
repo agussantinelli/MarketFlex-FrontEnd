@@ -48,12 +48,12 @@ describe('RegisterSaleView Component', () => {
         fireEvent.change(searchInput, { target: { value: 'zapa' } });
 
         await waitFor(() => {
-            expect(screen.getByText('Zapatillas Adidas')).toBeDefined();
+            expect(screen.getAllByText('Zapatillas Adidas').length).toBeGreaterThan(0);
         });
 
-        // Click on result to add
-        const productResult = screen.getAllByText('Zapatillas Adidas')[0];
-        if (productResult) fireEvent.click(productResult);
+        // Click on plus button to add
+        const addBtn = screen.getByLabelText(/Agregar producto/i);
+        fireEvent.click(addBtn);
 
         expect(screen.getByText(/Productos Seleccionados/i)).toBeDefined();
         expect(screen.getAllByText('Zapatillas Adidas').length).toBeGreaterThan(1);
@@ -104,13 +104,13 @@ describe('RegisterSaleView Component', () => {
         fireEvent.change(searchInput, { target: { value: 'zapa' } });
 
         await waitFor(() => {
-            const result = screen.getAllByText('Zapatillas Adidas')[0];
-            if (result) fireEvent.click(result);
+            const addBtn = screen.getByLabelText(/Agregar producto/i);
+            fireEvent.click(addBtn);
         });
 
-        const plusBtn = screen.getByText('+');
+        const plusBtn = screen.getByLabelText(/Aumentar cantidad/i);
         fireEvent.click(plusBtn);
 
-        expect(screen.getAllByText('2').length).toBeGreaterThan(0); // Quantity spans "2", but stepper also has "2"
+        expect(screen.getAllByText(/5.*000.*2/).length).toBeGreaterThan(0);
     });
 });
