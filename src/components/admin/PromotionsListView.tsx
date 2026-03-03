@@ -113,6 +113,15 @@ const PromotionsListView: React.FC = () => {
         }
     };
 
+    const humanizeAlcance = (alcance: string) => {
+        switch (alcance?.toUpperCase()) {
+            case 'GLOBAL': return 'Global';
+            case 'POR_TIPO': return 'Por Categoría';
+            case 'POR_PRODUCTO': return 'Por Producto';
+            default: return alcance;
+        }
+    };
+
     if (loading && promotions.length === 0) {
         return null; // Let global loader handle
     }
@@ -326,17 +335,26 @@ const PromotionsListView: React.FC = () => {
                             }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                     <div style={{
-                                        padding: '4px 8px',
-                                        background: 'rgba(0, 163, 136, 0.1)',
+                                        padding: '4px 10px',
+                                        background: 'rgba(0, 163, 136, 0.15)',
                                         color: 'var(--primary)',
-                                        borderRadius: '6px',
-                                        fontSize: '0.75rem',
-                                        fontWeight: '700'
+                                        borderRadius: '8px',
+                                        fontSize: '0.8rem',
+                                        fontWeight: '800',
+                                        textTransform: 'uppercase',
+                                        border: '1px solid rgba(0, 255, 136, 0.2)'
                                     }}>
-                                        {promo.alcance}
+                                        {humanizeAlcance(promo.alcance)}
                                     </div>
                                     {promo.tipoPromocion === 'NxM' && (
-                                        <span style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: '600' }}>
+                                        <span style={{
+                                            color: '#cbd5e1',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '700',
+                                            padding: '4px 8px',
+                                            background: 'rgba(255, 255, 255, 0.05)',
+                                            borderRadius: '6px'
+                                        }}>
                                             {promo.cantCompra} x {promo.cantPaga}
                                         </span>
                                     )}
