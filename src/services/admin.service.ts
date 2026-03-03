@@ -129,5 +129,14 @@ export const AdminService = {
                 message: errorData?.message || 'Error al desactivar el usuario'
             };
         }
+    },
+    async searchProducts(query: string): Promise<any[]> {
+        try {
+            const result = await api.get(`admin/products?q=${encodeURIComponent(query)}&limit=5`).json<PaginatedResponse<AdminProduct>>();
+            return result.data;
+        } catch (error) {
+            console.error('Error searching products:', error);
+            return [];
+        }
     }
 };
