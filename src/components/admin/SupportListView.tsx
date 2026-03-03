@@ -34,9 +34,24 @@ const SupportListView: React.FC = () => {
         if (window.triggerSileo) window.triggerSileo('info', `Responder a ${msg.email} (En desarrollo)`);
     };
 
-    const handleDelete = (msg: SupportMessageOutput) => {
-        if (window.confirm(`¿Seguro que quieres eliminar el mensaje de ${msg.nombre}?`)) {
-            if (window.triggerSileo) window.triggerSileo('info', `Mensaje eliminado (En desarrollo)`);
+    const handleDelete = async (msg: SupportMessageOutput) => {
+        if (window.confirm(`¿Seguro que quieres eliminar el mensaje de ${msg.nombre}? Pasará a estado BORRADO.`)) {
+            try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                const { AdminService } = await import('../../services/admin.service');
+                const result = await AdminService.deleteSupportMessage(msg.id);
+                if (result.status === 'success') {
+                    setMessages(prev => prev.filter(m => m.id !== msg.id));
+                    if (window.triggerSileo) window.triggerSileo('success', 'Mensaje de soporte borrado correctamente');
+                } else {
+                    if (window.triggerSileo) window.triggerSileo('error', result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting support message:', error);
+                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el mensaje');
+            } finally {
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+            }
         }
     };
 

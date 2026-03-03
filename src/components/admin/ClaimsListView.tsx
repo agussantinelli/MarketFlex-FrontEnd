@@ -10,13 +10,14 @@ import {
     LuInbox,
     LuMessageSquare,
     LuSearch,
-    LuFilter
+    LuFilter,
+    LuTrash2
 } from 'react-icons/lu';
 import { claimsService } from '../../services/claims.service';
 import type { Claim } from '../../types/claims.types';
 import styles from './styles/ClaimsListView.module.css';
 
-const ClaimCard = ({ claim }: { claim: Claim }) => {
+const ClaimCard = ({ claim, onDelete }: { claim: Claim, onDelete: (compraId: string, nroReclamo: number) => void }) => {
     const getStatusStyle = (estado: string) => {
         switch (estado.toUpperCase()) {
             case 'PENDIENTE': return styles.statusPending;
@@ -74,10 +75,19 @@ const ClaimCard = ({ claim }: { claim: Claim }) => {
                 </div>
             </div>
 
-            <button className={styles.detailsButton}>
-                Ver detalles completas
-                <LuChevronRight size={18} />
-            </button>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                <button className={styles.detailsButton} style={{ flex: 1 }}>
+                    Ver detalles completas
+                    <LuChevronRight size={18} />
+                </button>
+                <button
+                    className={styles.detailsButton}
+                    style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)' }}
+                    onClick={() => onDelete(claim.compraId, claim.nroReclamo)}
+                >
+                    <LuTrash2 size={18} />
+                </button>
+            </div>
         </div>
     );
 };
@@ -107,6 +117,27 @@ const ClaimsListView = () => {
 
         fetchClaims();
     }, []);
+
+    const handleDelete = async (compraId: string, nroReclamo: number) => {
+        if (window.confirm('¿Seguro que quieres borrar este reclamo? Pasará a estado BORRADO.')) {
+            try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                const { AdminService } = await import('../../services/admin.service');
+                const result = await AdminService.deleteClaim(compraId, nroReclamo);
+                if (result.status === 'success') {
+                    setClaims(prev => prev.filter(c => !(c.compraId === compraId && c.nroReclamo === nroReclamo)));
+                    if (window.triggerSileo) window.triggerSileo('success', 'Reclamo borrado correctamente');
+                } else {
+                    if (window.triggerSileo) window.triggerSileo('error', result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting claim:', error);
+                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el reclamo');
+            } finally {
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+            }
+        }
+    };
 
     const filteredClaims = claims.filter(claim => {
         const matchesSearch =
@@ -158,7 +189,7 @@ const ClaimsListView = () => {
             <div className={styles.grid}>
                 {filteredClaims.length > 0 ? (
                     filteredClaims.map((claim) => (
-                        <ClaimCard key={`${claim.compraId}-${claim.nroReclamo}`} claim={claim} />
+                        <ClaimCard key={`${claim.compraId}-${claim.nroReclamo}`} claim={claim} onDelete={handleDelete} />
                     ))
                 ) : !loading && (
                     <div className={styles.emptyState}>

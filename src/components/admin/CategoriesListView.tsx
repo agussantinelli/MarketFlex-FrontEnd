@@ -123,7 +123,7 @@ const CategoriesListView: React.FC = () => {
                 setCategories(categories.filter(c => c.id !== selectedCategory.id));
                 setDeleteModal(false);
                 if ((window as any).triggerSileo) {
-                    (window as any).triggerSileo('success', 'Categoría eliminada');
+                    (window as any).triggerSileo('success', 'Categoría eliminada permanentemente');
                 }
             } else {
                 if ((window as any).triggerSileo) {
@@ -133,7 +133,7 @@ const CategoriesListView: React.FC = () => {
         } catch (error) {
             console.error('Error deleting category:', error);
             if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'Error al eliminar la categoría');
+                (window as any).triggerSileo('error', 'Error al eliminar la categoría. Verifique que no tenga productos asociados.');
             }
         } finally {
             setModalLoading(false);

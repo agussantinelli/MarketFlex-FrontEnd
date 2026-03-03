@@ -141,13 +141,37 @@ const SalesListView = () => {
                     >
                         <LuPencil size={18} />
                     </a>
-                    <button className={styles.actionBtn} title="Borrar">
+                    <button
+                        className={styles.actionBtn}
+                        title="Borrar"
+                        onClick={() => handleDelete(sale.id, `Venta de ${sale.usuario?.nombre || 'Consumidor Final'}`)}
+                    >
                         <LuTrash2 size={18} />
                     </button>
                 </div>
             )
         }
     ];
+
+    const handleDelete = async (id: string, name: string) => {
+        if (window.confirm(`¿Seguro que quieres borrar la ${name}? Pasará a estado BORRADO.`)) {
+            try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                const result = await AdminService.deletePurchase(id);
+                if (result.status === 'success') {
+                    setSales(prev => prev.filter(s => s.id !== id));
+                    if (window.triggerSileo) window.triggerSileo('success', 'Venta borrada correctamente');
+                } else {
+                    if (window.triggerSileo) window.triggerSileo('error', result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting purchase:', error);
+                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar la venta');
+            } finally {
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+            }
+        }
+    };
 
     if (error) return (
         <div className={styles.error}>

@@ -67,6 +67,8 @@ const PromotionsListView: React.FC = () => {
             case 'pendiente': return { color: 'var(--neon-orange)', bg: 'rgba(255, 165, 0, 0.1)' };
             case 'vencido': return { color: '#f87171', bg: 'rgba(248, 113, 113, 0.1)' };
             case 'cancelado': return { color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)' };
+            case 'borrado': return { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.1)' };
+            case 'inactivo': return { color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)' };
             default: return { color: '#fff', bg: 'rgba(255, 255, 255, 0.05)' };
         }
     };

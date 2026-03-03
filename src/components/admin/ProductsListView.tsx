@@ -177,9 +177,21 @@ const ProductsListView: React.FC = () => {
         // TODO: Open edit modal
     };
 
-    const handleDelete = (product: AdminProduct) => {
-        if ((window as any).triggerSileo) {
-            (window as any).triggerSileo('error', `Eliminar producto funcionalmente no implementado aún para: ${product.nombre}`);
+    const handleDelete = async (product: AdminProduct) => {
+        if (window.confirm(`¿Seguro que quieres borrar el producto "${product.nombre}"? Pasará a estado BORRADO.`)) {
+            try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                const { deleteProduct } = await import('../../services/product.service');
+                await deleteProduct(product.id);
+                setProducts(prev => prev.filter(p => p.id !== product.id));
+                setTotal(prev => prev - 1);
+                if (window.triggerSileo) window.triggerSileo('success', 'Producto borrado correctamente');
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el producto');
+            } finally {
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+            }
         }
     };
 

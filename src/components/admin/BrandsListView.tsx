@@ -118,12 +118,12 @@ const BrandsListView: React.FC = () => {
             setBrands(brands.filter(b => b.id !== selectedBrand.id));
             setDeleteModal(false);
             if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('success', 'Marca eliminada');
+                (window as any).triggerSileo('success', 'Marca eliminada permanentemente');
             }
         } catch (error) {
             console.error('Error deleting brand:', error);
             if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'Error al eliminar la marca');
+                (window as any).triggerSileo('error', 'No se puede eliminar la marca. Verifique que no tenga productos asociados.');
             }
         } finally {
             setModalLoading(false);
