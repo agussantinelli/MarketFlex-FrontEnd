@@ -1,0 +1,129 @@
+.container {
+    padding: 2rem;
+    color: var(--green-cream);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: var(--neon-green);
+    margin-bottom: 0.5rem;
+}
+
+/* Stepper Styles */
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.stepper::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.stepCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.stepLabel {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.active .stepCircle {
+    background: var(--neon-green);
+    border-color: var(--neon-green);
+    color: var(--deep-black);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.active .stepLabel {
+    color: var(--neon-green);
+    font-weight: 700;
+}
+
+.completed .stepCircle {
+    background: var(--neon-green);
+    border-color: var(--neon-green);
+    color: var(--deep-black);
+}
+
+.completed .stepLabel {
+    color: var(--green-cream);
+}
+
+/* Form Sections */
+.viewContainer {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    min-height: 400px;
+    animation: fadeIn 0.3s ease;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stepper {
+        padding: 0;
+    }
+
+    .stepLabel {
+        display: none;
+    }
+}
