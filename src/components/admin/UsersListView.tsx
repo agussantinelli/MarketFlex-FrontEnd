@@ -36,11 +36,7 @@ export default function UsersListView() {
     }, [page, search, sort]);
 
     const handleEdit = (user: AdminUser) => {
-        // Placeholder for edit functionality
-        console.log('Edit user:', user.id);
-        if ((window as any).triggerSileo) {
-            (window as any).triggerSileo('info', `Editar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
-        }
+        window.location.href = `/admin/users/${user.id}`;
     };
 
     const handleDelete = (user: AdminUser) => {
