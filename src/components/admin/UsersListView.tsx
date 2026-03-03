@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { AdminUser, PaginatedResponse } from '../../types/admin.types';
 import { AdminService } from '../../services/admin.service';
-import { LuUser, LuPlus } from 'react-icons/lu';
+import { LuUser, LuPlus, LuPackage } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
+import UserPurchasesModal from './UserPurchasesModal';
 import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
 import dashboardStyles from './styles/dashboard.module.css';
@@ -16,6 +17,7 @@ export default function UsersListView() {
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('newest');
+    const [selectedUserForPurchases, setSelectedUserForPurchases] = useState<AdminUser | null>(null);
 
     const fetchUsers = async () => {
         if ((window as any).showAdminLoader) (window as any).showAdminLoader();
@@ -97,6 +99,39 @@ export default function UsersListView() {
             header: 'Registro',
             accessor: (user: AdminUser) => <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{new Date(user.creadoEn).toLocaleDateString()}</span>,
         },
+        {
+            header: 'Compras',
+            accessor: (user: AdminUser) => (
+                <button
+                    onClick={() => setSelectedUserForPurchases(user)}
+                    style={{
+                        background: 'rgba(0, 255, 136, 0.1)',
+                        color: 'var(--neon-green)',
+                        border: '1px solid rgba(0, 255, 136, 0.2)',
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(0, 255, 136, 0.2)';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(0, 255, 136, 0.1)';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                >
+                    <LuPackage size={14} />
+                    Ver
+                </button>
+            ),
+        },
     ];
 
     const sortOptions = [
@@ -153,6 +188,14 @@ export default function UsersListView() {
                 onEdit={handleEdit}
                 onDelete={handleDelete}
             />
+
+            {selectedUserForPurchases && (
+                <UserPurchasesModal
+                    userId={selectedUserForPurchases.id}
+                    userName={`${selectedUserForPurchases.nombre} ${selectedUserForPurchases.apellido}`}
+                    onClose={() => setSelectedUserForPurchases(null)}
+                />
+            )}
         </div>
     );
 }
