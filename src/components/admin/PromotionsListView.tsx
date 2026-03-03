@@ -1,14 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import type { Promotion } from '../../types/promotion.types';
 import { promotionService } from '../../services/promotion.service';
-const { getAll: getAllPromotionsAdmin, delete: deletePromotion } = promotionService;
-import { LuPlus, LuPencil, LuTrash2, LuClock, LuCalendar, LuTag, LuStar, LuInbox } from 'react-icons/lu';
+import PromotionForm from './PromotionForm';
+import { LuPlus, LuPencil, LuTrash2, LuClock, LuCalendar, LuTag, LuStar, LuInbox, LuX } from 'react-icons/lu';
 import styles from './styles/SalesListView.module.css';
 import { getImageUrl } from '../../lib/url';
+
+const { getAll: getAllPromotionsAdmin, delete: deletePromotion, create: createPromotion, update: updatePromotion, getById: getPromotionById } = promotionService;
 
 const PromotionsListView: React.FC = () => {
     const [promotions, setPromotions] = useState<Promotion[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedPromotion, setSelectedPromotion] = useState<Promotion | undefined>(undefined);
+    const [formLoading, setFormLoading] = useState(false);
 
     const fetchPromotions = useCallback(async () => {
         setLoading(true);
@@ -19,8 +24,8 @@ const PromotionsListView: React.FC = () => {
 
             // Sort: Featured promotions first
             const sortedData = [...data].sort((a, b) => {
-                if (a.destacado && !b.destacado) return -1;
-                if (!a.destacado && b.destacado) return 1;
+                if (a.esDestacado && !b.esDestacado) return -1;
+                if (!a.esDestacado && b.esDestacado) return 1;
                 return 0;
             });
 
@@ -42,11 +47,45 @@ const PromotionsListView: React.FC = () => {
     }, [fetchPromotions]);
 
     const handleCreate = () => {
-        if (window.triggerSileo) window.triggerSileo('info', 'Crear promoción (En desarrollo)');
+        setSelectedPromotion(undefined);
+        setIsModalOpen(true);
     };
 
-    const handleEdit = (promo: Promotion) => {
-        if (window.triggerSileo) window.triggerSileo('info', `Editar ${promo.nombre} (En desarrollo)`);
+    const handleEdit = async (promo: Promotion) => {
+        setLoading(true);
+        if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+        try {
+            // Fetch fresh data including relations
+            const response = await getPromotionById(promo.id);
+            setSelectedPromotion(response.data);
+            setIsModalOpen(true);
+        } catch (error) {
+            console.error('Error fetching promotion details:', error);
+            if (window.triggerSileo) window.triggerSileo('error', 'No se pudieron cargar los detalles de la promoción');
+        } finally {
+            setLoading(false);
+            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+        }
+    };
+
+    const handleFormSubmit = async (data: any) => {
+        setFormLoading(true);
+        try {
+            if (selectedPromotion) {
+                await updatePromotion(selectedPromotion.id, data);
+                if (window.triggerSileo) window.triggerSileo('success', 'Promoción actualizada');
+            } else {
+                await createPromotion(data);
+                if (window.triggerSileo) window.triggerSileo('success', 'Promoción creada');
+            }
+            setIsModalOpen(false);
+            fetchPromotions();
+        } catch (error) {
+            console.error('Error saving promotion:', error);
+            if (window.triggerSileo) window.triggerSileo('error', 'Error al guardar la promoción');
+        } finally {
+            setFormLoading(false);
+        }
     };
 
     const handleDelete = async (promo: Promotion) => {
@@ -211,7 +250,7 @@ const PromotionsListView: React.FC = () => {
                                     <h3 style={{ margin: 0, fontSize: '1.35rem', color: '#f8fafc', fontWeight: '800', lineHeight: '1.2' }}>
                                         {promo.nombre}
                                     </h3>
-                                    {promo.destacado && (
+                                    {promo.esDestacado && (
                                         <LuStar size={20} style={{ color: '#fbbf24', fill: '#fbbf24' }} title="Destacado" />
                                     )}
                                 </div>
@@ -337,6 +376,71 @@ const PromotionsListView: React.FC = () => {
                     );
                 })}
             </div>
+
+            {/* Modal Overlay */}
+            {isModalOpen && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.85)',
+                    backdropFilter: 'blur(8px)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem'
+                }}>
+                    <div style={{
+                        background: '#0f172a',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '24px',
+                        width: '100%',
+                        maxWidth: '1000px',
+                        maxHeight: '90vh',
+                        overflowY: 'auto',
+                        padding: '2.5rem',
+                        boxShadow: '0 25px 50px -12px rgba(0, 255, 136, 0.1)'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                            <div>
+                                <h2 style={{ fontSize: '2rem', fontWeight: '800', margin: 0 }}>
+                                    {selectedPromotion ? 'Editar Promoción' : 'Nueva Promoción'}
+                                </h2>
+                                <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0' }}>
+                                    Configure los detalles y el alcance de su oferta.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    border: 'none',
+                                    color: '#94a3b8',
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <LuX size={24} />
+                            </button>
+                        </div>
+
+                        <PromotionForm
+                            promotion={selectedPromotion}
+                            onSubmit={handleFormSubmit}
+                            onCancel={() => setIsModalOpen(false)}
+                            loading={formLoading}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
