@@ -8,7 +8,6 @@ import type { AdminPurchase } from '../../types/admin.types';
 const ESTADO_OPTIONS = [
     { value: 'COMPLETADO', label: 'Completado', icon: LuCheck, color: 'var(--neon-green)' },
     { value: 'PENDIENTE', label: 'Pendiente', icon: LuClock, color: 'var(--warning-yellow, #f59e0b)' },
-    { value: 'PROCESANDO', label: 'Procesando', icon: LuRefreshCcw, color: 'var(--info-blue, #3b82f6)' },
     { value: 'CANCELADO', label: 'Cancelado', icon: LuCircleAlert, color: 'var(--error-red, #f87171)' },
 ];
 
