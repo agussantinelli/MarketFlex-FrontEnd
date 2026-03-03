@@ -73,10 +73,6 @@ const CategoriesListView: React.FC = () => {
                         if ((window as any).triggerSileo) {
                             (window as any).triggerSileo('success', 'Categoría eliminada permanentemente');
                         }
-                    } else {
-                        if ((window as any).triggerSileo) {
-                            (window as any).triggerSileo('error', 'No se puede eliminar la categoría porque tiene productos asociados');
-                        }
                     }
                 } catch (error) {
                     console.error('Error deleting category:', error);
@@ -205,13 +201,15 @@ const CategoriesListView: React.FC = () => {
                                         >
                                             <LuPencil size={18} />
                                         </button>
-                                        <button
-                                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                                            onClick={() => handleDeleteClick(category)}
-                                            title="Eliminar"
-                                        >
-                                            <LuTrash2 size={18} />
-                                        </button>
+                                        {(category.productCount === undefined || category.productCount === 0) && (
+                                            <button
+                                                className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                                                onClick={() => handleDeleteClick(category)}
+                                                title="Eliminar"
+                                            >
+                                                <LuTrash2 size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>

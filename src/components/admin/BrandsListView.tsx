@@ -72,11 +72,6 @@ const BrandsListView: React.FC = () => {
                     if ((window as any).triggerSileo) {
                         (window as any).triggerSileo('success', 'Marca eliminada permanentemente');
                     }
-                } catch (error) {
-                    console.error('Error deleting brand:', error);
-                    if ((window as any).triggerSileo) {
-                        (window as any).triggerSileo('error', 'No se puede eliminar la marca. Verifique que no tenga productos asociados.');
-                    }
                 } finally {
                     setLoading(false);
                     if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
@@ -195,13 +190,15 @@ const BrandsListView: React.FC = () => {
                                         >
                                             <LuPencil size={18} />
                                         </button>
-                                        <button
-                                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                                            onClick={() => handleDeleteClick(brand)}
-                                            title="Eliminar"
-                                        >
-                                            <LuTrash2 size={18} />
-                                        </button>
+                                        {(brand.productCount === undefined || brand.productCount === 0) && (
+                                            <button
+                                                className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                                                onClick={() => handleDeleteClick(brand)}
+                                                title="Eliminar"
+                                            >
+                                                <LuTrash2 size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>

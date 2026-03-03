@@ -72,11 +72,6 @@ const CharacteristicsListView: React.FC = () => {
                     if ((window as any).triggerSileo) {
                         (window as any).triggerSileo('success', 'Característica eliminada');
                     }
-                } catch (error) {
-                    console.error('Error deleting characteristic:', error);
-                    if ((window as any).triggerSileo) {
-                        (window as any).triggerSileo('error', 'Error al eliminar la característica');
-                    }
                 } finally {
                     setLoading(false);
                     if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
@@ -176,13 +171,15 @@ const CharacteristicsListView: React.FC = () => {
                                         >
                                             <LuPencil size={18} />
                                         </button>
-                                        <button
-                                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                                            onClick={() => handleDeleteClick(char)}
-                                            title="Eliminar"
-                                        >
-                                            <LuTrash2 size={18} />
-                                        </button>
+                                        {(char.productCount === undefined || char.productCount === 0) && (
+                                            <button
+                                                className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                                                onClick={() => handleDeleteClick(char)}
+                                                title="Eliminar"
+                                            >
+                                                <LuTrash2 size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>
