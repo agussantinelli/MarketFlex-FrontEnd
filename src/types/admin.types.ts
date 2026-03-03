@@ -65,6 +65,7 @@ export type AdminPurchase = {
     metodoPago: string;
     cantCuotas: number;
     estado: string;
+    ventaEnFisico?: boolean;
     usuario: {
         nombre: string;
         apellido: string;
