@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
+import SaleDetailModal from './SaleDetailModal';
 import styles from './styles/SalesListView.module.css';
 
 const SalesListView = () => {
@@ -12,7 +13,7 @@ const SalesListView = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-
+    const [selectedSale, setSelectedSale] = useState<AdminPurchase | null>(null);
 
     useEffect(() => {
         const fetchSales = async () => {
@@ -107,9 +108,13 @@ const SalesListView = () => {
         },
         {
             header: 'Acciones',
-            accessor: () => (
+            accessor: (sale: AdminPurchase) => (
                 <div className={styles.actions}>
-                    <button className={styles.actionBtn} title="Ver detalles">
+                    <button
+                        className={styles.actionBtn}
+                        title="Ver detalles"
+                        onClick={() => setSelectedSale(sale)}
+                    >
                         <LuEye size={18} />
                     </button>
                     <button className={styles.actionBtn} title="Editar">
@@ -151,6 +156,13 @@ const SalesListView = () => {
                 searchTerm={searchQuery}
                 searchPlaceholder="Buscar por comprador..."
             />
+
+            {selectedSale && (
+                <SaleDetailModal
+                    sale={selectedSale}
+                    onClose={() => setSelectedSale(null)}
+                />
+            )}
         </div>
     );
 };
