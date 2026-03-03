@@ -82,5 +82,31 @@ export const AdminService = {
                 message: errorData?.message || 'Error al crear el usuario'
             };
         }
+    },
+    async getUserById(id: string): Promise<{ status: string; data?: import('../types/admin.types').AdminUser & any; message?: string }> {
+        try {
+            const result = await api.get(`admin/users/${id}`).json<{ status: string; data: any }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al obtener el usuario'
+            };
+        }
+    },
+    async updateUser(id: string, data: any): Promise<{ status: string; message?: string }> {
+        try {
+            const result = await api.patch(`admin/users/${id}`, {
+                json: data
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar el usuario'
+            };
+        }
     }
 };
