@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styles from './styles/RegisterSaleView.module.css';
 import dashboardStyles from './styles/dashboard.module.css';
-import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus, LuPackage, LuMinus, LuTrash2, LuDollarSign, LuCreditCard, LuRepeat, LuStore, LuTruck } from 'react-icons/lu';
+import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus, LuPackage, LuMinus, LuTrash2, LuDollarSign, LuCreditCard, LuRepeat, LuStore, LuTruck, LuTag } from 'react-icons/lu';
 import { api } from '../../lib/api';
 import { AdminService } from '../../services/admin.service';
 import { getImageUrl } from '../../lib/url';
+import { calculatePromotions } from '../../store/promotionEngine';
+import type { CartItem } from '../../types/cart.types';
 
 // Types
 export interface SelectedProduct {
@@ -14,6 +16,9 @@ export interface SelectedProduct {
     cantidad: number;
     stock: number;
     foto: string | null;
+    precioConDescuento: number | null;
+    descuentoActivo: { nombre: string; porcentaje: number | null; montoFijo: number | null } | null;
+    promocionActiva: { nombre: string; tipoPromocion: string; cantCompra: number | null; cantPaga: number | null; porcentajeDescuentoSegunda: string | null } | null;
 }
 
 const RegisterSaleView: React.FC = () => {
@@ -74,7 +79,10 @@ const RegisterSaleView: React.FC = () => {
                 precio: parseFloat(product.precioActual),
                 cantidad: 1,
                 stock: product.stock,
-                foto: product.foto
+                foto: product.foto,
+                precioConDescuento: product.precioConDescuento ? parseFloat(product.precioConDescuento) : null,
+                descuentoActivo: product.descuentoActivo || null,
+                promocionActiva: product.promocionActiva || null
             }]);
         }
 
@@ -100,6 +108,33 @@ const RegisterSaleView: React.FC = () => {
             return p;
         }));
     };
+
+    // Promotion calculation
+    const promoResult = useMemo(() => {
+        if (selectedProducts.length === 0) return { subtotal: 0, discount: 0, total: 0, appliedPromotions: [] };
+        const cartItems: CartItem[] = selectedProducts.map(p => ({
+            id: p.id,
+            nombre: p.nombre,
+            descripcion: null,
+            caracteristicas: [],
+            foto: p.foto,
+            categoria: null,
+            subcategoria: null,
+            precioActual: p.precio,
+            precioConDescuento: p.precioConDescuento,
+            descuentoActivo: p.descuentoActivo,
+            esDestacado: false,
+            stock: p.stock,
+            envioGratis: false,
+            marca: null,
+            autor: null,
+            fechaLlegada: null,
+            promocionActiva: p.promocionActiva,
+            quantity: p.cantidad,
+            cantidad: p.cantidad
+        } as any));
+        return calculatePromotions(cartItems);
+    }, [selectedProducts]);
 
     const renderStep = () => {
         switch (currentStep) {
@@ -205,7 +240,6 @@ const RegisterSaleView: React.FC = () => {
                     </div>
                 );
             case 2:
-                const subtotal = selectedProducts.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
                 return (
                     <div className={styles.stepContent}>
                         <div className={styles.formGroup}>
@@ -290,17 +324,33 @@ const RegisterSaleView: React.FC = () => {
                             </div>
                             <div className={styles.summaryRow}>
                                 <span className={styles.summaryLabel}>Subtotal</span>
-                                <span className={styles.summaryValue}>${subtotal.toLocaleString()}</span>
+                                <span className={styles.summaryValue}>${promoResult.subtotal.toLocaleString()}</span>
                             </div>
+                            {promoResult.discount > 0 && (
+                                <>
+                                    {promoResult.appliedPromotions.map((promo, idx) => (
+                                        <div key={idx} className={styles.summaryRow} style={{ borderColor: 'rgba(0,255,136,0.08)' }}>
+                                            <span className={styles.summaryLabel} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                                <LuTag size={14} style={{ color: 'var(--neon-green)', flexShrink: 0 }} />
+                                                {promo.nombre}
+                                            </span>
+                                            <span style={{ color: 'var(--neon-green)', fontWeight: 600, fontSize: '0.9rem' }}>-${promo.monto.toLocaleString()}</span>
+                                        </div>
+                                    ))}
+                                    <div className={styles.summaryRow}>
+                                        <span className={styles.summaryLabel} style={{ fontWeight: 700 }}>Descuento Total</span>
+                                        <span style={{ color: 'var(--neon-green)', fontWeight: 700, fontSize: '1rem' }}>-${promoResult.discount.toLocaleString()}</span>
+                                    </div>
+                                </>
+                            )}
                             <div className={styles.summaryRow}>
                                 <span className={styles.summaryLabel}>Total a Pagar</span>
-                                <span className={styles.summaryTotal}>${subtotal.toLocaleString()}</span>
+                                <span className={styles.summaryTotal}>${promoResult.total.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
                 );
             case 3:
-                const total = selectedProducts.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
                 return (
                     <div className={styles.stepContent}>
                         <h4 className={styles.sectionLabel}>Resumen de la Venta</h4>
@@ -353,11 +403,50 @@ const RegisterSaleView: React.FC = () => {
                             ))}
                         </div>
 
+                        {promoResult.appliedPromotions.length > 0 && (
+                            <>
+                                <h4 className={styles.sectionLabel} style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '1.5rem' }}>
+                                    <LuTag size={16} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+                                    Promociones Aplicadas
+                                </h4>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '1.5rem' }}>
+                                    {promoResult.appliedPromotions.map((promo, idx) => (
+                                        <div key={idx} style={{
+                                            backgroundColor: 'rgba(0, 255, 136, 0.08)',
+                                            padding: '8px 14px',
+                                            borderRadius: '10px',
+                                            border: '1px solid rgba(0, 255, 136, 0.15)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            fontSize: '0.8rem'
+                                        }}>
+                                            <span style={{ fontWeight: 600, color: 'var(--neon-green)' }}>{promo.nombre}</span>
+                                            <span style={{ opacity: 0.6 }}>|</span>
+                                            <span style={{ color: 'var(--neon-green)' }}>-${promo.monto.toLocaleString()}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
                         <div className={styles.summaryCard} style={{ marginTop: '2rem', border: '1px solid rgba(0, 255, 136, 0.2)' }}>
+                            {promoResult.discount > 0 && (
+                                <>
+                                    <div className={styles.summaryRow}>
+                                        <span className={styles.summaryLabel}>Subtotal</span>
+                                        <span className={styles.summaryValue}>${promoResult.subtotal.toLocaleString()}</span>
+                                    </div>
+                                    <div className={styles.summaryRow}>
+                                        <span className={styles.summaryLabel} style={{ color: 'var(--neon-green)' }}>Descuento</span>
+                                        <span style={{ color: 'var(--neon-green)', fontWeight: 700 }}>-${promoResult.discount.toLocaleString()}</span>
+                                    </div>
+                                </>
+                            )}
                             <div className={styles.summaryRow} style={{ borderBottom: 'none', padding: '0' }}>
                                 <span style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--green-cream)' }}>TOTAL FINAL</span>
                                 <span className={styles.summaryTotal} style={{ fontSize: '2rem' }}>
-                                    ${total.toLocaleString()}
+                                    ${promoResult.total.toLocaleString()}
                                 </span>
                             </div>
                         </div>
