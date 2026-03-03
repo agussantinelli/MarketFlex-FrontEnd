@@ -161,5 +161,41 @@ export const AdminService = {
                 message: errorData?.message || 'Error al actualizar la venta'
             };
         }
+    },
+    async deletePurchase(id: string): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.delete(`purchases/${id}`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al eliminar la compra'
+            };
+        }
+    },
+    async deleteClaim(compraId: string, nroReclamo: number): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.delete(`claims/${compraId}/${nroReclamo}`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al eliminar el reclamo'
+            };
+        }
+    },
+    async deleteSupportMessage(id: string): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.delete(`support/${id}`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al eliminar el mensaje de soporte'
+            };
+        }
     }
 };

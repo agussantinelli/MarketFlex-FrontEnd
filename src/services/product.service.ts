@@ -138,3 +138,7 @@ export const getProductById = async (id: string): Promise<Product | null> => {
         return null;
     }
 };
+
+export const deleteProduct = async (id: string): Promise<void> => {
+    await api.delete(`products/${id}`);
+};
