@@ -3,10 +3,11 @@ import { AdminService } from '../../services/admin.service';
 import type { AdminPurchase } from '../../types/admin.types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert } from 'react-icons/lu';
+import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert, LuPlus } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
 import SaleDetailModal from './SaleDetailModal';
 import styles from './styles/SalesListView.module.css';
+import dashboardStyles from './styles/dashboard.module.css';
 
 const SalesListView = () => {
     const [sales, setSales] = useState<AdminPurchase[]>([]);
@@ -143,7 +144,12 @@ const SalesListView = () => {
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <h1>Listado de Ventas</h1>
+                    <div className={dashboardStyles.dashboardHeader}>
+                        <h1>Listado de Ventas</h1>
+                        <a href="/admin/sales/new" className={dashboardStyles.createButton} style={{ textDecoration: 'none' }}>
+                            <LuPlus /> Registrar Venta
+                        </a>
+                    </div>
                     <p>Gestiona y visualiza todas las transacciones del sistema</p>
                 </div>
             </header>
