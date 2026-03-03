@@ -1,0 +1,64 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import SubcategoriesListView from "../../../../components/admin/SubcategoriesListView";
+import ConfirmationModal from "../../../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../../../components/common/styles/ConfirmationModal.module.css";
+
+const { id } = Astro.params;
+
+if (!id) {
+    return Astro.redirect("/admin/categories");
+}
+---
+
+<AdminLayout
+    title="Gestión de Subcategorías | MarketFlex Admin"
+    parentTitle="Categorías"
+    parentUrl="/admin/categories"
+>
+    <SubcategoriesListView client:only="react" categoriaId={id} />
+
+    <ConfirmationModal
+        id="delete-subcategory-modal"
+        title="Borrar Subcategoría"
+        message="¿Estás seguro de que deseas borrar esta subcategoría? Solo se podrá borrar si no tiene productos asociados."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
+</AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteSubcategoryModal = (onConfirm) => {
+        const modal = document.getElementById("delete-subcategory-modal");
+        const confirmBtn = document.getElementById(
+            "delete-subcategory-modal-confirm",
+        );
+        const cancelBtn = document.getElementById(
+            "delete-subcategory-modal-cancel",
+        );
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>
