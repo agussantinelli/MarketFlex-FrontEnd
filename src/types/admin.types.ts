@@ -63,6 +63,7 @@ export type AdminPurchase = {
     fechaHora: string;
     total: number;
     metodoPago: string;
+    cantCuotas: number;
     estado: string;
     usuario: {
         nombre: string;
@@ -72,6 +73,18 @@ export type AdminPurchase = {
         nombreProducto: string;
         cantidad: number;
         subtotal: number;
+    }>;
+    detalleEnvio: {
+        calle: string;
+        numero: string;
+        piso?: string;
+        depto?: string;
+        ciudad: string;
+        provincia: string;
+    } | null;
+    promociones: Array<{
+        nombre: string;
+        montoDescuento: number;
     }>;
 };
 
