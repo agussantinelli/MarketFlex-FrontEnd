@@ -1,0 +1,14 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import UserEditView from "../../../components/admin/UserEditView.tsx";
+
+const { id } = Astro.params;
+---
+
+<AdminLayout
+    title="Editar Usuario"
+    parentTitle="Usuarios"
+    parentUrl="/admin/users"
+>
+    <UserEditView client:only="react" userId={id as string} />
+</AdminLayout>
