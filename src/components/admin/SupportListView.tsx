@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import type { SupportMessageOutput } from '../../types/support.types';
 import { getSupportMessages, replyToSupportMessage } from '../../services/support.service';
-import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight, LuSend, LuX } from 'react-icons/lu';
+import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight, LuSend, LuX, LuLoader } from 'react-icons/lu';
 import styles from './styles/SalesListView.module.css';
 
 const SupportListView: React.FC = () => {
@@ -206,20 +206,47 @@ const SupportListView: React.FC = () => {
                                     placeholder="Escribe tu respuesta aquí..."
                                     style={{
                                         width: '100%',
-                                        minHeight: '100px',
-                                        background: 'transparent',
-                                        border: 'none',
+                                        minHeight: '120px',
+                                        background: 'rgba(0, 0, 0, 0.2)',
+                                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                                        borderRadius: '10px',
+                                        padding: '12px',
                                         color: '#fff',
                                         outline: 'none',
                                         resize: 'vertical',
-                                        fontFamily: 'inherit'
+                                        fontFamily: 'inherit',
+                                        fontSize: '0.95rem',
+                                        transition: 'border-color 0.2s',
                                     }}
+                                    onFocus={(e) => e.currentTarget.style.borderColor = 'var(--neon-blue)'}
+                                    onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
                                     autoFocus
                                 />
-                                <div style={{ display: 'flex', gap: '10px' }}>
+                                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                                     <button
                                         onClick={() => setReplyingTo(null)}
-                                        style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                                        style={{
+                                            background: 'rgba(255, 255, 255, 0.05)',
+                                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                                            color: '#94a3b8',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            padding: '10px 18px',
+                                            borderRadius: '10px',
+                                            fontSize: '0.85rem',
+                                            fontWeight: '600',
+                                            transition: 'all 0.2s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                                            e.currentTarget.style.color = '#fff';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                                            e.currentTarget.style.color = '#94a3b8';
+                                        }}
                                     >
                                         <LuX size={16} /> Cancelar
                                     </button>
@@ -228,22 +255,54 @@ const SupportListView: React.FC = () => {
                                         disabled={sendingReply || !replyText.trim()}
                                         style={{
                                             marginLeft: 'auto',
-                                            background: 'var(--neon-blue)',
-                                            color: '#000',
+                                            background: (sendingReply || !replyText.trim())
+                                                ? 'rgba(0, 255, 157, 0.1)'
+                                                : 'linear-gradient(135deg, #00ff9d, #00d2ff)',
+                                            color: (sendingReply || !replyText.trim()) ? '#64748b' : '#000',
                                             border: 'none',
-                                            padding: '6px 15px',
-                                            borderRadius: '4px',
-                                            fontWeight: 'bold',
-                                            cursor: 'pointer',
+                                            padding: '10px 24px',
+                                            borderRadius: '10px',
+                                            fontWeight: '800',
+                                            cursor: (sendingReply || !replyText.trim()) ? 'not-allowed' : 'pointer',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: '8px',
-                                            opacity: (sendingReply || !replyText.trim()) ? 0.5 : 1
+                                            gap: '10px',
+                                            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                                            boxShadow: (sendingReply || !replyText.trim())
+                                                ? 'none'
+                                                : '0 4px 15px rgba(0, 255, 157, 0.2)',
+                                            fontSize: '0.9rem'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!sendingReply && replyText.trim()) {
+                                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 255, 157, 0.4)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = (sendingReply || !replyText.trim())
+                                                ? 'none'
+                                                : '0 4px 15px rgba(0, 255, 157, 0.2)';
                                         }}
                                     >
-                                        <LuSend size={16} /> {sendingReply ? 'Enviando...' : 'Enviar Respuesta'}
+                                        {sendingReply ? (
+                                            <>
+                                                <LuLoader style={{ animation: 'spin 1s linear infinite' }} size={18} /> Enviando...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <LuSend size={18} /> Enviar Respuesta
+                                            </>
+                                        )}
                                     </button>
                                 </div>
+                                <style>{`
+                                    @keyframes spin {
+                                        from { transform: rotate(0deg); }
+                                        to { transform: rotate(360deg); }
+                                    }
+                                `}</style>
                             </div>
                         ) : (
                             <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
