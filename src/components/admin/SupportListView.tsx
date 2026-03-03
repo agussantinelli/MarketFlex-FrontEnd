@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import type { SupportMessageOutput } from '../../types/support.types';
-import { getSupportMessages } from '../../services/support.service';
-import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight } from 'react-icons/lu';
+import { getSupportMessages, replyToSupportMessage } from '../../services/support.service';
+import { LuMail, LuCheck, LuClock, LuTrash2, LuInbox, LuArrowRight, LuSend, LuX } from 'react-icons/lu';
 import styles from './styles/SalesListView.module.css';
 
 const SupportListView: React.FC = () => {
     const [messages, setMessages] = useState<SupportMessageOutput[]>([]);
     const [loading, setLoading] = useState(true);
+    const [replyingTo, setReplyingTo] = useState<string | null>(null);
+    const [replyText, setReplyText] = useState('');
+    const [sendingReply, setSendingReply] = useState(false);
 
     const fetchMessages = useCallback(async () => {
         setLoading(true);
@@ -18,11 +21,8 @@ const SupportListView: React.FC = () => {
             if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
         } catch (error) {
             console.error('Error al cargar los mensajes de soporte:', error);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'Error al cargar los mensajes.');
-            }
-            setLoading(false); // Ensure loading is set to false even on error
-            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader(); // Ensure loader is hidden even on error
+            setLoading(false);
+            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
         }
     }, []);
 
@@ -30,8 +30,31 @@ const SupportListView: React.FC = () => {
         fetchMessages();
     }, [fetchMessages]);
 
-    const handleReply = (msg: SupportMessageOutput) => {
-        if (window.triggerSileo) window.triggerSileo('info', `Responder a ${msg.email} (En desarrollo)`);
+    const handleReplyClick = (id: string) => {
+        setReplyingTo(id);
+        setReplyText('');
+    };
+
+    const handleSendReply = async (id: string) => {
+        if (!replyText.trim()) return;
+        setSendingReply(true);
+        try {
+            const result = await replyToSupportMessage(id, replyText);
+            if (result.status === 'success') {
+                if (window.triggerSileo) window.triggerSileo('success', 'Respuesta enviada y mail enviado correctamente');
+                setMessages((prev: SupportMessageOutput[]) =>
+                    prev.map((m: SupportMessageOutput) =>
+                        m.id === id ? { ...m, estado: 'Respondido', respuesta: replyText } : m
+                    )
+                );
+                setReplyingTo(null);
+                setReplyText('');
+            }
+        } catch (error) {
+            // Error managed by global interceptor
+        } finally {
+            setSendingReply(false);
+        }
     };
 
     const handleDelete = async (msg: SupportMessageOutput) => {
@@ -42,7 +65,7 @@ const SupportListView: React.FC = () => {
                     const { AdminService } = await import('../../services/admin.service');
                     const result = await AdminService.deleteSupportMessage(msg.id);
                     if (result.status === 'success') {
-                        setMessages(prev => prev.filter(m => m.id !== msg.id));
+                        setMessages((prev: SupportMessageOutput[]) => prev.filter((m: SupportMessageOutput) => m.id !== msg.id));
                         if (window.triggerSileo) window.triggerSileo('success', 'Mensaje de soporte borrado correctamente');
                     } else {
                         if (window.triggerSileo) window.triggerSileo('error', result.message);
@@ -68,9 +91,7 @@ const SupportListView: React.FC = () => {
         }
     };
 
-    if (loading && messages.length === 0) {
-        // Let global loader handle
-    }
+    if (loading && messages.length === 0) return null;
 
     if (messages.length === 0) {
         return (
@@ -93,7 +114,7 @@ const SupportListView: React.FC = () => {
 
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
                 gap: '1.5rem'
             }}>
                 {messages.map(msg => (
@@ -106,20 +127,11 @@ const SupportListView: React.FC = () => {
                         flexDirection: 'column',
                         gap: '1rem',
                         transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                    }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-5px)';
-                            e.currentTarget.style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.2)';
-                            e.currentTarget.style.borderColor = 'rgba(0, 255, 157, 0.3)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                        }}
-                    >
-                        {/* Header: Status and Date */}
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}>
+                        {/* Status Label */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '600' }}>
                                 {getStatusIcon(msg.estado)}
@@ -139,85 +151,142 @@ const SupportListView: React.FC = () => {
                             </span>
                         </div>
 
-                        {/* Body: Sender and Subject */}
+                        {/* Content */}
                         <div>
                             <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.1rem', color: '#f8fafc', fontWeight: '600' }}>
                                 {msg.asunto}
                             </h3>
                             <div style={{ fontSize: '0.9rem', color: '#cbd5e1', marginBottom: '0.75rem' }}>
                                 De: <strong style={{ color: '#fff' }}>{msg.nombre}</strong> ({msg.email})
-                                {msg.usuarioId && <span style={{ marginLeft: '8px', padding: '2px 6px', background: 'rgba(0,255,157,0.1)', color: 'var(--neon-green)', borderRadius: '4px', fontSize: '0.75rem' }}>Acreditado</span>}
                             </div>
                             <div style={{
                                 fontSize: '0.95rem',
                                 color: '#94a3b8',
-                                lineHeight: '1.5',
                                 background: 'rgba(15, 23, 42, 0.5)',
                                 padding: '1rem',
                                 borderRadius: '8px',
                                 borderLeft: '3px solid var(--neon-blue)',
-                                maxHeight: '100px',
-                                overflowY: 'auto',
                                 wordBreak: 'break-word'
                             }}>
                                 "{msg.mensaje}"
                             </div>
                         </div>
 
-                        {/* Footer: Actions */}
-                        <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                            <button
-                                onClick={() => handleReply(msg)}
-                                style={{
-                                    flex: 1,
-                                    background: 'linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 200, 255, 0.1))',
-                                    border: '1px solid rgba(0, 255, 157, 0.3)',
-                                    color: 'var(--neon-green)',
-                                    padding: '0.75rem',
-                                    borderRadius: '6px',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    fontWeight: '600',
-                                    transition: 'all 0.2s',
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 255, 157, 0.2), rgba(0, 200, 255, 0.2))';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 200, 255, 0.1))';
-                                }}
-                            >
-                                <LuArrowRight size={18} />
-                                Responder
-                            </button>
-                            <button
-                                onClick={() => handleDelete(msg)}
-                                style={{
-                                    background: 'transparent',
-                                    border: '1px solid rgba(255, 100, 100, 0.3)',
-                                    color: '#f87171',
-                                    padding: '0.75rem 1rem',
-                                    borderRadius: '6px',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    transition: 'all 0.2s',
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = 'rgba(255, 100, 100, 0.1)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = 'transparent';
-                                }}
-                                title="Eliminar mensaje"
-                            >
-                                <LuTrash2 size={18} />
-                            </button>
-                        </div>
+                        {/* Previous Response if any */}
+                        {msg.respuesta && (
+                            <div style={{
+                                fontSize: '0.9rem',
+                                color: 'var(--neon-green)',
+                                background: 'rgba(0, 255, 157, 0.05)',
+                                padding: '0.8rem',
+                                borderRadius: '8px',
+                                borderLeft: '3px solid var(--neon-green)',
+                                marginTop: '0.5rem'
+                            }}>
+                                <div style={{ fontWeight: 'bold', marginBottom: '4px', fontSize: '0.75rem' }}>RESPUESTA ENVIADA:</div>
+                                "{msg.respuesta}"
+                            </div>
+                        )}
+
+                        {/* Inline Reply Form */}
+                        {replyingTo === msg.id ? (
+                            <div style={{
+                                marginTop: '1rem',
+                                padding: '1rem',
+                                background: 'rgba(15, 23, 42, 0.8)',
+                                borderRadius: '8px',
+                                border: '1px solid var(--neon-blue)',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '10px'
+                            }}>
+                                <textarea
+                                    value={replyText}
+                                    onChange={(e) => setReplyText(e.target.value)}
+                                    placeholder="Escribe tu respuesta aquí..."
+                                    style={{
+                                        width: '100%',
+                                        minHeight: '100px',
+                                        background: 'transparent',
+                                        border: 'none',
+                                        color: '#fff',
+                                        outline: 'none',
+                                        resize: 'vertical',
+                                        fontFamily: 'inherit'
+                                    }}
+                                    autoFocus
+                                />
+                                <div style={{ display: 'flex', gap: '10px' }}>
+                                    <button
+                                        onClick={() => setReplyingTo(null)}
+                                        style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                                    >
+                                        <LuX size={16} /> Cancelar
+                                    </button>
+                                    <button
+                                        onClick={() => handleSendReply(msg.id)}
+                                        disabled={sendingReply || !replyText.trim()}
+                                        style={{
+                                            marginLeft: 'auto',
+                                            background: 'var(--neon-blue)',
+                                            color: '#000',
+                                            border: 'none',
+                                            padding: '6px 15px',
+                                            borderRadius: '4px',
+                                            fontWeight: 'bold',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            opacity: (sendingReply || !replyText.trim()) ? 0.5 : 1
+                                        }}
+                                    >
+                                        <LuSend size={16} /> {sendingReply ? 'Enviando...' : 'Enviar Respuesta'}
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                <button
+                                    onClick={() => handleReplyClick(msg.id)}
+                                    style={{
+                                        flex: 1,
+                                        background: 'linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 200, 255, 0.1))',
+                                        border: '1px solid rgba(0, 255, 157, 0.3)',
+                                        color: 'var(--neon-green)',
+                                        padding: '0.75rem',
+                                        borderRadius: '6px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        fontWeight: '600',
+                                        transition: 'all 0.2s',
+                                    }}
+                                >
+                                    <LuArrowRight size={18} />
+                                    Responder
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(msg)}
+                                    style={{
+                                        background: 'transparent',
+                                        border: '1px solid rgba(255, 100, 100, 0.3)',
+                                        color: '#f87171',
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '6px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        transition: 'all 0.2s',
+                                    }}
+                                >
+                                    <LuTrash2 size={18} />
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
