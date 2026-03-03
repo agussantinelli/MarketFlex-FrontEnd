@@ -117,5 +117,17 @@ export const AdminService = {
             console.error('Error fetching user purchases:', error);
             return [];
         }
+    },
+    async deleteUser(id: string): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.delete(`admin/users/${id}`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al desactivar el usuario'
+            };
+        }
     }
 };
