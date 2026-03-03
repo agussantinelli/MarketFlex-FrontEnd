@@ -89,7 +89,7 @@ export default function UsersListView() {
                     color: user.rol === 'admin' ? 'var(--neon-green)' : user.rol === 'seller' ? '#a855f7' : 'var(--text-muted)',
                     border: user.rol === 'admin' ? '1px solid rgba(0, 255, 136, 0.2)' : user.rol === 'seller' ? '1px solid rgba(168, 85, 247, 0.2)' : '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
-                    {user.rol === 'seller' ? 'Vendedor' : user.rol}
+                    {user.rol === 'admin' ? 'Administrador' : user.rol === 'seller' ? 'Vendedor' : 'Cliente'}
                 </span>
             ),
         },
