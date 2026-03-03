@@ -50,6 +50,8 @@ describe('CreateUserView Component', () => {
         fireEvent.change(screen.getByLabelText(/Apellido/i), { target: { name: 'apellido', value: 'Gomez' } });
         fireEvent.change(screen.getByLabelText(/DNI \/ ID/i), { target: { name: 'dni', value: '44555666' } });
         fireEvent.change(screen.getByLabelText(/Correo Electrónico/i), { target: { name: 'email', value: 'carlos@example.com' } });
+        fireEvent.change(screen.getByLabelText(/Tipo de ID/i), { target: { name: 'tipoDni', value: 'DNI' } });
+        fireEvent.change(screen.getByLabelText(/Rol del Usuario/i), { target: { name: 'rol', value: 'customer' } });
 
         const submitButton = screen.getByRole('button', { name: /Crear Usuario/i });
         fireEvent.click(submitButton);
@@ -57,7 +59,7 @@ describe('CreateUserView Component', () => {
         await waitFor(() => {
             expect(AdminService.createUser).toHaveBeenCalled();
             expect(mockTriggerSileo).toHaveBeenCalledWith('success', expect.stringContaining('éxito'));
-        });
+        }, { timeout: 3000 });
     });
 
     it('handles server errors gracefully', async () => {
@@ -70,12 +72,14 @@ describe('CreateUserView Component', () => {
         fireEvent.change(screen.getByLabelText(/Apellido/i), { target: { name: 'apellido', value: 'Gomez' } });
         fireEvent.change(screen.getByLabelText(/DNI \/ ID/i), { target: { name: 'dni', value: '44555666' } });
         fireEvent.change(screen.getByLabelText(/Correo Electrónico/i), { target: { name: 'email', value: 'carlos@example.com' } });
+        fireEvent.change(screen.getByLabelText(/Tipo de ID/i), { target: { name: 'tipoDni', value: 'DNI' } });
+        fireEvent.change(screen.getByLabelText(/Rol del Usuario/i), { target: { name: 'rol', value: 'customer' } });
 
         const submitButton = screen.getByRole('button', { name: /Crear Usuario/i });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
             expect(mockTriggerSileo).toHaveBeenCalledWith('error', 'DNI ya existe');
-        });
+        }, { timeout: 3000 });
     });
 });

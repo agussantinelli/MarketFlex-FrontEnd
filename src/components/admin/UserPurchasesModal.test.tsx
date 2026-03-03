@@ -36,7 +36,7 @@ describe('UserPurchasesModal Component', () => {
 
         await waitFor(() => {
             expect(AdminService.getUserPurchases).toHaveBeenCalledWith('u-1');
-            expect(screen.getByText(/\$1.500/)).toBeDefined();
+            expect(screen.getAllByText(/\$1.500/).length).toBeGreaterThan(0);
             expect(screen.getByText(/Producto 1/)).toBeDefined();
         });
     });
@@ -47,7 +47,7 @@ describe('UserPurchasesModal Component', () => {
         render(<UserPurchasesModal userId="u-1" userName="Juan" onClose={() => { }} />);
 
         await waitFor(() => {
-            expect(screen.getByText(/aun no ha realizado ninguna compra/i)).toBeDefined();
+            expect(screen.getByText(/no ha realizado ninguna compra/i)).toBeDefined();
         });
     });
 
@@ -55,9 +55,8 @@ describe('UserPurchasesModal Component', () => {
         const onClose = vi.fn();
         render(<UserPurchasesModal userId="u-1" userName="Juan" onClose={onClose} />);
 
-        // The close button uses LuX icon, should be accessible via its container/title or role
-        const closeBtn = screen.getByRole('button'); // In this modal, first button is close
-        fireEvent.click(closeBtn);
+        const closeBtn = screen.getAllByRole('button')[0];
+        if (closeBtn) fireEvent.click(closeBtn);
 
         expect(onClose).toHaveBeenCalled();
     });

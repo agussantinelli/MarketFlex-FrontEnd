@@ -49,7 +49,7 @@ describe('UserEditView Component', () => {
 
         expect((screen.getByLabelText(/Nombre/i) as HTMLInputElement).value).toBe('Juan');
         expect((screen.getByLabelText(/Correo Electrónico/i) as HTMLInputElement).value).toBe('juan@example.com');
-        expect(screen.getByLabelText(/Correo Electrónico/i)).toHaveAttribute('readonly');
+        expect(screen.getByLabelText(/Correo Electrónico/i).hasAttribute('readonly')).toBe(true);
     });
 
     it('disables DNI edit if DNI was already present', async () => {
@@ -58,7 +58,7 @@ describe('UserEditView Component', () => {
         render(<UserEditView userId="user-123" />);
 
         await waitFor(() => {
-            expect(screen.getByLabelText(/DNI \/ ID/i)).toHaveAttribute('readonly');
+            expect(screen.getByLabelText(/DNI \/ ID/i).hasAttribute('readonly')).toBe(true);
         });
     });
 
@@ -71,7 +71,7 @@ describe('UserEditView Component', () => {
         render(<UserEditView userId="user-123" />);
 
         await waitFor(() => {
-            expect(screen.getByLabelText(/DNI \/ ID/i)).not.toHaveAttribute('readonly');
+            expect(screen.getByLabelText(/DNI \/ ID/i).hasAttribute('readonly')).toBe(false);
         });
     });
 

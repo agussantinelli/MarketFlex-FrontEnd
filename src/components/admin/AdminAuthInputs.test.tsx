@@ -47,9 +47,9 @@ describe('AdminAuthInputs Component', () => {
             />
         );
 
-        expect(screen.getByLabelText(/Correo Electrónico/i)).toHaveAttribute('readonly');
-        expect(screen.getByLabelText(/DNI \/ ID/i)).toHaveAttribute('readonly');
-        expect(screen.getByLabelText(/Nombre/i)).not.toHaveAttribute('readonly');
+        expect(screen.getByLabelText(/Correo Electrónico/i).hasAttribute('readonly')).toBe(true);
+        expect(screen.getByLabelText(/DNI \/ ID/i).hasAttribute('readonly')).toBe(true);
+        expect(screen.getByLabelText(/Nombre/i).hasAttribute('readonly')).toBe(false);
     });
 
     it('shows password hint when not in edit mode', () => {
