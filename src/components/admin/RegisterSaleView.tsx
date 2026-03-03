@@ -192,6 +192,7 @@ const RegisterSaleView: React.FC = () => {
                                                     className={styles.smallActionBtn}
                                                     style={{ background: 'rgba(239, 68, 68, 0.1)', borderColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
                                                     title="Eliminar producto"
+                                                    aria-label="Eliminar producto"
                                                 >
                                                     <LuTrash2 size={14} />
                                                 </button>

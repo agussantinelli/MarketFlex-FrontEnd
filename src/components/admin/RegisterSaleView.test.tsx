@@ -108,6 +108,9 @@ describe('RegisterSaleView Component', () => {
             fireEvent.click(addBtn);
         });
 
+        const plusBtn = screen.getByLabelText(/Aumentar cantidad/i);
+        fireEvent.click(plusBtn);
+
         expect(screen.getAllByText(/5.*000.*2/).length).toBeGreaterThan(0);
     });
 
