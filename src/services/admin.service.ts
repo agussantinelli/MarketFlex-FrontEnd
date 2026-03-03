@@ -138,5 +138,28 @@ export const AdminService = {
             console.error('Error searching products:', error);
             return [];
         }
+    },
+    async getPurchaseById(id: string): Promise<AdminPurchase | null> {
+        try {
+            const result = await api.get(`admin/purchases`).json<{ data: AdminPurchase[] }>();
+            return result.data.find(p => p.id === id) || null;
+        } catch (error) {
+            console.error('Error fetching purchase:', error);
+            return null;
+        }
+    },
+    async updatePurchase(id: string, data: { estado?: string; metodoPago?: string }): Promise<{ status: string; message?: string }> {
+        try {
+            const result = await api.patch(`admin/purchases/${id}`, {
+                json: data
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar la venta'
+            };
+        }
     }
 };
