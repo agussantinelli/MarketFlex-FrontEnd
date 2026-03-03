@@ -160,7 +160,9 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                                 <LuCreditCard size={16} /> CLIENTE Y PAGO
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                <div style={{ fontSize: '1rem', fontWeight: 600 }}>{sale.usuario.nombre} {sale.usuario.apellido}</div>
+                                <div style={{ fontSize: '1rem', fontWeight: 600 }}>
+                                    {sale.usuario?.nombre || 'N/A'} {sale.usuario?.apellido || ''}
+                                </div>
                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                                     Metodo: {sale.metodoPago === 'card' ? 'Tarjeta' : sale.metodoPago}
                                     {sale.cantCuotas > 1 && ` • ${sale.cantCuotas} cuotas`}
