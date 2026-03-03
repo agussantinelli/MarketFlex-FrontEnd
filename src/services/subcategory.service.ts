@@ -1,12 +1,30 @@
 import { api } from "../lib/api";
-import type { SubcategoriesResponse, Subcategory } from "../types/subcategory.types";
+import type { Subcategory, SubcategoriesResponse, SubcategoryActionResponse } from "../types/subcategory.types";
 
-export async function getSubcategories(): Promise<Subcategory[]> {
-    try {
-        const data = await api.get('subcategories').json<SubcategoriesResponse>();
-        return data.status === "success" ? data.data : [];
-    } catch (error) {
-        console.error("Error fetching subcategories:", error);
-        return [];
+export const subcategoryService = {
+    async getSubcategories(categoriaId: string): Promise<Subcategory[]> {
+        const data = await api.get('subcategories', {
+            searchParams: { categoriaId }
+        }).json<SubcategoriesResponse>();
+        return data.data;
+    },
+
+    async createSubcategory(categoriaId: string, nombre: string): Promise<Subcategory> {
+        const data = await api.post('subcategories', {
+            json: { categoriaId, nombre }
+        }).json<SubcategoryActionResponse>();
+        return data.data;
+    },
+
+    async updateSubcategory(categoriaId: string, nroSubcategoria: number, nombre: string): Promise<Subcategory> {
+        const data = await api.patch(`subcategories/${categoriaId}/${nroSubcategoria}`, {
+            json: { nombre }
+        }).json<SubcategoryActionResponse>();
+        return data.data;
+    },
+
+    async deleteSubcategory(categoriaId: string, nroSubcategoria: number): Promise<boolean> {
+        const data = await api.delete(`subcategories/${categoriaId}/${nroSubcategoria}`).json<{ status: string }>();
+        return data.status === "success";
     }
-}
+};
