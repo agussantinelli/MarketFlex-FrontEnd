@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { LuPlus, LuPencil, LuTrash2, LuArrowLeft } from 'react-icons/lu';
+import { LuPlus, LuPencil, LuTrash2, LuArrowLeft, LuEye, LuPackage, LuLayers } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { subcategoryService } from '../../services/subcategory.service';
 import type { Subcategory } from '../../types/subcategory.types';
+import type { CategoryProductSummary } from '../../types/category.types';
 import StatTable from './StatTable';
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 const SubcategoriesListView: React.FC<Props> = ({ categoriaId }) => {
     const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
     const [selectedSub, setSelectedSub] = useState<Subcategory | null>(null);
+    const [products, setProducts] = useState<CategoryProductSummary[]>([]);
+    const [viewProductsModal, setViewProductsModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [createModal, setCreateModal] = useState(false);
     const [editName, setEditName] = useState('');
@@ -36,6 +39,23 @@ const SubcategoriesListView: React.FC<Props> = ({ categoriaId }) => {
     useEffect(() => {
         loadSubcategories();
     }, [categoriaId]);
+
+    const handleViewProducts = async (sub: Subcategory) => {
+        setSelectedSub(sub);
+        try {
+            setModalLoading(true);
+            setViewProductsModal(true);
+            const data = await subcategoryService.getProductsBySubcategory(categoriaId, sub.nroSubcategoria);
+            setProducts(data);
+        } catch (error) {
+            console.error('Error loading subcategory products:', error);
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'No se pudieron cargar los productos');
+            }
+        } finally {
+            setModalLoading(false);
+        }
+    };
 
     const handleEdit = (sub: Subcategory) => {
         setSelectedSub(sub);
@@ -174,6 +194,15 @@ const SubcategoriesListView: React.FC<Props> = ({ categoriaId }) => {
                                 <td className={styles.amount}>{sub.productCount || 0} productos</td>
                                 <td>
                                     <div className={styles.actionButtons}>
+                                        {sub.productCount !== undefined && sub.productCount > 0 && (
+                                            <button
+                                                className={styles.actionBtn}
+                                                onClick={() => handleViewProducts(sub)}
+                                                title="Ver productos"
+                                            >
+                                                <LuEye size={18} />
+                                            </button>
+                                        )}
                                         <button
                                             className={styles.actionBtn}
                                             onClick={() => handleEdit(sub)}
@@ -197,6 +226,44 @@ const SubcategoriesListView: React.FC<Props> = ({ categoriaId }) => {
                     />
                 )}
             </div>
+
+            {/* Modal: View Products */}
+            {viewProductsModal && (
+                <div className={styles.modalOverlay} onClick={() => setViewProductsModal(false)}>
+                    <div className={styles.modalContent} style={{ maxWidth: '400px', width: '95%' }} onClick={e => e.stopPropagation()}>
+                        <div className={styles.modalHeader}>
+                            <LuLayers className={styles.modalIcon} />
+                            <h2>{selectedSub?.nombre}</h2>
+                            <p style={{ margin: 0, opacity: 0.6, fontSize: '0.85rem' }}>Total: {products.length} productos</p>
+                        </div>
+                        <div className={`${styles.modalBody} ${styles.modalScrollList}`}>
+                            {modalLoading ? (
+                                <p>Cargando productos...</p>
+                            ) : products.length > 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                    {products.map(p => (
+                                        <div key={p.id} className={styles.productItem}>
+                                            {p.foto ? (
+                                                <img src={p.foto} alt={p.nombre} style={{ width: '35px', height: '35px', borderRadius: '6px', objectFit: 'cover' }} />
+                                            ) : (
+                                                <div style={{ width: '35px', height: '35px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.1)' }}>
+                                                    <LuPackage size={14} style={{ opacity: 0.4 }} />
+                                                </div>
+                                            )}
+                                            <div style={{ flex: 1, textAlign: 'left' }}>
+                                                <div style={{ fontWeight: '600', fontSize: '0.9rem' }}>{p.nombre}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>No hay productos registrados en esta subcategoría.</p>
+                            )}
+                        </div>
+                        <button className={styles.modalCloseBtn} style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }} onClick={() => setViewProductsModal(false)}>Cerrar</button>
+                    </div>
+                </div>
+            )}
 
             {/* Modal: Edit */}
             {editModal && (
