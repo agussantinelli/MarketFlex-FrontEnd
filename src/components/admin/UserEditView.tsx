@@ -26,6 +26,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [isDniInitialNull, setIsDniInitialNull] = useState(false);
+    const [hasPassword, setHasPassword] = useState(true);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -49,6 +50,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
                         rol: user.rol || 'customer'
                     });
                     setIsDniInitialNull(!user.dni);
+                    setHasPassword(!!user.password);
                 } else {
                     if ((window as any).triggerSileo) {
                         (window as any).triggerSileo('error', result.message || 'No se pudo cargar el usuario');
@@ -179,6 +181,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
                         onChange={handleChange}
                         readonlyFields={isDniInitialNull ? ['email'] : ['email', 'dni', 'tipoDni']}
                         isEdit={true}
+                        hasPassword={hasPassword}
                     />
 
                     <div style={{
