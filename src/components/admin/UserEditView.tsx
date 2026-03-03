@@ -25,6 +25,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [isDniInitialNull, setIsDniInitialNull] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -47,6 +48,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
                         codigoPostal: user.codigoPostal || '',
                         rol: user.rol || 'customer'
                     });
+                    setIsDniInitialNull(!user.dni);
                 } else {
                     if ((window as any).triggerSileo) {
                         (window as any).triggerSileo('error', result.message || 'No se pudo cargar el usuario');
@@ -78,15 +80,22 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
             setSaving(true);
             if ((window as any).showAdminLoader) (window as any).showAdminLoader();
 
-            // Prepare data: exclude immutable fields just in case, though the backend should handle it
-            const { dni, tipoDni, email, ...updateData } = formData;
+            // Prepare data: email is always immutable
+            let updatePayload: any = { ...formData };
+            delete updatePayload.email;
 
-            // If password is empty, don't send it
-            if (!updateData.password) {
-                delete (updateData as any).password;
+            // If DNI was already present, don't allow re-sending it (backend rule)
+            if (!isDniInitialNull) {
+                delete updatePayload.dni;
+                delete updatePayload.tipoDni;
             }
 
-            const result = await AdminService.updateUser(userId, updateData);
+            // If password is empty, don't send it
+            if (!updatePayload.password) {
+                delete updatePayload.password;
+            }
+
+            const result = await AdminService.updateUser(userId, updatePayload);
 
             if (result.status === 'success') {
                 if ((window as any).triggerSileo) {
@@ -168,7 +177,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
                     <AdminAuthInputs
                         formData={formData}
                         onChange={handleChange}
-                        readonlyFields={['email', 'dni', 'tipoDni']}
+                        readonlyFields={isDniInitialNull ? ['email'] : ['email', 'dni', 'tipoDni']}
                         isEdit={true}
                     />
 
