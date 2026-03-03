@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { LuPackage, LuX, LuCalendar, LuCreditCard } from 'react-icons/lu';
+import { LuPackage, LuX, LuCalendar, LuCreditCard, LuEye } from 'react-icons/lu';
 import { AdminService } from '../../services/admin.service';
 import type { AdminPurchase } from '../../types/admin.types';
+import SaleDetailModal from './SaleDetailModal';
 
 interface UserPurchasesModalProps {
     userId: string;
@@ -12,6 +13,7 @@ interface UserPurchasesModalProps {
 const UserPurchasesModal: React.FC<UserPurchasesModalProps> = ({ userId, userName, onClose }) => {
     const [purchases, setPurchases] = useState<AdminPurchase[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedSale, setSelectedSale] = useState<AdminPurchase | null>(null);
 
     useEffect(() => {
         const fetchPurchases = async () => {
@@ -177,7 +179,31 @@ const UserPurchasesModal: React.FC<UserPurchasesModalProps> = ({ userId, userNam
                                         borderTop: '1px dashed rgba(255,255,255,0.1)',
                                         paddingTop: '12px'
                                     }}>
-                                        <h4 style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: 0, marginBottom: '8px' }}>Productos:</h4>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                            <h4 style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>Productos:</h4>
+                                            <button
+                                                onClick={() => setSelectedSale(purchase)}
+                                                style={{
+                                                    background: 'rgba(0, 255, 136, 0.1)',
+                                                    color: 'var(--neon-green)',
+                                                    border: '1px solid rgba(0, 255, 136, 0.2)',
+                                                    padding: '4px 10px',
+                                                    borderRadius: '6px',
+                                                    fontSize: '0.75rem',
+                                                    fontWeight: 600,
+                                                    cursor: 'pointer',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '4px',
+                                                    transition: 'all 0.2s'
+                                                }}
+                                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(0, 255, 136, 0.2)'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(0, 255, 136, 0.1)'}
+                                            >
+                                                <LuEye size={12} />
+                                                Ver detalle
+                                            </button>
+                                        </div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                             {purchase.lineas.map((line, idx) => (
                                                 <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
@@ -227,6 +253,13 @@ const UserPurchasesModal: React.FC<UserPurchasesModalProps> = ({ userId, userNam
                     </button>
                 </div>
             </div>
+
+            {selectedSale && (
+                <SaleDetailModal
+                    sale={selectedSale}
+                    onClose={() => setSelectedSale(null)}
+                />
+            )}
 
             <style>{`
                 .admin-spinner {
