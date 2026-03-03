@@ -10,6 +10,7 @@ const SupportListView: React.FC = () => {
     const [replyingTo, setReplyingTo] = useState<string | null>(null);
     const [replyText, setReplyText] = useState('');
     const [sendingReply, setSendingReply] = useState(false);
+    const [filter, setFilter] = useState<'todos' | 'respondidos' | 'no-leidos'>('todos');
 
     const fetchMessages = useCallback(async () => {
         setLoading(true);
@@ -80,6 +81,13 @@ const SupportListView: React.FC = () => {
         }
     };
 
+    const filteredMessages = messages.filter(msg => {
+        if (filter === 'todos') return true;
+        if (filter === 'respondidos') return msg.estado?.toLowerCase() === 'respondido';
+        if (filter === 'no-leidos') return msg.estado?.toLowerCase() !== 'respondido';
+        return true;
+    });
+
     const getStatusIcon = (status: string | null) => {
         if (!status) return <LuInbox />;
         switch (status.toLowerCase()) {
@@ -110,6 +118,36 @@ const SupportListView: React.FC = () => {
                     <h1>Mensajes de Soporte</h1>
                     <p>Bandeja de gestión de tickets y consultas de usuarios</p>
                 </div>
+
+                <div style={{
+                    display: 'flex',
+                    background: 'rgba(30, 41, 59, 0.5)',
+                    padding: '4px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    marginTop: '1rem'
+                }}>
+                    {(['todos', 'respondidos', 'no-leidos'] as const).map((opt) => (
+                        <button
+                            key={opt}
+                            onClick={() => setFilter(opt)}
+                            style={{
+                                padding: '8px 16px',
+                                borderRadius: '8px',
+                                border: 'none',
+                                background: filter === opt ? 'rgba(0, 255, 157, 0.1)' : 'transparent',
+                                color: filter === opt ? 'var(--neon-green)' : '#94a3b8',
+                                cursor: 'pointer',
+                                fontSize: '0.85rem',
+                                fontWeight: filter === opt ? '700' : '500',
+                                transition: 'all 0.2s',
+                                textTransform: 'capitalize'
+                            }}
+                        >
+                            {opt.replace('-', ' ')}
+                        </button>
+                    ))}
+                </div>
             </header>
 
             <div style={{
@@ -117,7 +155,7 @@ const SupportListView: React.FC = () => {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
                 gap: '1.5rem'
             }}>
-                {messages.map(msg => (
+                {filteredMessages.map(msg => (
                     <div key={msg.id} style={{
                         background: 'rgba(30, 41, 59, 0.7)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
