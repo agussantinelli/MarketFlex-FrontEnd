@@ -93,6 +93,16 @@ const CategoriesListView: React.FC = () => {
 
     const handleCreate = async () => {
         if (!newName.trim()) return;
+
+        // Check for duplicate locally
+        const isDuplicate = categories.some(c => c.nombre.toLowerCase() === newName.trim().toLowerCase());
+        if (isDuplicate) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Ya existe una categoría con ese nombre');
+            }
+            return;
+        }
+
         try {
             setModalLoading(true);
             const created = await categoryService.createCategory(newName);
@@ -116,6 +126,19 @@ const CategoriesListView: React.FC = () => {
 
     const handleUpdate = async () => {
         if (!selectedCategory || !editName.trim()) return;
+
+        // Check for duplicate locally (excluding the current category)
+        const isDuplicate = categories.some(c =>
+            c.id !== selectedCategory.id &&
+            c.nombre.toLowerCase() === editName.trim().toLowerCase()
+        );
+        if (isDuplicate) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Ya existe otra categoría con ese nombre');
+            }
+            return;
+        }
+
         try {
             setModalLoading(true);
             const updated = await categoryService.updateCategory(selectedCategory.id, editName);

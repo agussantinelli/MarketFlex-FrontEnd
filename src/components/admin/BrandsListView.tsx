@@ -87,6 +87,16 @@ const BrandsListView: React.FC = () => {
 
     const handleCreate = async () => {
         if (!newName.trim()) return;
+
+        // Check for duplicate locally
+        const isDuplicate = brands.some(b => b.nombre.toLowerCase() === newName.trim().toLowerCase());
+        if (isDuplicate) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Ya existe una marca con ese nombre');
+            }
+            return;
+        }
+
         try {
             setModalLoading(true);
             const created = await brandService.create(newName);
@@ -108,6 +118,19 @@ const BrandsListView: React.FC = () => {
 
     const handleUpdate = async () => {
         if (!selectedBrand || !editName.trim()) return;
+
+        // Check for duplicate locally (excluding the current brand)
+        const isDuplicate = brands.some(b =>
+            b.id !== selectedBrand.id &&
+            b.nombre.toLowerCase() === editName.trim().toLowerCase()
+        );
+        if (isDuplicate) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Ya existe otra marca con ese nombre');
+            }
+            return;
+        }
+
         try {
             setModalLoading(true);
             const updated = await brandService.update(selectedBrand.id, editName);
