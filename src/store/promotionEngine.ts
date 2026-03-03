@@ -14,7 +14,7 @@ export const calculatePromotions = (items: CartItem[]): PromotionResult => {
     // 1. Clasificación de items
     items.forEach(item => {
         const promo = item.promocionActiva;
-        if (promo && promo.tipoPromocion !== 'DESCUENTO_DIRECTO') {
+        if (promo) {
             const promoId = promo.nombre || promo.tipoPromocion;
             if (!promoGroups[promoId]) promoGroups[promoId] = [];
             promoGroups[promoId].push({ ...item });
