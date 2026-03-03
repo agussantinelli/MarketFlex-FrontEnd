@@ -80,7 +80,9 @@ export const api = ky.create({
                             'not found': 'Producto no encontrado o no disponible',
                             'invalid data': 'Datos de compra inválidos',
                             'unauthorized': 'Sesión no válida',
-                            'internal server error': 'Error interno del servidor, por favor intenta de nuevo'
+                            'internal server error': 'Error interno del servidor, por favor intenta de nuevo',
+                            'conflicto': rawMessage, // Pass through conflict messages
+                            'ya existe': rawMessage  // Pass through existence messages
                         };
 
                         const matchedKey = Object.keys(errorMap).find(key =>
@@ -89,7 +91,7 @@ export const api = ky.create({
 
                         if (matchedKey && errorMap[matchedKey]) {
                             errorMessage = errorMap[matchedKey];
-                        } else if (rawMessage && rawMessage.length < 100) {
+                        } else if (rawMessage && rawMessage.length < 500) {
                             errorMessage = rawMessage;
                         }
                     } catch (e) {
