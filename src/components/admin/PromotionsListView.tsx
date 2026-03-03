@@ -261,6 +261,8 @@ const PromotionsListView: React.FC = () => {
                                 <div style={{ color: '#64748b', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
                                     <LuTag size={14} />
                                     {promo.tipoPromocion}
+                                    <span style={{ margin: '0 8px', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.2)' }}></span>
+                                    <span style={{ color: 'var(--primary)', fontWeight: '700' }}>{promo.usoCount || 0} usos</span>
                                 </div>
                             </div>
 

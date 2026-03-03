@@ -15,6 +15,7 @@ export interface Promotion {
     // Relation IDs for POR_TIPO / POR_PRODUCTO
     categoryIds?: string[];
     productIds?: string[];
+    usoCount?: number;
 }
 
 export interface CreatePromotionInput extends Omit<Promotion, 'id' | 'estado' | 'categoryIds' | 'productIds'> {
