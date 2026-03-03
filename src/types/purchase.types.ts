@@ -30,7 +30,7 @@ export type Purchase = {
     total: number;
     metodoPago: string;
     cantCuotas: number;
-    estado: string;
+    estado: 'COMPLETADO' | 'PENDIENTE' | 'CANCELADO' | 'BORRADO';
     lineas: LineaCompra[];
     detalleEnvio: DetalleEnvio;
     promociones?: AppliedPromotion[];
