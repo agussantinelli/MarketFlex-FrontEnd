@@ -51,24 +51,28 @@
 }
 
 .breadcrumbText {
-    color: var(--primary);
-    font-weight: 500;
+    color: var(--neon-green);
+    font-weight: 600;
     text-decoration: none;
+    transition: all 0.2s ease;
+    opacity: 0.6;
 }
 
 .breadcrumbText:hover {
+    opacity: 1;
     text-decoration: underline;
 }
 
 .breadcrumbIcon {
     width: 14px;
     height: 14px;
-    color: hsl(0, 0%, 50%);
+    color: rgba(255, 255, 255, 0.2);
 }
 
 .breadcrumbTitle {
     color: var(--foreground);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.2px;
 }
 
 .headerRight {

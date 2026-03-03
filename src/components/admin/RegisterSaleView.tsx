@@ -113,9 +113,9 @@ const RegisterSaleView: React.FC = () => {
                         </div>
 
                         <div className={styles.selectedSection}>
-                            <h3>Productos Seleccionados</h3>
+                            <h4 className={styles.sectionLabel}>Productos Seleccionados</h4>
                             {selectedProducts.length === 0 ? (
-                                <p className={styles.emptyText}>No hay productos seleccionados.</p>
+                                <div className={styles.emptyState}>No hay productos seleccionados.</div>
                             ) : (
                                 <div className={styles.selectedList}>
                                     {selectedProducts.map(p => (
@@ -201,7 +201,7 @@ const RegisterSaleView: React.FC = () => {
                 const total = selectedProducts.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
                 return (
                     <div className={styles.stepContent}>
-                        <h3>Resumen de la Venta</h3>
+                        <h4 className={styles.sectionLabel}>Resumen de la Venta</h4>
                         <div className={styles.confirmDetails}>
                             <div className={styles.summaryRow}>
                                 <span>Método de Pago:</span>
@@ -332,7 +332,10 @@ const RegisterSaleView: React.FC = () => {
                             <div className={styles.stepCircle}>
                                 {currentStep > step.id ? <LuCheck /> : step.id}
                             </div>
-                            <span className={styles.stepLabel}>{step.label}</span>
+                            <div className={styles.stepLabelContainer}>
+                                <span className={styles.stepNumber}>0{step.id}</span>
+                                <span className={styles.stepLabel}>{step.label}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
