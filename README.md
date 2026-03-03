@@ -410,57 +410,76 @@
 │   ├── background/                                 # Galería de texturas térmicas y fondos premium.
 │   ├── logos/                                      # Branding oficial y logotipos sociales.
 │   └── ...                                         # Isotipos y recursos gráficos adicionales.
-├── src/                                            # Núcleo del frontend de la aplicación.
-│   ├── components/                                 # Componentes reutilizables (Arquitectura de Islas).
-│   │   ├── admin/                                  # Componentes para el panel de administración.
-│   │   │   ├── AdminHeader.astro                   # Barra superior administrativa con buscador y usuario.
-│   │   │   ├── AdminSidebar.test.tsx               # Test de renderizado y lógica del sidebar.
-│   │   │   ├── AdminSidebar.tsx                    # Navegación lateral principal panel privado.
-│   │   │   ├── AnalyticsView.test.tsx              # Pruebas de la vista de analíticas.
-│   │   │   ├── AnalyticsView.tsx                   # Vista de gráficos y reportes de ventas (React).
-│   │   │   ├── BrandsListView.test.tsx             # Test de la gestión de marcas y editoriales.
-│   │   │   ├── BrandsListView.tsx                  # Vista de administración de marcas (CRUD).
-│   │   │   ├── CharacteristicsListView.test.tsx    # Test de la gestión de características.
-│   │   │   ├── CharacteristicsListView.tsx         # Vista de administración de atributos dinámicos.
-│   │   │   ├── ClaimsListView.test.tsx             # Test de la gestión de reclamos.
-│   │   │   ├── ClaimsListView.tsx                  # Vista de administración de incidencias de clientes.
-│   │   │   ├── DashboardView.test.tsx              # Pruebas del panel interactivo.
-│   │   │   ├── DashboardView.tsx                   # Vista principal de métricas y ventas (React).
-│   │   │   ├── DataTable.test.tsx                  # Test unitario del componente de tabla universal.
-│   │   │   ├── DataTable.tsx                       # Tabla reutilizable y personalizable para CRUDs.
-│   │   │   ├── ProductsListView.test.tsx           # Test integral de la gestión de productos.
-│   │   │   ├── ProductsListView.tsx                # Vista de administración del catálogo de productos.
-│   │   │   ├── PromotionsListView.tsx              # Vista de administración de promociones (Cards).
-│   │   │   ├── SalesListView.test.tsx              # Pruebas del listado de ventas administrativas.
-│   │   │   ├── SalesListView.tsx                   # Vista de administración de transacciones y ventas.
-│   │   │   ├── StatTable.test.tsx                  # Pruebas de la tabla de estadísticas administrativas.
-│   │   │   ├── StatTable.tsx                       # Componente reactivo para listar métricas en detalle.
-│   │   │   ├── SupportListView.test.tsx            # Test integral de la gestión de mensajes de soporte.
-│   │   │   ├── SupportListView.tsx                 # Vista de administración de mensajes de soporte. 
-│   │   │   ├── UsersListView.test.tsx              # Pruebas de la tabla de usuarios.
-│   │   │   ├── UsersListView.tsx                   # Componente reactivo para listar usuarios.
-│   │   │   └── styles/                             # Módulos CSS administrativos.
-│   │   │       ├── AdminHeader.module.css          # Estilos de la barra de navegación superior.
-│   │   │       ├── AdminSidebar.module.css         # Estilos del menú lateral.
-│   │   │       ├── dashboard.module.css            # Estilos dedicados del dashboard.
-│   │   │       ├── DataTable.module.css            # Estilos premium para la tabla universal.
-│   │   │       └── SalesListView.module.css        # Estilos dedicados de la vista de ventas.
-│   │   ├── auth/                                   # UI de login, registro y validación social.
-│   │   │   ├── AuthInputs.astro                    # Inputs estandarizados para formularios auth.
-│   │   │   ├── Captcha.astro                       # Integración visual de Google reCAPTCHA v3.
-│   │   │   └── styles/                             # Módulos CSS específicos de auth.
-│   │   │       └── AuthInputs.module.css           # Estilos de los inputs de autenticación.
-│   │   ├── cart/                                   # Gestión visual del carrito de compras.
-│   │   │   ├── CartView.test.tsx                   # Test del panel interactivo de carrito.
-│   │   │   ├── CartView.tsx                        # UI de gestión de ítems y totales (React).
-│   │   │   └── styles/                             # Estilos modulares del carrito.
-│   │   │       └── CartView.module.css             # Diseño premium del panel lateral de compra.
-│   │   ├── checkout/                               # Flujo final de transacción.
+├── src/                                            # Núcleo del frontend de la aplicación (Arquitectura Astro + React).
+│   ├── components/                                 # Biblioteca de componentes modulares.
+│   │   ├── admin/                                  # Componentes exclusivos del panel administrativo (React + CSS Modules).
+│   │   │   ├── AdminHeader.astro                   # Barra de navegación administrativa.
+│   │   │   ├── AdminSidebar.tsx                    # Menú lateral dinámico con estados de navegación.
+│   │   │   ├── AnalyticsView.tsx                   # Dashboard interactivo con Recharts.
+│   │   │   ├── BrandsListView.tsx                  # Gestión de marcas y editoriales.
+│   │   │   ├── CharacteristicsListView.tsx         # Gestión de atributos dinámicos.
+│   │   │   ├── ClaimsListView.tsx                  # Monitorización de reclamos post-venta.
+│   │   │   ├── DashboardView.tsx                   # Vista principal de estados y métricas.
+│   │   │   ├── DataTable.tsx                       # Componente core: Tabla universal con filtros y ordenamiento.
+│   │   │   ├── ProductsListView.tsx                # Gestión integral del catálogo.
+│   │   │   ├── PromotionForm.tsx                   # Formulario dinámico para creación de ofertas NxM.
+│   │   │   ├── PromotionsListView.tsx              # Galería de campañas activas.
+│   │   │   ├── SalesListView.tsx                   # Historial y auditoría de ventas.
+│   │   │   ├── StatTable.tsx                       # Tablas de resumen para métricas rápidas.
+│   │   │   ├── SubcategoriesListView.tsx           # Gestión de jerarquías secundarias y productos vinculados.
+│   │   │   ├── SupportListView.tsx                 # Centro de respuesta interactivo a consultas de clientes.
+│   │   │   ├── UsersListView.tsx                   # Administración de cuentas y roles de usuario.
+│   │   │   └── styles/                             # Estilos encapsulados para el panel admin.
+│   │   ├── auth/                                   # UI de flujos de identidad y seguridad.
+│   │   ├── cart/                                   # Componentes de gestión de cesta de compra.
+│   │   ├── checkout/                               # Flujo de pago y facturación.
+│   │   ├── common/                                 # Componentes transversales (Spinners, Modales, Notificaciones).
+│   │   ├── products/                               # UI de catálogo, carruseles y filtros.
+│   │   ├── promotions/                             # Banners y destacados promocionales.
+│   │   └── shared/                                 # Pequeñas utilidades visuales (Dropdowns, Avatars).
+│   ├── layouts/                                    # Estructuras base y envolventes (Master Pages).
+│   │   ├── AdminLayout.astro                       # Layout optimizado para administración interna.
+│   │   ├── Layout.astro                            # Layout principal (Head, SEO, Tipografía).
+│   │   └── styles/                                 # Estilos compartidos de estructura.
+│   ├── lib/                                        # Cliente de API y utilidades de bajo nivel.
+│   │   ├── api.ts                                  # Wrapper de Ky con manejo de Auth y Auto-Refresh.
+│   │   └── url.ts                                  # Utilidades de procesamiento de activos y multimedia.
+│   ├── pages/                                      # Enrutamiento basado en archivos (SSR/Hybrid).
+│   │   ├── admin/                                  # Rutas del panel privado.
+│   │   │   ├── categories/                         # Jerarquía de gestión de categorías.
+│   │   │   │   └── [id]/                           # Contexto de categoría específica.
+│   │   │   │       └── subcategories.astro         # Vista de gestión de subcategorías vinculadas.
+│   │   │   ├── analytics.astro                     # Reportes avanzados de negocio.
+│   │   │   ├── dashboard.astro                     # Inicio administrativo.
+│   │   │   ├── promotions.astro                    # Panel de ofertas.
+│   │   │   └── support.astro                       # Centro de atención al cliente.
+│   │   ├── auth/                                   # Login, Registro y Recuperación.
+│   │   └── shop/                                   # Navegación del catálogo público.
+│   ├── scripts/                                    # Lógica client-side para componentes Astro.
+│   │   ├── auth-login.ts                           # Manejo de sumisión de formularios de identidad.
+│   │   ├── carousel.ts                             # Motor de interacción de carruseles neón.
+│   │   ├── filter-modal.ts                         # Lógica de filtrado dinámico en tiempo real.
+│   │   └── navbar.ts                               # Efectos y navegación responsiva.
+│   ├── services/                                   # Capa de abstracción de datos (LLamadas a API).
+│   │   ├── admin.service.ts                        # Consumo de métricas y reportes.
+│   │   ├── auth.service.ts                         # Gestión de sesiones y tokens.
+│   │   ├── product.service.ts                      # Operaciones sobre el catálogo.
+│   │   ├── promotion.service.ts                    # Gestión de campañas dinámicas.
+│   │   └── subcategory.service.ts                  # CRUD de subcategorías y vinculación.
+│   ├── store/                                      # Estado global (Nanostores para persistencia).
+│   │   ├── cart.ts                                 # Gestión reactiva del carrito entre islas.
+│   │   └── auth.ts                                 # Estado persistente de autenticación.
+│   ├── styles/                                     # Diseño sistémico y tokens visuales.
+│   │   ├── globals.css                             # Reseteo y variables de tema (Neón/Glass).
+│   │   └── main.css                                # Estilos base de componentes HTML.
+│   └── types/                                      # Tipado estricto compartido por el sistema.
+│       ├── admin.types.ts                          # Interfaces de analíticas y reportes.
+│       ├── product.types.ts                        # Esquemas de modelos de productos.
+│       └── promotion.types.ts                      # Tipado de reglas de negocio para ofertas.
 │   │   │   ├── CheckoutForm.test.tsx               # Test de validación del formulario de pago.
 │   │   │   ├── CheckoutForm.tsx                    # Formulario multi-paso de envío (React).
 │   │   │   ├── CheckoutSummary.test.tsx            # Test del cálculo de totales finales.
 │   │   │   ├── CheckoutSummary.tsx                 # Resumen de orden y descuentos aplicados (React).
-│   │   │   └── styles/                             # Estilos del flujo de checkout.
 │   │   │       ├── CheckoutForm.module.css         # Diseño del formulario de facturación.
 │   │   │       └── CheckoutSummary.module.css      # Estética del resumen lateral de orden.
 │   │   ├── common/                                 # Componentes transversales del sistema.
@@ -520,13 +539,16 @@
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── categories.astro                    # Gestión jerárquica de categorías (CRUD).
+│   │   │   ├── categories/                         # Sub-rutas para categorías.
+│   │   │   │   └── [id]/                           # Ruta dinámica por categoría.
+│   │   │   │       └── subcategories.astro         # Gestión de subcategorías con breadcrumbs.
 │   │   │   ├── characteristics.astro               # Gestión de atributos de producto (CRUD).
 │   │   │   ├── claims.astro                        # Gestión de reclamos e incidencias (CRUD).
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
-│   │   │   ├── promotions.astro                    # Gestión de campañas y ofertas (Cards).
+│   │   │   ├── promotions.astro                    # Gestión de campañas y ofertas (CRUD).
 │   │   │   ├── sales.astro                         # Gestión y auditoría de ventas globales.
-│   │   │   ├── support.astro                       # Gestión de tickets de soporte y consultas.
+│   │   │   ├── support.astro                       # Gestión de tickets de soporte y respuestas.
 │   │   │   ├── users.astro                         # Gestión del catálogo de usuarios (CRUD).
 │   │   │   └── styles/                             # Estética del panel administrativo.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
