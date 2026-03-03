@@ -24,6 +24,7 @@ interface DataTableProps<T> {
     loading?: boolean;
     onEdit?: (item: T) => void;
     onDelete?: (item: T) => void;
+    isDeleteEnabled?: (item: T) => boolean;
     onAdd?: () => void;
     pagination?: Pagination;
     searchPlaceholder?: string;
@@ -39,6 +40,7 @@ function DataTable<T extends { id: string | number }>({
     loading = false,
     onEdit,
     onDelete,
+    isDeleteEnabled,
     onAdd,
     pagination,
     searchPlaceholder = 'Buscar...',
@@ -148,7 +150,7 @@ function DataTable<T extends { id: string | number }>({
                                                         <LuPencil />
                                                     </button>
                                                 )}
-                                                {onDelete && (
+                                                {onDelete && (!isDeleteEnabled || isDeleteEnabled(item)) && (
                                                     <button
                                                         className={styles.deleteBtn}
                                                         onClick={() => onDelete(item)}

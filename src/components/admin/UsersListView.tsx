@@ -42,11 +42,31 @@ export default function UsersListView() {
     };
 
     const handleDelete = (user: AdminUser) => {
-        // Placeholder for delete functionality
-        console.log('Delete user:', user.id);
-        if ((window as any).triggerSileo) {
-            (window as any).triggerSileo('error', `Eliminar usuario funcionalmente no implementado aún para el ID: ${user.id}`);
-        }
+        (window as any).showDeleteUserModal(async () => {
+            try {
+                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+
+                const result = await AdminService.deleteUser(user.id);
+
+                if (result.status === 'success') {
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('success', '¡Usuario desactivado correctamente!');
+                    }
+                    fetchUsers();
+                } else {
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', result.message || 'Error al desactivar el usuario');
+                    }
+                }
+            } catch (error) {
+                console.error('Error in confirmDelete:', error);
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'Error crítico al procesar la desactivación');
+                }
+            } finally {
+                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+            }
+        });
     };
 
     const columns: Column<AdminUser>[] = [
@@ -187,6 +207,7 @@ export default function UsersListView() {
                 }}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                isDeleteEnabled={(user) => user.rol !== 'admin'}
             />
 
             {selectedUserForPurchases && (
