@@ -306,43 +306,65 @@ const SupportListView: React.FC = () => {
                             </div>
                         ) : (
                             <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                                <button
-                                    onClick={() => handleReplyClick(msg.id)}
-                                    style={{
-                                        flex: 1,
-                                        background: 'linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 200, 255, 0.1))',
-                                        border: '1px solid rgba(0, 255, 157, 0.3)',
-                                        color: 'var(--neon-green)',
-                                        padding: '0.75rem',
-                                        borderRadius: '6px',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        fontWeight: '600',
-                                        transition: 'all 0.2s',
-                                    }}
-                                >
-                                    <LuArrowRight size={18} />
-                                    Responder
-                                </button>
+                                {msg.estado?.toLowerCase() !== 'respondido' && (
+                                    <button
+                                        onClick={() => handleReplyClick(msg.id)}
+                                        style={{
+                                            flex: 1,
+                                            background: 'rgba(0, 255, 157, 0.05)',
+                                            border: '1px solid rgba(0, 255, 157, 0.2)',
+                                            color: 'var(--neon-green)',
+                                            padding: '10px',
+                                            borderRadius: '8px',
+                                            cursor: 'pointer',
+                                            fontWeight: '700',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '8px',
+                                            transition: 'all 0.2s',
+                                            fontSize: '0.9rem'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = 'rgba(0, 255, 157, 0.1)';
+                                            e.currentTarget.style.transform = 'translateY(-1px)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = 'rgba(0, 255, 157, 0.05)';
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                        }}
+                                    >
+                                        <LuArrowRight size={18} /> Responder
+                                    </button>
+                                )}
                                 <button
                                     onClick={() => handleDelete(msg)}
                                     style={{
-                                        background: 'transparent',
-                                        border: '1px solid rgba(255, 100, 100, 0.3)',
-                                        color: '#f87171',
-                                        padding: '0.75rem 1rem',
-                                        borderRadius: '6px',
+                                        width: msg.estado?.toLowerCase() === 'respondido' ? '100%' : '45px',
+                                        height: '45px',
+                                        background: 'rgba(239, 68, 68, 0.1)',
+                                        border: '1px solid rgba(239, 68, 68, 0.2)',
+                                        color: '#ef4444',
+                                        borderRadius: '8px',
                                         cursor: 'pointer',
                                         display: 'flex',
-                                        justifyContent: 'center',
                                         alignItems: 'center',
+                                        justifyContent: 'center',
                                         transition: 'all 0.2s',
+                                        gap: '8px',
+                                        fontWeight: '700'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)';
+                                        e.currentTarget.style.transform = 'translateY(-1px)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                                        e.currentTarget.style.transform = 'translateY(0)';
                                     }}
                                 >
                                     <LuTrash2 size={18} />
+                                    {msg.estado?.toLowerCase() === 'respondido' && <span>Borrar Mensaje</span>}
                                 </button>
                             </div>
                         )}
