@@ -124,11 +124,11 @@ const SupportListView: React.FC = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '600' }}>
                                 {getStatusIcon(msg.estado)}
                                 <span style={{
-                                    color: msg.estado.toLowerCase() === 'pendiente' ? 'var(--neon-orange)' :
-                                        msg.estado.toLowerCase() === 'leido' ? 'var(--neon-blue)' :
-                                            msg.estado.toLowerCase() === 'respondido' ? 'var(--neon-green)' : '#94a3b8'
+                                    color: (msg.estado || '').toLowerCase() === 'pendiente' ? 'var(--neon-orange)' :
+                                        (msg.estado || '').toLowerCase() === 'leido' ? 'var(--neon-blue)' :
+                                            (msg.estado || '').toLowerCase() === 'respondido' ? 'var(--neon-green)' : '#94a3b8'
                                 }}>
-                                    {msg.estado.toUpperCase()}
+                                    {(msg.estado || 'PENDIENTE').toUpperCase()}
                                 </span>
                             </div>
                             <span style={{ color: '#64748b' }}>
