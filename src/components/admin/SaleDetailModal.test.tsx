@@ -51,7 +51,7 @@ describe('SaleDetailModal Component', () => {
 
         // Promotions
         expect(screen.getByText(/Descuento Admin/i)).toBeDefined();
-        expect(screen.getByText(/500/)).toBeDefined();
+        expect(screen.getByText(/-\$500/)).toBeDefined();
     });
 
     it('renders physical sale message when no shipping details', () => {

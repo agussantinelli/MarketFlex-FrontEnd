@@ -51,12 +51,14 @@ describe('UserPurchasesModal Component', () => {
         });
     });
 
-    it('calls onClose when close button clicked', () => {
+    it('calls onClose when close button clicked', async () => {
         const onClose = vi.fn();
         render(<UserPurchasesModal userId="u-1" userName="Juan" onClose={onClose} />);
 
         const closeBtn = screen.getAllByRole('button')[0];
-        if (closeBtn) fireEvent.click(closeBtn);
+        if (closeBtn) {
+            fireEvent.click(closeBtn);
+        }
 
         expect(onClose).toHaveBeenCalled();
     });
