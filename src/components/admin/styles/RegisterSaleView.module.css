@@ -20,9 +20,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     position: relative;
-    padding: 0 1rem;
+    padding: 0;
 }
 
 .stepper::before {
@@ -91,12 +91,20 @@
 
 /* Form Sections */
 .viewContainer {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 2rem;
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     min-height: 400px;
     animation: fadeIn 0.3s ease;
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 2.5rem;
 }
 
 .actions {

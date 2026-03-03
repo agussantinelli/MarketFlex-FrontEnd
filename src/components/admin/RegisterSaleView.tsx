@@ -280,29 +280,65 @@ const RegisterSaleView: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <header className={styles.header}>
-                <a href="/admin/sales" className={dashboardStyles.btnSecondary} style={{ width: 'fit-content', marginBottom: '1rem', padding: '0.5rem 1rem' }}>
-                    <LuArrowLeft /> Volver al listado
-                </a>
-                <h1>Registrar Venta</h1>
+        <div className={dashboardStyles.dashboardContainer} style={{ maxWidth: '900px', margin: '0 auto', padding: '1rem 2rem' }}>
+            <header className={dashboardStyles.header} style={{ marginBottom: '2.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '0.75rem' }}>
+                    <a
+                        href="/admin/sales"
+                        className={dashboardStyles.actionBtn}
+                        title="Volver a Ventas"
+                        style={{
+                            width: '40px',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '10px',
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            color: 'var(--neon-green)',
+                            transition: 'all 0.3s ease'
+                        }}
+                    >
+                        <LuArrowLeft size={20} />
+                    </a>
+                    <h1 style={{
+                        margin: 0,
+                        fontSize: '2.5rem',
+                        fontWeight: '800',
+                        color: 'var(--neon-green)',
+                        letterSpacing: '-1px'
+                    }}>
+                        Registrar Venta
+                    </h1>
+                </div>
+                <p style={{
+                    fontSize: '1.1rem',
+                    color: 'var(--green-cream)',
+                    opacity: 0.7,
+                    marginLeft: '3.75rem'
+                }}>
+                    Sigue los pasos para registrar una nueva venta manual en el sistema.
+                </p>
             </header>
 
-            <div className={styles.stepper}>
-                {steps.map((step) => (
-                    <div
-                        key={step.id}
-                        className={`${styles.step} ${currentStep === step.id ? styles.active : ''} ${currentStep > step.id ? styles.completed : ''}`}
-                    >
-                        <div className={styles.stepCircle}>
-                            {currentStep > step.id ? <LuCheck /> : step.id}
-                        </div>
-                        <span className={styles.stepLabel}>{step.label}</span>
-                    </div>
-                ))}
-            </div>
-
             <div className={styles.viewContainer}>
+                <div className={styles.stepper}>
+                    {steps.map((step) => (
+                        <div
+                            key={step.id}
+                            className={`${styles.step} ${currentStep === step.id ? styles.active : ''} ${currentStep > step.id ? styles.completed : ''}`}
+                        >
+                            <div className={styles.stepCircle}>
+                                {currentStep > step.id ? <LuCheck /> : step.id}
+                            </div>
+                            <span className={styles.stepLabel}>{step.label}</span>
+                        </div>
+                    ))}
+                </div>
+
+                <div className={styles.divider} />
+
                 {renderStep()}
 
                 <div className={styles.actions}>
