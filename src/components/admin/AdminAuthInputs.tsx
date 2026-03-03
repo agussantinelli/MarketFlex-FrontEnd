@@ -6,9 +6,10 @@ interface AdminAuthInputsProps {
     formData: any;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     readonlyFields?: string[];
+    isEdit?: boolean;
 }
 
-const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, readonlyFields = [] }) => {
+const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, readonlyFields = [], isEdit = false }) => {
     const isReadOnly = (fieldName: string) => readonlyFields.includes(fieldName);
 
     const getReadOnlyStyle = (fieldName: string) =>
@@ -143,10 +144,18 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, r
                         className={styles.inputField}
                     />
                 </div>
-                <p className={styles.passwordHint}>
-                    <LuInfo size={14} />
-                    Si se deja vacío, se asignará por defecto: <strong>Hola123</strong>
-                </p>
+                {!isEdit && (
+                    <p className={styles.passwordHint}>
+                        <LuHash size={14} />
+                        Si se deja vacío, se asignará por defecto: <strong>Hola123</strong>
+                    </p>
+                )}
+                {isEdit && (
+                    <p className={styles.passwordHint}>
+                        <LuInfo size={14} />
+                        Deja este campo vacío si no deseas cambiar la contraseña.
+                    </p>
+                )}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
