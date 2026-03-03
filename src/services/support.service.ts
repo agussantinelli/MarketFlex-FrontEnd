@@ -19,3 +19,12 @@ export const getSupportMessages = async (): Promise<SupportMessageOutput[]> => {
         throw error;
     }
 };
+
+export const replyToSupportMessage = async (id: string, respuesta: string) => {
+    try {
+        return await api.post(`support/${id}/reply`, { json: { respuesta } }).json<any>();
+    } catch (error) {
+        console.error('Error replying to support message:', error);
+        throw error;
+    }
+};
