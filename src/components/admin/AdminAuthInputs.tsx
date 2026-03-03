@@ -5,9 +5,15 @@ import { LuUser, LuMail, LuLock, LuIdCard, LuCalendar, LuGlobe, LuMapPin, LuHash
 interface AdminAuthInputsProps {
     formData: any;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    readonlyFields?: string[];
 }
 
-const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange }) => {
+const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, readonlyFields = [] }) => {
+    const isReadOnly = (fieldName: string) => readonlyFields.includes(fieldName);
+
+    const getReadOnlyStyle = (fieldName: string) =>
+        isReadOnly(fieldName) ? { opacity: 0.6, cursor: 'not-allowed', backgroundColor: 'rgba(255, 255, 255, 0.02)' } : {};
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
@@ -49,7 +55,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '1rem' }}>
                 <div className={styles.formGroup}>
                     <label htmlFor="tipoDni">Tipo de ID</label>
-                    <div className={styles.inputWrapper}>
+                    <div className={styles.inputWrapper} style={getReadOnlyStyle('tipoDni')}>
                         <LuIdCard className={styles.inputIcon} />
                         <select
                             id="tipoDni"
@@ -57,6 +63,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
                             value={formData.tipoDni}
                             onChange={onChange}
                             required
+                            disabled={isReadOnly('tipoDni')}
                             className={styles.inputField}
                         >
                             <option value="DNI">DNI</option>
@@ -68,7 +75,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
 
                 <div className={styles.formGroup}>
                     <label htmlFor="dni">DNI / ID</label>
-                    <div className={styles.inputWrapper}>
+                    <div className={styles.inputWrapper} style={getReadOnlyStyle('dni')}>
                         <LuIdCard className={styles.inputIcon} />
                         <input
                             type="text"
@@ -78,6 +85,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
                             onChange={onChange}
                             placeholder="12.345.678"
                             required
+                            readOnly={isReadOnly('dni')}
                             className={styles.inputField}
                         />
                     </div>
@@ -105,7 +113,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
 
             <div className={styles.formGroup}>
                 <label htmlFor="email">Correo Electrónico</label>
-                <div className={styles.inputWrapper}>
+                <div className={styles.inputWrapper} style={getReadOnlyStyle('email')}>
                     <LuMail className={styles.inputIcon} />
                     <input
                         type="email"
@@ -115,6 +123,7 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange })
                         onChange={onChange}
                         placeholder="nombre@ejemplo.com"
                         required
+                        readOnly={isReadOnly('email')}
                         className={styles.inputField}
                     />
                 </div>
