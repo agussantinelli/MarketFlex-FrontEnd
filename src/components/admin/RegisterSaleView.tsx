@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles/RegisterSaleView.module.css';
 import dashboardStyles from './styles/dashboard.module.css';
-import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus, LuPackage, LuMinus, LuTrash2 } from 'react-icons/lu';
+import { LuChevronLeft, LuChevronRight, LuCheck, LuArrowLeft, LuPlus, LuPackage, LuMinus, LuTrash2, LuDollarSign, LuCreditCard, LuRepeat, LuStore, LuTruck } from 'react-icons/lu';
 import { api } from '../../lib/api';
 import { AdminService } from '../../services/admin.service';
 import { getImageUrl } from '../../lib/url';
@@ -188,59 +188,96 @@ const RegisterSaleView: React.FC = () => {
                     </div>
                 );
             case 2:
+                const subtotal = selectedProducts.reduce((acc, p) => acc + (p.precio * p.cantidad), 0);
                 return (
                     <div className={styles.stepContent}>
-                        <div className={styles.formGrid}>
-                            <div className={styles.formGroup}>
-                                <label>Método de Pago</label>
-                                <div className={styles.radioGroup}>
-                                    {['cash', 'card', 'transfer'].map(method => (
-                                        <label key={method} className={styles.radioItem}>
-                                            <input
-                                                type="radio"
-                                                name="paymentMethod"
-                                                checked={paymentMethod === method}
-                                                onChange={() => setPaymentMethod(method as any)}
-                                            />
-                                            <span className={styles.radioLabel}>
-                                                {method === 'cash' ? 'Efectivo' : method === 'card' ? 'Tarjeta' : 'Transferencia'}
-                                            </span>
-                                        </label>
-                                    ))}
+                        <div className={styles.formGroup}>
+                            <h4 className={styles.sectionLabel}>Método de Pago</h4>
+                            <div className={styles.selectionGrid}>
+                                <div
+                                    className={`${styles.selectionTile} ${paymentMethod === 'cash' ? styles.active : ''}`}
+                                    onClick={() => setPaymentMethod('cash')}
+                                >
+                                    <LuDollarSign className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Efectivo</span>
+                                    {paymentMethod === 'cash' && <LuCheck className={styles.activeCheck} />}
                                 </div>
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label>Tipo de Venta</label>
-                                <div className={styles.toggleWrapper}>
-                                    <span>Venta en físico (al local)</span>
-                                    <label className={styles.switch}>
-                                        <input
-                                            type="checkbox"
-                                            checked={isPhysicalSale}
-                                            onChange={(e) => setIsPhysicalSale(e.target.checked)}
-                                        />
-                                        <span className={`${styles.slider} ${styles.round}`}></span>
-                                    </label>
+                                <div
+                                    className={`${styles.selectionTile} ${paymentMethod === 'card' ? styles.active : ''}`}
+                                    onClick={() => setPaymentMethod('card')}
+                                >
+                                    <LuCreditCard className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Tarjeta</span>
+                                    {paymentMethod === 'card' && <LuCheck className={styles.activeCheck} />}
                                 </div>
-                                <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>
-                                    {isPhysicalSale
-                                        ? 'No se requieren datos de envío. Se registrará como "Consumidor Final".'
-                                        : 'Se requerirán datos de envío del cliente.'}
-                                </p>
+                                <div
+                                    className={`${styles.selectionTile} ${paymentMethod === 'transfer' ? styles.active : ''}`}
+                                    onClick={() => setPaymentMethod('transfer')}
+                                >
+                                    <LuRepeat className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Transferencia</span>
+                                    {paymentMethod === 'transfer' && <LuCheck className={styles.activeCheck} />}
+                                </div>
                             </div>
                         </div>
 
-                        <div className={styles.summarySection} style={{ marginTop: '3rem' }}>
+                        <div className={styles.formGroup} style={{ marginTop: '3rem' }}>
+                            <h4 className={styles.sectionLabel}>Tipo de Venta</h4>
+                            <div className={styles.selectionGrid}>
+                                <div
+                                    className={`${styles.selectionTile} ${isPhysicalSale ? styles.active : ''}`}
+                                    onClick={() => setIsPhysicalSale(true)}
+                                >
+                                    <LuStore className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Venta en Físico</span>
+                                </div>
+                                <div
+                                    className={`${styles.selectionTile} ${!isPhysicalSale ? styles.active : ''}`}
+                                    onClick={() => setIsPhysicalSale(false)}
+                                >
+                                    <LuTruck className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Envio / Remoto</span>
+                                </div>
+                            </div>
+                            <div style={{
+                                marginTop: '1.5rem',
+                                padding: '1rem',
+                                background: 'rgba(0, 255, 136, 0.05)',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(0, 255, 136, 0.1)',
+                                color: 'var(--green-cream)',
+                                fontSize: '0.9rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem'
+                            }}>
+                                <LuCheck style={{ color: 'var(--neon-green)' }} />
+                                {isPhysicalSale
+                                    ? 'Se registrará como entrega inmediata en el local para Consumidor Final.'
+                                    : 'Se habilitarán los campos de dirección de envío en el siguiente paso.'}
+                            </div>
+                        </div>
+
+                        <div className={styles.summaryCard}>
+                            <h4 style={{
+                                color: 'var(--neon-green)',
+                                fontSize: '0.8rem',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                marginBottom: '1rem',
+                                opacity: 0.8
+                            }}>Resumen Parcial</h4>
                             <div className={styles.summaryRow}>
-                                <span>Cant. de Productos:</span>
-                                <span>{selectedProducts.reduce((acc, p) => acc + p.cantidad, 0)}</span>
+                                <span className={styles.summaryLabel}>Items Seleccionados</span>
+                                <span className={styles.summaryValue}>{selectedProducts.reduce((acc, p) => acc + p.cantidad, 0)}</span>
                             </div>
                             <div className={styles.summaryRow}>
-                                <span>Total:</span>
-                                <span className={styles.summaryTotal}>
-                                    ${selectedProducts.reduce((acc, p) => acc + (p.precio * p.cantidad), 0).toFixed(2)}
-                                </span>
+                                <span className={styles.summaryLabel}>Subtotal</span>
+                                <span className={styles.summaryValue}>${subtotal.toLocaleString()}</span>
+                            </div>
+                            <div className={styles.summaryRow}>
+                                <span className={styles.summaryLabel}>Total a Pagar</span>
+                                <span className={styles.summaryTotal}>${subtotal.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>
@@ -250,29 +287,61 @@ const RegisterSaleView: React.FC = () => {
                 return (
                     <div className={styles.stepContent}>
                         <h4 className={styles.sectionLabel}>Resumen de la Venta</h4>
-                        <div className={styles.confirmDetails}>
+
+                        <div className={styles.summaryCard} style={{ marginTop: '0', marginBottom: '2rem' }}>
                             <div className={styles.summaryRow}>
-                                <span>Método de Pago:</span>
-                                <span style={{ fontWeight: 600, color: 'var(--neon-green)' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    {paymentMethod === 'cash' ? <LuDollarSign style={{ color: 'var(--neon-green)' }} /> :
+                                        paymentMethod === 'card' ? <LuCreditCard style={{ color: 'var(--neon-green)' }} /> :
+                                            <LuRepeat style={{ color: 'var(--neon-green)' }} />}
+                                    <span className={styles.summaryLabel}>Método de Pago</span>
+                                </div>
+                                <span className={styles.summaryValue} style={{ color: 'var(--neon-green)' }}>
                                     {paymentMethod === 'cash' ? 'Efectivo' : paymentMethod === 'card' ? 'Tarjeta' : 'Transferencia'}
                                 </span>
                             </div>
                             <div className={styles.summaryRow}>
-                                <span>Tipo de Venta:</span>
-                                <span>{isPhysicalSale ? 'Física (Al Local)' : 'Online (Con Envío)'}</span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    {isPhysicalSale ? <LuStore style={{ color: 'var(--neon-green)' }} /> : <LuTruck style={{ color: 'var(--neon-green)' }} />}
+                                    <span className={styles.summaryLabel}>Tipo de Venta</span>
+                                </div>
+                                <span className={styles.summaryValue}>{isPhysicalSale ? 'Presencial (Local)' : 'Remota (Envío)'}</span>
                             </div>
                         </div>
 
-                        <div className={styles.confirmList}>
+                        <h4 className={styles.sectionLabel} style={{ fontSize: '0.9rem', opacity: 0.7 }}>Items a Registrar</h4>
+                        <div className={styles.selectedList} style={{ gap: '0.5rem' }}>
                             {selectedProducts.map(p => (
-                                <div key={p.id} className={styles.confirmItem}>
-                                    <span>{p.cantidad}x {p.nombre}</span>
-                                    <span>${(p.precio * p.cantidad).toFixed(2)}</span>
+                                <div key={p.id} className={styles.productCard} style={{ padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.01)' }}>
+                                    <div className={styles.productImage} style={{ width: '40px', height: '40px' }}>
+                                        {p.foto ? (
+                                            <img src={getImageUrl(p.foto)} alt={p.nombre} />
+                                        ) : (
+                                            <div className={styles.productImagePlaceholder}>
+                                                <LuPackage size={16} />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={styles.productInfo}>
+                                        <span className={styles.productName} style={{ fontSize: '0.85rem' }}>{p.nombre}</span>
+                                        <span className={styles.productPrice} style={{ fontSize: '0.75rem', opacity: 0.6 }}>${p.precio.toLocaleString()} c/u</span>
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <div style={{ color: 'var(--neon-green)', fontWeight: 700, fontSize: '0.9rem' }}>
+                                            ${(p.precio * p.cantidad).toLocaleString()}
+                                        </div>
+                                        <div style={{ fontSize: '0.75rem', opacity: 0.5 }}>Cant: {p.cantidad}</div>
+                                    </div>
                                 </div>
                             ))}
-                            <div className={styles.confirmItem} style={{ borderTop: '2px solid var(--neon-green)', marginTop: '1rem', paddingTop: '1rem' }}>
-                                <span style={{ fontWeight: 800 }}>TOTAL</span>
-                                <span style={{ fontWeight: 800, color: 'var(--neon-green)', fontSize: '1.2rem' }}>${total.toFixed(2)}</span>
+                        </div>
+
+                        <div className={styles.summaryCard} style={{ marginTop: '2rem', border: '1px solid rgba(0, 255, 136, 0.2)' }}>
+                            <div className={styles.summaryRow} style={{ borderBottom: 'none', padding: '0' }}>
+                                <span style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--green-cream)' }}>TOTAL FINAL</span>
+                                <span className={styles.summaryTotal} style={{ fontSize: '2rem' }}>
+                                    ${total.toLocaleString()}
+                                </span>
                             </div>
                         </div>
                     </div>
