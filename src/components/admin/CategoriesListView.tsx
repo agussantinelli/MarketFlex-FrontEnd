@@ -185,6 +185,14 @@ const CategoriesListView: React.FC = () => {
                                 <td className={styles.amount}>{category.productCount || 0} productos</td>
                                 <td>
                                     <div className={styles.actionButtons}>
+                                        <a
+                                            href={`/admin/categories/${category.id}/subcategories`}
+                                            className={styles.actionBtn}
+                                            title="Ver subcategorías"
+                                            style={{ color: 'var(--neon-green)' }}
+                                        >
+                                            <LuLayers size={18} />
+                                        </a>
                                         {category.productCount !== undefined && category.productCount > 0 && (
                                             <button
                                                 className={styles.actionBtn}
