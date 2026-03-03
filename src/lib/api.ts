@@ -73,26 +73,22 @@ export const api = ky.create({
 
                     try {
                         const errorData: any = await response.clone().json();
-                        const rawMessage: string = (errorData.message || errorData.error || '') as string;
+                        errorMessage = errorData.message || errorData.error || errorMessage;
 
-                        const errorMap: Record<string, string> = {
+                        // Optional: Map very common technical strings to user-friendly Spanish
+                        const friendlyMap: Record<string, string> = {
                             'insufficient stock': 'Stock insuficiente para uno o más productos',
-                            'not found': 'Producto no encontrado o no disponible',
-                            'invalid data': 'Datos de compra inválidos',
-                            'unauthorized': 'Sesión no válida',
-                            'internal server error': 'Error interno del servidor, por favor intenta de nuevo',
-                            'conflicto': rawMessage, // Pass through conflict messages
-                            'ya existe': rawMessage  // Pass through existence messages
+                            'not found': 'No se encontró el recurso solicitado',
+                            'unauthorized': 'Sesión expirada o no válida',
+                            'internal server error': 'Error interno del servidor, reintentá en unos momentos'
                         };
 
-                        const matchedKey = Object.keys(errorMap).find(key =>
-                            rawMessage.toLowerCase().includes(key)
-                        ) as keyof typeof errorMap | undefined;
+                        const matchedKey = Object.keys(friendlyMap).find(key =>
+                            errorMessage.toLowerCase().includes(key)
+                        ) as keyof typeof friendlyMap | undefined;
 
-                        if (matchedKey && errorMap[matchedKey]) {
-                            errorMessage = errorMap[matchedKey];
-                        } else if (rawMessage && rawMessage.length < 500) {
-                            errorMessage = rawMessage;
+                        if (matchedKey) {
+                            errorMessage = friendlyMap[matchedKey] as string;
                         }
                     } catch (e) {
                         errorMessage = 'Error de comunicación con el servidor';
