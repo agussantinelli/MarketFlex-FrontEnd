@@ -360,7 +360,10 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                                         >
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
                                                 <img src={p.foto} alt={p.nombre} style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
-                                                <span>{p.nombre}</span>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                                    <span style={{ fontWeight: 600 }}>{p.nombre}</span>
+                                                    {p.marca && <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{p.marca}</span>}
+                                                </div>
                                             </div>
                                             {formData.productIds?.includes(p.id) ? <LuCheck color="var(--primary)" /> : <LuPlus opacity={0.5} />}
                                         </div>
