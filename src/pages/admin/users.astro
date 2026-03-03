@@ -1,8 +1,54 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import UsersListView from "../../components/admin/UsersListView.tsx";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Gestión de Usuarios">
     <UsersListView client:only="react" />
+
+    <ConfirmationModal
+        id="delete-user-modal"
+        title="Desactivar Usuario"
+        message="¿Estás seguro de que deseas desactivar a este usuario? Esta acción lo ocultará del sistema."
+        confirmText="Desactivar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    // Bridge to connect React calls to Astro modal
+    window.showDeleteUserModal = (onConfirm) => {
+        const modal = document.getElementById("delete-user-modal");
+        const confirmBtn = document.getElementById("delete-user-modal-confirm");
+        const cancelBtn = document.getElementById("delete-user-modal-cancel");
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        // Show modal
+        modal.classList.add(modalStyles.active);
+
+        // Handle Confirm
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        // Handle Cancel
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>
