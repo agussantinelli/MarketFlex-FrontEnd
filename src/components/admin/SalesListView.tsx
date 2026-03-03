@@ -14,6 +14,7 @@ const SalesListView = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [sort, setSort] = useState('newest');
     const [selectedSale, setSelectedSale] = useState<AdminPurchase | null>(null);
 
     useEffect(() => {
@@ -43,6 +44,15 @@ const SalesListView = () => {
         }
         const fullName = `${sale.usuario?.nombre || ''} ${sale.usuario?.apellido || ''}`.toLowerCase();
         return fullName.includes(searchQuery.toLowerCase());
+    });
+
+    const sortedSales = [...filteredSales].sort((a, b) => {
+        switch (sort) {
+            case 'oldest': return new Date(a.fechaHora).getTime() - new Date(b.fechaHora).getTime();
+            case 'price_desc': return b.total - a.total;
+            case 'price_asc': return a.total - b.total;
+            default: return new Date(b.fechaHora).getTime() - new Date(a.fechaHora).getTime();
+        }
     });
 
     const getStatusIcon = (estado: string) => {
@@ -160,12 +170,24 @@ const SalesListView = () => {
             </header>
 
             <DataTable
-                data={filteredSales}
+                data={sortedSales}
                 columns={columns}
                 loading={loading}
                 onSearch={setSearchQuery}
                 searchTerm={searchQuery}
                 searchPlaceholder="Buscar por comprador..."
+                customFilters={
+                    <select
+                        className={styles.sortSelect}
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                    >
+                        <option value="newest">Más Recientes</option>
+                        <option value="oldest">Más Antiguas</option>
+                        <option value="price_desc">Mayor Monto</option>
+                        <option value="price_asc">Menor Monto</option>
+                    </select>
+                }
             />
 
             {selectedSale && (
