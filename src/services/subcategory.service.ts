@@ -1,11 +1,17 @@
 import { api } from "../lib/api";
 import type { Subcategory, SubcategoriesResponse, SubcategoryActionResponse } from "../types/subcategory.types";
+import type { CategoryProductSummary, CategoryProductsResponse } from "../types/category.types";
 
 export const subcategoryService = {
     async getSubcategories(categoriaId: string): Promise<Subcategory[]> {
         const data = await api.get('subcategories', {
             searchParams: { categoriaId }
         }).json<SubcategoriesResponse>();
+        return data.data;
+    },
+
+    async getProductsBySubcategory(categoriaId: string, nroSubcategoria: number): Promise<CategoryProductSummary[]> {
+        const data = await api.get(`subcategories/${categoriaId}/${nroSubcategoria}/products`).json<CategoryProductsResponse>();
         return data.data;
     },
 
