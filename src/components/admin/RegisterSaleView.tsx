@@ -26,6 +26,15 @@ const RegisterSaleView: React.FC = () => {
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [paymentMethod, setPaymentMethod] = useState<'card' | 'cash' | 'transfer'>('cash');
     const [isPhysicalSale, setIsPhysicalSale] = useState(true);
+    const [shippingData, setShippingData] = useState({
+        nombreCompleto: '',
+        email: '',
+        direccion: '',
+        ciudad: '',
+        provincia: '',
+        codigoPostal: '',
+        telefono: ''
+    });
 
     const steps = [
         { id: 1, label: 'Seleccionar Productos' },
@@ -34,6 +43,15 @@ const RegisterSaleView: React.FC = () => {
     ];
 
     const nextStep = () => {
+        if (currentStep === 2 && !isPhysicalSale) {
+            const { nombreCompleto, email, direccion, ciudad, provincia, codigoPostal, telefono } = shippingData;
+            if (!nombreCompleto.trim() || !email.trim() || !direccion.trim() || !ciudad.trim() || !provincia.trim() || !codigoPostal.trim() || !telefono.trim()) {
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'Completá todos los campos de envío');
+                }
+                return;
+            }
+        }
         if (currentStep < 3) setCurrentStep(currentStep + 1);
     };
 
@@ -305,8 +323,95 @@ const RegisterSaleView: React.FC = () => {
                                 <LuCheck style={{ color: 'var(--neon-green)' }} />
                                 {isPhysicalSale
                                     ? 'Se registrará como entrega inmediata en el local para Consumidor Final.'
-                                    : 'Se habilitarán los campos de dirección de envío en el siguiente paso.'}
+                                    : 'Completá los datos de envío del cliente a continuación.'}
                             </div>
+
+                            {!isPhysicalSale && (
+                                <div style={{
+                                    marginTop: '2rem',
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr 1fr',
+                                    gap: '1rem'
+                                }}>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nombre Completo</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Nombre y Apellido"
+                                            value={shippingData.nombreCompleto}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, nombreCompleto: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
+                                        <input
+                                            type="email"
+                                            placeholder="email@ejemplo.com"
+                                            value={shippingData.email}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, email: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div style={{ gridColumn: '1 / -1' }}>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dirección</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Calle y número"
+                                            value={shippingData.direccion}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, direccion: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ciudad</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Ciudad"
+                                            value={shippingData.ciudad}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, ciudad: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Provincia</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Provincia"
+                                            value={shippingData.provincia}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, provincia: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Código Postal</label>
+                                        <input
+                                            type="text"
+                                            placeholder="CP"
+                                            value={shippingData.codigoPostal}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, codigoPostal: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Teléfono</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Teléfono de contacto"
+                                            value={shippingData.telefono}
+                                            onChange={(e) => setShippingData(prev => ({ ...prev, telefono: e.target.value }))}
+                                            className={dashboardStyles.toggleBtn}
+                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className={styles.summaryCard}>
@@ -374,6 +479,20 @@ const RegisterSaleView: React.FC = () => {
                                 </div>
                                 <span className={styles.summaryValue}>{isPhysicalSale ? 'Presencial (Local)' : 'Remota (Envío)'}</span>
                             </div>
+                            {!isPhysicalSale && (
+                                <div className={styles.summaryRow} style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '4px' }}>
+                                    <span className={styles.summaryLabel} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                                        <LuTruck size={14} style={{ color: 'var(--neon-green)' }} /> Datos de Envío
+                                    </span>
+                                    <div style={{ fontSize: '0.85rem', opacity: 0.7, lineHeight: 1.6, paddingLeft: '20px' }}>
+                                        <div style={{ fontWeight: 600, opacity: 1 }}>{shippingData.nombreCompleto}</div>
+                                        <div>{shippingData.email}</div>
+                                        <div>{shippingData.direccion}</div>
+                                        <div>{shippingData.ciudad}, {shippingData.provincia} ({shippingData.codigoPostal})</div>
+                                        <div>Tel: {shippingData.telefono}</div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <h4 className={styles.sectionLabel} style={{ fontSize: '0.9rem', opacity: 0.7 }}>Items a Registrar</h4>
@@ -471,11 +590,13 @@ const RegisterSaleView: React.FC = () => {
                 ventaEnFisico: isPhysicalSale,
                 // If it's physical, we don't send shipping details
                 envio: isPhysicalSale ? undefined : {
-                    direccion: "Venta al local",
-                    ciudad: "Venta al local",
-                    provincia: "Venta al local",
-                    codigoPostal: "0000",
-                    telefono: "00000000"
+                    nombreCompleto: shippingData.nombreCompleto,
+                    email: shippingData.email,
+                    direccion: shippingData.direccion,
+                    ciudad: shippingData.ciudad,
+                    provincia: shippingData.provincia,
+                    codigoPostal: shippingData.codigoPostal,
+                    telefono: shippingData.telefono
                 }
             };
 
