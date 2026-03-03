@@ -1,8 +1,52 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import BrandsListView from "../../components/admin/BrandsListView.tsx";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Gestión de Marcas">
     <BrandsListView client:only="react" />
+
+    <ConfirmationModal
+        id="delete-brand-modal"
+        title="Borrar Marca"
+        message="¿Estás seguro de que deseas borrar esta marca? Solo se podrá borrar si no tiene productos asociados."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteBrandModal = (onConfirm) => {
+        const modal = document.getElementById("delete-brand-modal");
+        const confirmBtn = document.getElementById(
+            "delete-brand-modal-confirm",
+        );
+        const cancelBtn = document.getElementById("delete-brand-modal-cancel");
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

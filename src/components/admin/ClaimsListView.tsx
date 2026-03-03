@@ -119,23 +119,25 @@ const ClaimsListView = () => {
     }, []);
 
     const handleDelete = async (compraId: string, nroReclamo: number) => {
-        if (window.confirm('¿Seguro que quieres borrar este reclamo? Pasará a estado BORRADO.')) {
-            try {
-                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
-                const { AdminService } = await import('../../services/admin.service');
-                const result = await AdminService.deleteClaim(compraId, nroReclamo);
-                if (result.status === 'success') {
-                    setClaims(prev => prev.filter(c => !(c.compraId === compraId && c.nroReclamo === nroReclamo)));
-                    if (window.triggerSileo) window.triggerSileo('success', 'Reclamo borrado correctamente');
-                } else {
-                    if (window.triggerSileo) window.triggerSileo('error', result.message);
+        if ((window as any).showDeleteClaimModal) {
+            (window as any).showDeleteClaimModal(async () => {
+                try {
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    const { AdminService } = await import('../../services/admin.service');
+                    const result = await AdminService.deleteClaim(compraId, nroReclamo);
+                    if (result.status === 'success') {
+                        setClaims(prev => prev.filter(c => !(c.compraId === compraId && c.nroReclamo === nroReclamo)));
+                        if (window.triggerSileo) window.triggerSileo('success', 'Reclamo borrado correctamente');
+                    } else {
+                        if (window.triggerSileo) window.triggerSileo('error', result.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting claim:', error);
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el reclamo');
+                } finally {
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
                 }
-            } catch (error) {
-                console.error('Error deleting claim:', error);
-                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el reclamo');
-            } finally {
-                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
-            }
+            });
         }
     };
 

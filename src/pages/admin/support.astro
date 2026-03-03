@@ -1,10 +1,56 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import SupportListView from "../../components/admin/SupportListView";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Soporte">
     <div style="padding: 2rem;">
         <SupportListView client:only="react" />
     </div>
+
+    <ConfirmationModal
+        id="delete-support-modal"
+        title="Borrar Consulta de Soporte"
+        message="¿Estás seguro de que deseas borrar esta consulta? No se podrá recuperar una vez borrada."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteSupportModal = (onConfirm) => {
+        const modal = document.getElementById("delete-support-modal");
+        const confirmBtn = document.getElementById(
+            "delete-support-modal-confirm",
+        );
+        const cancelBtn = document.getElementById(
+            "delete-support-modal-cancel",
+        );
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

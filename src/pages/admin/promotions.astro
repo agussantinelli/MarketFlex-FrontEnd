@@ -1,10 +1,56 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import PromotionsListView from "../../components/admin/PromotionsListView";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Gestión de Promociones">
     <div style="padding: 2rem;">
         <PromotionsListView client:only="react" />
     </div>
+
+    <ConfirmationModal
+        id="delete-promotion-modal"
+        title="Borrar Promoción"
+        message="¿Estás seguro de que deseas borrar esta promoción? Pasará a estado BORRADO y dejará de aplicarse a los productos."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeletePromotionModal = (onConfirm) => {
+        const modal = document.getElementById("delete-promotion-modal");
+        const confirmBtn = document.getElementById(
+            "delete-promotion-modal-confirm",
+        );
+        const cancelBtn = document.getElementById(
+            "delete-promotion-modal-cancel",
+        );
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

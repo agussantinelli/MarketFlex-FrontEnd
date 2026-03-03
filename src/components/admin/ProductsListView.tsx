@@ -178,20 +178,22 @@ const ProductsListView: React.FC = () => {
     };
 
     const handleDelete = async (product: AdminProduct) => {
-        if (window.confirm(`¿Seguro que quieres borrar el producto "${product.nombre}"? Pasará a estado BORRADO.`)) {
-            try {
-                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
-                const { deleteProduct } = await import('../../services/product.service');
-                await deleteProduct(product.id);
-                setProducts(prev => prev.filter(p => p.id !== product.id));
-                setTotal(prev => prev - 1);
-                if (window.triggerSileo) window.triggerSileo('success', 'Producto borrado correctamente');
-            } catch (error) {
-                console.error('Error deleting product:', error);
-                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el producto');
-            } finally {
-                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
-            }
+        if ((window as any).showDeleteProductModal) {
+            (window as any).showDeleteProductModal(async () => {
+                try {
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    const { deleteProduct } = await import('../../services/product.service');
+                    await deleteProduct(product.id);
+                    setProducts(prev => prev.filter(p => p.id !== product.id));
+                    setTotal(prev => prev - 1);
+                    if (window.triggerSileo) window.triggerSileo('success', 'Producto borrado correctamente');
+                } catch (error) {
+                    console.error('Error deleting product:', error);
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el producto');
+                } finally {
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+                }
+            });
         }
     };
 

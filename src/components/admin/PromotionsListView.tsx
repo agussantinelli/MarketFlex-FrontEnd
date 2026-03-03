@@ -50,14 +50,16 @@ const PromotionsListView: React.FC = () => {
     };
 
     const handleDelete = async (promo: Promotion) => {
-        if (window.confirm(`¿Seguro que quieres eliminar la promoción "${promo.nombre}"?`)) {
-            try {
-                await deletePromotion(promo.id);
-                setPromotions(prev => prev.filter(p => p.id !== promo.id));
-                if (window.triggerSileo) window.triggerSileo('success', 'Promoción eliminada');
-            } catch (error) {
-                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo eliminar la promoción');
-            }
+        if ((window as any).showDeletePromotionModal) {
+            (window as any).showDeletePromotionModal(async () => {
+                try {
+                    await deletePromotion(promo.id);
+                    setPromotions(prev => prev.filter(p => p.id !== promo.id));
+                    if (window.triggerSileo) window.triggerSileo('success', 'Promoción eliminada');
+                } catch (error) {
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo eliminar la promoción');
+                }
+            });
         }
     };
 

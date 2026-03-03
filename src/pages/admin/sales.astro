@@ -1,10 +1,52 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import SalesListView from "../../components/admin/SalesListView";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 
 const title = "Gestión de Ventas";
 ---
 
 <AdminLayout title={title}>
     <SalesListView client:visible />
+
+    <ConfirmationModal
+        id="delete-sale-modal"
+        title="Borrar Registro de Venta"
+        message="¿Estás seguro de que deseas borrar este registro de venta? Pasará a estado BORRADO y se ocultará del listado principal."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteSaleModal = (onConfirm) => {
+        const modal = document.getElementById("delete-sale-modal");
+        const confirmBtn = document.getElementById("delete-sale-modal-confirm");
+        const cancelBtn = document.getElementById("delete-sale-modal-cancel");
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

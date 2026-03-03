@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LuPlus, LuEye, LuPencil, LuTrash2, LuTriangleAlert, LuPackage, LuAward } from 'react-icons/lu';
+import { LuPlus, LuEye, LuPencil, LuTrash2, LuPackage, LuAward } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { brandService } from '../../services/brand.service';
 import type { Brand, BrandWithCount, BrandProductSummary } from '../../types/brand.types';
@@ -11,7 +11,6 @@ const BrandsListView: React.FC = () => {
     const [products, setProducts] = useState<BrandProductSummary[]>([]);
     const [viewProductsModal, setViewProductsModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
     const [createModal, setCreateModal] = useState(false);
     const [editName, setEditName] = useState('');
     const [newName, setNewName] = useState('');
@@ -63,8 +62,27 @@ const BrandsListView: React.FC = () => {
     };
 
     const handleDeleteClick = (brand: Brand) => {
-        setSelectedBrand(brand);
-        setDeleteModal(true);
+        if ((window as any).showDeleteBrandModal) {
+            (window as any).showDeleteBrandModal(async () => {
+                try {
+                    setLoading(true);
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    await brandService.delete(brand.id);
+                    setBrands(prev => prev.filter(b => b.id !== brand.id));
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('success', 'Marca eliminada permanentemente');
+                    }
+                } catch (error) {
+                    console.error('Error deleting brand:', error);
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', 'No se puede eliminar la marca. Verifique que no tenga productos asociados.');
+                    }
+                } finally {
+                    setLoading(false);
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+                }
+            });
+        }
     };
 
     const handleCreate = async () => {
@@ -104,26 +122,6 @@ const BrandsListView: React.FC = () => {
             console.error('Error updating brand:', error);
             if ((window as any).triggerSileo) {
                 (window as any).triggerSileo('error', 'Error al actualizar la marca');
-            }
-        } finally {
-            setModalLoading(false);
-        }
-    };
-
-    const handleDelete = async () => {
-        if (!selectedBrand) return;
-        try {
-            setModalLoading(true);
-            await brandService.delete(selectedBrand.id);
-            setBrands(brands.filter(b => b.id !== selectedBrand.id));
-            setDeleteModal(false);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('success', 'Marca eliminada permanentemente');
-            }
-        } catch (error) {
-            console.error('Error deleting brand:', error);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'No se puede eliminar la marca. Verifique que no tenga productos asociados.');
             }
         } finally {
             setModalLoading(false);
@@ -250,30 +248,6 @@ const BrandsListView: React.FC = () => {
                             <button className={styles.modalCloseBtn} style={{ background: 'transparent', border: '1px solid #334155' }} onClick={() => setEditModal(false)}>Cancelar</button>
                             <button className={styles.modalCloseBtn} disabled={modalLoading || !editName.trim()} onClick={handleUpdate}>
                                 {modalLoading ? 'Guardando...' : 'Guardar Cambios'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Modal: Delete */}
-            {deleteModal && (
-                <div className={styles.modalOverlay} onClick={() => setDeleteModal(false)}>
-                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-                        <div className={styles.modalHeader} style={{ color: '#ef4444' }}>
-                            <LuTriangleAlert className={styles.modalIcon} />
-                            <h2>¿Eliminar Marca?</h2>
-                        </div>
-                        <div className={styles.modalBody}>
-                            <p>Estás a punto de eliminar <strong>{selectedBrand?.nombre}</strong>. </p>
-                            <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-                                Esta acción eliminará la asociación con todos los productos, pero los productos en sí no se verán afectados.
-                            </p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                            <button className={styles.modalCloseBtn} style={{ background: 'transparent', border: '1px solid #334155' }} onClick={() => setDeleteModal(false)}>Cancelar</button>
-                            <button className={styles.modalCloseBtn} style={{ background: '#ef4444' }} disabled={modalLoading} onClick={handleDelete}>
-                                {modalLoading ? 'Eliminando...' : 'Eliminar permanentemente'}
                             </button>
                         </div>
                     </div>

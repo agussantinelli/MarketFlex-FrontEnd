@@ -1,8 +1,52 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import ClaimsListView from "../../components/admin/ClaimsListView";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Gestión de Reclamos">
     <ClaimsListView client:load />
+
+    <ConfirmationModal
+        id="delete-claim-modal"
+        title="Borrar Reclamo"
+        message="¿Estás seguro de que deseas borrar este reclamo? Pasará a estado BORRADO y se ocultará del listado principal."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteClaimModal = (onConfirm) => {
+        const modal = document.getElementById("delete-claim-modal");
+        const confirmBtn = document.getElementById(
+            "delete-claim-modal-confirm",
+        );
+        const cancelBtn = document.getElementById("delete-claim-modal-cancel");
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

@@ -35,23 +35,25 @@ const SupportListView: React.FC = () => {
     };
 
     const handleDelete = async (msg: SupportMessageOutput) => {
-        if (window.confirm(`¿Seguro que quieres eliminar el mensaje de ${msg.nombre}? Pasará a estado BORRADO.`)) {
-            try {
-                if ((window as any).showAdminLoader) (window as any).showAdminLoader();
-                const { AdminService } = await import('../../services/admin.service');
-                const result = await AdminService.deleteSupportMessage(msg.id);
-                if (result.status === 'success') {
-                    setMessages(prev => prev.filter(m => m.id !== msg.id));
-                    if (window.triggerSileo) window.triggerSileo('success', 'Mensaje de soporte borrado correctamente');
-                } else {
-                    if (window.triggerSileo) window.triggerSileo('error', result.message);
+        if ((window as any).showDeleteSupportModal) {
+            (window as any).showDeleteSupportModal(async () => {
+                try {
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    const { AdminService } = await import('../../services/admin.service');
+                    const result = await AdminService.deleteSupportMessage(msg.id);
+                    if (result.status === 'success') {
+                        setMessages(prev => prev.filter(m => m.id !== msg.id));
+                        if (window.triggerSileo) window.triggerSileo('success', 'Mensaje de soporte borrado correctamente');
+                    } else {
+                        if (window.triggerSileo) window.triggerSileo('error', result.message);
+                    }
+                } catch (error) {
+                    console.error('Error deleting support message:', error);
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el mensaje');
+                } finally {
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
                 }
-            } catch (error) {
-                console.error('Error deleting support message:', error);
-                if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar el mensaje');
-            } finally {
-                if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
-            }
+            });
         }
     };
 

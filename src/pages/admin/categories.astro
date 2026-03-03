@@ -1,8 +1,54 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import CategoriesListView from "../../components/admin/CategoriesListView";
+import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
+import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
 <AdminLayout title="Gestión de Categorías | MarketFlex Admin">
     <CategoriesListView client:only="react" />
+
+    <ConfirmationModal
+        id="delete-category-modal"
+        title="Borrar Categoría"
+        message="¿Estás seguro de que deseas borrar esta categoría? Solo se podrá borrar si no tiene productos o subcategorías asociadas."
+        confirmText="Borrar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </AdminLayout>
+
+<script is:inline define:vars={{ modalStyles }}>
+    window.showDeleteCategoryModal = (onConfirm) => {
+        const modal = document.getElementById("delete-category-modal");
+        const confirmBtn = document.getElementById(
+            "delete-category-modal-confirm",
+        );
+        const cancelBtn = document.getElementById(
+            "delete-category-modal-cancel",
+        );
+
+        if (!modal || !confirmBtn || !cancelBtn) return;
+
+        modal.classList.add(modalStyles.active);
+
+        const handleConfirm = () => {
+            onConfirm();
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const handleCancel = () => {
+            modal.classList.remove(modalStyles.active);
+            cleanup();
+        };
+
+        const cleanup = () => {
+            confirmBtn.removeEventListener("click", handleConfirm);
+            cancelBtn.removeEventListener("click", handleCancel);
+        };
+
+        confirmBtn.addEventListener("click", handleConfirm);
+        cancelBtn.addEventListener("click", handleCancel);
+    };
+</script>

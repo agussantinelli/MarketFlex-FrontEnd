@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LuPlus, LuEye, LuPencil, LuTrash2, LuTriangleAlert, LuPackage } from 'react-icons/lu';
+import { LuPlus, LuEye, LuPencil, LuTrash2, LuPackage } from 'react-icons/lu';
 import styles from './styles/dashboard.module.css';
 import { characteristicsService } from '../../services/characteristics.service';
 import type { Characteristic, ProductSummary } from '../../types/characteristics.types';
@@ -11,7 +11,6 @@ const CharacteristicsListView: React.FC = () => {
     const [products, setProducts] = useState<ProductSummary[]>([]);
     const [viewProductsModal, setViewProductsModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
     const [createModal, setCreateModal] = useState(false);
     const [editName, setEditName] = useState('');
     const [newName, setNewName] = useState('');
@@ -63,8 +62,27 @@ const CharacteristicsListView: React.FC = () => {
     };
 
     const handleDeleteClick = (char: Characteristic) => {
-        setSelectedChar(char);
-        setDeleteModal(true);
+        if ((window as any).showDeleteCharacteristicModal) {
+            (window as any).showDeleteCharacteristicModal(async () => {
+                try {
+                    setLoading(true);
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    await characteristicsService.delete(char.id);
+                    setCharacteristics(prev => prev.filter(c => c.id !== char.id));
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('success', 'Característica eliminada');
+                    }
+                } catch (error) {
+                    console.error('Error deleting characteristic:', error);
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', 'Error al eliminar la característica');
+                    }
+                } finally {
+                    setLoading(false);
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+                }
+            });
+        }
     };
 
     const handleCreate = async () => {
@@ -107,28 +125,6 @@ const CharacteristicsListView: React.FC = () => {
             console.error('Error updating characteristic:', error);
             if ((window as any).triggerSileo) {
                 (window as any).triggerSileo('error', 'Error al actualizar la característica');
-            }
-        } finally {
-            setModalLoading(false);
-            if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
-        }
-    };
-
-    const handleDelete = async () => {
-        if (!selectedChar) return;
-        try {
-            setModalLoading(true);
-            if ((window as any).showAdminLoader) (window as any).showAdminLoader();
-            await characteristicsService.delete(selectedChar.id);
-            setCharacteristics(characteristics.filter(c => c.id !== selectedChar.id));
-            setDeleteModal(false);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('success', 'Característica eliminada');
-            }
-        } catch (error) {
-            console.error('Error deleting characteristic:', error);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', 'Error al eliminar la característica');
             }
         } finally {
             setModalLoading(false);
@@ -261,30 +257,6 @@ const CharacteristicsListView: React.FC = () => {
                             <button className={styles.modalCloseBtn} style={{ background: 'transparent', border: '1px solid #334155' }} onClick={() => setEditModal(false)}>Cancelar</button>
                             <button className={styles.modalCloseBtn} disabled={modalLoading} onClick={handleUpdate}>
                                 {modalLoading ? 'Guardando...' : 'Guardar Cambios'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Modal: Delete */}
-            {deleteModal && (
-                <div className={styles.modalOverlay} onClick={() => setDeleteModal(false)}>
-                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-                        <div className={styles.modalHeader} style={{ color: '#ef4444' }}>
-                            <LuTriangleAlert className={styles.modalIcon} />
-                            <h2>¿Eliminar Característica?</h2>
-                        </div>
-                        <div className={styles.modalBody}>
-                            <p>Estás a punto de eliminar <strong>{selectedChar?.nombre}</strong>. </p>
-                            <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-                                Esta acción eliminará las asociaciones con todos los productos, pero los productos en sí no se verán afectados.
-                            </p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                            <button className={styles.modalCloseBtn} style={{ background: 'transparent', border: '1px solid #334155' }} onClick={() => setDeleteModal(false)}>Cancelar</button>
-                            <button className={styles.modalCloseBtn} style={{ background: '#ef4444' }} disabled={modalLoading} onClick={handleDelete}>
-                                {modalLoading ? 'Eliminando...' : 'Eliminar permanentemente'}
                             </button>
                         </div>
                     </div>
