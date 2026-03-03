@@ -142,16 +142,16 @@
 }
 
 .actionsHeader {
-    text-align: right;
+    text-align: center;
 }
 
 .actionsCell {
-    text-align: right;
+    text-align: center;
 }
 
 .actionsWrapper {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 0.75rem;
 }
 
