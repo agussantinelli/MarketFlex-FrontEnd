@@ -16,7 +16,7 @@ interface PromotionFormProps {
 
 const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCancel, loading: externalLoading }) => {
     const isEdit = !!promotion;
-    const [imageSource, setImageSource] = useState<'url' | 'upload'>('url');
+    const [imageSource, setImageSource] = useState<'url' | 'upload'>('upload');
     const [uploading, setUploading] = useState(false);
 
     const [formData, setFormData] = useState<CreatePromotionInput>({
