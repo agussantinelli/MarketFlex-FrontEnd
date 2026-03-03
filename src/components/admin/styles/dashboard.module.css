@@ -250,15 +250,15 @@
     background: #0f172a;
     border: 1px solid rgba(0, 255, 136, 0.2);
     border-radius: 20px;
-    padding: 1.5rem;
-    max-width: 400px;
+    padding: 2rem;
+    max-width: 450px;
     width: 90%;
-    max-height: 90vh;
+    max-height: 85vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 25px 50px -12px rgba(0, 255, 136, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
+    position: relative;
 }
 
 .modalHeader {
@@ -753,4 +753,46 @@
     .chartsGrid {
         grid-template-columns: 1fr;
     }
+}
+
+.modalScrollList {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin: 1rem 0;
+}
+
+.modalScrollList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modalScrollList::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+}
+
+.modalScrollList::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 136, 0.2);
+    border-radius: 10px;
+}
+
+.modalScrollList::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 136, 0.4);
+}
+
+.productItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.productItem:hover {
+    background: rgba(0, 255, 136, 0.05);
+    border-color: rgba(0, 255, 136, 0.2);
+    transform: translateX(4px);
 }
