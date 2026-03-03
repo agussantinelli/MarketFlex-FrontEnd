@@ -3,8 +3,9 @@ import type { Promotion, CreatePromotionInput } from '../../types/promotion.type
 import { categoryService } from '../../services/category.service';
 import * as productService from '../../services/product.service';
 import type { Category } from '../../types/category.types';
-import { LuSave, LuX, LuSearch, LuCheck, LuPlus } from 'react-icons/lu';
+import { LuSave, LuX, LuSearch, LuCheck, LuPlus, LuUpload, LuLink, LuLoader } from 'react-icons/lu';
 import styles from './styles/PromotionForm.module.css';
+import { uploadService } from '../../services/upload.service';
 
 interface PromotionFormProps {
     promotion: Promotion | undefined;
@@ -15,6 +16,9 @@ interface PromotionFormProps {
 
 const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCancel, loading: externalLoading }) => {
     const isEdit = !!promotion;
+    const [imageSource, setImageSource] = useState<'url' | 'upload'>('url');
+    const [uploading, setUploading] = useState(false);
+
     const [formData, setFormData] = useState<CreatePromotionInput>({
         nombre: promotion?.nombre || '',
         descripcion: promotion?.descripcion || '',
@@ -60,6 +64,22 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
         const { name, value, type } = e.target;
         const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
         setFormData(prev => ({ ...prev, [name]: val }));
+    };
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        try {
+            const url = await uploadService.uploadImage(file);
+            setFormData(prev => ({ ...prev, foto: url }));
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Error al subir la imagen');
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleToggleId = (listName: 'categoryIds' | 'productIds', id: string) => {
@@ -207,18 +227,58 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                 {/* Media */}
                 <div className={styles.formSection}>
                     <h3 className={styles.sectionTitle}>Imagen y Alcance</h3>
-                    <div className={styles.inputGroup}>
-                        <label>URL de la Foto {formData.esDestacado && <span style={{ color: 'var(--neon-orange)' }}>* Requerido p/ destacados</span>}</label>
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                            <input
-                                type="text"
-                                name="foto"
-                                value={formData.foto || ''}
-                                onChange={handleChange}
-                                placeholder="https://..."
-                                style={{ flex: 1 }}
-                            />
+
+                    <div className={styles.imageSelector}>
+                        <div className={styles.toggleSwitch}>
+                            <button
+                                type="button"
+                                className={`${styles.toggleBtn} ${imageSource === 'url' ? styles.active : ''}`}
+                                onClick={() => setImageSource('url')}
+                            >
+                                <LuLink /> URL
+                            </button>
+                            <button
+                                type="button"
+                                className={`${styles.toggleBtn} ${imageSource === 'upload' ? styles.active : ''}`}
+                                onClick={() => setImageSource('upload')}
+                            >
+                                <LuUpload /> Subir
+                            </button>
                         </div>
+
+                        {imageSource === 'url' ? (
+                            <div className={styles.inputGroup}>
+                                <label>URL de la Foto {formData.esDestacado && <span style={{ color: 'var(--neon-orange)' }}>* Requerido</span>}</label>
+                                <input
+                                    type="text"
+                                    name="foto"
+                                    value={formData.foto || ''}
+                                    onChange={handleChange}
+                                    placeholder="https://..."
+                                />
+                            </div>
+                        ) : (
+                            <div className={styles.uploadArea}>
+                                <label className={styles.uploadLabel}>
+                                    <input
+                                        type="file"
+                                        className={styles.fileInput}
+                                        onChange={handleFileUpload}
+                                        accept="image/*"
+                                    />
+                                    {uploading ? (
+                                        <div className={styles.uploadStatus}>
+                                            <LuLoader className="animate-spin" /> Subiendo...
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <LuPlus size={24} />
+                                            <span>{formData.foto ? 'Cambiar Imagen' : 'Seleccionar Archivo'}</span>
+                                        </>
+                                    )}
+                                </label>
+                            </div>
+                        )}
                     </div>
 
                     {formData.foto && (
@@ -227,7 +287,7 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                         </div>
                     )}
 
-                    <div className={styles.inputGroup} style={{ marginTop: '1rem' }}>
+                    <div className={styles.inputGroup} style={{ marginTop: '0.5rem' }}>
                         <label>Alcance de la Promoción</label>
                         <select name="alcance" value={formData.alcance} onChange={handleChange}>
                             <option value="GLOBAL">GLOBAL (Todo el catálogo)</option>

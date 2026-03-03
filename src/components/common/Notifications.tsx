@@ -92,7 +92,9 @@ export default function Notifications({
         return () => {
             // @ts-ignore
             delete window.triggerSileo;
-            document.head.removeChild(style);
+            if (style.parentNode) {
+                style.parentNode.removeChild(style);
+            }
         };
     }, []);
 
