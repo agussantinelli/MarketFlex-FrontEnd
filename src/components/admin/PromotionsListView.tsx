@@ -217,6 +217,26 @@ const PromotionsListView: React.FC = () => {
                                         alt={promo.nombre}
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
+                                    {/* Featured Badge on Image */}
+                                    {promo.esDestacado && (
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '12px',
+                                            right: '12px',
+                                            background: 'rgba(15, 23, 42, 0.8)',
+                                            backdropFilter: 'blur(4px)',
+                                            padding: '8px',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            border: '1px solid rgba(251, 191, 36, 0.3)',
+                                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                                            zIndex: 10
+                                        }}>
+                                            <LuStar size={18} style={{ color: '#fbbf24', fill: '#fbbf24' }} />
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
