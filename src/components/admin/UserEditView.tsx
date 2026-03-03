@@ -43,7 +43,7 @@ const UserEditView: React.FC<UserEditViewProps> = ({ userId }) => {
                         tipoDni: user.tipoDni || 'DNI',
                         email: user.email || '',
                         password: '', // Password stays empty unless changing
-                        fechaNacimiento: user.fechaNacimiento ? user.fechaNacimiento.split('T')[0] : '',
+                        fechaNacimiento: user.fechaNacimiento ? user.fechaNacimiento.substring(0, 10) : '',
                         paisNacimiento: user.pais || '',
                         ciudadResidencia: user.ciudad || '',
                         codigoPostal: user.codigoPostal || '',
