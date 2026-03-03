@@ -122,6 +122,14 @@ const PromotionsListView: React.FC = () => {
         }
     };
 
+    const humanizeTipo = (tipo: string) => {
+        switch (tipo) {
+            case 'NxM': return 'Por Cantidad';
+            case 'DESCUENTO_SEGUNDA_UNIDAD': return 'Descuento 2da Unidad';
+            default: return tipo;
+        }
+    };
+
     if (loading && promotions.length === 0) {
         return null; // Let global loader handle
     }
@@ -268,7 +276,7 @@ const PromotionsListView: React.FC = () => {
                                 </div>
                                 <div style={{ color: '#64748b', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
                                     <LuTag size={14} />
-                                    {promo.tipoPromocion}
+                                    {humanizeTipo(promo.tipoPromocion)}
                                     <span style={{ margin: '0 8px', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255, 255, 255, 0.2)' }}></span>
                                     <span style={{ color: 'var(--primary)', fontWeight: '700' }}>{promo.usoCount || 0} usos</span>
                                 </div>
@@ -356,6 +364,18 @@ const PromotionsListView: React.FC = () => {
                                             borderRadius: '6px'
                                         }}>
                                             {promo.cantCompra} x {promo.cantPaga}
+                                        </span>
+                                    )}
+                                    {promo.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' && (
+                                        <span style={{
+                                            color: '#cbd5e1',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '700',
+                                            padding: '4px 8px',
+                                            background: 'rgba(255, 255, 255, 0.05)',
+                                            borderRadius: '6px'
+                                        }}>
+                                            {promo.porcentajeDescuentoSegunda}% en la 2da
                                         </span>
                                     )}
                                 </div>
