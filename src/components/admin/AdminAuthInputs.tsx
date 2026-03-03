@@ -7,9 +7,10 @@ interface AdminAuthInputsProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     readonlyFields?: string[];
     isEdit?: boolean;
+    hasPassword?: boolean;
 }
 
-const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, readonlyFields = [], isEdit = false }) => {
+const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, readonlyFields = [], isEdit = false, hasPassword = true }) => {
     const isReadOnly = (fieldName: string) => readonlyFields.includes(fieldName);
 
     const getReadOnlyStyle = (fieldName: string) =>
@@ -153,7 +154,13 @@ const AdminAuthInputs: React.FC<AdminAuthInputsProps> = ({ formData, onChange, r
                 {isEdit && (
                     <p className={styles.passwordHint}>
                         <LuInfo size={14} />
-                        Deja este campo vacío si no deseas cambiar la contraseña.
+                        {!hasPassword ? (
+                            <span style={{ color: 'var(--warning-yellow)', fontWeight: 600 }}>
+                                Este usuario no tiene una contraseña asignada (posible registro social).
+                            </span>
+                        ) : (
+                            'Deja este campo vacío si no deseas cambiar la contraseña.'
+                        )}
                     </p>
                 )}
             </div>
