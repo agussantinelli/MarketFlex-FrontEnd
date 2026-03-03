@@ -63,7 +63,23 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-        setFormData(prev => ({ ...prev, [name]: val }));
+
+        // Validation: Cannot highlight without a photo
+        if (name === 'esDestacado' && val === true && !formData.foto) {
+            alert('No se puede destacar una promoción sin foto. Por favor, sube una imagen o pega un URL primero.');
+            return;
+        }
+
+        setFormData(prev => {
+            const newState = { ...prev, [name]: val };
+
+            // If photo is removed, uncheck highlight
+            if (name === 'foto' && !val && newState.esDestacado) {
+                newState.esDestacado = false;
+            }
+
+            return newState;
+        });
     };
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,17 +152,6 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                                 <option value="ACTIVO">ACTIVO</option>
                                 <option value="INACTIVO">INACTIVO</option>
                             </select>
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginTop: '32px' }}>
-                                <input
-                                    type="checkbox"
-                                    name="esDestacado"
-                                    checked={formData.esDestacado}
-                                    onChange={handleChange}
-                                />
-                                <span>Destacar en Inicio (Hero)</span>
-                            </label>
                         </div>
                     </div>
                 </div>
@@ -286,6 +291,21 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                             <img src={formData.foto} alt="Preview" />
                         </div>
                     )}
+
+                    <div className={styles.inputGroup} style={{ marginTop: '1rem', padding: '1.25rem', background: 'rgba(255, 107, 0, 0.05)', borderRadius: '16px', border: '1px solid rgba(255, 107, 0, 0.1)' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+                            <input
+                                type="checkbox"
+                                name="esDestacado"
+                                checked={formData.esDestacado}
+                                onChange={handleChange}
+                            />
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#f8fafc' }}>Destacar en Inicio (Hero)</span>
+                                <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Aparecerá en el slider principal con diseño premium</span>
+                            </div>
+                        </label>
+                    </div>
 
                     <div className={styles.inputGroup} style={{ marginTop: '0.5rem' }}>
                         <label>Alcance de la Promoción</label>
