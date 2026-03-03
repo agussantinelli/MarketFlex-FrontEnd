@@ -246,6 +246,7 @@ const CharacteristicsListView: React.FC = () => {
                                     type="text"
                                     value={editName}
                                     onChange={(e) => setEditName(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleUpdate()}
                                     style={{ padding: '0.75rem', borderRadius: '8px', background: 'rgba(255,255,254,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
                                 />
                             </div>
@@ -275,6 +276,7 @@ const CharacteristicsListView: React.FC = () => {
                                     type="text"
                                     value={newName}
                                     onChange={(e) => setNewName(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
                                     placeholder="Ej: Material, Color, Talle..."
                                     style={{ padding: '0.75rem', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
                                     autoFocus
