@@ -31,6 +31,7 @@ This skill serves as a central index for all architectural and development guide
 - **[code-quality](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/code-quality/SKILL.md)**: SOLID principles, naming, and "No Comments" policy.
 - **[express](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/express/SKILL.md)**: Hono/Express routing and middleware best practices.
 - **[global-context](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/global-context/SKILL.md)**: The "Master Rule". Enforces compliance with all other skills.
+- **[module-architecture](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/module-architecture/SKILL.md)**: Blueprint de los 7 archivos por módulo de dominio (controller, router, swagger, service + 3 tests).
 - **[naming-conventions](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/naming-conventions/SKILL.md)**: Filename suffixes and database naming rules.
 - **[no-browser](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/no-browser/SKILL.md)**: Regla de oro que prohíbe terminantemente el uso del subagente del navegador (browser subagent).
 - **[node](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/node/SKILL.md)**: Node.js runtime configuration and best practices.
