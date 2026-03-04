@@ -89,7 +89,8 @@ describe('Checkout Store', () => {
             items: [{
                 id: 'prod-1', nombre: 'P1', precioActual: 10, precioConDescuento: 10, quantity: 1, stock: 10,
                 foto: '', caracteristicas: [], esDestacado: false, envioGratis: false, categoria: null,
-                subcategoria: null, descripcion: null, descuentoActivo: null, marca: null, autor: null, fechaLlegada: null
+                subcategoria: null, descripcion: null, descuentoActivo: null, marca: null, autor: null, fechaLlegada: null,
+                estado: 'ACTIVO' as const
             }]
         });
 
@@ -113,7 +114,8 @@ describe('Checkout Store', () => {
             items: [{
                 id: 'prod-1', nombre: 'P1', precioActual: 10, precioConDescuento: 10, quantity: 1, stock: 10,
                 foto: '', caracteristicas: [], esDestacado: false, envioGratis: false, categoria: null,
-                subcategoria: null, descripcion: null, descuentoActivo: null, marca: null, autor: null, fechaLlegada: null
+                subcategoria: null, descripcion: null, descuentoActivo: null, marca: null, autor: null, fechaLlegada: null,
+                estado: 'ACTIVO' as const
             }]
         });
 

@@ -91,14 +91,14 @@ describe('EditSaleView Component', () => {
 
     it('redirects and shows error when no ?id param is present', async () => {
         (window as any).location.search = '';
-        const timeoutSpy = vi.spyOn(global, 'setTimeout').mockImplementation((fn: any) => { fn(); return 0 as any; });
 
+        const { act } = await import('@testing-library/react');
         render(<EditSaleView />);
 
-        await waitFor(() => {
-            expect((window as any).triggerSileo).toHaveBeenCalledWith('error', 'No se proporcionó un ID de venta');
+        await act(async () => {
+            await Promise.resolve();
         });
 
-        timeoutSpy.mockRestore();
+        expect((window as any).triggerSileo).toHaveBeenCalledWith('error', 'No se proporcionó un ID de venta');
     });
 });

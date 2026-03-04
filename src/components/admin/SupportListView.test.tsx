@@ -20,8 +20,9 @@ describe('SupportListView', () => {
         (getSupportMessages as any).mockResolvedValue([]);
         render(<SupportListView />);
 
-
-        expect(screen.getByText(/Bandeja de entrada vacía/i)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(/Bandeja de entrada vacía/i)).toBeInTheDocument();
+        });
     });
 
     it('should render messages correctly', async () => {

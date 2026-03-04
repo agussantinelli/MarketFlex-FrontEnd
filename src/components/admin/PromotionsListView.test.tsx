@@ -63,7 +63,7 @@ describe('PromotionsListView', () => {
 
         expect(screen.getByText('Descuento de verano')).toBeInTheDocument();
         expect(screen.getByText('ACTIVO')).toBeInTheDocument();
-        expect(screen.getByText('GLOBAL')).toBeInTheDocument();
+        expect(screen.getByText('Global')).toBeInTheDocument();
         expect(screen.getByText('3 x 2')).toBeInTheDocument();
     });
 

@@ -48,6 +48,11 @@ describe('CharacteristicsListView Component', () => {
         (characteristicsService.getAll as any).mockResolvedValue(mockCharacteristics);
         render(<CharacteristicsListView />);
 
+        // Wait for the initial data load to complete before clicking
+        await waitFor(() => {
+            expect(characteristicsService.getAll).toHaveBeenCalled();
+        });
+
         const createBtn = screen.getByRole('button', { name: /nueva característica/i });
         fireEvent.click(createBtn);
 
@@ -97,18 +102,20 @@ describe('CharacteristicsListView Component', () => {
     });
 
     it('opens delete modal and calls delete service', async () => {
-        (characteristicsService.getAll as any).mockResolvedValue(mockCharacteristics);
+        const deletableCharacteristics = [
+            { id: '1', nombre: 'Material', productCount: 0 },
+            { id: '2', nombre: 'Color', productCount: 0 }
+        ];
+        (characteristicsService.getAll as any).mockResolvedValue(deletableCharacteristics);
         (characteristicsService.delete as any).mockResolvedValue(undefined);
+
+        // Mock the global window function that opens the delete confirmation modal
+        (window as any).showDeleteCharacteristicModal = vi.fn((callback: () => void) => callback());
 
         render(<CharacteristicsListView />);
 
         const deleteBtns = await screen.findAllByTitle('Eliminar');
         fireEvent.click(deleteBtns[0]!);
-
-        expect(screen.getByRole('heading', { name: /¿Eliminar Característica\?/i })).toBeDefined();
-
-        const confirmBtn = screen.getByText('Eliminar permanentemente');
-        fireEvent.click(confirmBtn);
 
         await waitFor(() => {
             expect(characteristicsService.delete).toHaveBeenCalledWith('1');

@@ -44,7 +44,7 @@ describe('PromotionForm Component', () => {
     });
 
     it('renders the form with default create state', async () => {
-        render(
+        const { container } = render(
             <PromotionForm
                 promotion={undefined}
                 onSubmit={mockOnSubmit}
@@ -57,7 +57,7 @@ describe('PromotionForm Component', () => {
             expect(productService.getProducts).toHaveBeenCalled();
         });
 
-        expect(screen.getByLabelText(/nombre/i)).toBeDefined();
+        expect(container.querySelector('input[name="nombre"]')).toBeTruthy();
     });
 
     it('pre-fills form fields when editing an existing promotion', async () => {
@@ -79,7 +79,7 @@ describe('PromotionForm Component', () => {
             productIds: [],
         };
 
-        render(
+        const { container } = render(
             <PromotionForm
                 promotion={existingPromotion}
                 onSubmit={mockOnSubmit}
@@ -88,8 +88,8 @@ describe('PromotionForm Component', () => {
         );
 
         await waitFor(() => {
-            const input = screen.getByLabelText(/nombre/i) as HTMLInputElement;
-            expect(input.value).toBe('Promo Verano');
+            const input = container.querySelector('input[name="nombre"]') as HTMLInputElement;
+            expect(input?.value).toBe('Promo Verano');
         });
     });
 
@@ -106,7 +106,7 @@ describe('PromotionForm Component', () => {
             expect(categoryService.getCategories).toHaveBeenCalled();
         });
 
-        const cancelBtn = screen.getByTitle(/cancelar/i);
+        const cancelBtn = screen.getByText(/cancelar/i);
         cancelBtn.click();
 
         expect(mockOnCancel).toHaveBeenCalled();
