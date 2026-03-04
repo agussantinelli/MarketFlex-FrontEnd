@@ -234,8 +234,7 @@
   <li>🔄 <b>Invalidación de Cache Inteligente:</b> Detección automática de re-seeds en la base de datos para forzar la limpieza del `localStorage`, evitando errores de inconsistencia de datos.</li>
   <li>📱 <b>Responsive Design de Alta Densidad:</b> Interfaz optimizada meticulosamente para dispositivos móviles, escalando sin pérdida de estética o funcionalidad a pantallas de escritorio.</li>
   <li>🔒 <b>Seguridad & Anti-Bot:</b> Integración profunda con JWT (Auto-Refresh), Google reCAPTCHA v3 e HTTPS local garantizado mediante certificados confiables.</li>
-  <li>⚡
- <b>Navbar Inteligente (Contextual):</b> Navegación jerárquica con subcategorías anidadas, triggers de flecha y sistema de *hover delay* (2s) para una navegación fluida.</li>
+  <li>⚡ <b>Navbar Inteligente (Contextual):</b> Navegación jerárquica con subcategorías anidadas, triggers de flecha y sistema de *hover delay* (2s) para una navegación fluida.</li>
   <li>🎡 <b>Componentes Visuales Premium:</b> Carruseles interactivos con estados dinámicos, badges sociales oficiales y micro-interacciones neón en toda la UI.</li>
   <li>✨ <b>Páginas de Contexto Curado:</b> Secciones dedicadas para Novedades (`/new-arrivals`) y Ofertas (`/offers`) con filtros pre-configurados y navegación optimizada.</li>
   <li>🛡️ <b>Mocking de API (MSW):</b> Integración con Mock Service Worker para simular respuestas del backend en tests unitarios, permitiendo pruebas deterministas de interceptores y flujo de tokens.</li>
