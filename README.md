@@ -413,21 +413,52 @@
 ├── src/                                            # Núcleo del frontend de la aplicación (Arquitectura Astro + React).
 │   ├── components/                                 # Biblioteca de componentes modulares.
 │   │   ├── admin/                                  # Componentes exclusivos del panel administrativo (React + CSS Modules).
+│   │   │   ├── AdminAuthInputs.test.tsx            # Test de inputs de autenticación administrativa.
+│   │   │   ├── AdminAuthInputs.tsx                 # Campos reutilizables de login admin.
 │   │   │   ├── AdminHeader.astro                   # Barra de navegación administrativa.
+│   │   │   ├── AdminSidebar.test.tsx               # Test del menú lateral dinámico.
 │   │   │   ├── AdminSidebar.tsx                    # Menú lateral dinámico con estados de navegación.
+│   │   │   ├── AnalyticsView.test.tsx              # Test del dashboard de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Dashboard interactivo con Recharts.
+│   │   │   ├── BrandsListView.test.tsx             # Test de gestión de marcas.
 │   │   │   ├── BrandsListView.tsx                  # Gestión de marcas y editoriales.
+│   │   │   ├── CategoriesListView.test.tsx         # Test de gestión de categorías.
+│   │   │   ├── CategoriesListView.tsx              # Gestión CRUD de categorías y sus productos.
+│   │   │   ├── CharacteristicsListView.test.tsx    # Test de gestión de atributos.
 │   │   │   ├── CharacteristicsListView.tsx         # Gestión de atributos dinámicos.
+│   │   │   ├── ClaimsListView.test.tsx             # Test de monitorización de reclamos.
 │   │   │   ├── ClaimsListView.tsx                  # Monitorización de reclamos post-venta.
+│   │   │   ├── CreateUserView.test.tsx             # Test del formulario de alta de usuarios.
+│   │   │   ├── CreateUserView.tsx                  # Formulario multi-paso de creación de usuarios.
+│   │   │   ├── DashboardView.test.tsx              # Test del panel principal de métricas.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de estados y métricas.
+│   │   │   ├── DataTable.test.tsx                  # Test del componente de tabla universal.
 │   │   │   ├── DataTable.tsx                       # Componente core: Tabla universal con filtros y ordenamiento.
+│   │   │   ├── EditSaleView.test.tsx               # Test del wizard de edición de ventas.
+│   │   │   ├── EditSaleView.tsx                    # Wizard multi-paso para editar estado y pago de ventas.
+│   │   │   ├── ProductsListView.test.tsx           # Test de gestión del catálogo de productos.
 │   │   │   ├── ProductsListView.tsx                # Gestión integral del catálogo.
+│   │   │   ├── PromotionForm.test.tsx              # Test del formulario dinámico de campañas.
 │   │   │   ├── PromotionForm.tsx                   # Formulario dinámico para creación de ofertas NxM.
+│   │   │   ├── PromotionsListView.test.tsx         # Test de galería de campañas activas.
 │   │   │   ├── PromotionsListView.tsx              # Galería de campañas activas.
+│   │   │   ├── RegisterSaleView.test.tsx           # Test del formulario de registro manual de ventas.
+│   │   │   ├── RegisterSaleView.tsx                # Formulario de alta manual de ventas presenciales.
+│   │   │   ├── SaleDetailModal.test.tsx            # Test del modal de detalle de venta.
+│   │   │   ├── SaleDetailModal.tsx                 # Modal con desglose completo de transacción.
+│   │   │   ├── SalesListView.test.tsx              # Test del historial de ventas.
 │   │   │   ├── SalesListView.tsx                   # Historial y auditoría de ventas.
+│   │   │   ├── StatTable.test.tsx                  # Test de tablas de resumen de métricas.
 │   │   │   ├── StatTable.tsx                       # Tablas de resumen para métricas rápidas.
+│   │   │   ├── SubcategoriesListView.test.tsx      # Test de jerarquías secundarias.
 │   │   │   ├── SubcategoriesListView.tsx           # Gestión de jerarquías secundarias y productos vinculados.
+│   │   │   ├── SupportListView.test.tsx            # Test del centro de respuesta a consultas.
 │   │   │   ├── SupportListView.tsx                 # Centro de respuesta interactivo a consultas de clientes.
+│   │   │   ├── UserEditView.test.tsx               # Test del formulario de edición de usuario.
+│   │   │   ├── UserEditView.tsx                    # Formulario de edición de datos de cuenta de usuario.
+│   │   │   ├── UserPurchasesModal.test.tsx         # Test del modal de historial de compras de usuario.
+│   │   │   ├── UserPurchasesModal.tsx              # Modal con órdenes asociadas a un usuario.
+│   │   │   ├── UsersListView.test.tsx              # Test de administración de usuarios.
 │   │   │   ├── UsersListView.tsx                   # Administración de cuentas y roles de usuario.
 │   │   │   └── styles/                             # Estilos encapsulados para el panel admin.
 │   │   ├── auth/                                   # UI de flujos de identidad y seguridad.
@@ -460,12 +491,37 @@
 │   │   ├── carousel.ts                             # Motor de interacción de carruseles neón.
 │   │   ├── filter-modal.ts                         # Lógica de filtrado dinámico en tiempo real.
 │   │   └── navbar.ts                               # Efectos y navegación responsiva.
-│   ├── services/                                   # Capa de abstracción de datos (LLamadas a API).
+│   ├── services/                                   # Capa de abstracción de datos (Llamadas a API).
+│   │   ├── admin.service.test.ts                   # Test de obtención de estadísticas y compras.
 │   │   ├── admin.service.ts                        # Consumo de métricas y reportes.
+│   │   ├── auth.service.test.ts                    # Test de autenticación global.
 │   │   ├── auth.service.ts                         # Gestión de sesiones y tokens.
+│   │   ├── brand.service.test.ts                   # Test de listado de marcas.
+│   │   ├── brand.service.ts                        # Catálogo de marcas y editoriales.
+│   │   ├── category.service.test.ts                # Test del árbol de categorías.
+│   │   ├── category.service.ts                     # Gestión de categorías y productos asociados.
+│   │   ├── characteristics.service.test.ts         # Test de atributos dinámicos.
+│   │   ├── characteristics.service.ts              # Integración con módulo de características.
+│   │   ├── claims.service.test.ts                  # Test de gestión de reclamos.
+│   │   ├── claims.service.ts                       # Integración con soporte post-venta.
+│   │   ├── discount.service.test.ts                # Test de obtención y eliminación de descuentos.
+│   │   ├── discount.service.ts                     # Consumo de la API de descuentos directos.
+│   │   ├── filter.service.test.ts                  # Test de normalización de parámetros.
+│   │   ├── filter.service.ts                       # Adaptador de parámetros de búsqueda.
+│   │   ├── product.service.test.ts                 # Test del catálogo de productos.
 │   │   ├── product.service.ts                      # Operaciones sobre el catálogo.
+│   │   ├── promotion.service.test.ts               # Test de campañas activas.
 │   │   ├── promotion.service.ts                    # Gestión de campañas dinámicas.
-│   │   └── subcategory.service.ts                  # CRUD de subcategorías y vinculación.
+│   │   ├── purchase.service.test.ts                # Test de órdenes y transacciones.
+│   │   ├── purchase.service.ts                     # Gestión de compras del usuario.
+│   │   ├── subcategory.service.test.ts             # Test de subcategorías y vinculación.
+│   │   ├── subcategory.service.ts                  # CRUD de subcategorías y vinculación.
+│   │   ├── support.service.test.ts                 # Test de envío de mensajes de soporte.
+│   │   ├── support.service.ts                      # Enlace con el módulo de ayuda al cliente.
+│   │   ├── upload.service.test.ts                  # Test de subida de imágenes a Cloudinary.
+│   │   ├── upload.service.ts                       # Servicio de carga de imágenes via FormData.
+│   │   ├── user.service.test.ts                    # Test de datos de perfil de usuario.
+│   │   └── user.service.ts                         # Obtención y actualización de perfiles.
 │   ├── store/                                      # Estado global (Nanostores para persistencia).
 │   │   ├── cart.ts                                 # Gestión reactiva del carrito entre islas.
 │   │   └── auth.ts                                 # Estado persistente de autenticación.
