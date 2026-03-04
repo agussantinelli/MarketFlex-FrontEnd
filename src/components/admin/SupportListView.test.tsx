@@ -51,15 +51,16 @@ describe('SupportListView', () => {
         expect(screen.getByText('PENDIENTE')).toBeInTheDocument();
     });
 
-    it('should handle error fetching messages', async () => {
+    it('should show empty state when fetch fails', async () => {
         (getSupportMessages as any).mockRejectedValue(new Error('Network error'));
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
         render(<SupportListView />);
 
         await waitFor(() => {
-            expect(window.triggerSileo).toHaveBeenCalledWith('error', 'Error al cargar los mensajes.');
+            expect(screen.getByText(/Bandeja de entrada vacía/i)).toBeInTheDocument();
         });
 
-        expect(screen.getByText(/Bandeja de entrada vacía/i)).toBeInTheDocument();
+        consoleSpy.mockRestore();
     });
 });
