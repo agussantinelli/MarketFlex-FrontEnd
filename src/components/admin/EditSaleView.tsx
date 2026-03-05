@@ -21,6 +21,12 @@ const DELIVERY_OPTIONS = [
     { value: 'ENVIO_DOMICILIO', label: 'Envío a Domicilio', icon: LuTruck },
 ];
 
+const RAZON_PENDIENTE_OPTIONS = [
+    { value: 'ENVIO_DOMICILIO', label: 'Pendiente de envío a domicilio por parte del correo -sin responsabilidad directa del local-' },
+    { value: 'RETIRO_LOCAL', label: 'Pendiente de retiro por el cliente en el local' },
+    { value: 'ENVIO_AL_CORREO', label: 'Pendiente de envío al correo por parte del local' },
+];
+
 const EditSaleView: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [sale, setSale] = useState<AdminPurchase | null>(null);
@@ -28,6 +34,7 @@ const EditSaleView: React.FC = () => {
     const [estado, setEstado] = useState('');
     const [metodoPago, setMetodoPago] = useState('');
     const [tipoEntrega, setTipoEntrega] = useState('');
+    const [razonPendiente, setRazonPendiente] = useState('');
     const [shippingData, setShippingData] = useState({
         nombreCompleto: '',
         email: '',
@@ -71,6 +78,7 @@ const EditSaleView: React.FC = () => {
                 setEstado(data.estado);
                 setMetodoPago(data.metodoPago);
                 setTipoEntrega(data.tipoEntrega);
+                setRazonPendiente(data.razonPendiente || '');
                 if (data.detalleEnvio) {
                     setShippingData({
                         nombreCompleto: data.detalleEnvio.nombreCompleto || '',
@@ -117,10 +125,11 @@ const EditSaleView: React.FC = () => {
         try {
             if ((window as any).showAdminLoader) (window as any).showAdminLoader();
 
-            const changes: { estado?: string; metodoPago?: string; tipoEntrega?: string; envio?: any } = {};
+            const changes: { estado?: string; metodoPago?: string; tipoEntrega?: string; razonPendiente?: string; envio?: any } = {};
             if (estado !== sale.estado) changes.estado = estado;
             if (metodoPago !== sale.metodoPago) changes.metodoPago = metodoPago;
             if (tipoEntrega !== sale.tipoEntrega) changes.tipoEntrega = tipoEntrega;
+            if (estado === 'PENDIENTE' && razonPendiente !== sale.razonPendiente) changes.razonPendiente = razonPendiente;
 
             // Simple check for shipping changes
             const shippingChanged =
@@ -169,6 +178,7 @@ const EditSaleView: React.FC = () => {
         estado !== sale.estado ||
         metodoPago !== sale.metodoPago ||
         tipoEntrega !== sale.tipoEntrega ||
+        (estado === 'PENDIENTE' && razonPendiente !== sale.razonPendiente) ||
         shippingData.nombreCompleto !== (sale.detalleEnvio?.nombreCompleto || '') ||
         shippingData.email !== (sale.detalleEnvio?.email || '') ||
         shippingData.direccion !== (sale.detalleEnvio?.direccion || '') ||
@@ -236,6 +246,33 @@ const EditSaleView: React.FC = () => {
                             }}>
                                 <LuCircleAlert size={18} />
                                 Al cancelar esta venta, el stock de los productos será repuesto automáticamente.
+                            </div>
+                        )}
+
+                        {estado === 'PENDIENTE' && (
+                            <div style={{ marginTop: '2.5rem' }}>
+                                <h4 className={styles.sectionLabel}>Razón Logística (Pendiente)</h4>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    {RAZON_PENDIENTE_OPTIONS.map(opt => (
+                                        <div
+                                            key={opt.value}
+                                            onClick={() => setRazonPendiente(opt.value)}
+                                            style={{
+                                                padding: '1rem',
+                                                background: razonPendiente === opt.value ? 'rgba(245, 158, 11, 0.1)' : 'rgba(255,255,255,0.03)',
+                                                borderRadius: '12px',
+                                                border: '1px solid',
+                                                borderColor: razonPendiente === opt.value ? 'var(--warning-yellow)' : 'rgba(255,255,255,0.08)',
+                                                cursor: 'pointer',
+                                                fontSize: '0.85rem',
+                                                transition: 'all 0.2s',
+                                                color: razonPendiente === opt.value ? 'var(--warning-yellow)' : 'var(--green-cream)'
+                                            }}
+                                        >
+                                            {opt.label}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -493,6 +530,14 @@ const EditSaleView: React.FC = () => {
                                     )}
                                 </div>
                             </div>
+                            {estado === 'PENDIENTE' && (
+                                <div className={styles.summaryRow}>
+                                    <span className={styles.summaryLabel}>Razón Logística</span>
+                                    <span className={styles.summaryValue} style={{ color: 'var(--warning-yellow)', fontSize: '0.8rem', textAlign: 'right' }}>
+                                        {RAZON_PENDIENTE_OPTIONS.find(o => o.value === razonPendiente)?.label || razonPendiente}
+                                    </span>
+                                </div>
+                            )}
                             <div className={styles.summaryRow}>
                                 <span className={styles.summaryLabel}>Método de Pago</span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -547,12 +592,6 @@ const EditSaleView: React.FC = () => {
                                     </div>
                                 </div>
                             )}
-                            <div className={styles.summaryRow}>
-                                <span className={styles.summaryLabel}>Tipo</span>
-                                <span className={styles.summaryValue} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    {sale.ventaEnFisico ? <><LuStore size={14} /> Presencial</> : <><LuTruck size={14} /> Envío</>}
-                                </span>
-                            </div>
                         </div>
 
                         <h4 className={styles.sectionLabel} style={{ fontSize: '0.9rem', opacity: 0.7 }}>Items de la Venta</h4>

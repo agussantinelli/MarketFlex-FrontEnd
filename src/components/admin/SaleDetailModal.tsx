@@ -30,6 +30,12 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
         }
     };
 
+    const RAZON_PENDIENTE_MAP: Record<string, string> = {
+        'ENVIO_DOMICILIO': 'Pendiente de envío a domicilio por parte del correo -sin responsabilidad directa del local-',
+        'RETIRO_LOCAL': 'Pendiente de retiro por el cliente en el local',
+        'ENVIO_AL_CORREO': 'Pendiente de envío al correo por parte del local'
+    };
+
     return (
         <div className="admin-modal-overlay" style={{
             position: 'fixed',
@@ -179,6 +185,11 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                                     <div style={{ fontWeight: 600, color: 'var(--neon-green)', marginBottom: '4px' }}>Envío a Domicilio</div>
                                     <div>{sale.detalleEnvio.direccion}</div>
                                     <div style={{ color: 'var(--text-muted)' }}>{sale.detalleEnvio.ciudad}, {sale.detalleEnvio.provincia}</div>
+                                    {sale.estado === 'PENDIENTE' && sale.razonPendiente && (
+                                        <div style={{ marginTop: '12px', padding: '10px', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '8px', border: '1px solid rgba(245, 158, 11, 0.1)', color: 'var(--warning-yellow)', fontSize: '0.75rem' }}>
+                                            <strong>Nota:</strong> {RAZON_PENDIENTE_MAP[sale.razonPendiente] || sale.razonPendiente}
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
@@ -186,6 +197,11 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                                         {sale.tipoEntrega === 'RETIRO_LOCAL' ? 'Retiro en Local' : sale.tipoEntrega}
                                     </div>
                                     <div style={{ fontStyle: 'italic', opacity: 0.7 }}>El cliente retira el pedido.</div>
+                                    {sale.estado === 'PENDIENTE' && sale.razonPendiente && (
+                                        <div style={{ marginTop: '12px', padding: '10px', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '8px', border: '1px solid rgba(245, 158, 11, 0.1)', color: 'var(--warning-yellow)', fontSize: '0.75rem' }}>
+                                            <strong>Nota:</strong> {RAZON_PENDIENTE_MAP[sale.razonPendiente] || sale.razonPendiente}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </section>

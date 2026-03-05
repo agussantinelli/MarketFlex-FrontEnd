@@ -613,7 +613,6 @@ const RegisterSaleView: React.FC = () => {
                 })),
                 metodoPago: paymentMethod,
                 tipoEntrega: deliveryMethod,
-                ventaEnFisico: deliveryMethod !== 'ENVIO_DOMICILIO',
                 // Always send shipping data if at least one field is filled, or if it's mandatory
                 envio: (deliveryMethod === 'ENVIO_DOMICILIO' || Object.values(shippingData).some(v => v.trim())) ? {
                     nombreCompleto: shippingData.nombreCompleto,
