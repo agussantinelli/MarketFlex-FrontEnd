@@ -39,7 +39,7 @@ export const updatePaymentMethod = (method: 'Mercado Pago' | 'Efectivo') => {
     checkoutStore.set({ ...current, paymentMethod: method });
 };
 
-export const updateDeliveryType = (type: CheckoutState['tipoEntrega']) => {
+export const updateDeliveryType = (type: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL') => {
     const current = checkoutStore.get();
     checkoutStore.set({ ...current, tipoEntrega: type });
 };
