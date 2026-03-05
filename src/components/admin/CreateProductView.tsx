@@ -166,7 +166,9 @@ const CreateProductView: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!nombre || !descripcion || !precioActual || !stock || !marca || !categoriaId || nroSubcategoria === '') {
+        const isSubcategoryIdMissing = subcategories.length > 0 && nroSubcategoria === '';
+
+        if (!nombre || !descripcion || !precioActual || !stock || !marca || !categoriaId || isSubcategoryIdMissing) {
             if ((window as any).triggerSileo) {
                 (window as any).triggerSileo('warning', 'Por favor, completá todos los campos base obligatorios.');
             }
@@ -180,7 +182,7 @@ const CreateProductView: React.FC = () => {
             stock: Number(stock),
             marca,
             categoriaId,
-            nroSubcategoria: Number(nroSubcategoria),
+            nroSubcategoria: nroSubcategoria !== '' ? Number(nroSubcategoria) : undefined,
             foto: foto || undefined,
             esDestacado,
             tags,
