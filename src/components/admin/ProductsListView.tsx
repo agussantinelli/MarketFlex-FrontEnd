@@ -179,6 +179,10 @@ const ProductsListView: React.FC = () => {
         }
     ];
 
+    const handleView = (product: AdminProduct) => {
+        window.open('/producto/' + product.id, '_blank');
+    };
+
     const handleEdit = (product: AdminProduct) => {
         console.log('Edit product:', product);
         // TODO: Open edit modal
@@ -222,6 +226,7 @@ const ProductsListView: React.FC = () => {
                 data={products}
                 columns={columns}
                 loading={loading}
+                onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 onAdd={handleAdd}

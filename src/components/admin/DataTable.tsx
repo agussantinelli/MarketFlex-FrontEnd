@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuPencil, LuTrash2, LuChevronLeft, LuChevronRight, LuSearch, LuPlus } from 'react-icons/lu';
+import { LuEye, LuPencil, LuTrash2, LuChevronLeft, LuChevronRight, LuSearch, LuPlus } from 'react-icons/lu';
 import styles from './styles/DataTable.module.css';
 import LoadingSpinner from '../common/LoadingSpinner';
 
@@ -22,6 +22,7 @@ interface DataTableProps<T> {
     data: T[];
     columns: Column<T>[];
     loading?: boolean;
+    onView?: (item: T) => void;
     onEdit?: (item: T) => void;
     onDelete?: (item: T) => void;
     isDeleteEnabled?: (item: T) => boolean;
@@ -38,6 +39,7 @@ function DataTable<T extends { id: string | number }>({
     data,
     columns,
     loading = false,
+    onView,
     onEdit,
     onDelete,
     isDeleteEnabled,
@@ -118,13 +120,13 @@ function DataTable<T extends { id: string | number }>({
                                     {col.header}
                                 </th>
                             ))}
-                            {(onEdit || onDelete) && <th className={styles.actionsHeader}>Acciones</th>}
+                            {(onView || onEdit || onDelete) && <th className={styles.actionsHeader}>Acciones</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {data.length === 0 && !loading ? (
                             <tr>
-                                <td colSpan={columns.length + (onEdit || onDelete ? 1 : 0)} className={styles.emptyCell}>
+                                <td colSpan={columns.length + (onView || onEdit || onDelete ? 1 : 0)} className={styles.emptyCell}>
                                     No se encontraron resultados
                                 </td>
                             </tr>
@@ -138,9 +140,18 @@ function DataTable<T extends { id: string | number }>({
                                                 : (item[col.accessor] as React.ReactNode)}
                                         </td>
                                     ))}
-                                    {(onEdit || onDelete) && (
+                                    {(onView || onEdit || onDelete) && (
                                         <td className={styles.actionsCell}>
                                             <div className={styles.actionsWrapper}>
+                                                {onView && (
+                                                    <button
+                                                        className={styles.viewBtn}
+                                                        onClick={() => onView(item)}
+                                                        title="Ver Detalle"
+                                                    >
+                                                        <LuEye />
+                                                    </button>
+                                                )}
                                                 {onEdit && (
                                                     <button
                                                         className={styles.editBtn}
