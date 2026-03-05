@@ -461,12 +461,56 @@
 │   │   │   ├── UsersListView.tsx                   # Administración de cuentas y roles de usuario.
 │   │   │   └── styles/                             # Estilos encapsulados para el panel admin.
 │   │   ├── auth/                                   # UI de flujos de identidad y seguridad.
+│   │   │   ├── AuthInputs.astro                    # Inputs base de formularios (Email, Password).
+│   │   │   ├── Captcha.astro                       # Componente visual para reCAPTCHA v3.
+│   │   │   └── styles/                             # Estilos modulares para login/registro.
 │   │   ├── cart/                                   # Componentes de gestión de cesta de compra.
+│   │   │   ├── CartView.test.tsx                   # Test de interactividad y persistencia del carrito.
+│   │   │   ├── CartView.tsx                        # Vista lateral del carrito interactivo.
+│   │   │   └── styles/                             # Diseño Glassmorphism del catálogo.
 │   │   ├── checkout/                               # Flujo de pago y facturación.
-│   │   ├── common/                                 # Componentes transversales (Spinners, Modales, Notificaciones).
-│   │   ├── products/                               # UI de catálogo, carruseles y filtros.
-│   │   ├── promotions/                             # Banners y destacados promocionales.
-│   │   └── shared/                                 # Pequeñas utilidades visuales (Dropdowns, Avatars).
+│   │   │   ├── CheckoutForm.test.tsx               # Test de validación del formulario de pago.
+│   │   │   ├── CheckoutForm.tsx                    # Formulario multi-paso de envío (React).
+│   │   │   ├── CheckoutSummary.test.tsx            # Test del cálculo de totales finales.
+│   │   │   ├── CheckoutSummary.tsx                 # Resumen de orden y descuentos aplicados (React).
+│   │   │   └── styles/                             # Estética del proceso de finalización.
+│   │   ├── common/                                 # Componentes transversales del sistema.
+│   │   │   ├── ConfirmationModal.astro             # Ventana emergente de confirmación UI.
+│   │   │   ├── LoadingSpinner.test.tsx             # Test del componente de carga global.
+│   │   │   ├── LoadingSpinner.tsx                  # Animación premium de espera asíncrona.
+│   │   │   ├── Notifications.test.tsx              # Test del sistema de avisos Sileo.
+│   │   │   ├── Notifications.tsx                   # UI de notificaciones estilo push interactiva.
+│   │   │   ├── PageCard.astro                      # Contenedor Glassmorphism para vistas centradas.
+│   │   │   └── styles/                             # Estilos comunes modulares.
+│   │   │       ├── ConfirmationModal.module.css    # Diseño del modal de confirmación.
+│   │   │       ├── LoadingSpinner.module.css       # Animación neón del spinner.
+│   │   │       └── PageCard.module.css             # Estética Glassmorphism de las tarjetas.
+│   │   ├── products/                               # Dominio del catálogo de productos.
+│   │   │   ├── ActiveFilters.astro                 # Tags interactivos de filtrado activo.
+│   │   │   ├── AddToCartButton.test.tsx            # Test del botón de acción principal.
+│   │   │   ├── AddToCartButton.tsx                 # Lógica de adición al carrito (React).
+│   │   │   ├── AddToCartModal.test.tsx             # Test del modal de éxito de adición.
+│   │   │   ├── AddToCartModal.tsx                  # Modal transicional de producto añadido (React).
+│   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para el home.
+│   │   │   ├── FilterButton.astro                  # Disparador del modal de filtros neón.
+│   │   │   ├── FilterModal.astro                   # Panel de filtrado avanzado por marcas/precio.
+│   │   │   ├── ProductCard.astro                   # Tarjeta individual con efectos térmicos.
+│   │   │   ├── ProductCarousel.astro               # Motor de carrusel interactivo neón.
+│   │   │   ├── ProductControls.astro               # Barra de ordenamiento y visualización.
+│   │   │   ├── SortSelect.astro                    # Selector de ordenamiento selectivo.
+│   │   │   └── styles/                             # Estilos del dominio de productos.
+│   │   │       ├── ActiveFilters.module.css        # Diseño de tags de filtros activos.
+│   │   │       ├── AddToCartModal.module.css       # Estética neón del modal de carrito.
+│   │   │       ├── FeaturedProducts.module.css     # Layout de la sección de destacados.
+│   │   │       ├── ProductCard.module.css          # Efectos hover y bordes térmicos neón.
+│   │   │       ├── ProductCarousel.module.css      # Configuración visual del slider neón.
+│   │   │       └── controls.module.css             # Estilos de la barra de herramientas.
+│   │   ├── promotions/                             # Gestión de campañas visuales.
+│   │   │   ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
+│   │   │   └── styles/                             # Estética de las promociones.
+│   │   │       └── PromotionHero.module.css        # Animaciones y gradientes del hero.
+│   │   └── shared/                                 # Componentes compartidos por todo el sistema.
+│   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Estructuras base y envolventes (Master Pages).
 │   │   ├── AdminLayout.astro                       # Layout optimizado para administración interna.
 │   │   ├── Layout.astro                            # Layout principal (Head, SEO, Tipografía).
@@ -531,49 +575,6 @@
 │       ├── admin.types.ts                          # Interfaces de analíticas y reportes.
 │       ├── product.types.ts                        # Esquemas de modelos de productos.
 │       └── promotion.types.ts                      # Tipado de reglas de negocio para ofertas.
-│   │   │   ├── CheckoutForm.test.tsx               # Test de validación del formulario de pago.
-│   │   │   ├── CheckoutForm.tsx                    # Formulario multi-paso de envío (React).
-│   │   │   ├── CheckoutSummary.test.tsx            # Test del cálculo de totales finales.
-│   │   │   ├── CheckoutSummary.tsx                 # Resumen de orden y descuentos aplicados (React).
-│   │   │       ├── CheckoutForm.module.css         # Diseño del formulario de facturación.
-│   │   │       └── CheckoutSummary.module.css      # Estética del resumen lateral de orden.
-│   │   ├── common/                                 # Componentes transversales del sistema.
-│   │   │   ├── ConfirmationModal.astro             # Ventana emergente de confirmación UI.
-│   │   │   ├── LoadingSpinner.test.tsx             # Test del componente de carga global.
-│   │   │   ├── LoadingSpinner.tsx                  # Animación premium de espera asíncrona.
-│   │   │   ├── Notifications.test.tsx              # Test del sistema de avisos Sileo.
-│   │   │   ├── Notifications.tsx                   # UI de notificaciones estilo push interactiva.
-│   │   │   ├── PageCard.astro                      # Contenedor Glassmorphism para vistas centradas.
-│   │   │   └── styles/                             # Estilos comunes modulares.
-│   │   │       ├── ConfirmationModal.module.css    # Diseño del modal de confirmación.
-│   │   │       ├── LoadingSpinner.module.css       # Animación neón del spinner.
-│   │   │       └── PageCard.module.css             # Estética Glassmorphism de las tarjetas.
-│   │   ├── products/                               # Dominio del catálogo de productos.
-│   │   │   ├── ActiveFilters.astro                 # Tags interactivos de filtrado activo.
-│   │   │   ├── AddToCartButton.test.tsx            # Test del botón de acción principal.
-│   │   │   ├── AddToCartButton.tsx                 # Lógica de adición al carrito (React).
-│   │   │   ├── AddToCartModal.test.tsx             # Test del modal de éxito de adición.
-│   │   │   ├── AddToCartModal.tsx                  # Modal transicional de producto añadido (React).
-│   │   │   ├── FeaturedProducts.astro              # Grilla de destacados para el home.
-│   │   │   ├── FilterButton.astro                  # Disparador del modal de filtros neón.
-│   │   │   ├── FilterModal.astro                   # Panel de filtrado avanzado por marcas/precio.
-│   │   │   ├── ProductCard.astro                   # Tarjeta individual con efectos térmicos.
-│   │   │   ├── ProductCarousel.astro               # Motor de carrusel interactivo neón.
-│   │   │   ├── ProductControls.astro               # Barra de ordenamiento y visualización.
-│   │   │   ├── SortSelect.astro                    # Selector de ordenamiento selectivo.
-│   │   │   └── styles/                             # Estilos del dominio de productos.
-│   │   │       ├── ActiveFilters.module.css        # Diseño de tags de filtros activos.
-│   │   │       ├── AddToCartModal.module.css       # Estética neón del modal de carrito.
-│   │   │       ├── FeaturedProducts.module.css     # Layout de la sección de destacados.
-│   │   │       ├── ProductCard.module.css          # Efectos hover y bordes térmicos neón.
-│   │   │       ├── ProductCarousel.module.css      # Configuración visual del slider neón.
-│   │   │       └── controls.module.css             # Estilos de la barra de herramientas.
-│   │   ├── promotions/                             # Gestión de campañas visuales.
-│   │   │   ├── PromotionHero.astro                 # Banner interactivo de grandes ofertas.
-│   │   │   └── styles/                             # Estética de las promociones.
-│   │   │       └── PromotionHero.module.css        # Animaciones y gradientes del hero.
-│   │   └── shared/                                 # Componentes compartidos por todo el sistema.
-│   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Wrapper y estructuras base.
 │   │   ├── AdminLayout.astro                       # Esqueleto de visualización para páginas /admin.
 │   │   ├── Footer.astro                            # Pie de página responsivo y legal.
@@ -593,6 +594,7 @@
 │   │   ├── about.astro                             # Página de información institucional.
 │   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
+│   │   │   ├── brands.astro                        # Gestión de editoriales registradas.
 │   │   │   ├── categories.astro                    # Gestión jerárquica de categorías (CRUD).
 │   │   │   ├── categories/                         # Sub-rutas para categorías.
 │   │   │   │   └── [id]/                           # Ruta dinámica por categoría.
@@ -601,10 +603,21 @@
 │   │   │   ├── claims.astro                        # Gestión de reclamos e incidencias (CRUD).
 │   │   │   ├── dashboard.astro                     # Dashboard con métricas y tendencias reales.
 │   │   │   ├── products.astro                      # Gestión del catálogo de productos (CRUD).
+│   │   │   ├── products/                           # Rutas de administración de catálogo.
+│   │   │   │   ├── [id]/                           # Contexto de producto individual.
+│   │   │   │   │   └── edit.astro                  # Página de edición de producto.
+│   │   │   │   ├── [id].astro                      # Detalle técnico administrativo.
+│   │   │   │   └── new.astro                       # Wizard de creación de producto.
 │   │   │   ├── promotions.astro                    # Gestión de campañas y ofertas (CRUD).
 │   │   │   ├── sales.astro                         # Gestión y auditoría de ventas globales.
+│   │   │   ├── sales/                              # Rutas de auditoría de transacciones.
+│   │   │   │   ├── edit.astro                      # Edición de estado de venta.
+│   │   │   │   └── new.astro                       # Formulario de alta manual de ventas.
 │   │   │   ├── support.astro                       # Gestión de tickets de soporte y respuestas.
 │   │   │   ├── users.astro                         # Gestión del catálogo de usuarios (CRUD).
+│   │   │   ├── users/                              # Gestión del catálogo de usuarios.
+│   │   │   │   ├── [id].astro                      # Edición de datos de usuario.
+│   │   │   │   └── new.astro                       # Alta administrativa de usuario.
 │   │   │   └── styles/                             # Estética del panel administrativo.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
 │   │   ├── api/                                    # Puntos de conexión internos del servidor.
