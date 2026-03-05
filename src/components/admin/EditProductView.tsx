@@ -72,7 +72,7 @@ const EditProductView: React.FC<EditProductViewProps> = ({ productId }) => {
                     setFoto(p.foto || '');
                     setEsDestacado(!!p.esDestacado);
                     setEstado(p.estado || 'ACTIVO');
-                    setTags(p.tags ? p.tags.map((t: any) => t[2]) : []); // Assuming tags follow internal [pid, nrotag, name] or similar if not formatted
+                    setTags(p.tags || []);
                     setCaracteristicas(p.caracteristicas || []);
                 } else {
                     if ((window as any).triggerSileo) {
@@ -382,12 +382,7 @@ const EditProductView: React.FC<EditProductViewProps> = ({ productId }) => {
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'rgba(0,255,136,0.05)', borderRadius: '12px', border: '1px solid rgba(0,255,136,0.1)' }}>
-                        <input type="checkbox" id="esDestacado" checked={esDestacado} onChange={e => setEsDestacado(e.target.checked)} style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--neon-green)' }} />
-                        <label htmlFor="esDestacado" style={{ color: 'white', fontWeight: '500', cursor: 'pointer' }}>Producto Destacado</label>
-                    </div>
-
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <label htmlFor="estado" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Estado</label>
                         <select id="estado" value={estado} onChange={e => setEstado(e.target.value as any)}
@@ -396,6 +391,11 @@ const EditProductView: React.FC<EditProductViewProps> = ({ productId }) => {
                             <option value="INACTIVO" style={{ background: '#1a1a1a' }}>INACTIVO</option>
                             <option value="BORRADO" style={{ background: '#1a1a1a' }}>BORRADO</option>
                         </select>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'rgba(0,255,136,0.05)', borderRadius: '12px', border: '1px solid rgba(0,255,136,0.1)' }}>
+                        <input type="checkbox" id="esDestacado" checked={esDestacado} onChange={e => setEsDestacado(e.target.checked)} style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--neon-green)' }} />
+                        <label htmlFor="esDestacado" style={{ color: 'white', fontWeight: '500', cursor: 'pointer' }}>Producto Destacado</label>
                     </div>
                 </div>
 
