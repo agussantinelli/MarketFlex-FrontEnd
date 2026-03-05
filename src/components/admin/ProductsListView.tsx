@@ -198,9 +198,7 @@ const ProductsListView: React.FC = () => {
     };
 
     const handleAdd = () => {
-        if ((window as any).triggerSileo) {
-            (window as any).triggerSileo('info', 'Agregar producto funcionalmente no implementado aún');
-        }
+        window.location.href = '/admin/products/new';
     };
 
     return (
