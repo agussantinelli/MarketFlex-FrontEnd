@@ -75,7 +75,8 @@ export const AdminService = {
     async generateTags(nombre: string, descripcion: string): Promise<{ status: string; data?: string[]; message?: string }> {
         try {
             const result = await api.post('admin/generate-tags', {
-                json: { nombre, descripcion }
+                json: { nombre, descripcion },
+                timeout: 60000 // override 10s default timeout
             }).json<{ status: string; data: string[] }>();
             return result;
         } catch (error: any) {
