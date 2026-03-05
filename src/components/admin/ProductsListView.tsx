@@ -106,6 +106,28 @@ const ProductsListView: React.FC = () => {
             width: '60px'
         },
         {
+            header: '',
+            accessor: (p) => {
+                const colors = {
+                    'ACTIVO': 'var(--neon-green)',
+                    'INACTIVO': '#94a3b8',
+                    'BORRADO': '#f87171'
+                };
+                return (
+                    <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        backgroundColor: colors[p.estado] || '#94a3b8',
+                        boxShadow: `0 0 6px ${colors[p.estado] || '#94a3b8'}`,
+                        margin: '0 auto'
+                    }} title={p.estado} />
+                );
+            },
+            width: '30px',
+            align: 'center'
+        },
+        {
             header: 'Nombre',
             accessor: (p) => (
                 <div>
