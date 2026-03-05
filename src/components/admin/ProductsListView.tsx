@@ -208,8 +208,7 @@ const ProductsListView: React.FC = () => {
     };
 
     const handleEdit = (product: AdminProduct) => {
-        console.log('Edit product:', product);
-        // TODO: Open edit modal
+        window.location.href = `/admin/products/${product.id}/edit`;
     };
 
     const handleDelete = async (product: AdminProduct) => {
