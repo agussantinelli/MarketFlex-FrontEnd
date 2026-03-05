@@ -72,6 +72,20 @@ export const AdminService = {
             };
         }
     },
+    async updateProduct(id: string, data: any): Promise<{ status: string; message?: string }> {
+        try {
+            const result = await api.put(`admin/products/${id}`, {
+                json: data
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar el producto'
+            };
+        }
+    },
     async getAdminProduct(id: string): Promise<{ status: string; data?: any; message?: string }> {
         try {
             const result = await api.get(`admin/products/${id}`).json<{ status: string; data: any }>();
