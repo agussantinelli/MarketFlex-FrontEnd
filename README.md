@@ -736,9 +736,18 @@
 │   │   └── user.types.ts                           # Perfil, roles y atributos de usuario.
 │   ├── env.d.ts                                    # Tipado estricto para variables de entorno.
 │   └── middleware.ts                               # Middleware global de autenticación e interceptores Astro.
-├── playwright.config.ts                            # Configuración de tests E2E con Playwright.
-├── package.json                                    # Scripts, metadata y dependencias (pnpm).
-└── README.md                                       # Documentación principal del frontend.
+├── public/                                     # Recursos estáticos (imágenes, fuentes, iconos).
+├── tests/                                      # Suite de pruebas E2E y configuración Playwright.
+├── utils/                                      # Scripts de apoyo e infraestructura local.
+├── astro.config.mjs                            # Configuración del framework Astro y adaptadores.
+├── playwright.config.ts                        # Configuración de tests E2E con Playwright.
+├── package.json                                # Scripts, metadata y dependencias (pnpm).
+├── pnpm-lock.yaml                              # Bloqueo de versiones de dependencias.
+├── tsconfig.json                               # Configuración estricta de TypeScript.
+├── vitest.config.mts                           # Configuración de Vitest para pruebas unitarias.
+├── .env                                        # Variables de entorno locales (Privado).
+├── LICENSE                                     # Licencia y propiedad intelectual.
+└── README.md                                   # Documentación principal del frontend.
 </code></pre>
 
 <hr>
