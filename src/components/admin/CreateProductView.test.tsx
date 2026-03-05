@@ -8,7 +8,8 @@ import { api } from '../../lib/api';
 // Mock dependencies
 vi.mock('../../services/admin.service', () => ({
     AdminService: {
-        createProduct: vi.fn()
+        createProduct: vi.fn(),
+        generateTags: vi.fn()
     }
 }));
 
@@ -57,4 +58,23 @@ describe('CreateProductView', () => {
         fireEvent.submit(form!);
         expect((window as any).triggerSileo).toHaveBeenCalledWith('warning', 'Por favor, completá todos los campos base obligatorios.');
     });
+
+    it('should call generateTags when AI button is clicked with inputs', async () => {
+        (AdminService.generateTags as any).mockResolvedValue({ status: 'success', data: ['ia-tag'] });
+        render(<CreateProductView />);
+
+        const nameInput = screen.getByLabelText(/Nombre del Producto/i);
+        const descInput = screen.getByLabelText(/Descripción/i);
+
+        fireEvent.change(nameInput, { target: { value: 'Test' } });
+        fireEvent.change(descInput, { target: { value: 'Desc' } });
+
+        const aiBtn = screen.getByText(/IA Tags/i);
+        fireEvent.click(aiBtn);
+
+        await waitFor(() => {
+            expect(AdminService.generateTags).toHaveBeenCalledWith('Test', 'Desc');
+        });
+    });
 });
+
