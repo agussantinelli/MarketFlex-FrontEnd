@@ -9,7 +9,7 @@ export type CheckoutState = {
         cp: string;
     };
     paymentMethod: 'Mercado Pago' | 'Efectivo';
-    tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'RETIRO_SUCURSAL';
+    tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL';
     ventaEnFisico: boolean;
     isSubmitting: boolean;
     error: string | null;
