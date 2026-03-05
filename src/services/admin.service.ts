@@ -200,7 +200,7 @@ export const AdminService = {
             return null;
         }
     },
-    async updatePurchase(id: string, data: { estado?: string; metodoPago?: string }): Promise<{ status: string; message?: string }> {
+    async updatePurchase(id: string, data: { estado?: string; metodoPago?: string; tipoEntrega?: string; envio?: any }): Promise<{ status: string; message?: string }> {
         try {
             const result = await api.patch(`admin/purchases/${id}`, {
                 json: data
