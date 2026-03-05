@@ -13,7 +13,9 @@ export const checkoutStore = persistentAtom<CheckoutState>('marketflex_checkout'
         provincia: '',
         cp: ''
     },
-    paymentMethod: 'card',
+    paymentMethod: 'Mercado Pago',
+    tipoEntrega: 'ENVIO_DOMICILIO',
+    ventaEnFisico: false,
     isSubmitting: false,
     error: null,
     success: false,
@@ -32,18 +34,37 @@ export const updateFormData = (data: Partial<CheckoutState['formData']>) => {
     });
 };
 
-export const updatePaymentMethod = (method: CheckoutState['paymentMethod']) => {
+export const updatePaymentMethod = (method: 'Mercado Pago' | 'Efectivo') => {
     const current = checkoutStore.get();
     checkoutStore.set({ ...current, paymentMethod: method });
 };
 
+export const updateDeliveryType = (type: CheckoutState['tipoEntrega']) => {
+    const current = checkoutStore.get();
+    checkoutStore.set({ ...current, tipoEntrega: type });
+};
+
 export const validateFields = () => {
-    const { formData } = checkoutStore.get();
+    const { formData, tipoEntrega } = checkoutStore.get();
+
+    // If not home delivery, everything is optional (but we still validate email format if provided)
+    if (tipoEntrega !== 'ENVIO_DOMICILIO') {
+        if (formData.email && formData.email.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                checkoutStore.set({ ...checkoutStore.get(), error: 'El email ingresado no es válido.' });
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // For home delivery, everything is mandatory
     const required = ['nombre', 'email', 'telefono', 'direccion', 'ciudad', 'provincia', 'cp'];
-    const missing = required.filter(key => !(formData as any)[key].trim());
+    const missing = required.filter(key => !(formData as any)[key]?.trim());
 
     if (missing.length > 0) {
-        checkoutStore.set({ ...checkoutStore.get(), error: 'Por favor, completa todos los campos obligatorios.' });
+        checkoutStore.set({ ...checkoutStore.get(), error: 'Por favor, completa todos los campos de envío.' });
         return false;
     }
 
@@ -73,12 +94,12 @@ export const submitPurchase = async () => {
     try {
         const payload = {
             metodoPago: current.paymentMethod,
-            cantCuotas: 1, // Default to 1 for now
+            cantCuotas: 1,
             items: cartData.items.map(item => ({
                 productoId: item.id,
                 cantidad: item.quantity
             })),
-            envio: {
+            envio: current.tipoEntrega === 'ENVIO_DOMICILIO' ? {
                 nombreCompleto: current.formData.nombre,
                 email: current.formData.email,
                 telefono: current.formData.telefono,
@@ -86,7 +107,9 @@ export const submitPurchase = async () => {
                 ciudad: current.formData.ciudad,
                 provincia: current.formData.provincia,
                 codigoPostal: current.formData.cp
-            }
+            } : undefined,
+            tipoEntrega: current.tipoEntrega,
+            ventaEnFisico: current.ventaEnFisico
         };
 
         const response = await createPurchase(payload);
@@ -135,7 +158,9 @@ export const resetCheckout = () => {
             provincia: '',
             cp: ''
         },
-        paymentMethod: 'card',
+        paymentMethod: 'Mercado Pago',
+        tipoEntrega: 'ENVIO_DOMICILIO',
+        ventaEnFisico: false,
         isSubmitting: false,
         error: null,
         success: false,
