@@ -182,7 +182,7 @@ const ProductsListView: React.FC = () => {
     ];
 
     const handleView = (product: AdminProduct) => {
-        window.open('/producto/' + product.id, '_blank');
+        window.location.href = '/admin/products/' + product.id;
     };
 
     const handleEdit = (product: AdminProduct) => {
