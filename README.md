@@ -40,6 +40,7 @@
     <img src="https://img.shields.io/badge/MSW-2.x-FF6A00?style=for-the-badge&logo=mockserviceworker&logoColor=white" alt="MSW Badge">
     <img src="https://img.shields.io/badge/Playwright-1.58.2-2EAD33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright Badge">
     <img src="https://img.shields.io/badge/Test_Enforcement-Mandatory-orange?style=for-the-badge&logo=vitest&logoColor=white" alt="Test Enforcement Badge">
+    <img src="https://img.shields.io/badge/OpenRouter-StepFun-646CFF?style=for-the-badge&logo=openai&logoColor=white" alt="OpenRouter Badge">
 </div>
 
 <div align="center">
@@ -215,6 +216,12 @@
             <td><strong>^5.0.11 / ^1.1.0</strong></td>
             <td>Gestión de estado global para React Islands y compartida entre frameworks (Astro/React).</td>
         </tr>
+        <tr>
+            <td><strong>Inteligencia Artificial</strong></td>
+            <td>OpenRouter (StepFun)</td>
+            <td><strong>step-3.5-flash:free</strong></td>
+            <td>Visualización de etiquetas semánticas y enriquecimiento del descubrimiento de productos.</td>
+        </tr>
     </tbody>
 </table>
 
@@ -242,6 +249,18 @@
   <li>📁 <b>Gestión de Categorías:</b> Módulo completo para administrar la jerarquía del catálogo, con conteo dinámico de productos y restricción de borrado de seguridad.</li>
 </ul>
   
+<hr>
+
+<h2>🤖 Inteligencia Artificial & Experiencia de Usuario</h2>
+<p>
+  El FrontEnd de MarketFlex aprovecha la potencia de la Inteligencia Artificial para ofrecer una experiencia de búsqueda y navegación que se siente intuitiva y casi predictiva.
+</p>
+<ul>
+  <li><b>Visualización Semántica:</b> Las etiquetas generadas por IA no son solo metadatos; se presentan visualmente en la interfaz para ayudar al usuario a entender rápidamente el contexto y estilo de cada producto.</li>
+  <li><b>Filtrado por Conceptos:</b> Gracias a la integración con el Backend, el FrontEnd permite filtrar por conceptos abstractos generados semánticamente, rompiendo la barrera de las categorías tradicionales rígidas.</li>
+  <li><b>Interfaz Reactiva:</b> Los componentes consumen estos datos enriquecidos mediante Nanostores, asegurando que cualquier actualización en los metadatos de IA se refleje instantáneamente en la UI sin recargas costosas.</li>
+</ul>
+
 <hr>
 
 <h2>📊 Analytics Performance Platform</h2>
