@@ -35,6 +35,7 @@ const RegisterSaleView: React.FC = () => {
         codigoPostal: '',
         telefono: ''
     });
+    const [initialStatus, setInitialStatus] = useState<'PENDIENTE' | 'COMPLETADO'>('COMPLETADO');
 
     const steps = [
         { id: 1, label: 'Seleccionar Productos' },
@@ -72,7 +73,6 @@ const RegisterSaleView: React.FC = () => {
             return;
         }
         setSearching(true);
-        // Simulate search for now, will integrate with product.service later
         try {
             const results = await AdminService.searchProducts(query);
             setSearchResults(results || []);
@@ -129,7 +129,6 @@ const RegisterSaleView: React.FC = () => {
         }));
     };
 
-    // Promotion calculation
     const promoResult = useMemo(() => {
         if (selectedProducts.length === 0) return { subtotal: 0, discount: 0, total: 0, appliedPromotions: [] };
         const cartItems: CartItem[] = selectedProducts.map(p => ({
@@ -293,6 +292,7 @@ const RegisterSaleView: React.FC = () => {
                                 >
                                     <LuStore className={styles.tileIcon} />
                                     <span className={styles.tileLabel}>Retiro en Local</span>
+                                    {deliveryMethod === 'RETIRO_LOCAL' && <LuCheck className={styles.activeCheck} />}
                                 </div>
                                 <div
                                     className={`${styles.selectionTile} ${deliveryMethod === 'ENVIO_DOMICILIO' ? styles.active : ''}`}
@@ -300,144 +300,167 @@ const RegisterSaleView: React.FC = () => {
                                 >
                                     <LuTruck className={styles.tileIcon} />
                                     <span className={styles.tileLabel}>Envío a Domicilio</span>
+                                    {deliveryMethod === 'ENVIO_DOMICILIO' && <LuCheck className={styles.activeCheck} />}
                                 </div>
                             </div>
+                        </div>
 
+                        <div className={styles.formGroup} style={{ marginTop: '3rem' }}>
+                            <h4 className={styles.sectionLabel}>Estado Inicial de la Venta</h4>
+                            <div className={styles.selectionGrid}>
+                                <div
+                                    className={`${styles.selectionTile} ${initialStatus === 'COMPLETADO' ? styles.active : ''}`}
+                                    onClick={() => setInitialStatus('COMPLETADO')}
+                                >
+                                    <LuCheck className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Completado</span>
+                                    {initialStatus === 'COMPLETADO' && <LuCheck className={styles.activeCheck} />}
+                                </div>
+                                <div
+                                    className={`${styles.selectionTile} ${initialStatus === 'PENDIENTE' ? styles.active : ''}`}
+                                    onClick={() => setInitialStatus('PENDIENTE')}
+                                >
+                                    <LuPackage className={styles.tileIcon} />
+                                    <span className={styles.tileLabel}>Pendiente</span>
+                                    {initialStatus === 'PENDIENTE' && <LuCheck className={styles.activeCheck} />}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{
+                            marginTop: '2rem',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '1rem'
+                        }}>
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Nombre Completo {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Nombre y Apellido"
+                                    value={shippingData.nombreCompleto}
+                                    onChange={(e) => setShippingData(prev => ({ ...prev, nombreCompleto: e.target.value }))}
+                                    className={dashboardStyles.toggleBtn}
+                                    style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                />
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Email {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
+                                </label>
+                                <input
+                                    type="email"
+                                    placeholder="email@ejemplo.com"
+                                    value={shippingData.email}
+                                    onChange={(e) => setShippingData(prev => ({ ...prev, email: e.target.value }))}
+                                    className={dashboardStyles.toggleBtn}
+                                    style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                />
+                            </div>
+                            <div style={{ gridColumn: deliveryMethod === 'ENVIO_DOMICILIO' ? 'auto' : '1 / -1' }}>
+                                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Teléfono {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Teléfono de contacto"
+                                    value={shippingData.telefono}
+                                    onChange={(e) => setShippingData(prev => ({ ...prev, telefono: e.target.value }))}
+                                    className={dashboardStyles.toggleBtn}
+                                    style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                />
+                            </div>
+                        </div>
+
+                        {deliveryMethod === 'ENVIO_DOMICILIO' ? (
+                            <div style={{
+                                marginTop: '1.5rem',
+                                padding: '1rem',
+                                background: 'rgba(0, 255, 136, 0.05)',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(0, 255, 136, 0.1)',
+                                color: 'var(--green-cream)',
+                                fontSize: '0.9rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem'
+                            }}>
+                                <LuTruck style={{ color: 'var(--neon-green)' }} />
+                                Completá los datos de envío del cliente a continuación.
+                            </div>
+                        ) : (
+                            <div style={{
+                                marginTop: '1.5rem',
+                                padding: '1rem',
+                                background: 'rgba(245, 158, 11, 0.05)',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(245, 158, 11, 0.1)',
+                                color: 'var(--warning-yellow)',
+                                fontSize: '0.9rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem'
+                            }}>
+                                <LuStore style={{ color: 'var(--warning-yellow)' }} />
+                                El cliente retirará el pedido. Los datos de contacto son opcionales.
+                            </div>
+                        )}
+
+                        {deliveryMethod === 'ENVIO_DOMICILIO' && (
                             <div style={{
                                 marginTop: '2rem',
                                 display: 'grid',
                                 gridTemplateColumns: '1fr 1fr',
                                 gap: '1rem'
                             }}>
-                                <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                        Nombre Completo {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
-                                    </label>
+                                <div style={{ gridColumn: '1 / -1' }}>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dirección</label>
                                     <input
                                         type="text"
-                                        placeholder="Nombre y Apellido"
-                                        value={shippingData.nombreCompleto}
-                                        onChange={(e) => setShippingData(prev => ({ ...prev, nombreCompleto: e.target.value }))}
+                                        placeholder="Calle y número"
+                                        value={shippingData.direccion}
+                                        onChange={(e) => setShippingData(prev => ({ ...prev, direccion: e.target.value }))}
                                         className={dashboardStyles.toggleBtn}
                                         style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                        Email {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
-                                    </label>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ciudad</label>
                                     <input
-                                        type="email"
-                                        placeholder="email@ejemplo.com"
-                                        value={shippingData.email}
-                                        onChange={(e) => setShippingData(prev => ({ ...prev, email: e.target.value }))}
+                                        type="text"
+                                        placeholder="Ciudad"
+                                        value={shippingData.ciudad}
+                                        onChange={(e) => setShippingData(prev => ({ ...prev, ciudad: e.target.value }))}
                                         className={dashboardStyles.toggleBtn}
                                         style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
                                     />
                                 </div>
-                                <div style={{ gridColumn: deliveryMethod === 'ENVIO_DOMICILIO' ? 'auto' : '1 / -1' }}>
-                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                                        Teléfono {deliveryMethod === 'ENVIO_DOMICILIO' && <span style={{ color: 'var(--error-red)' }}>*</span>}
-                                    </label>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Provincia</label>
                                     <input
                                         type="text"
-                                        placeholder="Teléfono de contacto"
-                                        value={shippingData.telefono}
-                                        onChange={(e) => setShippingData(prev => ({ ...prev, telefono: e.target.value }))}
+                                        placeholder="Provincia"
+                                        value={shippingData.provincia}
+                                        onChange={(e) => setShippingData(prev => ({ ...prev, provincia: e.target.value }))}
+                                        className={dashboardStyles.toggleBtn}
+                                        style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Código Postal</label>
+                                    <input
+                                        type="text"
+                                        placeholder="CP"
+                                        value={shippingData.codigoPostal}
+                                        onChange={(e) => setShippingData(prev => ({ ...prev, codigoPostal: e.target.value }))}
                                         className={dashboardStyles.toggleBtn}
                                         style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
                                     />
                                 </div>
                             </div>
-
-                            {deliveryMethod === 'ENVIO_DOMICILIO' ? (
-                                <div style={{
-                                    marginTop: '1.5rem',
-                                    padding: '1rem',
-                                    background: 'rgba(0, 255, 136, 0.05)',
-                                    borderRadius: '12px',
-                                    border: '1px solid rgba(0, 255, 136, 0.1)',
-                                    color: 'var(--green-cream)',
-                                    fontSize: '0.9rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.75rem'
-                                }}>
-                                    <LuTruck style={{ color: 'var(--neon-green)' }} />
-                                    Completá los datos de envío del cliente a continuación.
-                                </div>
-                            ) : (
-                                <div style={{
-                                    marginTop: '1.5rem',
-                                    padding: '1rem',
-                                    background: 'rgba(245, 158, 11, 0.05)',
-                                    borderRadius: '12px',
-                                    border: '1px solid rgba(245, 158, 11, 0.1)',
-                                    color: 'var(--warning-yellow)',
-                                    fontSize: '0.9rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.75rem'
-                                }}>
-                                    <LuStore style={{ color: 'var(--warning-yellow)' }} />
-                                    El cliente retirará el pedido. Los datos de contacto son opcionales.
-                                </div>
-                            )}
-
-                            {deliveryMethod === 'ENVIO_DOMICILIO' && (
-                                <div style={{
-                                    marginTop: '2rem',
-                                    display: 'grid',
-                                    gridTemplateColumns: '1fr 1fr',
-                                    gap: '1rem'
-                                }}>
-                                    <div style={{ gridColumn: '1 / -1' }}>
-                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Dirección</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Calle y número"
-                                            value={shippingData.direccion}
-                                            onChange={(e) => setShippingData(prev => ({ ...prev, direccion: e.target.value }))}
-                                            className={dashboardStyles.toggleBtn}
-                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ciudad</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Ciudad"
-                                            value={shippingData.ciudad}
-                                            onChange={(e) => setShippingData(prev => ({ ...prev, ciudad: e.target.value }))}
-                                            className={dashboardStyles.toggleBtn}
-                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Provincia</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Provincia"
-                                            value={shippingData.provincia}
-                                            onChange={(e) => setShippingData(prev => ({ ...prev, provincia: e.target.value }))}
-                                            className={dashboardStyles.toggleBtn}
-                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Código Postal</label>
-                                        <input
-                                            type="text"
-                                            placeholder="CP"
-                                            value={shippingData.codigoPostal}
-                                            onChange={(e) => setShippingData(prev => ({ ...prev, codigoPostal: e.target.value }))}
-                                            className={dashboardStyles.toggleBtn}
-                                            style={{ width: '100%', background: 'rgba(255,255,255,0.05)', textAlign: 'left', padding: '0.85rem 1rem' }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        )}
 
                         <div className={styles.summaryCard}>
                             <h4 style={{
@@ -502,6 +525,15 @@ const RegisterSaleView: React.FC = () => {
                                 </div>
                                 <span className={styles.summaryValue}>
                                     {deliveryMethod === 'ENVIO_DOMICILIO' ? 'Envío a Domicilio' : 'Retiro en Local'}
+                                </span>
+                            </div>
+                            <div className={styles.summaryRow}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <LuPackage style={{ color: 'var(--neon-green)' }} />
+                                    <span className={styles.summaryLabel}>Estado Inicial</span>
+                                </div>
+                                <span className={styles.summaryValue}>
+                                    {initialStatus}
                                 </span>
                             </div>
                             {deliveryMethod === 'ENVIO_DOMICILIO' && (
@@ -605,7 +637,6 @@ const RegisterSaleView: React.FC = () => {
         try {
             if ((window as any).showAdminLoader) (window as any).showAdminLoader();
 
-            // Prepare the data for the backend
             const saleData = {
                 items: selectedProducts.map(p => ({
                     productoId: p.id,
@@ -613,7 +644,6 @@ const RegisterSaleView: React.FC = () => {
                 })),
                 metodoPago: paymentMethod,
                 tipoEntrega: deliveryMethod,
-                // Always send shipping data if at least one field is filled, or if it's mandatory
                 envio: (deliveryMethod === 'ENVIO_DOMICILIO' || Object.values(shippingData).some(v => v.trim())) ? {
                     nombreCompleto: shippingData.nombreCompleto,
                     email: shippingData.email,
@@ -622,7 +652,8 @@ const RegisterSaleView: React.FC = () => {
                     provincia: shippingData.provincia,
                     codigoPostal: shippingData.codigoPostal,
                     telefono: shippingData.telefono
-                } : undefined
+                } : undefined,
+                estado: initialStatus
             };
 
             const response = await api.post('purchases', { json: saleData }).json<any>();
