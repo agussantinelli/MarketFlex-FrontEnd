@@ -3,7 +3,7 @@ import { AdminService } from '../../services/admin.service';
 import { uploadService } from '../../services/upload.service';
 import { api } from '../../lib/api';
 import styles from './styles/dashboard.module.css';
-import { LuArrowLeft, LuUpload, LuX, LuPlus } from 'react-icons/lu';
+import { LuArrowLeft, LuUpload, LuX, LuPlus, LuSparkles } from 'react-icons/lu';
 
 interface Category {
     id: string;
@@ -118,7 +118,7 @@ const CreateProductView: React.FC = () => {
                     setTags([...tags, ...newTags]);
                 }
                 if ((window as any).triggerSileo) {
-                    (window as any).triggerSileo('success', 'Tags generados con IA ✨');
+                    (window as any).triggerSileo('success', 'Tags generados con IA');
                 }
             } else {
                 if ((window as any).triggerSileo) {
@@ -320,7 +320,7 @@ const CreateProductView: React.FC = () => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Tags (Etiquetas)</label>
                             <button type="button" onClick={handleGenerateTags} disabled={generatingTags || !nombre || !descripcion} style={{ padding: '0.3rem 0.8rem', background: 'rgba(138, 43, 226, 0.15)', color: '#b57aff', border: '1px solid rgba(138, 43, 226, 0.3)', borderRadius: '8px', cursor: (generatingTags || !nombre || !descripcion) ? 'not-allowed' : 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s', opacity: (generatingTags || !nombre || !descripcion) ? 0.5 : 1 }}>
-                                ✨ {generatingTags ? 'Generando...' : 'IA Tags'}
+                                <LuSparkles size={16} /> {generatingTags ? 'Generando...' : 'IA Tags'}
                             </button>
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
