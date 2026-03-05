@@ -164,7 +164,7 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                                     {sale.usuario?.nombre || 'N/A'} {sale.usuario?.apellido || ''}
                                 </div>
                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    Metodo: {sale.metodoPago === 'card' ? 'Tarjeta' : sale.metodoPago}
+                                    Metodo: {sale.metodoPago}
                                     {sale.cantCuotas > 1 && ` • ${sale.cantCuotas} cuotas`}
                                 </div>
                             </div>
@@ -172,16 +172,23 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
 
                         <section>
                             <h3 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                                <LuMapPin size={16} /> ENVÍO
+                                <LuMapPin size={16} /> ENTREGA
                             </h3>
-                            {sale.detalleEnvio ? (
+                            {sale.tipoEntrega === 'ENVIO_DOMICILIO' && sale.detalleEnvio ? (
                                 <div style={{ fontSize: '0.85rem', lineHeight: '1.5', opacity: 0.9 }}>
-                                    <div>{sale.detalleEnvio.calle} {sale.detalleEnvio.numero}</div>
-                                    {sale.detalleEnvio.piso && <div>Piso {sale.detalleEnvio.piso} {sale.detalleEnvio.depto}</div>}
+                                    <div style={{ fontWeight: 600, color: 'var(--neon-green)', marginBottom: '4px' }}>Envío a Domicilio</div>
+                                    <div>{sale.detalleEnvio.direccion}</div>
                                     <div style={{ color: 'var(--text-muted)' }}>{sale.detalleEnvio.ciudad}, {sale.detalleEnvio.provincia}</div>
                                 </div>
                             ) : (
-                                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Sin detalles de envío (Retiro en local o digital)</div>
+                                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                                    <div style={{ fontWeight: 600, color: 'var(--neon-green)', marginBottom: '4px' }}>
+                                        {sale.tipoEntrega === 'RETIRO_LOCAL' ? 'Retiro en Local' :
+                                            sale.tipoEntrega === 'RETIRO_SUCURSAL' ? 'Retiro en Sucursal' :
+                                                sale.tipoEntrega}
+                                    </div>
+                                    <div style={{ fontStyle: 'italic', opacity: 0.7 }}>El cliente retira el pedido.</div>
+                                </div>
                             )}
                         </section>
                     </div>
