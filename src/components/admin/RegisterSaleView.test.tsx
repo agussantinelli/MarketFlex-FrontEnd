@@ -68,6 +68,9 @@ describe('RegisterSaleView Component', () => {
         // Change payment method
         fireEvent.click(screen.getByText(/Mercado Pago/i));
 
+        // Change delivery method
+        fireEvent.click(screen.getByText(/Retiro en Local/i));
+
         // Go to next step
         fireEvent.click(screen.getByText(/Siguiente/i));
 

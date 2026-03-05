@@ -85,7 +85,7 @@ describe('EditSaleView Component', () => {
             expect(screen.getByText('Estado de la Venta')).toBeDefined();
         });
 
-        expect(screen.getByText('Método de Pago')).toBeDefined();
+        expect(screen.getByText('Pago y Entrega')).toBeDefined();
         expect(screen.getByText('Confirmación')).toBeDefined();
     });
 
