@@ -105,9 +105,16 @@ const ProductsListView: React.FC = () => {
             ),
             width: '60px'
         },
-        { header: 'Nombre', accessor: 'nombre' },
+        {
+            header: 'Nombre',
+            accessor: (p) => (
+                <div>
+                    <div style={{ fontWeight: '600', color: 'var(--foreground)' }}>{p.nombre}</div>
+                    <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '4px' }}>{p.marca}</div>
+                </div>
+            )
+        },
         { header: 'Categoría', accessor: 'categoria' },
-        { header: 'Marca', accessor: 'marca' },
         {
             header: 'Precio',
             accessor: (p) => (
