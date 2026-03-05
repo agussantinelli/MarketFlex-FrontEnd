@@ -5,7 +5,11 @@ import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Características">
+<AdminLayout
+    title="Gestión de Características"
+    parentTitle="Administración"
+    parentUrl="/admin/dashboard"
+>
     <CharacteristicsListView client:only="react" />
 
     <ConfirmationModal

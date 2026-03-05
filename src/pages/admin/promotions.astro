@@ -5,10 +5,12 @@ import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Promociones">
-    <div style="padding: 2rem;">
-        <PromotionsListView client:only="react" />
-    </div>
+<AdminLayout
+    title="Gestión de Promociones"
+    parentTitle="Administración"
+    parentUrl="/admin/dashboard"
+>
+    <PromotionsListView client:only="react" />
 
     <ConfirmationModal
         id="delete-promotion-modal"

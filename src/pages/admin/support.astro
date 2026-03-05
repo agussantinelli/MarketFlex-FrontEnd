@@ -5,10 +5,12 @@ import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Soporte">
-    <div style="padding: 2rem;">
-        <SupportListView client:only="react" />
-    </div>
+<AdminLayout
+    title="Soporte"
+    parentTitle="Administración"
+    parentUrl="/admin/dashboard"
+>
+    <SupportListView client:only="react" />
 
     <ConfirmationModal
         id="delete-support-modal"

@@ -5,7 +5,11 @@ import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Marcas">
+<AdminLayout
+    title="Gestión de Marcas"
+    parentTitle="Administración"
+    parentUrl="/admin/dashboard"
+>
     <BrandsListView client:only="react" />
 
     <ConfirmationModal
