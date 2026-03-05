@@ -137,14 +137,16 @@ const PromotionsListView: React.FC = () => {
     if (promotions.length === 0) {
         return (
             <div className={styles.container}>
-                <header className={styles.header}>
+                <header className={styles.header} style={{ display: 'block', marginBottom: '3.5rem' }}>
                     <div className={styles.titleSection}>
-                        <h1>Promociones</h1>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <h1>Promociones</h1>
+                            <button className={styles.actionBtn} onClick={handleCreate} title="Nueva Promoción" style={{ padding: '0.75rem 1.5rem', gap: '8px', fontSize: '0.9rem', fontWeight: '700' }}>
+                                <LuPlus size={20} /> Nueva Promoción
+                            </button>
+                        </div>
                         <p>Gestioná las ofertas y beneficios del marketplace</p>
                     </div>
-                    <button className={styles.actionBtn} onClick={handleCreate} title="Nueva Promoción" style={{ padding: '0.75rem 1.5rem', gap: '8px', fontSize: '0.9rem', fontWeight: '700' }}>
-                        <LuPlus size={20} /> Nueva Promoción
-                    </button>
                 </header>
                 <div style={{ padding: '5rem', textAlign: 'center', color: '#64748b' }}>
                     <LuInbox size={64} style={{ opacity: 0.3, marginBottom: '1.5rem' }} />
@@ -157,30 +159,33 @@ const PromotionsListView: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
+            <header className={styles.header} style={{ display: 'block', marginBottom: '3.5rem' }}>
                 <div className={styles.titleSection}>
-                    <h1>Promociones</h1>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <h1>Promociones</h1>
+                        <button
+                            className={styles.actionBtn}
+                            onClick={handleCreate}
+                            style={{
+                                background: 'var(--primary)',
+                                color: 'var(--background)',
+                                padding: '0.5rem 1rem',
+                                borderRadius: '12px',
+                                fontWeight: '800',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                boxShadow: '0 0 20px rgba(0, 163, 136, 0.3)',
+                                fontSize: '0.9rem'
+                            }}
+                        >
+                            <LuPlus size={18} /> Crear Nueva
+                        </button>
+                    </div>
                     <p>Gestioná las ofertas y beneficios del marketplace</p>
                 </div>
-                <button
-                    className={styles.actionBtn}
-                    onClick={handleCreate}
-                    style={{
-                        background: 'var(--primary)',
-                        color: 'var(--background)',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '12px',
-                        fontWeight: '800',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        boxShadow: '0 0 20px rgba(0, 163, 136, 0.3)'
-                    }}
-                >
-                    <LuPlus size={20} /> Crear Nueva
-                </button>
             </header>
 
             <div style={{
