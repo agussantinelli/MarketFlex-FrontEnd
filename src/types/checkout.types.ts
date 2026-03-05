@@ -8,7 +8,9 @@ export type CheckoutState = {
         provincia: string;
         cp: string;
     };
-    paymentMethod: 'card' | 'cash' | 'transfer';
+    paymentMethod: 'Mercado Pago' | 'Efectivo';
+    tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'RETIRO_SUCURSAL';
+    ventaEnFisico: boolean;
     isSubmitting: boolean;
     error: string | null;
     success: boolean;

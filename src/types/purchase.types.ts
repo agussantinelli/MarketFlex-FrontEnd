@@ -34,14 +34,18 @@ export type Purchase = {
     lineas: LineaCompra[];
     detalleEnvio: DetalleEnvio;
     promociones?: AppliedPromotion[];
+    tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'RETIRO_SUCURSAL';
+    razonPendiente?: string;
 };
 
 export type CreatePurchaseRequest = {
-    metodoPago: 'card' | 'cash' | 'transfer';
+    metodoPago: 'Mercado Pago' | 'Efectivo';
     cantCuotas: number;
     items: {
         productoId: string;
         cantidad: number;
     }[];
-    envio: DetalleEnvio;
+    envio?: DetalleEnvio | undefined;
+    ventaEnFisico: boolean;
+    tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'RETIRO_SUCURSAL';
 };

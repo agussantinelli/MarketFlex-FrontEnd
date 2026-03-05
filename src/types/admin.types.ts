@@ -65,8 +65,8 @@ export type AdminPurchase = {
     metodoPago: string;
     cantCuotas: number;
     estado: string;
+    tipoEntrega: string;
     ventaEnFisico?: boolean;
-    retiroEnLocal?: boolean;
     usuario: {
         nombre: string;
         apellido: string;
@@ -77,12 +77,13 @@ export type AdminPurchase = {
         subtotal: number;
     }>;
     detalleEnvio: {
-        calle: string;
-        numero: string;
-        piso?: string;
-        depto?: string;
+        nombreCompleto: string;
+        email: string;
+        telefono: string;
+        direccion: string;
         ciudad: string;
         provincia: string;
+        codigoPostal: string;
     } | null;
     promociones: Array<{
         nombre: string;
