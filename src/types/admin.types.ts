@@ -66,6 +66,7 @@ export type AdminPurchase = {
     cantCuotas: number;
     estado: string;
     ventaEnFisico?: boolean;
+    retiroEnLocal?: boolean;
     usuario: {
         nombre: string;
         apellido: string;
@@ -132,6 +133,7 @@ export interface AdminProduct {
     stock: number;
     envioGratis: boolean;
     fechaLlegada: string | null;
+    estado: 'ACTIVO' | 'INACTIVO' | 'BORRADO';
 }
 
 export interface PaginatedResponse<T> {
