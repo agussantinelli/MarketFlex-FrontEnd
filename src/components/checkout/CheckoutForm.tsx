@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { HiOutlineUser, HiOutlineTruck, HiExclamationCircle } from 'react-icons/hi2';
-import { MdOutlinePayment, MdCreditCard, MdAccountBalance, MdPayments } from 'react-icons/md';
+import { MdOutlinePayment, MdCreditCard, MdPayments } from 'react-icons/md';
 import styles from './styles/CheckoutForm.module.css';
 import { checkoutStore, updateFormData, updatePaymentMethod } from '../../store/checkoutStore';
 import { UserService } from '../../services/user.service';
@@ -49,7 +49,7 @@ const CheckoutForm: React.FC = () => {
         updateFormData({ [id]: value });
     };
 
-    const handlePaymentChange = (method: 'card' | 'cash' | 'transfer') => {
+    const handlePaymentChange = (method: 'Mercado Pago' | 'Efectivo') => {
         updatePaymentMethod(method);
     };
 
@@ -170,22 +170,15 @@ const CheckoutForm: React.FC = () => {
                 </h2>
                 <div className={styles.paymentOptions}>
                     <div
-                        className={`${styles.paymentCard} ${paymentMethod === 'card' ? styles.active : ''}`}
-                        onClick={() => handlePaymentChange('card')}
+                        className={`${styles.paymentCard} ${paymentMethod === 'Mercado Pago' ? styles.active : ''}`}
+                        onClick={() => handlePaymentChange('Mercado Pago')}
                     >
                         <MdCreditCard className={styles.paymentIcon} />
-                        <span className={styles.paymentLabel}>Tarjeta</span>
+                        <span className={styles.paymentLabel}>Mercado Pago</span>
                     </div>
                     <div
-                        className={`${styles.paymentCard} ${paymentMethod === 'transfer' ? styles.active : ''}`}
-                        onClick={() => handlePaymentChange('transfer')}
-                    >
-                        <MdAccountBalance className={styles.paymentIcon} />
-                        <span className={styles.paymentLabel}>Transferencia</span>
-                    </div>
-                    <div
-                        className={`${styles.paymentCard} ${paymentMethod === 'cash' ? styles.active : ''}`}
-                        onClick={() => handlePaymentChange('cash')}
+                        className={`${styles.paymentCard} ${paymentMethod === 'Efectivo' ? styles.active : ''}`}
+                        onClick={() => handlePaymentChange('Efectivo')}
                     >
                         <MdPayments className={styles.paymentIcon} />
                         <span className={styles.paymentLabel}>Efectivo</span>
