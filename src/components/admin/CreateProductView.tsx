@@ -211,8 +211,8 @@ const CreateProductView: React.FC = () => {
                         <label htmlFor="categoriaId" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Categoría *</label>
                         <select id="categoriaId" required value={categoriaId} onChange={e => { setCategoriaId(e.target.value); setNroSubcategoria(''); }}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
-                            <option value="">Seleccionar Categoría...</option>
-                            {categories.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
+                            <option value="" style={{ background: '#1a1a1a', color: 'white' }}>Seleccionar Categoría...</option>
+                            {categories.map(c => <option key={c.id} value={c.id} style={{ background: '#1a1a1a', color: 'white' }}>{c.nombre}</option>)}
                         </select>
                     </div>
 
@@ -220,8 +220,8 @@ const CreateProductView: React.FC = () => {
                         <label htmlFor="nroSubcategoria" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Subcategoría *</label>
                         <select id="nroSubcategoria" required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', opacity: !categoriaId ? 0.5 : 1 }}>
-                            <option value="">Seleccionar Subcategoría...</option>
-                            {currentCategory?.subcategorias.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria}>{s.nombre}</option>)}
+                            <option value="" style={{ background: '#1a1a1a', color: 'white' }}>Seleccionar Subcategoría...</option>
+                            {currentCategory?.subcategorias.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria} style={{ background: '#1a1a1a', color: 'white' }}>{s.nombre}</option>)}
                         </select>
                     </div>
 
