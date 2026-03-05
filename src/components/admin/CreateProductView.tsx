@@ -40,7 +40,7 @@ const CreateProductView: React.FC = () => {
         const fetchCategories = async () => {
             try {
                 // Adjusting based on filterService format natively available in API
-                const results = await api.get('filters/categories').json<{ data: Category[] }>();
+                const results = await api.get('categories').json<{ data: Category[] }>();
                 if (results && results.data) setCategories(results.data);
             } catch (err) {
                 console.error("Failed to fetch categories", err);
