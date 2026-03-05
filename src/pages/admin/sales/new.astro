@@ -5,6 +5,10 @@ import RegisterSaleView from "../../../components/admin/RegisterSaleView";
 const title = "Registrar Venta";
 ---
 
-<AdminLayout title={title} parentTitle="Ventas" parentUrl="/admin/sales">
+<AdminLayout
+    title={title}
+    parentTitle="Gestión de Ventas"
+    parentUrl="/admin/sales"
+>
     <RegisterSaleView client:load />
 </AdminLayout>

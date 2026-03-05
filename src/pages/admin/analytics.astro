@@ -3,10 +3,6 @@ import AdminLayout from "../../layouts/AdminLayout.astro";
 import AnalyticsView from "../../components/admin/AnalyticsView.tsx";
 ---
 
-<AdminLayout
-    title="Analíticas"
-    parentTitle="Administración"
-    parentUrl="/admin/dashboard"
->
+<AdminLayout title="Analíticas">
     <AnalyticsView client:only="react" />
 </AdminLayout>

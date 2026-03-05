@@ -7,7 +7,7 @@ const { id } = Astro.params;
 
 <AdminLayout
     title="Editar Usuario"
-    parentTitle="Usuarios"
+    parentTitle="Gestión de Usuarios"
     parentUrl="/admin/users"
 >
     <UserEditView client:only="react" userId={id as string} />

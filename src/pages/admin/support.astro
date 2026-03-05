@@ -5,11 +5,7 @@ import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout
-    title="Soporte"
-    parentTitle="Administración"
-    parentUrl="/admin/dashboard"
->
+<AdminLayout title="Soporte">
     <SupportListView client:only="react" />
 
     <ConfirmationModal

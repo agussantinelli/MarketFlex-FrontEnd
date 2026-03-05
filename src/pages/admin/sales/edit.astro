@@ -5,6 +5,10 @@ import EditSaleView from "../../../components/admin/EditSaleView";
 const title = "Editar Venta";
 ---
 
-<AdminLayout title={title} parentTitle="Ventas" parentUrl="/admin/sales">
+<AdminLayout
+    title={title}
+    parentTitle="Gestión de Ventas"
+    parentUrl="/admin/sales"
+>
     <EditSaleView client:load />
 </AdminLayout>

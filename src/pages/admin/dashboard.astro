@@ -3,10 +3,6 @@ import AdminLayout from "../../layouts/AdminLayout.astro";
 import DashboardView from "../../components/admin/DashboardView.tsx";
 ---
 
-<AdminLayout
-    title="Dashboard"
-    parentTitle="Administración"
-    parentUrl="/admin/dashboard"
->
+<AdminLayout title="Dashboard">
     <DashboardView client:only="react" />
 </AdminLayout>
