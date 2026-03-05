@@ -8,11 +8,18 @@ import { LuArrowLeft, LuUpload, LuX, LuPlus } from 'react-icons/lu';
 interface Category {
     id: string;
     nombre: string;
-    subcategorias: { nroSubcategoria: number; nombre: string }[];
+}
+
+interface Subcategory {
+    categoriaId: string;
+    nroSubcategoria: number;
+    nombre: string;
 }
 
 const CreateProductView: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
+    const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+    const [loadingSubcats, setLoadingSubcats] = useState(false);
 
     // Form state
     const [nombre, setNombre] = useState('');
@@ -52,6 +59,30 @@ const CreateProductView: React.FC = () => {
             (window as any).triggerSileo('info', 'Completá los campos para crear un nuevo producto.');
         }
     }, []);
+
+    // Load subcategories dynamically when a category is selected
+    useEffect(() => {
+        if (!categoriaId) {
+            setSubcategories([]);
+            return;
+        }
+
+        const fetchSubcategories = async () => {
+            setLoadingSubcats(true);
+            try {
+                const results = await api.get(`subcategories?categoriaId=${categoriaId}`).json<{ data: Subcategory[] }>();
+                if (results && results.data) setSubcategories(results.data);
+            } catch (err) {
+                console.error("Failed to fetch subcategories", err);
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', 'Error al cargar subcategorías');
+                }
+            } finally {
+                setLoadingSubcats(false);
+            }
+        };
+        fetchSubcategories();
+    }, [categoriaId]);
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -221,7 +252,7 @@ const CreateProductView: React.FC = () => {
                         <select id="nroSubcategoria" required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', opacity: !categoriaId ? 0.5 : 1 }}>
                             <option value="" style={{ background: '#1a1a1a', color: 'white' }}>Seleccionar Subcategoría...</option>
-                            {currentCategory?.subcategorias.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria} style={{ background: '#1a1a1a', color: 'white' }}>{s.nombre}</option>)}
+                            {subcategories.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria} style={{ background: '#1a1a1a', color: 'white' }}>{s.nombre}</option>)}
                         </select>
                     </div>
 
