@@ -9,6 +9,10 @@ if (!id) {
 }
 ---
 
-<AdminLayout title="Editar Producto | MarketFlex Admin">
+<AdminLayout
+    title="Editar Producto"
+    parentTitle="Gestión de Productos"
+    parentUrl="/admin/products"
+>
     <EditProductView productId={id} client:load />
 </AdminLayout>
