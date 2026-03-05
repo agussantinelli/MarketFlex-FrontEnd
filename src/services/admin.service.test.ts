@@ -65,4 +65,30 @@ describe('AdminService', () => {
             expect(result).toEqual([]);
         });
     });
+
+    describe('createProduct', () => {
+        it('should return success and data', async () => {
+            const mockData = { id: 'new-id', nombre: 'Test Prod' };
+            (api.post as any) = vi.fn().mockReturnValue({
+                json: vi.fn().mockResolvedValue({ status: 'success', data: mockData })
+            });
+
+            const result = await AdminService.createProduct({ nombre: 'Test Prod' });
+            expect(result.status).toBe('success');
+            expect(result.data).toEqual(mockData);
+            expect(api.post).toHaveBeenCalledWith('admin/products', { json: { nombre: 'Test Prod' } });
+        });
+
+        it('should handle API errors', async () => {
+            (api.post as any) = vi.fn().mockReturnValue({
+                json: vi.fn().mockRejectedValue({
+                    response: { json: vi.fn().mockResolvedValue({ message: 'Validation failed' }) }
+                })
+            });
+
+            const result = await AdminService.createProduct({});
+            expect(result.status).toBe('error');
+            expect(result.message).toBe('Validation failed');
+        });
+    });
 });
