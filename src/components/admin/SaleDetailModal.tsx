@@ -183,9 +183,7 @@ const SaleDetailModal: React.FC<SaleDetailModalProps> = ({ sale, onClose }) => {
                             ) : (
                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                                     <div style={{ fontWeight: 600, color: 'var(--neon-green)', marginBottom: '4px' }}>
-                                        {sale.tipoEntrega === 'RETIRO_LOCAL' ? 'Retiro en Local' :
-                                            sale.tipoEntrega === 'RETIRO_SUCURSAL' ? 'Retiro en Sucursal' :
-                                                sale.tipoEntrega}
+                                        {sale.tipoEntrega === 'RETIRO_LOCAL' ? 'Retiro en Local' : sale.tipoEntrega}
                                     </div>
                                     <div style={{ fontStyle: 'italic', opacity: 0.7 }}>El cliente retira el pedido.</div>
                                 </div>

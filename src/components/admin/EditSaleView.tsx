@@ -18,7 +18,6 @@ const PAYMENT_OPTIONS = [
 
 const DELIVERY_OPTIONS = [
     { value: 'RETIRO_LOCAL', label: 'Retiro en Local', icon: LuStore },
-    { value: 'RETIRO_SUCURSAL', label: 'Retiro en Sucursal', icon: LuPackage },
     { value: 'ENVIO_DOMICILIO', label: 'Envío a Domicilio', icon: LuTruck },
 ];
 

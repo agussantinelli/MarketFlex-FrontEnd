@@ -25,7 +25,7 @@ const RegisterSaleView: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [paymentMethod, setPaymentMethod] = useState<'Mercado Pago' | 'Efectivo'>('Efectivo');
-    const [deliveryMethod, setDeliveryMethod] = useState<'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'RETIRO_SUCURSAL'>('ENVIO_DOMICILIO');
+    const [deliveryMethod, setDeliveryMethod] = useState<'ENVIO_DOMICILIO' | 'RETIRO_LOCAL'>('ENVIO_DOMICILIO');
     const [shippingData, setShippingData] = useState({
         nombreCompleto: '',
         email: '',
@@ -295,13 +295,6 @@ const RegisterSaleView: React.FC = () => {
                                     <span className={styles.tileLabel}>Retiro en Local</span>
                                 </div>
                                 <div
-                                    className={`${styles.selectionTile} ${deliveryMethod === 'RETIRO_SUCURSAL' ? styles.active : ''}`}
-                                    onClick={() => setDeliveryMethod('RETIRO_SUCURSAL')}
-                                >
-                                    <LuPackage className={styles.tileIcon} />
-                                    <span className={styles.tileLabel}>Retiro en Sucursal</span>
-                                </div>
-                                <div
                                     className={`${styles.selectionTile} ${deliveryMethod === 'ENVIO_DOMICILIO' ? styles.active : ''}`}
                                     onClick={() => setDeliveryMethod('ENVIO_DOMICILIO')}
                                 >
@@ -508,7 +501,7 @@ const RegisterSaleView: React.FC = () => {
                                     <span className={styles.summaryLabel}>Método de Entrega</span>
                                 </div>
                                 <span className={styles.summaryValue}>
-                                    {deliveryMethod === 'ENVIO_DOMICILIO' ? 'Envío a Domicilio' : deliveryMethod === 'RETIRO_LOCAL' ? 'Retiro en Local' : 'Retiro en Sucursal'}
+                                    {deliveryMethod === 'ENVIO_DOMICILIO' ? 'Envío a Domicilio' : 'Retiro en Local'}
                                 </span>
                             </div>
                             {deliveryMethod === 'ENVIO_DOMICILIO' && (
