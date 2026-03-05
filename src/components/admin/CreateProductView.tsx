@@ -30,6 +30,7 @@ const CreateProductView: React.FC = () => {
     const [nroSubcategoria, setNroSubcategoria] = useState<number | ''>('');
     const [foto, setFoto] = useState('');
     const [esDestacado, setEsDestacado] = useState(false);
+    const [estado, setEstado] = useState<'ACTIVO' | 'INACTIVO' | 'BORRADO'>('ACTIVO');
 
     // Dynamic arrays
     const [tags, setTags] = useState<string[]>([]);
@@ -185,6 +186,7 @@ const CreateProductView: React.FC = () => {
             nroSubcategoria: nroSubcategoria !== '' ? Number(nroSubcategoria) : undefined,
             foto: foto || undefined,
             esDestacado,
+            estado,
             tags,
             caracteristicas
         };
@@ -383,9 +385,21 @@ const CreateProductView: React.FC = () => {
                 </div>
 
                 {/* Toggles y Switches */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'rgba(0,255,136,0.05)', borderRadius: '12px', border: '1px solid rgba(0,255,136,0.1)' }}>
-                    <input type="checkbox" id="esDestacado" checked={esDestacado} onChange={e => setEsDestacado(e.target.checked)} style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--neon-green)' }} />
-                    <label htmlFor="esDestacado" style={{ color: 'white', fontWeight: '500', cursor: 'pointer' }}>Marcar como Producto Destacado</label>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'rgba(0,255,136,0.05)', borderRadius: '12px', border: '1px solid rgba(0,255,136,0.1)' }}>
+                        <input type="checkbox" id="esDestacado" checked={esDestacado} onChange={e => setEsDestacado(e.target.checked)} style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--neon-green)' }} />
+                        <label htmlFor="esDestacado" style={{ color: 'white', fontWeight: '500', cursor: 'pointer' }}>Marcar como Producto Destacado</label>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <label htmlFor="estado" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Estado del Producto</label>
+                        <select id="estado" value={estado} onChange={e => setEstado(e.target.value as any)}
+                            style={{ padding: '0.8rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
+                            <option value="ACTIVO" style={{ background: '#1a1a1a' }}>ACTIVO</option>
+                            <option value="INACTIVO" style={{ background: '#1a1a1a' }}>INACTIVO</option>
+                            <option value="BORRADO" style={{ background: '#1a1a1a' }}>BORRADO (No recomendado aquí)</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1.25rem', marginTop: '1rem', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
