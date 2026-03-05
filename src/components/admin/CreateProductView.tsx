@@ -247,16 +247,18 @@ const CreateProductView: React.FC = () => {
                         </select>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label htmlFor="nroSubcategoria" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Subcategoría *</label>
-                        <select id="nroSubcategoria" required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
-                            style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', opacity: !categoriaId ? 0.5 : 1 }}>
-                            <option value="" style={{ background: '#1a1a1a', color: 'white' }}>Seleccionar Subcategoría...</option>
-                            {subcategories.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria} style={{ background: '#1a1a1a', color: 'white' }}>{s.nombre}</option>)}
-                        </select>
-                    </div>
+                    {subcategories.length > 0 && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <label htmlFor="nroSubcategoria" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Subcategoría *</label>
+                            <select id="nroSubcategoria" required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
+                                style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', opacity: !categoriaId ? 0.5 : 1 }}>
+                                <option value="" style={{ background: '#1a1a1a', color: 'white' }}>Seleccionar Subcategoría...</option>
+                                {subcategories.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria} style={{ background: '#1a1a1a', color: 'white' }}>{s.nombre}</option>)}
+                            </select>
+                        </div>
+                    )}
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: '1 / -1' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: subcategories.length > 0 ? '1 / -1' : 'auto' }}>
                         <label htmlFor="marca" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Marca (Creatable) *</label>
                         <input id="marca" required type="text" value={marca} onChange={e => setMarca(e.target.value)} placeholder="Ej: Nike, Sony, Editorial Planeta..."
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />

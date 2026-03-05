@@ -28,9 +28,9 @@ describe('FilterService', () => {
         };
         (fetch as any).mockResolvedValueOnce(mockResponse);
 
-        const subcategories = await filterService.getSubcategories();
+        const subcategories = await filterService.getSubcategories('cat-1');
 
-        expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/subcategories'));
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/subcategories?categoriaId=cat-1'));
         expect(subcategories).toEqual(mockSubcategories);
     });
 
@@ -39,7 +39,7 @@ describe('FilterService', () => {
         const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
         const categories = await filterService.getCategories();
-        const subcategories = await filterService.getSubcategories();
+        const subcategories = await filterService.getSubcategories('cat-2');
 
         expect(categories).toEqual([]);
         expect(subcategories).toEqual([]);
