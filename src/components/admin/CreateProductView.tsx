@@ -19,7 +19,6 @@ interface Subcategory {
 const CreateProductView: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-    const [loadingSubcats, setLoadingSubcats] = useState(false);
 
     // Form state
     const [nombre, setNombre] = useState('');
@@ -41,6 +40,7 @@ const CreateProductView: React.FC = () => {
 
     const [loading, setLoading] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [generatingTags, setGeneratingTags] = useState(false);
 
     useEffect(() => {
         // Fetch categories for the dropdown
@@ -68,7 +68,6 @@ const CreateProductView: React.FC = () => {
         }
 
         const fetchSubcategories = async () => {
-            setLoadingSubcats(true);
             try {
                 const results = await api.get(`subcategories?categoriaId=${categoriaId}`).json<{ data: Subcategory[] }>();
                 if (results && results.data) setSubcategories(results.data);
@@ -77,8 +76,6 @@ const CreateProductView: React.FC = () => {
                 if ((window as any).triggerSileo) {
                     (window as any).triggerSileo('error', 'Error al cargar subcategorías');
                 }
-            } finally {
-                setLoadingSubcats(false);
             }
         };
         fetchSubcategories();
@@ -101,6 +98,39 @@ const CreateProductView: React.FC = () => {
             }
         } finally {
             setUploadingImage(false);
+        }
+    };
+
+    const handleGenerateTags = async () => {
+        if (!nombre || !descripcion) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('warning', 'Ingresá el nombre y la descripción primero.');
+            }
+            return;
+        }
+
+        setGeneratingTags(true);
+        try {
+            const result = await AdminService.generateTags(nombre, descripcion);
+            if (result.status === 'success' && result.data) {
+                const newTags = result.data.filter(t => !tags.includes(t));
+                if (newTags.length > 0) {
+                    setTags([...tags, ...newTags]);
+                }
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('success', 'Tags generados con IA ✨');
+                }
+            } else {
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', result.message || 'Error al generar tags');
+                }
+            }
+        } catch (error) {
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Error crítico al contactar la IA');
+            }
+        } finally {
+            setGeneratingTags(false);
         }
     };
 
@@ -187,7 +217,6 @@ const CreateProductView: React.FC = () => {
     };
 
     // UI helpers
-    const currentCategory = categories.find(c => c.id === categoriaId);
 
     return (
         <div style={{ padding: '0 1rem' }}>
@@ -288,7 +317,12 @@ const CreateProductView: React.FC = () => {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Tags (Etiquetas)</label>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Tags (Etiquetas)</label>
+                            <button type="button" onClick={handleGenerateTags} disabled={generatingTags || !nombre || !descripcion} style={{ padding: '0.3rem 0.8rem', background: 'rgba(138, 43, 226, 0.15)', color: '#b57aff', border: '1px solid rgba(138, 43, 226, 0.3)', borderRadius: '8px', cursor: (generatingTags || !nombre || !descripcion) ? 'not-allowed' : 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s', opacity: (generatingTags || !nombre || !descripcion) ? 0.5 : 1 }}>
+                                ✨ {generatingTags ? 'Generando...' : 'IA Tags'}
+                            </button>
+                        </div>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                             <input type="text" value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={addTag} placeholder="Ej: novedad"
                                 style={{ flex: 1, padding: '0.8rem', borderRadius: '10px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
