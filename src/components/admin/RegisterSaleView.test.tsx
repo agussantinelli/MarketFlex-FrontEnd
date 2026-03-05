@@ -63,10 +63,10 @@ describe('RegisterSaleView Component', () => {
 
         // --- STEP 2: Sale Details ---
         expect(screen.getByText(/Método de Pago/i)).toBeDefined();
-        expect(screen.getByText(/Venta en Físico/i)).toBeDefined();
+        expect(screen.getByText(/Método de Entrega/i)).toBeDefined();
 
         // Change payment method
-        fireEvent.click(screen.getByText(/Tarjeta/i));
+        fireEvent.click(screen.getByText(/Mercado Pago/i));
 
         // Go to next step
         fireEvent.click(screen.getByText(/Siguiente/i));
@@ -82,7 +82,7 @@ describe('RegisterSaleView Component', () => {
         await waitFor(() => {
             expect(api.post).toHaveBeenCalledWith('purchases', expect.objectContaining({
                 json: expect.objectContaining({
-                    metodoPago: 'card',
+                    metodoPago: 'Mercado Pago',
                     ventaEnFisico: true
                 })
             }));

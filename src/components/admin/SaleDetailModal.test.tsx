@@ -6,7 +6,7 @@ const mockSale = {
     id: 'sale-12345',
     fechaHora: '2026-02-28T14:30:00Z',
     total: 3500.50,
-    metodoPago: 'card',
+    metodoPago: 'Mercado Pago',
     cantCuotas: 3,
     estado: 'COMPLETADO',
     usuario: {
@@ -14,10 +14,13 @@ const mockSale = {
         apellido: 'Pérez'
     },
     detalleEnvio: {
-        calle: 'Av. Siempre Viva',
-        numero: '742',
+        direccion: 'Av. Siempre Viva 742',
         ciudad: 'Springfield',
-        provincia: 'Buenos Aires'
+        provincia: 'Buenos Aires',
+        email: 'juan@perez.com',
+        nombreCompleto: 'Juan Pérez',
+        telefono: '123456',
+        codigoPostal: '1234'
     },
     lineas: [
         { nombreProducto: 'Zapatillas Pro', cantidad: 2, subtotal: 3000 },
@@ -39,7 +42,7 @@ describe('SaleDetailModal Component', () => {
 
         // Customer Info
         expect(screen.getByText(/Juan Pérez/i)).toBeDefined();
-        expect(screen.getByText(/Tarjeta/i)).toBeDefined();
+        expect(screen.getByText(/Mercado Pago/i)).toBeDefined();
         expect(screen.getByText(/3 cuotas/i)).toBeDefined();
 
         // Shipping
@@ -55,10 +58,10 @@ describe('SaleDetailModal Component', () => {
     });
 
     it('renders physical sale message when no shipping details', () => {
-        const physicalSale = { ...mockSale, detalleEnvio: null };
+        const physicalSale = { ...mockSale, detalleEnvio: null, tipoEntrega: 'RETIRO_LOCAL' };
         render(<SaleDetailModal sale={physicalSale as any} onClose={vi.fn()} />);
 
-        expect(screen.getByText(/Sin detalles de envío/i)).toBeDefined();
+        expect(screen.getByText(/El cliente retira el pedido/i)).toBeDefined();
     });
 
     it('calls onClose when close button is clicked', () => {
