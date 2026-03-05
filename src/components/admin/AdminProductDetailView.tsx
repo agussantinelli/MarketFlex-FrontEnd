@@ -89,7 +89,7 @@ export default function AdminProductDetailView({ productId }: Props) {
                         </span>
                     )}
                     {p.estado === 'INACTIVO' && (
-                        <span className={styles.badge} style={{ color: '#94a3b8', borderColor: '#94a3b8', background: 'rgba(148,163,184,0.1)' }}>
+                        <span className={styles.badge} style={{ color: '#f87171', borderColor: '#f87171', background: 'rgba(248,113,113,0.1)' }}>
                             Inactivo
                         </span>
                     )}

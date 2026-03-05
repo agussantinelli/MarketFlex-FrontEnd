@@ -150,7 +150,7 @@ const PromotionForm: React.FC<PromotionFormProps> = ({ promotion, onSubmit, onCa
                             <select name="estado" value={formData.estado} onChange={handleChange}>
                                 <option value="PENDIENTE">PENDIENTE</option>
                                 <option value="ACTIVO">ACTIVO</option>
-                                <option value="INACTIVO">INACTIVO</option>
+                                <option value="INACTIVO" style={{ color: '#f87171' }}>INACTIVO</option>
                             </select>
                         </div>
                     </div>

@@ -388,7 +388,7 @@ const EditProductView: React.FC<EditProductViewProps> = ({ productId }) => {
                         <select id="estado" value={estado} onChange={e => setEstado(e.target.value as any)}
                             style={{ padding: '0.8rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
                             <option value="ACTIVO" style={{ background: '#1a1a1a' }}>ACTIVO</option>
-                            <option value="INACTIVO" style={{ background: '#1a1a1a' }}>INACTIVO</option>
+                            <option value="INACTIVO" style={{ background: '#1a1a1a', color: '#f87171' }}>INACTIVO</option>
                             <option value="BORRADO" style={{ background: '#1a1a1a' }}>BORRADO</option>
                         </select>
                     </div>

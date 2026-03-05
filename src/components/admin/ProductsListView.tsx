@@ -110,8 +110,8 @@ const ProductsListView: React.FC = () => {
             accessor: (p) => {
                 const colors = {
                     'ACTIVO': 'var(--neon-green)',
-                    'INACTIVO': '#94a3b8',
-                    'BORRADO': '#f87171'
+                    'INACTIVO': '#f87171',
+                    'BORRADO': '#ef4444'
                 };
                 return (
                     <div style={{
