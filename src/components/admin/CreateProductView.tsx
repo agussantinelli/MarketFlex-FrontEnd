@@ -181,26 +181,26 @@ const CreateProductView: React.FC = () => {
                 {/* Info Básica */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: '1 / -1' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Nombre del Producto *</label>
-                        <input required type="text" value={nombre} onChange={e => setNombre(e.target.value)}
+                        <label htmlFor="nombre" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Nombre del Producto *</label>
+                        <input id="nombre" required type="text" value={nombre} onChange={e => setNombre(e.target.value)}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: '1 / -1' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Descripción *</label>
-                        <textarea required value={descripcion} onChange={e => setDescripcion(e.target.value)} rows={4}
+                        <label htmlFor="descripcion" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Descripción *</label>
+                        <textarea id="descripcion" required value={descripcion} onChange={e => setDescripcion(e.target.value)} rows={4}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Precio ($) *</label>
-                        <input required type="number" step="0.01" min="0" value={precioActual} onChange={e => setPrecioActual(Number(e.target.value))}
+                        <label htmlFor="precioActual" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Precio ($) *</label>
+                        <input id="precioActual" required type="number" step="0.01" min="0" value={precioActual} onChange={e => setPrecioActual(Number(e.target.value))}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Stock Inicial *</label>
-                        <input required type="number" min="0" value={stock} onChange={e => setStock(Number(e.target.value))}
+                        <label htmlFor="stock" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Stock Inicial *</label>
+                        <input id="stock" required type="number" min="0" value={stock} onChange={e => setStock(Number(e.target.value))}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
                 </div>
@@ -208,8 +208,8 @@ const CreateProductView: React.FC = () => {
                 {/* Relaciones Básicas */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Categoría *</label>
-                        <select required value={categoriaId} onChange={e => { setCategoriaId(e.target.value); setNroSubcategoria(''); }}
+                        <label htmlFor="categoriaId" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Categoría *</label>
+                        <select id="categoriaId" required value={categoriaId} onChange={e => { setCategoriaId(e.target.value); setNroSubcategoria(''); }}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}>
                             <option value="">Seleccionar Categoría...</option>
                             {categories.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -217,8 +217,8 @@ const CreateProductView: React.FC = () => {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Subcategoría *</label>
-                        <select required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
+                        <label htmlFor="nroSubcategoria" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Subcategoría *</label>
+                        <select id="nroSubcategoria" required value={nroSubcategoria} onChange={e => setNroSubcategoria(Number(e.target.value))} disabled={!categoriaId}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', opacity: !categoriaId ? 0.5 : 1 }}>
                             <option value="">Seleccionar Subcategoría...</option>
                             {currentCategory?.subcategorias.map(s => <option key={s.nroSubcategoria} value={s.nroSubcategoria}>{s.nombre}</option>)}
@@ -226,8 +226,8 @@ const CreateProductView: React.FC = () => {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: '1 / -1' }}>
-                        <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Marca (Creatable) *</label>
-                        <input required type="text" value={marca} onChange={e => setMarca(e.target.value)} placeholder="Ej: Nike, Sony, Editorial Planeta..."
+                        <label htmlFor="marca" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Marca (Creatable) *</label>
+                        <input id="marca" required type="text" value={marca} onChange={e => setMarca(e.target.value)} placeholder="Ej: Nike, Sony, Editorial Planeta..."
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                         <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>Si la marca no existe, se creará automáticamente.</span>
                     </div>
