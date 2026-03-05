@@ -58,6 +58,20 @@ export const AdminService = {
             };
         }
     },
+    async createProduct(data: any): Promise<{ status: string; data?: any; message?: string }> {
+        try {
+            const result = await api.post('admin/products', {
+                json: data
+            }).json<{ status: string; data: any }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al crear el producto'
+            };
+        }
+    },
     async getUsers(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<import('../types/admin.types').AdminUser> | null> {
         try {
             const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
