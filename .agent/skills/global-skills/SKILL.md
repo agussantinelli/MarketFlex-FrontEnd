@@ -38,6 +38,7 @@ This skill serves as a central index for all architectural and development guide
 - **[readme-auto-sync](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/readme-auto-sync/SKILL.md)**: Mandatory automated README syncing for project structure and tests.
 - **[skill-generator](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/skill-generator/SKILL.md)**: Standardized way to create new skills like this one.
 - **[swagger-openapi](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/swagger-openapi/SKILL.md)**: Mandatory API documentation with Zero-Pollution pattern.
+- **[swagger-standard](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/swagger-standard/SKILL.md)**: Estándar premium para la redacción de resúmenes, descripciones y organización de tags en Swagger.
 - **[test](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/test/SKILL.md)**: Testing guidelines for the backend.
 - **[test-enforcement](file:///c:/Users/Agus/Documents/MarketFlex/MarketFlex-BackEnd/.agent/skills/test-enforcement/SKILL.md)**: Mandatory rule requiring one test per file.
 
