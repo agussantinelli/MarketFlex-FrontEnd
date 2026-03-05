@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { checkoutStore, updateFormData, updatePaymentMethod, validateFields, submitPurchase, resetCheckout } from './checkoutStore';
+import { checkoutStore, updateFormData, updatePaymentMethod, updateDeliveryType, validateFields, submitPurchase, resetCheckout } from './checkoutStore';
 import { cart } from './cartStore';
 import * as purchaseService from '../services/purchase.service';
 
@@ -25,15 +25,16 @@ describe('Checkout Store', () => {
     });
 
     it('should update payment method', () => {
-        updatePaymentMethod('cash');
-        expect(checkoutStore.get().paymentMethod).toBe('cash');
+        updatePaymentMethod('Efectivo');
+        expect(checkoutStore.get().paymentMethod).toBe('Efectivo');
     });
 
     it('validateFields should fail if required fields are missing', () => {
+        updateDeliveryType('ENVIO_DOMICILIO');
         updateFormData({ nombre: '' });
         const isValid = validateFields();
         expect(isValid).toBe(false);
-        expect(checkoutStore.get().error).toContain('campos obligatorios');
+        expect(checkoutStore.get().error).toContain('completa todos los campos');
     });
 
     it('validateFields should fail if email is invalid', () => {

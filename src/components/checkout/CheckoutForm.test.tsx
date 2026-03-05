@@ -43,19 +43,15 @@ describe('CheckoutForm Component', () => {
     it('should allow changing payment method', () => {
         render(<CheckoutForm />);
 
-        const transferOption = screen.getByText(/Transferencia/i);
         const cashOption = screen.getByText(/Efectivo/i);
-        const cardOption = screen.getByText(/Tarjeta/i);
-
-        fireEvent.click(transferOption);
-        expect(transferOption.closest('div')?.className).toContain('active');
+        const mpOption = screen.getByText(/Mercado Pago/i);
 
         fireEvent.click(cashOption);
         expect(cashOption.closest('div')?.className).toContain('active');
-        expect(transferOption.closest('div')?.className).not.toContain('active');
+        expect(mpOption.closest('div')?.className).not.toContain('active');
 
-        fireEvent.click(cardOption);
-        expect(cardOption.closest('div')?.className).toContain('active');
+        fireEvent.click(mpOption);
+        expect(mpOption.closest('div')?.className).toContain('active');
     });
 
     it('should update input values on change', () => {
