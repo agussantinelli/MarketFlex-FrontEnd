@@ -66,7 +66,7 @@ export type AdminPurchase = {
     cantCuotas: number;
     estado: string;
     tipoEntrega: string;
-    ventaEnFisico?: boolean;
+    razonPendiente?: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'ENVIO_AL_CORREO';
     usuario: {
         nombre: string;
         apellido: string;
@@ -132,6 +132,7 @@ export interface AdminProduct {
     precioActual: number;
     precioConDescuento: number | null;
     stock: number;
+    stockComprometido: number;
     envioGratis: boolean;
     fechaLlegada: string | null;
     estado: 'ACTIVO' | 'INACTIVO' | 'BORRADO';

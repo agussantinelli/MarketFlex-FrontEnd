@@ -35,7 +35,7 @@ export type Purchase = {
     detalleEnvio: DetalleEnvio;
     promociones?: AppliedPromotion[];
     tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL';
-    razonPendiente?: string;
+    razonPendiente?: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'ENVIO_AL_CORREO';
 };
 
 export type CreatePurchaseRequest = {
@@ -46,6 +46,5 @@ export type CreatePurchaseRequest = {
         cantidad: number;
     }[];
     envio?: DetalleEnvio | undefined;
-    ventaEnFisico: boolean;
     tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL';
 };
