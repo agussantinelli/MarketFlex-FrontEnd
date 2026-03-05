@@ -8,6 +8,7 @@ export interface Column<T> {
     accessor: keyof T | ((item: T) => React.ReactNode);
     className?: string;
     width?: string;
+    align?: 'left' | 'center' | 'right';
 }
 
 interface Pagination {
@@ -116,7 +117,7 @@ function DataTable<T extends { id: string | number }>({
                     <thead>
                         <tr>
                             {columns.map((col, idx) => (
-                                <th key={idx} style={{ width: col.width }}>
+                                <th key={idx} style={{ width: col.width, textAlign: col.align }}>
                                     {col.header}
                                 </th>
                             ))}
@@ -134,7 +135,7 @@ function DataTable<T extends { id: string | number }>({
                             data.map((item) => (
                                 <tr key={item.id}>
                                     {columns.map((col, idx) => (
-                                        <td key={idx} className={col.className}>
+                                        <td key={idx} className={col.className} style={{ textAlign: col.align }}>
                                             {typeof col.accessor === 'function'
                                                 ? col.accessor(item)
                                                 : (item[col.accessor] as React.ReactNode)}

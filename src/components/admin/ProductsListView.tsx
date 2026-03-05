@@ -141,6 +141,7 @@ const ProductsListView: React.FC = () => {
         },
         {
             header: 'Destacado',
+            align: 'center',
             accessor: (p) => {
                 const isLimitReached = featuredCount >= 4;
                 const canToggle = p.esDestacado || !isLimitReached;
@@ -157,6 +158,7 @@ const ProductsListView: React.FC = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             padding: '4px',
+                            margin: '0 auto',
                             transition: 'transform 0.2s ease',
                             color: p.esDestacado ? 'var(--neon-blue)' : (canToggle ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)'),
                             opacity: canToggle ? 1 : 0.5
