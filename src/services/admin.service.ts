@@ -72,6 +72,15 @@ export const AdminService = {
             };
         }
     },
+    async getAdminProduct(id: string): Promise<{ status: string; data?: any; message?: string }> {
+        try {
+            const result = await api.get(`admin/products/${id}`).json<{ status: string; data: any }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return { status: 'error', message: errorData?.message || 'Error al obtener el producto' };
+        }
+    },
     async generateTags(nombre: string, descripcion: string): Promise<{ status: string; data?: string[]; message?: string }> {
         try {
             const result = await api.post('admin/generate-tags', {
