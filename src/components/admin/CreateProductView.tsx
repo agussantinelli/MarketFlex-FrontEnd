@@ -23,8 +23,8 @@ const CreateProductView: React.FC = () => {
     // Form state
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [precioActual, setPrecioActual] = useState(0);
-    const [stock, setStock] = useState(0);
+    const [precioActual, setPrecioActual] = useState<string>('');
+    const [stock, setStock] = useState<string>('');
     const [marca, setMarca] = useState('');
     const [categoriaId, setCategoriaId] = useState('');
     const [nroSubcategoria, setNroSubcategoria] = useState<number | ''>('');
@@ -254,13 +254,23 @@ const CreateProductView: React.FC = () => {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <label htmlFor="precioActual" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Precio ($) *</label>
-                        <input id="precioActual" required type="number" step="0.01" min="0" value={precioActual} onChange={e => setPrecioActual(Number(e.target.value))}
+                        <input id="precioActual" required type="number" step="0.01" min="0" value={precioActual} onChange={e => {
+                            const val = e.target.value;
+                            if (val === '' || val === '0') setPrecioActual(val);
+                            else if (val.startsWith('0') && !val.includes('.')) setPrecioActual(val.replace(/^0+/, ''));
+                            else setPrecioActual(val);
+                        }}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <label htmlFor="stock" style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Stock Inicial *</label>
-                        <input id="stock" required type="number" min="0" value={stock} onChange={e => setStock(Number(e.target.value))}
+                        <input id="stock" required type="number" min="0" value={stock} onChange={e => {
+                            const val = e.target.value;
+                            if (val === '' || val === '0') setStock(val);
+                            else if (val.startsWith('0')) setStock(val.replace(/^0+/, ''));
+                            else setStock(val);
+                        }}
                             style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }} />
                     </div>
                 </div>
