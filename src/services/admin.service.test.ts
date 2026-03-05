@@ -102,7 +102,7 @@ describe('AdminService', () => {
             const result = await AdminService.generateTags('Test', 'Desc');
             expect(result.status).toBe('success');
             expect(result.data).toEqual(mockTags);
-            expect(api.post).toHaveBeenCalledWith('admin/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' } });
+            expect(api.post).toHaveBeenCalledWith('admin/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' }, timeout: 60000 });
         });
 
         it('should handle API errors', async () => {
