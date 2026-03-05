@@ -91,4 +91,30 @@ describe('AdminService', () => {
             expect(result.message).toBe('Validation failed');
         });
     });
+
+    describe('generateTags', () => {
+        it('should return success and tags', async () => {
+            const mockTags = ['tag1', 'tag2'];
+            (api.post as any) = vi.fn().mockReturnValue({
+                json: vi.fn().mockResolvedValue({ status: 'success', data: mockTags })
+            });
+
+            const result = await AdminService.generateTags('Test', 'Desc');
+            expect(result.status).toBe('success');
+            expect(result.data).toEqual(mockTags);
+            expect(api.post).toHaveBeenCalledWith('admin/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' } });
+        });
+
+        it('should handle API errors', async () => {
+            (api.post as any) = vi.fn().mockReturnValue({
+                json: vi.fn().mockRejectedValue({
+                    response: { json: vi.fn().mockResolvedValue({ message: 'AI error' }) }
+                })
+            });
+
+            const result = await AdminService.generateTags('Test', 'Desc');
+            expect(result.status).toBe('error');
+            expect(result.message).toBe('AI error');
+        });
+    });
 });
