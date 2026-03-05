@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AdminService } from '../../services/admin.service';
-import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap } from 'react-icons/lu';
+import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil } from 'react-icons/lu';
 import styles from './styles/AdminProductDetailView.module.css';
 
 interface Props {
@@ -51,9 +51,27 @@ export default function AdminProductDetailView({ productId }: Props) {
         <div className={styles.container}>
             {/* Header */}
             <div className={styles.pageHeader}>
-                <a href="/admin/products" className={styles.backLink}>
-                    <LuArrowLeft size={16} /> Volver a Productos
-                </a>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <a href="/admin/products" className={styles.backLink}>
+                        <LuArrowLeft size={16} /> Volver a Productos
+                    </a>
+                    <a
+                        href={`/admin/products/${productId}/edit`}
+                        className={styles.badge}
+                        style={{
+                            color: 'var(--neon-green)',
+                            borderColor: 'var(--neon-green)',
+                            background: 'rgba(0,255,136,0.1)',
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem'
+                        }}
+                    >
+                        <LuPencil size={12} /> Editar Producto
+                    </a>
+                </div>
                 <div className={styles.statusBadges}>
                     {p.esDestacado && (
                         <span className={styles.badge} style={{ color: 'var(--neon-blue)', borderColor: 'var(--neon-blue)', background: 'rgba(96,165,250,0.1)' }}>
