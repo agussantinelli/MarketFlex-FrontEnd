@@ -597,7 +597,8 @@
 /* Status Badges */
 .completado,
 .procesando,
-.cancelado {
+.cancelado,
+.pendiente {
     padding: 0.3rem 0.6rem;
     border-radius: 6px;
     font-size: 0.7rem;
@@ -619,6 +620,11 @@
 .cancelado {
     background: rgba(255, 77, 77, 0.1);
     color: #ff4d4d;
+}
+
+.pendiente {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
 }
 
 .emptyTable {
