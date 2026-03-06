@@ -25,7 +25,7 @@ const RegisterSaleView: React.FC = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [paymentMethod, setPaymentMethod] = useState<'Mercado Pago' | 'Efectivo'>('Efectivo');
-    const [deliveryMethod, setDeliveryMethod] = useState<'ENVIO_DOMICILIO' | 'RETIRO_LOCAL'>('ENVIO_DOMICILIO');
+    const [deliveryMethod, setDeliveryMethod] = useState<'ENVIO_DOMICILIO' | 'RETIRO_LOCAL'>('RETIRO_LOCAL');
     const [shippingData, setShippingData] = useState({
         nombreCompleto: '',
         email: '',
