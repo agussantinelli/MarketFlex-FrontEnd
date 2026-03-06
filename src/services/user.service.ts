@@ -4,7 +4,7 @@ import type { UserResponse, UpdateUserInput } from "../types/user.types";
 export const UserService = {
     async getProfile(): Promise<UserResponse | null> {
         try {
-            return await api.get('user/profile').json<UserResponse>();
+            return await api.get('user/me').json<UserResponse>();
         } catch (error) {
             console.error('Error fetching user profile:', error);
             return null;
@@ -13,7 +13,7 @@ export const UserService = {
 
     async updateProfile(data: UpdateUserInput): Promise<UserResponse | null> {
         try {
-            return await api.patch('user/profile', { json: data }).json<UserResponse>();
+            return await api.patch('user/me', { json: data }).json<UserResponse>();
         } catch (error) {
             console.error('Error updating user profile:', error);
             return null;
