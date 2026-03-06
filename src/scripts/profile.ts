@@ -1,4 +1,4 @@
-import { getProfile } from "../services/user.service";
+import { UserService } from "../services/user.service";
 import { getUser, logout } from "../services/auth.service";
 import type { User } from "../types/user.types";
 
@@ -14,8 +14,12 @@ export async function initProfile(styles: Record<string, string>, modalStyles: R
     }
 
     try {
-        const profile = await getProfile();
-        populateProfile(profile, styles);
+        const profile = await UserService.getProfile();
+        if (profile) {
+            populateProfile(profile as unknown as User, styles);
+        } else {
+            if (styles.hasError) container.classList.add(styles.hasError);
+        }
     } catch (error) {
         console.error("Error fetching profile:", error);
         if (styles.hasError) container.classList.add(styles.hasError);
