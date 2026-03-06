@@ -653,7 +653,8 @@ const RegisterSaleView: React.FC = () => {
                     codigoPostal: shippingData.codigoPostal,
                     telefono: shippingData.telefono
                 } : undefined,
-                estado: initialStatus
+                estado: initialStatus,
+                esVentaManual: true
             };
 
             const response = await api.post('purchases', { json: saleData }).json<any>();
