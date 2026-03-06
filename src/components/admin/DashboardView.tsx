@@ -8,7 +8,7 @@ import { formatOrderDate } from '../../../utils/dateFormatter';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
-    const [period, setPeriod] = useState<'month' | 'historical'>('month');
+    const [period, setPeriod] = useState<'today' | 'month' | 'historical'>('month');
     const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);
 
     useEffect(() => {
@@ -161,8 +161,28 @@ const DashboardView: React.FC = () => {
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
             showTrend: period === 'month' && (statsData?.lastCancelRate ?? 0) > 0,
             description: "Porcentaje de órdenes canceladas sobre el total de órdenes (Completadas + Canceladas + Pendientes)."
+        },
+        {
+            title: "Productos Vendidos",
+            value: (statsData?.totalProductsSold ?? 0).toLocaleString(),
+            trend: "0%", // Trends not yet implemented for this
+            lastValueStr: (statsData?.lastTotalProductsSold ?? 0).toLocaleString(),
+            icon: LuPackage,
+            color: styles.colorCyan,
+            isPositive: true,
+            showTrend: false,
+            description: "Suma total de unidades de productos vendidas en el período seleccionado."
+        },
+    ].filter(stat => {
+        if (period !== 'today') {
+            // Hide 'Productos Vendidos' in other views for now if we want to keep it clean, 
+            // or show everything. User said: admin can do everything BUT for today show only 3.
+            return stat.title !== "Productos Vendidos";
         }
-    ];
+        // For 'today', only show these three:
+        const todayMetrics = ["Ingresos Totales", "Ventas Totales", "Productos Vendidos"];
+        return todayMetrics.includes(stat.title);
+    });
 
     return (
         <div className={styles.dashboardContainer}>
@@ -173,6 +193,12 @@ const DashboardView: React.FC = () => {
                 </div>
                 <div className={styles.headerActions}>
                     <div className={styles.periodToggleWrapper}>
+                        <button
+                            className={`${styles.toggleBtn} ${period === 'today' ? styles.active : ''}`}
+                            onClick={() => setPeriod('today')}
+                        >
+                            Hoy
+                        </button>
                         <button
                             className={`${styles.toggleBtn} ${period === 'month' ? styles.active : ''}`}
                             onClick={() => setPeriod('month')}
@@ -226,97 +252,101 @@ const DashboardView: React.FC = () => {
 
 
             <div className={styles.tablesGrid}>
-                {/* 1. Las últimas 5 ventas */}
-                <StatTable
-                    title="Últimas 5 Ventas"
-                    headers={['Usuario', 'Monto', 'Estado']}
-                    data={statsData?.latestSales || []}
-                    renderRow={(sale: TopSale) => {
-                        const normalizedStatus = (statusMap[sale.estado] || sale.estado).toLowerCase();
-                        return (
-                            <tr key={sale.id}>
-                                <td className={styles.userCell}>{sale.usuarioNombre}</td>
-                                <td className={styles.amount}>{formatCurrency(sale.total)}</td>
-                                <td>
-                                    <span className={styles[normalizedStatus] || styles.badge}>
-                                        {statusMap[sale.estado] || sale.estado}
-                                    </span>
-                                </td>
-                            </tr>
-                        );
-                    }}
-                />
+                {period !== 'today' && (
+                    <>
+                        {/* 1. Las últimas 5 ventas */}
+                        <StatTable
+                            title="Últimas 5 Ventas"
+                            headers={['Usuario', 'Monto', 'Estado']}
+                            data={statsData?.latestSales || []}
+                            renderRow={(sale: TopSale) => {
+                                const normalizedStatus = (statusMap[sale.estado] || sale.estado).toLowerCase();
+                                return (
+                                    <tr key={sale.id}>
+                                        <td className={styles.userCell}>{sale.usuarioNombre}</td>
+                                        <td className={styles.amount}>{formatCurrency(sale.total)}</td>
+                                        <td>
+                                            <span className={styles[normalizedStatus] || styles.badge}>
+                                                {statusMap[sale.estado] || sale.estado}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                );
+                            }}
+                        />
 
-                {/* 2. Las 5 ventas más caras */}
-                <StatTable
-                    title="Ventas de Mayor Valor"
-                    headers={['Usuario', 'Monto', 'Fecha']}
-                    data={statsData?.highestValueSales || []}
-                    renderRow={(sale: TopSale) => (
-                        <tr key={sale.id}>
-                            <td className={styles.userCell}>{sale.usuarioNombre}</td>
-                            <td className={styles.amount}>{formatCurrency(sale.total)}</td>
-                            <td className={styles.dateCell}>{formatOrderDate(sale.fecha).split(', ')[0]}</td>
-                        </tr>
-                    )}
-                />
+                        {/* 2. Las 5 ventas más caras */}
+                        <StatTable
+                            title="Ventas de Mayor Valor"
+                            headers={['Usuario', 'Monto', 'Fecha']}
+                            data={statsData?.highestValueSales || []}
+                            renderRow={(sale: TopSale) => (
+                                <tr key={sale.id}>
+                                    <td className={styles.userCell}>{sale.usuarioNombre}</td>
+                                    <td className={styles.amount}>{formatCurrency(sale.total)}</td>
+                                    <td className={styles.dateCell}>{formatOrderDate(sale.fecha).split(', ')[0]}</td>
+                                </tr>
+                            )}
+                        />
 
-                {/* 3. Los 5 productos más vendidos */}
-                <StatTable
-                    title="Productos Más Vendidos"
-                    headers={['Producto', 'Cant.', 'Ingresos']}
-                    data={statsData?.topProducts || []}
-                    renderRow={(prod: TopProduct) => (
-                        <tr key={prod.id}>
-                            <td className={styles.userCell}>{prod.nombre}</td>
-                            <td className={styles.amount}>{prod.cantidad}</td>
-                            <td className={styles.amount}>{formatCurrency(prod.ingresos)}</td>
-                        </tr>
-                    )}
-                />
+                        {/* 3. Los 5 productos más vendidos */}
+                        <StatTable
+                            title="Productos Más Vendidos"
+                            headers={['Producto', 'Cant.', 'Ingresos']}
+                            data={statsData?.topProducts || []}
+                            renderRow={(prod: TopProduct) => (
+                                <tr key={prod.id}>
+                                    <td className={styles.userCell}>{prod.nombre}</td>
+                                    <td className={styles.amount}>{prod.cantidad}</td>
+                                    <td className={styles.amount}>{formatCurrency(prod.ingresos)}</td>
+                                </tr>
+                            )}
+                        />
 
-                {/* 4. Los 5 productos con menos stock */}
-                <StatTable
-                    title="Productos con Poco Stock"
-                    headers={['Producto', 'Stock']}
-                    data={statsData?.lowStockProducts || []}
-                    renderRow={(prod: TopProduct) => (
-                        <tr key={prod.id}>
-                            <td className={styles.userCell}>{prod.nombre}</td>
-                            <td style={{ color: prod.cantidad <= 5 ? '#ff4d4d' : 'inherit', fontWeight: 'bold' }}>
-                                {prod.cantidad} un.
-                            </td>
-                        </tr>
-                    )}
-                />
+                        {/* 4. Los 5 productos con menos stock */}
+                        <StatTable
+                            title="Productos con Poco Stock"
+                            headers={['Producto', 'Stock']}
+                            data={statsData?.lowStockProducts || []}
+                            renderRow={(prod: TopProduct) => (
+                                <tr key={prod.id}>
+                                    <td className={styles.userCell}>{prod.nombre}</td>
+                                    <td style={{ color: prod.cantidad <= 5 ? '#ff4d4d' : 'inherit', fontWeight: 'bold' }}>
+                                        {prod.cantidad} un.
+                                    </td>
+                                </tr>
+                            )}
+                        />
 
-                {/* 5. Los 5 usuarios con más compras */}
-                <StatTable
-                    title="Usuarios Más Frecuentes"
-                    headers={['Usuario', 'Compras', 'Total']}
-                    data={statsData?.mostFrequentBuyers || []}
-                    renderRow={(user: TopUser) => (
-                        <tr key={user.id}>
-                            <td className={styles.userCell}>{user.nombre} {user.apellido}</td>
-                            <td className={styles.amount}>{user.compras}</td>
-                            <td className={styles.amount}>{formatCurrency(user.totalGastado)}</td>
-                        </tr>
-                    )}
-                />
+                        {/* 5. Los 5 usuarios con más compras */}
+                        <StatTable
+                            title="Usuarios Más Frecuentes"
+                            headers={['Usuario', 'Compras', 'Total']}
+                            data={statsData?.mostFrequentBuyers || []}
+                            renderRow={(user: TopUser) => (
+                                <tr key={user.id}>
+                                    <td className={styles.userCell}>{user.nombre} {user.apellido}</td>
+                                    <td className={styles.amount}>{user.compras}</td>
+                                    <td className={styles.amount}>{formatCurrency(user.totalGastado)}</td>
+                                </tr>
+                            )}
+                        />
 
-                {/* 6. Los 5 usuarios que más gastaron */}
-                <StatTable
-                    title="Usuarios de Mayor Gasto"
-                    headers={['Usuario', 'Total', 'Compras']}
-                    data={statsData?.topSpendingUsers || []}
-                    renderRow={(user: TopUser) => (
-                        <tr key={user.id}>
-                            <td className={styles.userCell}>{user.nombre} {user.apellido}</td>
-                            <td className={styles.amount}>{formatCurrency(user.totalGastado)}</td>
-                            <td className={styles.amount}>{user.compras}</td>
-                        </tr>
-                    )}
-                />
+                        {/* 6. Los 5 usuarios que más gastaron */}
+                        <StatTable
+                            title="Usuarios de Mayor Gasto"
+                            headers={['Usuario', 'Total', 'Compras']}
+                            data={statsData?.topSpendingUsers || []}
+                            renderRow={(user: TopUser) => (
+                                <tr key={user.id}>
+                                    <td className={styles.userCell}>{user.nombre} {user.apellido}</td>
+                                    <td className={styles.amount}>{formatCurrency(user.totalGastado)}</td>
+                                    <td className={styles.amount}>{user.compras}</td>
+                                </tr>
+                            )}
+                        />
+                    </>
+                )}
             </div>
 
             {/* Metric Info Modal */}

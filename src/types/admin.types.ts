@@ -24,6 +24,7 @@ export type TopSale = {
 export type AdminStats = {
     totalRevenue: number;
     totalSales: number;
+    totalProductsSold: number;
     averageTicket: number;
     activeUsers: number;
     revenueTrend: number;
@@ -43,6 +44,7 @@ export type AdminStats = {
     lastRevenue?: number;
     lastSales?: number;
     lastAverageTicket?: number;
+    lastTotalProductsSold?: number;
     lastActiveUsers?: number;
     lastConversionRate?: number;
     lastRecurrentBuyers?: number;

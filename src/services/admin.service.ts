@@ -2,7 +2,7 @@ import { api } from '../lib/api';
 import type { AdminStats, AdminPurchase, AdminProduct, PaginatedResponse } from '../types/admin.types';
 
 export const AdminService = {
-    async getStats(period: 'month' | 'historical' = 'month'): Promise<AdminStats | null> {
+    async getStats(period: 'today' | 'month' | 'historical' = 'month'): Promise<AdminStats | null> {
         try {
             const result = await api.get(`admin/stats?period=${period}`).json<{ data: AdminStats }>();
             return result.data;
