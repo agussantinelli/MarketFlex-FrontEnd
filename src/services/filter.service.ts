@@ -15,9 +15,13 @@ export const filterService = {
         }
     },
 
-    async getSubcategories(categoriaId: string): Promise<Subcategory[]> {
+    async getSubcategories(categoriaId?: string): Promise<Subcategory[]> {
         try {
-            const response = await fetch(`${API_URL}/subcategories?categoriaId=${categoriaId}`);
+            let url = `${API_URL}/subcategories`;
+            if (categoriaId && categoriaId !== 'undefined') {
+                url += `?categoriaId=${categoriaId}`;
+            }
+            const response = await fetch(url);
             const result = await response.json();
             return result.status === 'success' ? result.data : [];
         } catch (error) {
