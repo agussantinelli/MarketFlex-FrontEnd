@@ -173,7 +173,7 @@ const RegisterSaleView: React.FC = () => {
                             {searchResults.length > 0 && (
                                 <div className={styles.searchResults}>
                                     {searchResults.map(p => (
-                                        <div key={p.id} className={styles.productCard}>
+                                        <div key={p.id} className={`${styles.productCard} ${p.stock <= 0 ? styles.outOfStock : ''}`}>
                                             <div className={styles.productImage}>
                                                 {p.foto ? (
                                                     <img src={getImageUrl(p.foto)} alt={p.nombre} />
@@ -184,13 +184,41 @@ const RegisterSaleView: React.FC = () => {
                                                 )}
                                             </div>
                                             <div className={styles.productInfo}>
-                                                <span className={styles.productName}>{p.nombre}</span>
-                                                <span className={styles.productPrice}>${p.precioActual.toLocaleString()}</span>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                                    <span className={styles.productName}>{p.nombre}</span>
+                                                    {p.promocionActiva && (
+                                                        <span style={{ background: '#BC52EE', color: 'white', fontSize: '0.65rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                            <LuTag size={10} />
+                                                            {p.promocionActiva.tipoPromocion === 'NxM' ? `${p.promocionActiva.cantCompra}x${p.promocionActiva.cantPaga}` :
+                                                                p.promocionActiva.tipoPromocion === 'DESCUENTO_SEGUNDA_UNIDAD' ? `${p.promocionActiva.porcentajeDescuentoSegunda}% en la 2da` :
+                                                                    p.promocionActiva.nombre}
+                                                        </span>
+                                                    )}
+                                                    {p.descuentoActivo && !p.promocionActiva && (
+                                                        <span style={{ background: 'var(--neon-green)', color: 'black', fontSize: '0.65rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px' }}>
+                                                            {p.descuentoActivo.porcentaje ? `-${p.descuentoActivo.porcentaje}%` : `-$${p.descuentoActivo.montoFijo}`}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span className={styles.productPrice}>${parseFloat(p.precioActual || p.precio).toLocaleString()}</span>
+                                                    {p.stock <= 0 ? (
+                                                        <span style={{ color: 'var(--error-red)', fontSize: '0.75rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>
+                                                            Sin Stock
+                                                        </span>
+                                                    ) : (
+                                                        <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>
+                                                            Stock: {p.stock}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
                                             <button
-                                                onClick={() => addProduct(p)}
+                                                onClick={() => p.stock > 0 && addProduct(p)}
                                                 className={styles.smallActionBtn}
-                                                title="Agregar a la venta"
+                                                disabled={p.stock <= 0}
+                                                style={p.stock <= 0 ? { opacity: 0.5, cursor: 'not-allowed', background: 'transparent', borderColor: 'transparent', color: 'var(--text-muted)' } : {}}
+                                                title={p.stock <= 0 ? "Sin stock" : "Agregar a la venta"}
                                                 aria-label="Agregar producto"
                                             >
                                                 <LuPlus size={18} />
