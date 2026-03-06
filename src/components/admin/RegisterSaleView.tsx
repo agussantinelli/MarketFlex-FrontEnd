@@ -665,14 +665,12 @@ const RegisterSaleView: React.FC = () => {
         try {
             if ((window as any).showAdminLoader) (window as any).showAdminLoader();
 
-            const saleData = {
-                items: selectedProducts.map(p => ({
-                    productoId: p.id,
-                    cantidad: p.cantidad
-                })),
-                metodoPago: paymentMethod,
-                tipoEntrega: deliveryMethod,
-                envio: (deliveryMethod === 'ENVIO_DOMICILIO' || Object.values(shippingData).some(v => v.trim())) ? {
+            let envioData = undefined;
+            if (deliveryMethod === 'ENVIO_DOMICILIO') {
+                if (!shippingData.nombreCompleto || !shippingData.email || !shippingData.direccion || !shippingData.ciudad || !shippingData.provincia || !shippingData.codigoPostal || !shippingData.telefono) {
+                    throw new Error('Completá todos los campos de envío obligatorios');
+                }
+                envioData = {
                     nombreCompleto: shippingData.nombreCompleto,
                     email: shippingData.email,
                     direccion: shippingData.direccion,
@@ -680,7 +678,17 @@ const RegisterSaleView: React.FC = () => {
                     provincia: shippingData.provincia,
                     codigoPostal: shippingData.codigoPostal,
                     telefono: shippingData.telefono
-                } : undefined,
+                };
+            }
+
+            const saleData = {
+                items: selectedProducts.map(p => ({
+                    productoId: p.id,
+                    cantidad: p.cantidad
+                })),
+                metodoPago: paymentMethod,
+                tipoEntrega: deliveryMethod,
+                envio: envioData,
                 estado: initialStatus,
                 esVentaManual: true
             };
@@ -700,8 +708,21 @@ const RegisterSaleView: React.FC = () => {
 
         } catch (error: any) {
             console.error('Error submitting sale:', error);
-            if ((window as any).triggerSileo) {
-                (window as any).triggerSileo('error', error.message || 'Error crítico al registrar la venta');
+            if (error.response) {
+                error.response.json().then((errData: any) => {
+                    console.error('Backend validation details:', errData);
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', errData.details ? JSON.stringify(errData.details) : (errData.message || 'Error crítico al registrar la venta'));
+                    }
+                }).catch(() => {
+                    if ((window as any).triggerSileo) {
+                        (window as any).triggerSileo('error', error.message || 'Error crítico al registrar la venta');
+                    }
+                });
+            } else {
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', error.message || 'Error crítico al registrar la venta');
+                }
             }
         } finally {
             if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
