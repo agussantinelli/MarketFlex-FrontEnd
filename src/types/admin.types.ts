@@ -67,10 +67,11 @@ export type AdminPurchase = {
     estado: string;
     tipoEntrega: string;
     razonPendiente?: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'ENVIO_AL_CORREO';
-    usuario: {
+    usuario?: {
         nombre: string;
         apellido: string;
-    };
+    } | null;
+    usuarioNombre?: string;
     lineas: Array<{
         nombreProducto: string;
         cantidad: number;
