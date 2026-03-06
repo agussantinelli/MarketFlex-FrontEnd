@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CartView from "../components/cart/CartView";
+import ConfirmationModal from "../components/common/ConfirmationModal.astro";
 ---
 
 <Layout title="Mi Carrito | MarketFlex">
@@ -9,6 +10,15 @@ import CartView from "../components/cart/CartView";
             <CartView client:load />
         </div>
     </main>
+
+    <ConfirmationModal
+        id="clear-cart-modal"
+        title="¿Vaciar carrito?"
+        message="¿Estás seguro de que deseas eliminar todos los productos de tu carrito?"
+        confirmText="Vaciar"
+        cancelText="Cancelar"
+        type="danger"
+    />
 </Layout>
 
 <style>
@@ -31,3 +41,60 @@ import CartView from "../components/cart/CartView";
         margin: 0 auto;
     }
 </style>
+
+<script>
+    import modalStyles from "../components/common/styles/ConfirmationModal.module.css";
+
+    const setupModal = () => {
+        const id = "clear-cart-modal";
+        const modal = document.getElementById(id);
+        const cancelBtn = document.getElementById(`${id}-cancel`);
+        const confirmBtn = document.getElementById(`${id}-confirm`);
+        let currentConfirmCallback: (() => void) | null = null;
+
+        if (!modal || !cancelBtn || !confirmBtn) return;
+
+        const activeClass = modalStyles.active;
+        if (!activeClass) return;
+
+        const closeModal = () => {
+            modal.classList.remove(activeClass);
+        };
+
+        const openModal = () => {
+            modal.classList.add(activeClass);
+        };
+
+        cancelBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeModal();
+        });
+
+        confirmBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (currentConfirmCallback) {
+                currentConfirmCallback();
+            }
+            closeModal();
+        });
+
+        // Listen for event from React
+        window.addEventListener(`show-confirmation-${id}`, (e: any) => {
+            if (e.detail && e.detail.onConfirm) {
+                currentConfirmCallback = e.detail.onConfirm;
+            }
+            openModal();
+        });
+
+        // Close on overlay click
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+    };
+
+    // Initialize
+    setupModal();
+
+    // Re-initialize for View Transitions
+    document.addEventListener("astro:page-load", setupModal);
+</script>
