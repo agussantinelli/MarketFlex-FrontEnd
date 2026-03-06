@@ -251,15 +251,25 @@
   
 <hr>
 
-<h2>🛒 Manejo del Carrito y Proceso de Checkout</h2>
+<h2>🛒 Gestión de Carrito y Proceso de Compra (Checkout)</h2>
 <p>
-  El sistema de compras de MarketFlex está fundamentado en la reactividad y la fluidez del "estado atómico", garantizando que la información del usuario no se pierda y sea compartida entre distintas islas de Astro y React.
+  El marketplace Frontend provee una experiencia de compra fluida e ininterrumpida que no bloquea la exploración gracias a su carrito efímero, "estado atómico" reactivo y un proceso de checkout multi-paso avanzado.
 </p>
+
+<h3>1. Inicialización y Persistencia (Nanostores y Zustand)</h3>
 <ul>
   <li><b>Nanostores como Motor Reactivo:</b> El carrito (`cartStore`) y el proceso de compra (`checkoutStore`) mantienen un estado compartido en memoria del navegador, permitiendo actualizaciones instantáneas en el contador del nav y en el resumen de compras sin recargar la página.</li>
-  <li><b>Persistencia Local Independiente:</b> Se emplea <code>persistentAtom</code> para sincronizar automáticamente el contenido del carrito con <code>localStorage</code> (`marketflex_cart` y `marketflex_checkout`). Esto previene pérdidas en caso de recargas accidentales o si el usuario cierra el navegador.</li>
-  <li><b>Arquitectura de Checkout:</b> El formulario de checkout se separa en tres pasos lógicos (Datos Personales, Método de Entrega, y Pago). Integra validaciones para métodos alternativos de entrega (Envío a Domicilio vs. Retiro en Local).</li>
-  <li><b>Resiliencia al Error:</b> El store de checkout captura fallos de backend (Ej. "Error de comunicación") y los despliega reactivamente. Se incluye un mecanismo de auto-limpieza al montar nuevamente la página, impidiendo que el frontend mantenga *estados fantasma* o errores de conexiones pasadas resolviendo bugs de "cache visual".</li>
+  <li><b>Guest Cart y Persistencia Local Independiente:</b> Se emplea persistencia en <code>localStorage</code> (`marketflex_cart` y `marketflex_checkout`) a través de `persistentAtom` o utilidades afines, protegiendo intenciones de compra ante cierres accidentales.</li>
+  <li><b>Sincronización Transparente:</b> Durante la acción de Login, todos los ítems acumulados en el estado anónimo son atados a la iteración autenticada, evitando disrupciones del embudo de conversión (<i>funnel drop</i>).</li>
+  <li><b>Desacople de Precios Reales:</b> Todos los totales proyectados (Ej: <i>Subtotal: $120.00</i>) son referenciales. Durante el checkout, solo se emiten a la API tuplas <code>[productoId, cantidad]</code>. El Backend ejerce control absoluto recalculando totales para erradicar vulnerabilidades o manipulaciones en el DOM.</li> 
+</ul>
+
+<h3>2. Motor de Checkout Multi-Paso</h3>
+<p>El flujo <code>&lt;CheckoutForm /&gt;</code> conduce al cliente por pasos secuenciales, integrando resiliencia inteligente al error:</p>
+<ul>
+  <li><b>Paso 1: Credenciales Logísticas.</b> Formulario validado (Teléfonos, Código Postal). Al estar logueados, el front re-hidrata automáticamente los campos usando <code>user.direccion</code> y <code>user.ciudad</code> desde el perfil.</li>
+  <li><b>Paso 2: Métodos de Entrega Flexibles.</b> Selección de modalidad (Envío a Domicilio vs. Retiro en Local), inyectando el <i>Razón Pendiente Logístico</i> inmutable para la administración del local físico.</li>
+  <li><b>Paso 3: Feedback Post-Venta y Resiliencia.</b> Al finalizar, se despliega un Splash Modal de éxito o se capturan reactivamente contingencias del backend (ej. "Error de comunicación"). El checkout store posee auto-limpieza al montar nuevamente, impidiendo <i>estados fantasma</i>.</li>
 </ul>
 
 <hr>
