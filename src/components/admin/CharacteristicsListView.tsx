@@ -69,6 +69,16 @@ const CharacteristicsListView: React.FC = () => {
         }
     };
 
+    const handleAddProductDirect = (char: Characteristic) => {
+        setSelectedChar(char);
+        setProducts([]);
+        setShowAddProduct(true);
+        setSelectedProduct(null);
+        setSearchQuery('');
+        setSearchResults([]);
+        setAssocValue('');
+    };
+
     const handleProductSearch = async (query: string) => {
         setSearchQuery(query);
         if (query.length < 2) {
@@ -240,6 +250,15 @@ const CharacteristicsListView: React.FC = () => {
                                                 title="Ver productos"
                                             >
                                                 <LuEye size={18} />
+                                            </button>
+                                        )}
+                                        {(char.productCount === undefined || char.productCount === 0) && (
+                                            <button
+                                                className={styles.actionBtn}
+                                                onClick={() => handleAddProductDirect(char)}
+                                                title="Asociar producto"
+                                            >
+                                                <LuPlus size={18} />
                                             </button>
                                         )}
                                         <button
