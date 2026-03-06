@@ -359,8 +359,15 @@ const CharacteristicsListView: React.FC = () => {
                                         placeholder="Buscar producto por nombre..."
                                         value={searchQuery}
                                         onChange={(e) => handleProductSearch(e.target.value)}
-                                        className={styles.searchInput}
-                                        style={{ width: '100%', fontSize: '0.9rem', padding: '0.75rem' }}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            borderRadius: '8px',
+                                            background: 'rgba(255,255,255,0.05)',
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            color: 'white',
+                                            fontSize: '0.9rem'
+                                        }}
                                         autoFocus
                                     />
                                     {searching && (
