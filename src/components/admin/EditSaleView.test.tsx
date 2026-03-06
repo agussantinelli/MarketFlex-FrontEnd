@@ -17,7 +17,6 @@ const mockSale = {
     total: 5000,
     metodoPago: 'cash',
     estado: 'PENDIENTE',
-    ventaEnFisico: false,
     lineas: [
         { nombreProducto: 'Libro XYZ', cantidad: 2, subtotal: 5000 }
     ],
