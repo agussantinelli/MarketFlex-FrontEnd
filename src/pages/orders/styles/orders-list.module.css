@@ -66,10 +66,17 @@
     font-size: 1.5rem;
 }
 
+.orderTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+}
+
 .orderInfo h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin: 0;
 }
 
 .orderDate {
@@ -79,10 +86,6 @@
 
 .orderStats {
     text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
 }
 
 .orderTotal {
