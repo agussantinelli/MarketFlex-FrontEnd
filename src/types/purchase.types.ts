@@ -47,4 +47,6 @@ export type CreatePurchaseRequest = {
     }[];
     envio?: DetalleEnvio | undefined;
     tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL';
+    estado?: 'PENDIENTE' | 'COMPLETADO';
+    esVentaManual?: boolean;
 };
