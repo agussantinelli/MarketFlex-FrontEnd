@@ -43,6 +43,7 @@ export async function initOrdersList() {
                         <p class="${styles.orderDate}">${formattedDate} • ${formattedTime}</p>
                     </div>
                     <div class="${styles.orderStats}">
+                        <span class="${styles.statusBadge} ${styles[order.estado.toLowerCase()]}">${order.estado}</span>
                         <span class="${styles.orderTotal}">$${Number(order.total).toLocaleString('es-AR')}</span>
                         <span class="${styles.orderItemsCount}">${itemsCount} ${itemsCount === 1 ? 'artículo' : 'artículos'}</span>
                     </div>

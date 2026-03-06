@@ -32,10 +32,17 @@ const { id } = Astro.params;
                 </div>
                 <div>
                     <span class={styles.statusBadge} id="order-status-badge"
-                        >COMPLETADA</span
+                        >...</span
                     >
                 </div>
             </header>
+
+            <div
+                id="status-info-container"
+                style="display: none; margin-bottom: 2rem;"
+            >
+                <!-- Status info card injected by JS -->
+            </div>
 
             <div class={styles.orderDetailGrid}>
                 <!-- Items Table -->

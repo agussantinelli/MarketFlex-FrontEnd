@@ -37,6 +37,40 @@ export async function initOrderDetail() {
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
 
+        // Update Status Badge
+        const statusBadge = document.getElementById('order-status-badge');
+        if (statusBadge) {
+            statusBadge.textContent = order.estado;
+            statusBadge.className = `${styles.statusBadge} ${styles[order.estado.toLowerCase()]}`;
+        }
+
+        // Handle Pending Reason Info
+        const statusInfoContainer = document.getElementById('status-info-container');
+        if (statusInfoContainer) {
+            if (order.estado === 'PENDIENTE' && order.razonPendiente) {
+                const reasons: Record<string, string> = {
+                    'ENVIO_DOMICILIO': 'Pendiente de envío a domicilio por parte del correo.',
+                    'RETIRO_LOCAL': 'Pendiente de retiro por el cliente en el local.',
+                    'ENVIO_AL_CORREO': 'Pendiente de envío al correo por parte del local.'
+                };
+
+                statusInfoContainer.innerHTML = `
+                    <div class="${styles.statusInfoCard}">
+                        <div class="${styles.statusInfoIcon}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="${styles.statusInfoContent}">
+                            <h4>Información de Seguimiento</h4>
+                            <p>${reasons[order.razonPendiente] || 'Tu pedido está siendo procesado.'}</p>
+                        </div>
+                    </div>
+                `;
+                statusInfoContainer.style.display = 'block';
+            } else {
+                statusInfoContainer.style.display = 'none';
+            }
+        }
+
         // Totals Calculation
         const itemBaseSubtotal = order.lineas.reduce((acc, line) => acc + (line.precioUnitario * line.cantidad), 0);
         const subtotalEl = document.getElementById('order-subtotal-amount');
