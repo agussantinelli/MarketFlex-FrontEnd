@@ -226,6 +226,30 @@ export const AdminService = {
             };
         }
     },
+    async completePurchase(id: string): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.patch(`purchases/${id}/complete`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al completar la compra'
+            };
+        }
+    },
+    async cancelPurchase(id: string): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.patch(`purchases/${id}/cancel`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al cancelar la compra'
+            };
+        }
+    },
     async deleteClaim(compraId: string, nroReclamo: number): Promise<{ status: string; message: string }> {
         try {
             const result = await api.delete(`claims/${compraId}/${nroReclamo}`).json<{ status: string; message: string }>();
