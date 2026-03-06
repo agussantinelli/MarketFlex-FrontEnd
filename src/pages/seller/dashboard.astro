@@ -1,0 +1,8 @@
+---
+import SellerLayout from "../../layouts/SellerLayout.astro";
+import SellerDashboardView from "../../components/seller/SellerDashboardView.tsx";
+---
+
+<SellerLayout title="Dashboard">
+    <SellerDashboardView client:only="react" />
+</SellerLayout>

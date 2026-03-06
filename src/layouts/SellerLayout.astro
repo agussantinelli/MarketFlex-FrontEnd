@@ -1,0 +1,154 @@
+---
+import "../styles/globals.css";
+import SellerSidebar from "../components/seller/SellerSidebar";
+import AdminHeader from "../components/admin/AdminHeader.astro";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import Notifications from "../components/common/Notifications";
+import { ViewTransitions } from "astro:transitions";
+import "sileo/styles.css";
+
+interface Props {
+    title: string;
+    parentTitle?: string | undefined;
+    parentUrl?: string | undefined;
+}
+
+const { title, parentTitle, parentUrl } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Panel de Vendedor MarketFlex" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/logo-marketflex-circle.png"
+        />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | MarketFlex Seller</title>
+        <ViewTransitions />
+        <script is:inline>
+            window.showSellerLoader = () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.add("active");
+            };
+
+            window.hideSellerLoader = () => {
+                const overlay = document.getElementById("nav-loading-overlay");
+                if (overlay) overlay.classList.remove("active");
+            };
+
+            document.addEventListener("astro:before-preparation", () => {
+                window.showSellerLoader();
+            });
+
+            document.addEventListener("astro:page-load", () => {
+                setTimeout(() => {
+                    const overlay = document.getElementById(
+                        "nav-loading-overlay",
+                    );
+                    if (overlay && overlay.classList.contains("active")) {
+                        window.hideSellerLoader();
+                    }
+                }, 15000);
+            });
+        </script>
+        <style>
+            .seller-container {
+                display: flex;
+                min-height: 100vh;
+                background-color: var(--background);
+                position: relative;
+            }
+            .seller-main {
+                flex: 1;
+                margin-left: 260px;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                transition: margin-left 0.3s ease;
+            }
+            .seller-content {
+                flex: 1;
+                padding: 2rem;
+                overflow-y: auto;
+                overflow-x: hidden;
+                min-width: 0;
+            }
+
+            @media (max-width: 1024px) {
+                .seller-main {
+                    margin-left: 0;
+                }
+                .seller-content {
+                    padding: 1.5rem;
+                }
+            }
+
+            .nav-loading-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(15, 23, 42, 0.8);
+                backdrop-filter: blur(8px);
+                z-index: 9999;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-loading-overlay.active {
+                display: flex;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="seller-container">
+            <div id="nav-loading-overlay" class="nav-loading-overlay">
+                <LoadingSpinner fullPage message="Cargando panel..." />
+            </div>
+            <SellerSidebar client:load />
+            <div class="seller-main">
+                <AdminHeader
+                    title={title}
+                    parentTitle={parentTitle}
+                    parentUrl={parentUrl}
+                />
+                <main class="seller-content">
+                    <slot />
+                </main>
+            </div>
+        </div>
+
+        <span id="sileo-root"></span>
+
+        <script>
+            const checkSellerAccess = () => {
+                const userStr = localStorage.getItem("marketflex_user");
+                if (!userStr) {
+                    window.location.href = "/login?redirect=/seller/dashboard";
+                    return;
+                }
+
+                try {
+                    const user = JSON.parse(userStr);
+                    if (user.rol !== "seller" && user.rol !== "admin") {
+                        window.location.href = "/";
+                        return;
+                    }
+                } catch (e) {
+                    window.location.href = "/login";
+                }
+            };
+
+            checkSellerAccess();
+            document.addEventListener("astro:after-swap", checkSellerAccess);
+        </script>
+        <Notifications client:only="react" />
+    </body>
+</html>
