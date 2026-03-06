@@ -3,7 +3,7 @@ import { AdminService } from '../../services/admin.service';
 import type { AdminPurchase } from '../../types/admin.types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert, LuPlus } from 'react-icons/lu';
+import { LuEye, LuPencil, LuTrash2, LuRefreshCcw, LuCheck, LuClock, LuCircleAlert, LuPlus, LuX } from 'react-icons/lu';
 import DataTable, { type Column } from './DataTable';
 import SaleDetailModal from './SaleDetailModal';
 import styles from './styles/SalesListView.module.css';
@@ -126,6 +126,24 @@ const SalesListView = () => {
             header: 'Acciones',
             accessor: (sale: AdminPurchase) => (
                 <div className={styles.actions}>
+                    {sale.estado.toUpperCase() === 'PENDIENTE' && (
+                        <>
+                            <button
+                                className={`${styles.actionBtn} ${styles.actionComplete}`}
+                                title="Completar"
+                                onClick={() => handleComplete(sale.id)}
+                            >
+                                <LuCheck size={18} />
+                            </button>
+                            <button
+                                className={`${styles.actionBtn} ${styles.actionCancel}`}
+                                title="Cancelar"
+                                onClick={() => handleCancel(sale.id)}
+                            >
+                                <LuX size={18} />
+                            </button>
+                        </>
+                    )}
                     <button
                         className={styles.actionBtn}
                         title="Ver detalles"
@@ -141,13 +159,15 @@ const SalesListView = () => {
                     >
                         <LuPencil size={18} />
                     </a>
-                    <button
-                        className={styles.actionBtn}
-                        title="Borrar"
-                        onClick={() => handleDelete(sale.id)}
-                    >
-                        <LuTrash2 size={18} />
-                    </button>
+                    {sale.estado.toUpperCase() === 'CANCELADO' || sale.estado.toUpperCase() === 'COMPLETADO' ? (
+                        <button
+                            className={`${styles.actionBtn} ${styles.actionDelete}`}
+                            title="Borrar"
+                            onClick={() => handleDelete(sale.id)}
+                        >
+                            <LuTrash2 size={18} />
+                        </button>
+                    ) : null}
                 </div>
             )
         }
@@ -168,6 +188,50 @@ const SalesListView = () => {
                 } catch (error) {
                     console.error('Error deleting purchase:', error);
                     if (window.triggerSileo) window.triggerSileo('error', 'No se pudo borrar la venta');
+                } finally {
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+                }
+            });
+        }
+    };
+
+    const handleComplete = async (id: string) => {
+        if ((window as any).showCompleteSaleModal) {
+            (window as any).showCompleteSaleModal(async () => {
+                try {
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    const result = await AdminService.completePurchase(id);
+                    if (result.status === 'success') {
+                        setSales(prev => prev.map(s => s.id === id ? { ...s, estado: 'COMPLETADO' } : s));
+                        if (window.triggerSileo) window.triggerSileo('success', result.message);
+                    } else {
+                        if (window.triggerSileo) window.triggerSileo('error', result.message);
+                    }
+                } catch (error) {
+                    console.error('Error completing purchase:', error);
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo completar la venta');
+                } finally {
+                    if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
+                }
+            });
+        }
+    };
+
+    const handleCancel = async (id: string) => {
+        if ((window as any).showCancelSaleModal) {
+            (window as any).showCancelSaleModal(async () => {
+                try {
+                    if ((window as any).showAdminLoader) (window as any).showAdminLoader();
+                    const result = await AdminService.cancelPurchase(id);
+                    if (result.status === 'success') {
+                        setSales(prev => prev.map(s => s.id === id ? { ...s, estado: 'CANCELADO' } : s));
+                        if (window.triggerSileo) window.triggerSileo('success', result.message);
+                    } else {
+                        if (window.triggerSileo) window.triggerSileo('error', result.message);
+                    }
+                } catch (error) {
+                    console.error('Error cancelling purchase:', error);
+                    if (window.triggerSileo) window.triggerSileo('error', 'No se pudo cancelar la venta');
                 } finally {
                     if ((window as any).hideAdminLoader) (window as any).hideAdminLoader();
                 }

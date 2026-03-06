@@ -11,6 +11,24 @@ const title = "Gestión de Ventas";
     <SalesListView client:visible />
 
     <ConfirmationModal
+        id="complete-sale-modal"
+        title="Completar Registro de Venta"
+        message="¿Estás seguro de que deseas completar este registro de venta? El estado pasará a COMPLETADO y se reflejará en las estadísticas de ingresos."
+        confirmText="Completar Venta"
+        cancelText="Volver"
+        type="default"
+    />
+
+    <ConfirmationModal
+        id="cancel-sale-modal"
+        title="Cancelar Registro de Venta"
+        message="¿Estás seguro de que deseas cancelar este registro de venta? El estado pasará a CANCELADO."
+        confirmText="Confirmar Cancelación"
+        cancelText="Volver"
+        type="danger"
+    />
+
+    <ConfirmationModal
         id="delete-sale-modal"
         title="Borrar Registro de Venta"
         message="¿Estás seguro de que deseas borrar este registro de venta? Pasará a estado BORRADO y se ocultará del listado principal."
@@ -21,32 +39,38 @@ const title = "Gestión de Ventas";
 </AdminLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
-    window.showDeleteSaleModal = (onConfirm) => {
-        const modal = document.getElementById("delete-sale-modal");
-        const confirmBtn = document.getElementById("delete-sale-modal-confirm");
-        const cancelBtn = document.getElementById("delete-sale-modal-cancel");
+    const setupModal = (modalId, globalName) => {
+        window[globalName] = (onConfirm) => {
+            const modal = document.getElementById(modalId);
+            const confirmBtn = document.getElementById(`${modalId}-confirm`);
+            const cancelBtn = document.getElementById(`${modalId}-cancel`);
 
-        if (!modal || !confirmBtn || !cancelBtn) return;
+            if (!modal || !confirmBtn || !cancelBtn) return;
 
-        modal.classList.add(modalStyles.active);
+            modal.classList.add(modalStyles.active);
 
-        const handleConfirm = () => {
-            onConfirm();
-            modal.classList.remove(modalStyles.active);
-            cleanup();
+            const handleConfirm = () => {
+                onConfirm();
+                modal.classList.remove(modalStyles.active);
+                cleanup();
+            };
+
+            const handleCancel = () => {
+                modal.classList.remove(modalStyles.active);
+                cleanup();
+            };
+
+            const cleanup = () => {
+                confirmBtn.removeEventListener("click", handleConfirm);
+                cancelBtn.removeEventListener("click", handleCancel);
+            };
+
+            confirmBtn.addEventListener("click", handleConfirm);
+            cancelBtn.addEventListener("click", handleCancel);
         };
-
-        const handleCancel = () => {
-            modal.classList.remove(modalStyles.active);
-            cleanup();
-        };
-
-        const cleanup = () => {
-            confirmBtn.removeEventListener("click", handleConfirm);
-            cancelBtn.removeEventListener("click", handleCancel);
-        };
-
-        confirmBtn.addEventListener("click", handleConfirm);
-        cancelBtn.addEventListener("click", handleCancel);
     };
+
+    setupModal("delete-sale-modal", "showDeleteSaleModal");
+    setupModal("complete-sale-modal", "showCompleteSaleModal");
+    setupModal("cancel-sale-modal", "showCancelSaleModal");
 </script>

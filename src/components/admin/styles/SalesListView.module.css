@@ -167,8 +167,8 @@
 
 .actions {
     display: flex;
-    gap: 0.75rem;
-    justify-content: flex-start;
+    gap: 0.5rem;
+    justify-content: center;
 }
 
 .actionBtn {
@@ -191,6 +191,19 @@
     color: var(--neon-green);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.actionComplete:hover {
+    background: rgba(74, 222, 128, 0.1);
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+.actionCancel:hover,
+.actionDelete:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: #f87171;
+    color: #f87171;
 }
 
 .loading,
