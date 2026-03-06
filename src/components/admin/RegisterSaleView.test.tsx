@@ -86,7 +86,7 @@ describe('RegisterSaleView Component', () => {
             expect(api.post).toHaveBeenCalledWith('purchases', expect.objectContaining({
                 json: expect.objectContaining({
                     metodoPago: 'Mercado Pago',
-                    ventaEnFisico: true
+                    esVentaManual: true
                 })
             }));
             expect((window as any).triggerSileo).toHaveBeenCalledWith('success', expect.stringContaining('éxito'));
