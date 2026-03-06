@@ -39,8 +39,8 @@ const SalesListView = () => {
     }, []);
 
     const filteredSales = sales.filter(sale => {
-        if (sale.ventaEnFisico) {
-            return 'consumidor final'.includes(searchQuery.toLowerCase()) || searchQuery === '';
+        if (!sale.usuario) {
+            return 'comprador en el local'.includes(searchQuery.toLowerCase()) || searchQuery === '';
         }
         const fullName = `${sale.usuario?.nombre || ''} ${sale.usuario?.apellido || ''}`.toLowerCase();
         return fullName.includes(searchQuery.toLowerCase());
@@ -99,8 +99,8 @@ const SalesListView = () => {
             header: 'Comprador',
             accessor: (sale: AdminPurchase) => (
                 <div className={styles.buyer}>
-                    {sale.ventaEnFisico
-                        ? <span style={{ opacity: 0.5, fontStyle: 'italic' }}>Consumidor Final</span>
+                    {!sale.usuario
+                        ? <span style={{ opacity: 0.5, fontStyle: 'italic' }}>{sale.usuarioNombre || 'Comprador en el local'}</span>
                         : <>{sale.usuario?.nombre} {sale.usuario?.apellido}</>}
                 </div>
             )

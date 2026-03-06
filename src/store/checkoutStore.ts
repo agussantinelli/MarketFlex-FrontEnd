@@ -15,7 +15,6 @@ export const checkoutStore = persistentAtom<CheckoutState>('marketflex_checkout'
     },
     paymentMethod: 'Mercado Pago',
     tipoEntrega: 'ENVIO_DOMICILIO',
-    ventaEnFisico: false,
     isSubmitting: false,
     error: null,
     success: false,
@@ -108,8 +107,7 @@ export const submitPurchase = async () => {
                 provincia: current.formData.provincia,
                 codigoPostal: current.formData.cp
             } : undefined,
-            tipoEntrega: current.tipoEntrega,
-            ventaEnFisico: current.ventaEnFisico
+            tipoEntrega: current.tipoEntrega
         };
 
         const response = await createPurchase(payload);
@@ -160,7 +158,6 @@ export const resetCheckout = () => {
         },
         paymentMethod: 'Mercado Pago',
         tipoEntrega: 'ENVIO_DOMICILIO',
-        ventaEnFisico: false,
         isSubmitting: false,
         error: null,
         success: false,
