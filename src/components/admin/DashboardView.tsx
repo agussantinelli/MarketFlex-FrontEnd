@@ -252,43 +252,43 @@ const DashboardView: React.FC = () => {
 
 
             <div className={styles.tablesGrid}>
+                {/* 1. Las últimas 5 ventas (Shown for Today, Month and Historical) */}
+                <StatTable
+                    title={period === 'today' ? "Últimas 5 Ventas de Hoy" : "Últimas 5 Ventas"}
+                    headers={['Usuario', 'Monto', 'Estado']}
+                    data={statsData?.latestSales || []}
+                    renderRow={(sale: TopSale) => {
+                        const normalizedStatus = (statusMap[sale.estado] || sale.estado).toLowerCase();
+                        return (
+                            <tr key={sale.id}>
+                                <td className={styles.userCell}>{sale.usuarioNombre}</td>
+                                <td className={styles.amount}>{formatCurrency(sale.total)}</td>
+                                <td>
+                                    <span className={styles[normalizedStatus] || styles.badge}>
+                                        {statusMap[sale.estado] || sale.estado}
+                                    </span>
+                                </td>
+                            </tr>
+                        );
+                    }}
+                />
+
+                {/* 2. Las 5 ventas más caras (Shown for Today, Month and Historical) */}
+                <StatTable
+                    title={period === 'today' ? "Ventas de Mayor Valor Hoy" : "Ventas de Mayor Valor"}
+                    headers={['Usuario', 'Monto', 'Fecha']}
+                    data={statsData?.highestValueSales || []}
+                    renderRow={(sale: TopSale) => (
+                        <tr key={sale.id}>
+                            <td className={styles.userCell}>{sale.usuarioNombre}</td>
+                            <td className={styles.amount}>{formatCurrency(sale.total)}</td>
+                            <td className={styles.dateCell}>{formatOrderDate(sale.fecha).split(', ')[0]}</td>
+                        </tr>
+                    )}
+                />
+
                 {period !== 'today' && (
                     <>
-                        {/* 1. Las últimas 5 ventas */}
-                        <StatTable
-                            title="Últimas 5 Ventas"
-                            headers={['Usuario', 'Monto', 'Estado']}
-                            data={statsData?.latestSales || []}
-                            renderRow={(sale: TopSale) => {
-                                const normalizedStatus = (statusMap[sale.estado] || sale.estado).toLowerCase();
-                                return (
-                                    <tr key={sale.id}>
-                                        <td className={styles.userCell}>{sale.usuarioNombre}</td>
-                                        <td className={styles.amount}>{formatCurrency(sale.total)}</td>
-                                        <td>
-                                            <span className={styles[normalizedStatus] || styles.badge}>
-                                                {statusMap[sale.estado] || sale.estado}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                );
-                            }}
-                        />
-
-                        {/* 2. Las 5 ventas más caras */}
-                        <StatTable
-                            title="Ventas de Mayor Valor"
-                            headers={['Usuario', 'Monto', 'Fecha']}
-                            data={statsData?.highestValueSales || []}
-                            renderRow={(sale: TopSale) => (
-                                <tr key={sale.id}>
-                                    <td className={styles.userCell}>{sale.usuarioNombre}</td>
-                                    <td className={styles.amount}>{formatCurrency(sale.total)}</td>
-                                    <td className={styles.dateCell}>{formatOrderDate(sale.fecha).split(', ')[0]}</td>
-                                </tr>
-                            )}
-                        />
-
                         {/* 3. Los 5 productos más vendidos */}
                         <StatTable
                             title="Productos Más Vendidos"

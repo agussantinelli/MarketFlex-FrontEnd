@@ -49,6 +49,17 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mis Compras
         </a>
 
+        <!-- Seller Panel Link (New) -->
+        <a
+            id="seller-panel-link"
+            href="/seller/dashboard"
+            class={`${styles.dropdownItem} seller-only`}
+            style="display: none;"
+        >
+            <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
+            Panel Vendedor
+        </a>
+
         <div
             class={`${styles.dropdownDivider} admin-only`}
             style="display: none;"

@@ -6,6 +6,7 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
     // Role based elements
     const adminLinks = document.querySelectorAll(".admin-only");
+    const sellerLinks = document.querySelectorAll(".seller-only");
     const customerLinks = document.querySelectorAll(".customer-only");
 
     // Explicit Admin Navigation Buttons
@@ -74,9 +75,15 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
             // Role Based Visibility - Base State
             if (user.rol === "admin") {
                 adminLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
+                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
+            } else if (user.rol === "seller") {
+                adminLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
+                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
+                customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex")); // Let sellers see their purchases too
             } else {
                 adminLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
+                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
             }
         }
