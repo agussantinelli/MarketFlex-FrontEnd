@@ -28,5 +28,10 @@ export const characteristicsService = {
 
     async delete(id: string): Promise<void> {
         await api.delete(`characteristics/${id}`);
+    },
+    async associate(charId: string, productId: string, valor: string): Promise<void> {
+        await api.post(`characteristics/${charId}/products`, {
+            json: { productoId: productId, valor }
+        });
     }
 };
