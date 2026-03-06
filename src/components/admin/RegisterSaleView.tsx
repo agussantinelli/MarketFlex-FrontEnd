@@ -680,19 +680,12 @@ const RegisterSaleView: React.FC = () => {
                     telefono: shippingData.telefono
                 };
             } else if (deliveryMethod === 'RETIRO_LOCAL') {
-                // If they provided any of the contact fields, we save them and mock the rest for the DB constraints
+                // If they provided contact fields, send them. Backend will fill the rest.
                 if (shippingData.nombreCompleto || shippingData.email || shippingData.telefono) {
-                    if (!shippingData.nombreCompleto || !shippingData.email || !shippingData.telefono) {
-                        throw new Error('Para registrar el contacto de retiro, completá Nombre, Email y Teléfono');
-                    }
                     envioData = {
                         nombreCompleto: shippingData.nombreCompleto,
                         email: shippingData.email,
-                        telefono: shippingData.telefono,
-                        direccion: 'Retiro en Local',
-                        ciudad: 'N/A',
-                        provincia: 'N/A',
-                        codigoPostal: '0000'
+                        telefono: shippingData.telefono
                     };
                 }
             }
