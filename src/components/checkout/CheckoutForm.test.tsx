@@ -27,7 +27,7 @@ describe('CheckoutForm Component', () => {
         render(<CheckoutForm />);
 
         expect(screen.getByText(/Información Personal/i)).toBeDefined();
-        expect(screen.getByText(/Dirección de Envío/i)).toBeDefined();
+        expect(screen.getByText(/Medio de Entrega/i)).toBeDefined();
         expect(screen.getByText(/Método de Pago/i)).toBeDefined();
     });
 
@@ -37,6 +37,7 @@ describe('CheckoutForm Component', () => {
         expect(screen.getByPlaceholderText(/Juan Pérez/i)).toBeDefined();
         expect(screen.getByPlaceholderText(/juan@ejemplo.com/i)).toBeDefined();
         expect(screen.getByPlaceholderText(/\+54 11 1234-5678/i)).toBeDefined();
+        // Address fields are visible because 'ENVIO_DOMICILIO' is default in checkoutStore
         expect(screen.getByPlaceholderText(/Av. Siempre Viva 742/i)).toBeDefined();
     });
 

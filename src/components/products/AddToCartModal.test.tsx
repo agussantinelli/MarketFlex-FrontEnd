@@ -12,7 +12,9 @@ describe('AddToCartModal Component', () => {
         id: '1',
         nombre: 'Product Test',
         precioActual: 100,
-        precioConDescuento: null
+        precioConDescuento: null,
+        stock: 10,
+        stockComprometido: 0
     } as any;
 
     const mockOnClose = vi.fn();

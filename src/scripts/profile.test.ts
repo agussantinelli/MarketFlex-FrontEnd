@@ -4,7 +4,10 @@ import * as userService from '../services/user.service';
 import * as authService from '../services/auth.service';
 
 vi.mock('../services/user.service', () => ({
-    getProfile: vi.fn(),
+    UserService: {
+        getProfile: vi.fn(),
+        updateProfile: vi.fn(),
+    }
 }));
 
 vi.mock('../services/auth.service', () => ({
@@ -82,7 +85,7 @@ describe('profile.ts', () => {
             foto: 'http://image.com/avatar.jpg'
         };
         (authService.getUser as any).mockReturnValue({ email: 'agus@test.com' });
-        (userService.getProfile as any).mockResolvedValue(mockUser);
+        (userService.UserService.getProfile as any).mockResolvedValue(mockUser);
 
         await initProfile(styles, modalStyles);
 
@@ -102,7 +105,7 @@ describe('profile.ts', () => {
 
     it('should handle API errors by adding designated error class', async () => {
         (authService.getUser as any).mockReturnValue({ email: 'agus@test.com' });
-        (userService.getProfile as any).mockRejectedValue(new Error('API Failure'));
+        (userService.UserService.getProfile as any).mockRejectedValue(new Error('API Failure'));
 
         await initProfile(styles, modalStyles);
 
@@ -117,7 +120,7 @@ describe('profile.ts', () => {
             dni: null // Triggering incomplete status
         };
         (authService.getUser as any).mockReturnValue({ email: 'agus@test.com' });
-        (userService.getProfile as any).mockResolvedValue(mockUser);
+        (userService.UserService.getProfile as any).mockResolvedValue(mockUser);
 
         await initProfile(styles, modalStyles);
 
@@ -126,7 +129,7 @@ describe('profile.ts', () => {
 
     it('should handle modal visibility and confirm logout correctly', async () => {
         (authService.getUser as any).mockReturnValue({ email: 'agus' });
-        (userService.getProfile as any).mockResolvedValue({});
+        (userService.UserService.getProfile as any).mockResolvedValue({});
 
         await initProfile(styles, modalStyles);
 
@@ -143,7 +146,7 @@ describe('profile.ts', () => {
 
     it('should trigger page reload on retry button click', async () => {
         (authService.getUser as any).mockReturnValue({ email: 'agus' });
-        (userService.getProfile as any).mockRejectedValue(new Error('err'));
+        (userService.UserService.getProfile as any).mockRejectedValue(new Error('err'));
 
         await initProfile(styles, modalStyles);
 

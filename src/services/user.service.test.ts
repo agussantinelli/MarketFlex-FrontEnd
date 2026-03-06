@@ -24,7 +24,7 @@ describe('UserService', () => {
 
         const result = await UserService.getProfile();
 
-        expect(api.get).toHaveBeenCalledWith('user/profile');
+        expect(api.get).toHaveBeenCalledWith('user/me');
         expect(result).toEqual(mockUser);
     });
 
@@ -35,9 +35,9 @@ describe('UserService', () => {
             json: vi.fn().mockResolvedValueOnce(mockUser)
         });
 
-        const result = await UserService.updateProfile(updateData);
+        const result = await UserService.updateProfile(updateData as any);
 
-        expect(api.patch).toHaveBeenCalledWith('user/profile', expect.objectContaining({ json: updateData }));
+        expect(api.patch).toHaveBeenCalledWith('user/me', expect.objectContaining({ json: updateData }));
         expect(result).toEqual(mockUser);
     });
 });
