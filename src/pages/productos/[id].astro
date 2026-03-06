@@ -266,6 +266,10 @@ const hasDiscount = product.precioConDescuento !== null;
         if (decrementBtn) {
             (decrementBtn as HTMLButtonElement).disabled = quantity <= 1;
         }
+        if (incrementBtn && product) {
+            (incrementBtn as HTMLButtonElement).disabled =
+                quantity >= product.stock;
+        }
     }
 
     incrementBtn?.addEventListener("click", () => {

@@ -118,7 +118,7 @@ const CartView: React.FC = () => {
                                         <button
                                             className={styles.qtyBtn}
                                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                            disabled={item.quantity >= (item.stock || 99)}
+                                            disabled={item.quantity >= item.stock}
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                                 <line x1="12" y1="5" x2="12" y2="19"></line>

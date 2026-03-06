@@ -43,7 +43,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     // Importante: No renderizar nada en el servidor o si no está abierto
     if (!mounted || (!isOpen && !isVisible)) return null;
 
-    const handleIncrement = () => setQuantity(prev => prev + 1);
+    const handleIncrement = () => setQuantity(prev => Math.min(product.stock, prev + 1));
     const handleDecrement = () => setQuantity(prev => Math.max(1, prev - 1));
 
     const subtotal = (productPrice * quantity).toFixed(2);
@@ -106,6 +106,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                         <button
                             className={styles.controlBtn}
                             onClick={handleIncrement}
+                            disabled={quantity >= product.stock}
                             aria-label="Aumentar cantidad"
                         >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
