@@ -251,6 +251,19 @@
   
 <hr>
 
+<h2>🛒 Manejo del Carrito y Proceso de Checkout</h2>
+<p>
+  El sistema de compras de MarketFlex está fundamentado en la reactividad y la fluidez del "estado atómico", garantizando que la información del usuario no se pierda y sea compartida entre distintas islas de Astro y React.
+</p>
+<ul>
+  <li><b>Nanostores como Motor Reactivo:</b> El carrito (`cartStore`) y el proceso de compra (`checkoutStore`) mantienen un estado compartido en memoria del navegador, permitiendo actualizaciones instantáneas en el contador del nav y en el resumen de compras sin recargar la página.</li>
+  <li><b>Persistencia Local Independiente:</b> Se emplea <code>persistentAtom</code> para sincronizar automáticamente el contenido del carrito con <code>localStorage</code> (`marketflex_cart` y `marketflex_checkout`). Esto previene pérdidas en caso de recargas accidentales o si el usuario cierra el navegador.</li>
+  <li><b>Arquitectura de Checkout:</b> El formulario de checkout se separa en tres pasos lógicos (Datos Personales, Método de Entrega, y Pago). Integra validaciones para métodos alternativos de entrega (Envío a Domicilio vs. Retiro en Local).</li>
+  <li><b>Resiliencia al Error:</b> El store de checkout captura fallos de backend (Ej. "Error de comunicación") y los despliega reactivamente. Se incluye un mecanismo de auto-limpieza al montar nuevamente la página, impidiendo que el frontend mantenga *estados fantasma* o errores de conexiones pasadas resolviendo bugs de "cache visual".</li>
+</ul>
+
+<hr>
+
 <h2>🤖 Inteligencia Artificial & Experiencia de Usuario</h2>
 <p>
   El FrontEnd de MarketFlex aprovecha la potencia de la Inteligencia Artificial para ofrecer una experiencia de búsqueda y navegación que se siente intuitiva y casi predictiva.
