@@ -8,7 +8,7 @@ import { formatOrderDate } from '../../../utils/dateFormatter';
 
 const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<AdminStats | null>(null);
-    const [period, setPeriod] = useState<'today' | 'month' | 'historical'>('month');
+    const [period, setPeriod] = useState<'today' | 'week' | 'month' | 'historical'>('month');
     const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);
 
     useEffect(() => {
@@ -200,6 +200,12 @@ const DashboardView: React.FC = () => {
                             Hoy
                         </button>
                         <button
+                            className={`${styles.toggleBtn} ${period === 'week' ? styles.active : ''}`}
+                            onClick={() => setPeriod('week')}
+                        >
+                            Esta Semana
+                        </button>
+                        <button
                             className={`${styles.toggleBtn} ${period === 'month' ? styles.active : ''}`}
                             onClick={() => setPeriod('month')}
                         >
@@ -252,9 +258,9 @@ const DashboardView: React.FC = () => {
 
 
             <div className={styles.tablesGrid}>
-                {/* 1. Las últimas 5 ventas (Shown for Today, Month and Historical) */}
+                {/* 1. Las últimas 5 ventas (Shown for Today, Week, Month and Historical) */}
                 <StatTable
-                    title={period === 'today' ? "Últimas 5 Ventas de Hoy" : "Últimas 5 Ventas"}
+                    title={period === 'today' ? "Últimas 5 Ventas de Hoy" : (period === 'week' ? "Últimas 5 Ventas de la Semana" : "Últimas 5 Ventas")}
                     headers={['Usuario', 'Monto', 'Estado']}
                     data={statsData?.latestSales || []}
                     renderRow={(sale: TopSale) => {
@@ -273,9 +279,9 @@ const DashboardView: React.FC = () => {
                     }}
                 />
 
-                {/* 2. Las 5 ventas más caras (Shown for Today, Month and Historical) */}
+                {/* 2. Las 5 ventas más caras (Shown for Today, Week, Month and Historical) */}
                 <StatTable
-                    title={period === 'today' ? "Ventas de Mayor Valor Hoy" : "Ventas de Mayor Valor"}
+                    title={period === 'today' ? "Ventas de Mayor Valor Hoy" : (period === 'week' ? "Ventas de Mayor Valor esta Semana" : "Ventas de Mayor Valor")}
                     headers={['Usuario', 'Monto', 'Fecha']}
                     data={statsData?.highestValueSales || []}
                     renderRow={(sale: TopSale) => (
