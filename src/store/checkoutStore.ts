@@ -21,7 +21,19 @@ export const checkoutStore = persistentAtom<CheckoutState>('marketflex_checkout'
     lastOrderTotal: 0
 }, {
     encode: JSON.stringify,
-    decode: JSON.parse
+    decode: (val) => {
+        try {
+            const parsed = JSON.parse(val);
+            return {
+                ...parsed,
+                isSubmitting: false,
+                error: null,
+                success: false
+            };
+        } catch (e) {
+            return JSON.parse(val);
+        }
+    }
 });
 
 // Actions
