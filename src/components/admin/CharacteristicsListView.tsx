@@ -197,33 +197,56 @@ const CharacteristicsListView: React.FC = () => {
                             <h2>{selectedChar?.nombre}</h2>
                             <p style={{ margin: 0, opacity: 0.6, fontSize: '0.85rem' }}>Total: {products.length} productos</p>
                         </div>
-                        <div className={`${styles.modalBody} ${styles.modalScrollList}`}>
+                        <div className={`${styles.modalBody} ${styles.modalScrollList}`} style={{ margin: '0.5rem -1rem' }}>
                             {modalLoading ? (
-                                <p>Cargando productos...</p>
+                                <p style={{ textAlign: 'center', padding: '2rem', opacity: 0.6 }}>Cargando productos...</p>
                             ) : products.length > 0 ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                                    {products.map(p => (
-                                        <div key={p.id} className={styles.productItem}>
-                                            {p.foto ? (
-                                                <img src={p.foto} alt={p.nombre} style={{ width: '35px', height: '35px', borderRadius: '6px', objectFit: 'cover' }} />
-                                            ) : (
-                                                <div style={{ width: '35px', height: '35px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(255,255,255,0.1)' }}>
-                                                    <LuPackage size={14} style={{ opacity: 0.4 }} />
-                                                </div>
-                                            )}
-                                            <div style={{ flex: 1, textAlign: 'left' }}>
-                                                <div style={{ fontWeight: '600', fontSize: '0.9rem' }}>{p.nombre}</div>
-                                                {p.valor && (
-                                                    <div style={{ fontSize: '0.75rem', color: 'var(--neon-green)', opacity: 0.8, marginTop: '1px' }}>
-                                                        {selectedChar?.nombre}: <span style={{ color: '#fff', opacity: 0.7 }}>{p.valor}</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div className={styles.tableContainer} style={{ margin: 0 }}>
+                                    <table className={styles.table} style={{ minWidth: 'auto' }}>
+                                        <thead>
+                                            <tr>
+                                                <th style={{ paddingLeft: '1rem', fontSize: '0.7rem' }}>Producto</th>
+                                                <th style={{ fontSize: '0.7rem' }}>Valor</th>
+                                                <th style={{ paddingRight: '1rem', fontSize: '0.7rem' }}>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {products.map(p => (
+                                                <tr key={p.id}>
+                                                    <td style={{ paddingLeft: '1rem' }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                            {p.foto ? (
+                                                                <img src={p.foto} alt={p.nombre} style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'cover' }} />
+                                                            ) : (
+                                                                <div style={{ width: '32px', height: '32px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                                    <LuPackage size={14} style={{ opacity: 0.4 }} />
+                                                                </div>
+                                                            )}
+                                                            <div style={{ fontWeight: '600', fontSize: '0.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '120px' }} title={p.nombre}>
+                                                                {p.nombre}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style={{ fontSize: '0.85rem', color: 'var(--neon-green)', fontWeight: '600' }}>
+                                                        {p.valor || '—'}
+                                                    </td>
+                                                    <td style={{ paddingRight: '1rem' }}>
+                                                        <button
+                                                            className={styles.actionBtn}
+                                                            onClick={() => window.location.href = `/admin/products/${p.id}`}
+                                                            title="Ver producto"
+                                                            style={{ width: '32px', height: '32px' }}
+                                                        >
+                                                            <LuEye size={16} />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             ) : (
-                                <p>No hay productos asociados.</p>
+                                <p style={{ textAlign: 'center', padding: '2rem', opacity: 0.6 }}>No hay productos asociados.</p>
                             )}
                         </div>
                         <button className={styles.modalCloseBtn} style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }} onClick={() => setViewProductsModal(false)}>Cerrar</button>
