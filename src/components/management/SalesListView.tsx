@@ -164,7 +164,7 @@ const SalesListView = () => {
                     >
                         <LuEye size={18} />
                     </button>
-                    {role === 'admin' && (
+                    {(role === 'admin' || role === 'seller') && (
                         <a
                             className={styles.actionBtn}
                             title="Editar"
@@ -271,7 +271,7 @@ const SalesListView = () => {
                 <div className={styles.titleSection}>
                     <div className={dashboardStyles.dashboardHeader}>
                         <h1>Listado de Ventas</h1>
-                        {role === 'admin' && (
+                        {(role === 'admin' || role === 'seller') && (
                             <a href="/management/sales/new" className={dashboardStyles.createButton} style={{ textDecoration: 'none' }}>
                                 <LuPlus /> Registrar Venta
                             </a>
