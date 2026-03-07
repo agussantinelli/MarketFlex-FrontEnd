@@ -229,8 +229,8 @@
 
 <h2>📦 Características Principales</h2>
 <ul>
-  <li>📊 <b>Admin Dashboard (Data-Driven):</b> Panel interactivo con métricas reales y visualizaciones de tendencias mediante el componente `StatTable`, permitiendo una gestión eficiente de ventas e ingresos.</li>
-  <li>🛡️ <b>Ecosistema de Vistas Binarias:</b> Sistema inteligente que alterna entre el entorno de Administrador y Cliente con transiciones fluidas y limpieza de estados persistentes.</li>
+  <li>📊 <b>Admin Dashboard (Multi-Role):</b> Panel interactivo con métricas reales y visualizaciones de tendencias mediante el componente `StatTable`. El dashboard se adapta contextualmente: los **Sellers** ven métricas operativas de hoy, mientras que los **Admins** acceden a proyecciones históricas y analíticas avanzas.</li>
+  <li>🛡️ <b>Ecosistema de Vistas Binarias:</b> Sistema inteligente que alterna entre el entorno de Administrador/Vendedor y Cliente. Utiliza `persistentMap` de **Nanostores** para mantener la coherencia del estado (`isManagementMode`) sin colisionar con la navegación pública.</li>
   <li>🛒 <b>Experiencia de Carrito Premium:</b> Diseño basado en *Glassmorphism* de alta densidad con micro-animaciones, controles de cantidad tipo pildora y gestión de estado atomizada mediante Nanostores.</li>
   <li>🛍️ <b>Checkout Multi-Sección & Fluid:</b> Proceso de compra dividido en fases lógicas (Personal, Envío, Pago) con validación en tiempo real y auto-completado inteligente.</li>
   <li>🌙 <b>Dark Mode Nativo (High-End):</b> Implementación de tema oscuro profundo con efectos de desenfoque y transparencias que realzan la estética neón oficial de MarketFlex.</li>
@@ -335,6 +335,7 @@
 <ul>
     <li><b>Arquitectura Zero-Delay:</b> Consumo directo de la API mediante Ky con tipado estricto para una respuesta instantánea.</li>
     <li><b>Visualización Neo-Dark:</b> Diseño optimizado para el tema oscuro con tooltips translúcidos y efectos de desenfoque.</li>
+    <li><b>Filtros de Temporalidad Dinámicos:</b> El dashboard permite alternar entre <b>Hoy</b> (foco preventivo/operativo), <b>Semana</b>, <b>Mes</b> e <b>Histórico</b>. Los vendedores están bloqueados a la vista operativa del día por seguridad y agilidad.</li>
     <li><b>Detección de Métricas Clave:</b> Cálculo en tiempo real de ingresos liquidados, volumen por categoría y engagement de marca.</li>
     <li><b>Mini-Modales Informativos:</b> Sistema de iconos `(i)` que despliegan modales centrados con la explicación técnica de cada indicador (Ratio de Conversión, Recurrencia, etc.).</li>
     <li><b>Formatos Inteligentes:</b> Localización dinámica de moneda (ARS) y ajuste de zona horaria (ART) para una precisión absoluta en el mercado local.</li>
@@ -357,11 +358,17 @@
 <hr>
 
 <h2>👁️ Sistema de Vistas Binarias (Gestión)</h2>
-<p>Para simplificar y optimizar la experiencia de gestión técnica, MarketFlex implementa un sistema robusto de <b>Vistas Binarias</b> gestionado vía <code>localStorage</code> (<code>marketflex_management:isManagementMode</code>) encapsulado en el menú de usuario. El comportamiento para las cuentas con el rol <code>admin</code> es el siguiente:</p>
+<p>Para simplificar y optimizar la experiencia de gestión técnica, MarketFlex implementa un sistema robusto de <b>Vistas Binarias</b> gestionado vía un store persistente atómico (<code>marketflex_management:isManagementMode</code>) integrado en el <code>UserDropdown</code>. La dinámica de navegación se adapta según el rol detectado:</p>
 <ul>
-    <li><b>Landing por Defecto (Panel de Gestión):</b> Todo inicio de sesión de administrador activa el modo gestión por defecto y redirige inmediata y automáticamente a <code>/management/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas de forma fluida.</li>
-    <li><b>Vista Cliente:</b> Estando en el panel, el menú desplegable del perfil superior expone un botón dedicado llamado <b>"Cambiar a Vista Cliente"</b>. Al accionarlo, el estado administrativo se pausa temporalmente (<code>isManagementMode="false"</code>), redirigiendo al usuario a la ruta raíz (<code>/</code>). Esto permite navegar y auditar la tienda (productos, carritos, promociones) exactamente como un usuario estándar.</li>
-    <li><b>Retorno al Panel de Gestión:</b> Mientras se audita la "Vista Cliente", el menú inteligente reestructura sus opciones: expone el botón <b>"Cambiar al Panel Gestión"</b> y las rutas típicas de cliente. Al accionarlo, se restaura el entorno administrativo devolviendo al staff a sus métricas con un clic y cerrando el ciclo.</li>
+    <li><b>Landing Contextual (Login):</b> Al iniciar sesión, el sistema evalúa el rol. Si el usuario es <code>admin</code> o <code>seller</code>, se activa automáticamente el <b>Modo Gestión</b> (<code>isManagementMode="true"</code>) y se redirige a <code>/management/dashboard</code>. El staff aterriza en su entorno de trabajo sin pasos intermedios.</li>
+    <li><b>Cambio a Vista Cliente:</b> En cualquier momento, el personal puede cambiar a la <b>"Vista Cliente"</b> desde el menú de usuario. Esto permite navegar la tienda pública como un usuario final, habilitando el carrito de compras y el checkout para auditoría visual directa. Internamente, el estado cambia a <code>false</code> para ajustar la visibilidad de enlaces en el Navbar.</li>
+    <li><b>Panel de Gestión vs Panel Vendedor:</b> El sistema detecta el rol para personalizar la experiencia administratva:
+        <ul>
+            <li><b>Admins:</b> Tienen acceso total incluyendo Analíticas avanzadas y Gestión de Usuarios. El botón se etiqueta como <b>"Panel Gestión"</b>.</li>
+            <li><b>Sellers (Vendedores):</b> Tienen acceso restringido a Ventas, Productos y Reclamos. El botón se etiqueta dinámicamente como <b>"Panel Vendedor"</b>.</li>
+        </ul>
+    </li>
+    <li><b>Transición Fluida:</b> Los botones de alternancia utilizan una pequeña demora controlada tras persistir el estado para asegurar que la redirección (<code>/management/dashboard</code> o <code>/</code>) ocurra con los metadatos de sesión correctamente sincronizados.</li>
 </ul>
 
 <hr>
