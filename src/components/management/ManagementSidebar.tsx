@@ -18,9 +18,21 @@ import styles from './styles/ManagementSidebar.module.css';
 const ManagementSidebar = () => {
     const [currentPath, setCurrentPath] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
 
     useEffect(() => {
         setCurrentPath(window.location.pathname);
+
+        // Get role from localStorage
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+            } catch (e) {
+                console.error("Error parsing user for sidebar", e);
+            }
+        }
 
         const handleToggle = () => setIsOpen(prev => !prev);
         window.addEventListener('toggle-management-sidebar', handleToggle);
@@ -30,9 +42,12 @@ const ManagementSidebar = () => {
 
     const closeSidebar = () => setIsOpen(false);
 
-    const navItems = [
-        { href: '/management/dashboard', icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
-        { href: '/management/analytics', icon: BarChart3, label: 'Analíticas', section: 'Principal' },
+    const isSeller = role === 'seller';
+    const basePath = isSeller ? '/seller' : '/management';
+
+    const allNavItems = [
+        { href: `${basePath}/dashboard`, icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
+        { href: '/management/analytics', icon: BarChart3, label: 'Analíticas', section: 'Principal', adminOnly: true },
 
         { href: '/management/users', icon: Users, label: 'Usuarios', section: 'Gestión' },
         { href: '/management/sales', icon: ShoppingCart, label: 'Ventas', section: 'Gestión' },
@@ -46,6 +61,12 @@ const ManagementSidebar = () => {
         { href: '/management/characteristics', icon: ListTree, label: 'Características', section: 'Catálogo' },
     ];
 
+    // Filter items based on role
+    const navItems = allNavItems.filter(item => {
+        if (isSeller && item.adminOnly) return false;
+        return true;
+    });
+
     const sections = [...new Set(navItems.map(item => item.section))];
 
     return (
@@ -55,9 +76,9 @@ const ManagementSidebar = () => {
 
             <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
                 <div className={styles.logoContainer}>
-                    <a href="/management/dashboard" className={styles.logoLink}>
+                    <a href={`${basePath}/dashboard`} className={styles.logoLink}>
                         <img src="/logo-marketflex-letters.png" alt="MarketFlex Logo" className={styles.logoImg} />
-                        <span className={styles.logoText}>Gestión</span>
+                        <span className={styles.logoText}>{isSeller ? 'Vendedor' : 'Gestión'}</span>
                     </a>
                     <button className={styles.closeBtn} onClick={closeSidebar} aria-label="Cerrar menú">
                         <X size={24} />
