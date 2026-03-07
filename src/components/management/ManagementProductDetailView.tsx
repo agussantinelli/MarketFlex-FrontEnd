@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ManagementService } from '../../services/management\.service';
-import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil, LuDollarSign, LuTag as LuDiscount, LuTrash2 } from 'react-icons/lu';
+import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil, LuDollarSign, LuTag as LuDiscount } from 'react-icons/lu';
 import UpdatePriceModal from './UpdatePriceModal';
 import ApplyDiscountModal from './ApplyDiscountModal';
 import styles from './styles/ManagementProductDetailView.module.css';
@@ -141,7 +141,7 @@ export default function ManagementProductDetailView({ productId }: Props) {
                             <button
                                 onClick={() => setIsPriceModalOpen(true)}
                                 className={styles.badge}
-                                style={{ background: 'rgba(96,165,250,0.1)', color: '#60a5fa', border: '1px solid rgba(96,165,250,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
+                                style={{ background: 'rgba(52,211,153,0.1)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
                             >
                                 <LuDollarSign size={14} /> Actualizar Precio
                             </button>
