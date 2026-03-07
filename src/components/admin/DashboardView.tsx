@@ -55,7 +55,7 @@ const DashboardView: React.FC = () => {
             icon: LuDollarSign,
             color: styles.colorGreen,
             isPositive: (statsData?.revenueTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastRevenue ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastRevenue ?? 0) > 0,
             description: "Suma total facturada por ventas completadas (sin incluir impuestos o extras si no están en el total)."
         },
         {
@@ -68,7 +68,7 @@ const DashboardView: React.FC = () => {
             icon: LuShoppingCart,
             color: styles.colorBlue,
             isPositive: (statsData?.salesTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastSales ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastSales ?? 0) > 0,
             description: "Número total de órdenes que han llegado al estado final de 'COMPLETADO'."
         },
         {
@@ -81,7 +81,7 @@ const DashboardView: React.FC = () => {
             icon: LuTrendingUp,
             color: styles.colorPurple,
             isPositive: (statsData?.avgTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastAverageTicket ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastAverageTicket ?? 0) > 0,
             description: "Ingreso total dividido por la cantidad de ventas. Indica cuánto gasta el cliente en promedio por pedido."
         },
         {
@@ -94,7 +94,7 @@ const DashboardView: React.FC = () => {
             icon: LuUsers,
             color: styles.colorYellow,
             isPositive: (statsData?.userTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastActiveUsers ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastActiveUsers ?? 0) > 0,
             description: "Total de usuarios registrados en el sistema hasta la fecha."
         },
         {
@@ -107,7 +107,7 @@ const DashboardView: React.FC = () => {
             icon: LuTarget,
             color: styles.colorPink,
             isPositive: (statsData?.conversionTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastConversionRate ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastConversionRate ?? 0) > 0,
             description: "Porcentaje de usuarios registrados que han realizado al menos una compra completada."
         },
         {
@@ -120,7 +120,7 @@ const DashboardView: React.FC = () => {
             icon: LuRotateCw,
             color: styles.colorOrange,
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastRecurrentBuyers ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastRecurrentBuyers ?? 0) > 0,
             description: "Porcentaje de clientes que compraron este mes y ya eran clientes, o que tienen más de una compra (Histórico)."
         },
         {
@@ -133,7 +133,7 @@ const DashboardView: React.FC = () => {
             icon: LuPackage,
             color: styles.colorCyan,
             isPositive: (statsData?.itemsTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastAverageItems ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastAverageItems ?? 0) > 0,
             description: "Cantidad media de unidades de producto por cada orden de compra."
         },
         {
@@ -146,7 +146,7 @@ const DashboardView: React.FC = () => {
             icon: LuTags,
             color: styles.colorIndigo,
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
-            showTrend: period === 'month' && (statsData?.lastTotalDiscount ?? 0) >= 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastTotalDiscount ?? 0) >= 0,
             description: "Ahorro total aplicado a los clientes mediante promociones NxM y descuentos directos."
         },
         {
@@ -159,7 +159,7 @@ const DashboardView: React.FC = () => {
             icon: LuTriangleAlert,
             color: styles.colorRed,
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
-            showTrend: period === 'month' && (statsData?.lastCancelRate ?? 0) > 0,
+            showTrend: (period === 'month' || period === 'week') && (statsData?.lastCancelRate ?? 0) > 0,
             description: "Porcentaje de órdenes canceladas sobre el total de órdenes (Completadas + Canceladas + Pendientes)."
         },
         {
@@ -240,7 +240,7 @@ const DashboardView: React.FC = () => {
                         <div className={styles.statInfo}>
                             <h3>{stat.title}</h3>
                             <div className={styles.statValue}>{stat.value}</div>
-                            {period === 'month' && (
+                            {(period === 'month' || period === 'week') && (
                                 <span className={styles.statTrend}>
                                     {stat.showTrend && (
                                         <span className={`${styles.trendArrowValue} ${stat.isPositive ? styles.positive : styles.negative}`}>
@@ -248,7 +248,7 @@ const DashboardView: React.FC = () => {
                                             {stat.trend}
                                         </span>
                                     )}
-                                    <span className={styles.trendLabel}>vs {stat.lastValueStr} el mes pasado</span>
+                                    <span className={styles.trendLabel}>vs {stat.lastValueStr} {period === 'week' ? 'la semana pasada' : 'el mes pasado'}</span>
                                 </span>
                             )}
                         </div>
