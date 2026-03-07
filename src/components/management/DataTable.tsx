@@ -25,7 +25,7 @@ interface DataTableProps<T> {
     loading?: boolean;
     onView?: (item: T) => void;
     onEdit?: (item: T) => void;
-    onDelete?: (item: T) => void;
+    onDelete?: (item: T) => void | Promise<void>;
     isDeleteEnabled?: (item: T) => boolean;
     onAdd?: () => void;
     renderActions?: (item: T) => React.ReactNode;

@@ -10,6 +10,23 @@ const DashboardView: React.FC = () => {
     const [statsData, setStatsData] = useState<ManagementStats | null>(null);
     const [period, setPeriod] = useState<'today' | 'week' | 'month' | 'historical'>('month');
     const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
+
+    useEffect(() => {
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+                // Sellers are locked to 'today'
+                if (user.rol === 'seller') {
+                    setPeriod('today');
+                }
+            } catch (e) {
+                console.error("Error parsing role in dashboard", e);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +43,8 @@ const DashboardView: React.FC = () => {
 
         fetchData();
     }, [period]);
+
+    const isSeller = role === 'seller';
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat("en-US", {
@@ -55,8 +74,8 @@ const DashboardView: React.FC = () => {
             icon: LuDollarSign,
             color: styles.colorGreen,
             isPositive: (statsData?.revenueTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastRevenue ?? 0) > 0,
-            description: "Suma total facturada por ventas completadas (sin incluir impuestos o extras si no están en el total)."
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastRevenue ?? 0) > 0,
+            description: isSeller ? "Resumen de ingresos generados hoy." : "Suma total facturada por ventas completadas (sin incluir impuestos o extras si no están en el total)."
         },
         {
             title: "Ventas Totales",
@@ -68,8 +87,8 @@ const DashboardView: React.FC = () => {
             icon: LuShoppingCart,
             color: styles.colorBlue,
             isPositive: (statsData?.salesTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastSales ?? 0) > 0,
-            description: "Número total de órdenes que han llegado al estado final de 'COMPLETADO'."
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastSales ?? 0) > 0,
+            description: isSeller ? "Número total de órdenes completadas hoy." : "Número total de órdenes que han llegado al estado final de 'COMPLETADO'."
         },
         {
             title: "Venta Promedio",
@@ -81,7 +100,7 @@ const DashboardView: React.FC = () => {
             icon: LuTrendingUp,
             color: styles.colorPurple,
             isPositive: (statsData?.avgTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastAverageTicket ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastAverageTicket ?? 0) > 0,
             description: "Ingreso total dividido por la cantidad de ventas. Indica cuánto gasta el cliente en promedio por pedido."
         },
         {
@@ -94,7 +113,7 @@ const DashboardView: React.FC = () => {
             icon: LuUsers,
             color: styles.colorYellow,
             isPositive: (statsData?.userTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastActiveUsers ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastActiveUsers ?? 0) > 0,
             description: "Total de usuarios registrados en el sistema hasta la fecha."
         },
         {
@@ -107,7 +126,7 @@ const DashboardView: React.FC = () => {
             icon: LuTarget,
             color: styles.colorPink,
             isPositive: (statsData?.conversionTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastConversionRate ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastConversionRate ?? 0) > 0,
             description: "Porcentaje de usuarios registrados que han realizado al menos una compra completada."
         },
         {
@@ -120,7 +139,7 @@ const DashboardView: React.FC = () => {
             icon: LuRotateCw,
             color: styles.colorOrange,
             isPositive: (statsData?.recurrentTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastRecurrentBuyers ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastRecurrentBuyers ?? 0) > 0,
             description: "Porcentaje de clientes que compraron este mes y ya eran clientes, o que tienen más de una compra (Histórico)."
         },
         {
@@ -133,7 +152,7 @@ const DashboardView: React.FC = () => {
             icon: LuPackage,
             color: styles.colorCyan,
             isPositive: (statsData?.itemsTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastAverageItems ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastAverageItems ?? 0) > 0,
             description: "Cantidad media de unidades de producto por cada orden de compra."
         },
         {
@@ -146,7 +165,7 @@ const DashboardView: React.FC = () => {
             icon: LuTags,
             color: styles.colorIndigo,
             isPositive: (statsData?.discountTrend ?? 0) >= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastTotalDiscount ?? 0) >= 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastTotalDiscount ?? 0) >= 0,
             description: "Ahorro total aplicado a los clientes mediante promociones NxM y descuentos directos."
         },
         {
@@ -159,66 +178,65 @@ const DashboardView: React.FC = () => {
             icon: LuTriangleAlert,
             color: styles.colorRed,
             isPositive: (statsData?.cancelTrend ?? 0) <= 0,
-            showTrend: (period === 'month' || period === 'week') && (statsData?.lastCancelRate ?? 0) > 0,
+            showTrend: !isSeller && (period === 'month' || period === 'week') && (statsData?.lastCancelRate ?? 0) > 0,
             description: "Porcentaje de órdenes canceladas sobre el total de órdenes (Completadas + Canceladas + Pendientes)."
         },
         {
             title: "Productos Vendidos",
             value: (statsData?.totalProductsSold ?? 0).toLocaleString(),
-            trend: "0%", // Trends not yet implemented for this
+            trend: "0%",
             lastValueStr: (statsData?.lastTotalProductsSold ?? 0).toLocaleString(),
             icon: LuPackage,
             color: styles.colorCyan,
             isPositive: true,
             showTrend: false,
-            description: "Suma total de unidades de productos vendidas en el período seleccionado."
+            description: isSeller ? "Suma total de unidades vendidas hoy." : "Suma total de unidades de productos vendidas en el período seleccionado."
         },
     ].filter(stat => {
-        if (period !== 'today') {
-            // Hide 'Productos Vendidos' in other views for now if we want to keep it clean, 
-            // or show everything. User said: admin can do everything BUT for today show only 3.
-            return stat.title !== "Productos Vendidos";
+        if (isSeller || period === 'today') {
+            const todayMetrics = ["Ingresos Totales", "Ventas Totales", "Productos Vendidos"];
+            return todayMetrics.includes(stat.title);
         }
-        // For 'today', only show these three:
-        const todayMetrics = ["Ingresos Totales", "Ventas Totales", "Productos Vendidos"];
-        return todayMetrics.includes(stat.title);
+        return stat.title !== "Productos Vendidos";
     });
 
     return (
         <div className={styles.dashboardContainer}>
             <header className={styles.dashboardHeader}>
                 <div>
-                    <h1>Panel de Gestión</h1>
-                    <p>Resumen de actividad y métricas clave del sistema</p>
+                    <h1>{isSeller ? 'Panel de Vendedor' : 'Panel de Gestión'}</h1>
+                    <p>{isSeller ? 'Resumen de actividad y métricas clave de tu tienda (Hoy)' : 'Resumen de actividad y métricas clave del sistema'}</p>
                 </div>
-                <div className={styles.headerActions}>
-                    <div className={styles.periodToggleWrapper}>
-                        <button
-                            className={`${styles.toggleBtn} ${period === 'today' ? styles.active : ''}`}
-                            onClick={() => setPeriod('today')}
-                        >
-                            Hoy
-                        </button>
-                        <button
-                            className={`${styles.toggleBtn} ${period === 'week' ? styles.active : ''}`}
-                            onClick={() => setPeriod('week')}
-                        >
-                            Esta Semana
-                        </button>
-                        <button
-                            className={`${styles.toggleBtn} ${period === 'month' ? styles.active : ''}`}
-                            onClick={() => setPeriod('month')}
-                        >
-                            Este Mes
-                        </button>
-                        <button
-                            className={`${styles.toggleBtn} ${period === 'historical' ? styles.active : ''}`}
-                            onClick={() => setPeriod('historical')}
-                        >
-                            Histórico
-                        </button>
+                {!isSeller && (
+                    <div className={styles.headerActions}>
+                        <div className={styles.periodToggleWrapper}>
+                            <button
+                                className={`${styles.toggleBtn} ${period === 'today' ? styles.active : ''}`}
+                                onClick={() => setPeriod('today')}
+                            >
+                                Hoy
+                            </button>
+                            <button
+                                className={`${styles.toggleBtn} ${period === 'week' ? styles.active : ''}`}
+                                onClick={() => setPeriod('week')}
+                            >
+                                Esta Semana
+                            </button>
+                            <button
+                                className={`${styles.toggleBtn} ${period === 'month' ? styles.active : ''}`}
+                                onClick={() => setPeriod('month')}
+                            >
+                                Este Mes
+                            </button>
+                            <button
+                                className={`${styles.toggleBtn} ${period === 'historical' ? styles.active : ''}`}
+                                onClick={() => setPeriod('historical')}
+                            >
+                                Histórico
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
             </header>
 
             <div className={styles.statsGrid}>
