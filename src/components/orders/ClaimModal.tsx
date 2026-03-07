@@ -8,19 +8,37 @@ interface Props {
     onClose: () => void;
     purchaseId: string;
     purchaseDate: string;
+    claims?: any[];
     onSuccess: () => void;
 }
 
-export default function ClaimModal({ isOpen, onClose, purchaseId, purchaseDate, onSuccess }: Props) {
+export default function ClaimModal({ isOpen, onClose, purchaseId, claims = [], onSuccess }: Props) {
     const [motivo, setMotivo] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const purchaseDateObj = new Date(purchaseDate);
+    const getLatestClaimDate = () => {
+        if (!claims || claims.length === 0) return null;
+        return claims.reduce((latest, current) => {
+            if (!current.fecha) return latest;
+            const currentDate = new Date(current.fecha);
+            if (!latest || isNaN(latest.getTime())) return currentDate;
+            return currentDate > latest ? currentDate : latest;
+        }, null as Date | null);
+    };
+
+    const lastDate = getLatestClaimDate();
     const now = new Date();
-    const hoursDiff = (now.getTime() - purchaseDateObj.getTime()) / (1000 * 60 * 60);
-    const isTimeRestricted = hoursDiff < 72;
-    const remainingHours = Math.ceil(72 - hoursDiff);
+
+    // Absolute UTC-to-UTC comparison
+    const nowMs = now.getTime();
+    const lastClaimMs = lastDate ? lastDate.getTime() : 0;
+    const diffMs = nowMs - lastClaimMs;
+    const hoursDiff = diffMs / (1000 * 60 * 60);
+
+    // Restriction applies if there are claims (72h between claims)
+    const isTimeRestricted = lastDate && !isNaN(lastClaimMs) && hoursDiff < 72;
+    const remainingHours = lastDate ? Math.max(0, Math.ceil(72 - hoursDiff)) : 0;
 
     if (!isOpen) return null;
 
@@ -81,7 +99,7 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, purchaseDate, 
                             color: '#ffc107',
                             borderRadius: '4px'
                         }}>
-                            <strong>¡Atención!</strong> Deben pasar al menos 72 horas desde la compra para realizar un reclamo.
+                            <strong>¡Atención!</strong> Deben pasar al menos 72 horas desde tu último reclamo para realizar uno nuevo.
                             Faltan aproximadamente {remainingHours} horas.
                         </div>
                     )}

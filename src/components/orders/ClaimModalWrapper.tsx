@@ -5,13 +5,18 @@ export default function ClaimModalWrapper() {
     const [isOpen, setIsOpen] = useState(false);
     const [purchaseId, setPurchaseId] = useState('');
     const [purchaseDate, setPurchaseDate] = useState('');
+    const [claims, setClaims] = useState<any[]>([]);
 
     useEffect(() => {
         const handleOpen = () => {
             const container = document.querySelector('[data-purchase-id]');
             if (container) {
+                const pDate = container.getAttribute('data-purchase-date') || '';
+                const rawClaims = container.getAttribute('data-claims');
                 setPurchaseId(container.getAttribute('data-purchase-id') || '');
-                setPurchaseDate(container.getAttribute('data-purchase-date') || '');
+                setPurchaseDate(pDate);
+                setClaims(rawClaims ? JSON.parse(rawClaims) : []);
+                console.log('[ClaimModal] PurchaseID:', container.getAttribute('data-purchase-id'), 'PurchaseDate:', pDate, 'Claims:', rawClaims);
             }
             setIsOpen(true);
         };
@@ -26,6 +31,7 @@ export default function ClaimModalWrapper() {
             onClose={() => setIsOpen(false)}
             purchaseId={purchaseId}
             purchaseDate={purchaseDate}
+            claims={claims}
             onSuccess={() => {
                 // Optionally refresh order detail or show another message
             }}

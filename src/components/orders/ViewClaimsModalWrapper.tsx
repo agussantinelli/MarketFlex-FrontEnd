@@ -20,8 +20,10 @@ export default function ViewClaimsModalWrapper() {
             const container = document.querySelector('[data-purchase-id]');
             if (container) {
                 const rawClaims = container.getAttribute('data-claims');
+                const pDate = container.getAttribute('data-purchase-date') || '';
                 setClaims(rawClaims ? JSON.parse(rawClaims) : []);
-                setPurchaseDate(container.getAttribute('data-purchase-date') || '');
+                setPurchaseDate(pDate);
+                console.log('[ViewClaimsModal] Claims:', rawClaims, 'PurchaseDate:', pDate);
             }
             setIsOpen(true);
         };

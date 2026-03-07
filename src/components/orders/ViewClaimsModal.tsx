@@ -17,14 +17,31 @@ interface Props {
     purchaseDate: string;
 }
 
-export default function ViewClaimsModal({ isOpen, onClose, claims, purchaseDate }: Props) {
+export default function ViewClaimsModal({ isOpen, onClose, claims }: Props) {
     if (!isOpen) return null;
 
-    const purchaseDateObj = new Date(purchaseDate);
+    const getLatestClaimDate = () => {
+        if (!claims || claims.length === 0) return null;
+        return claims.reduce((latest, current) => {
+            if (!current.fecha) return latest;
+            const currentDate = new Date(current.fecha);
+            if (!latest || isNaN(latest.getTime())) return currentDate;
+            return currentDate > latest ? currentDate : latest;
+        }, null as Date | null);
+    };
+
+    const lastClaimDate = getLatestClaimDate();
     const now = new Date();
-    const hoursDiff = (now.getTime() - purchaseDateObj.getTime()) / (1000 * 60 * 60);
-    const isUnder72h = hoursDiff < 72;
-    const remainingHours = Math.ceil(72 - hoursDiff);
+
+    // UTC-to-UTC comparison in absolute milliseconds
+    const nowMs = now.getTime();
+    const lastClaimMs = lastClaimDate ? lastClaimDate.getTime() : 0;
+    const diffMs = nowMs - lastClaimMs;
+    const hoursDiff = diffMs / (1000 * 60 * 60);
+
+    // 72h cool-down period between claims
+    const isUnder72h = lastClaimDate && !isNaN(lastClaimMs) && hoursDiff < 72;
+    const remainingHours = lastClaimDate ? Math.max(0, Math.ceil(72 - hoursDiff)) : 0;
 
     const getStatusIcon = (estado: string) => {
         switch (estado.toUpperCase()) {
@@ -53,7 +70,7 @@ export default function ViewClaimsModal({ isOpen, onClose, claims, purchaseDate 
                         <div className={styles.infoBox}>
                             <LuInfo size={18} />
                             <span>
-                                <strong>Nota:</strong> Deben pasar 72hs desde la compra para iniciar nuevos reclamos.
+                                <strong>Nota:</strong> Deben pasar 72hs desde tu último reclamo para iniciar uno nuevo.
                                 (Restan {remainingHours}hs aprox.)
                             </span>
                         </div>
