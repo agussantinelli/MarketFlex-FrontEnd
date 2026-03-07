@@ -10,7 +10,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
     product
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const stock = product.stock;
+    const stock = Math.max(0, product.stock - (product.stockComprometido || 0));
 
     const handleOpenModal = (e: React.MouseEvent) => {
         e.preventDefault();

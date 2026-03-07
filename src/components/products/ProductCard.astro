@@ -12,6 +12,10 @@ type Props = {
 };
 
 const { product, showFeatured = false, rank } = Astro.props;
+const stockDisponible = Math.max(
+    0,
+    product.stock - (product.stockComprometido || 0),
+);
 ---
 
 <article class={styles.productCard}>
@@ -87,7 +91,7 @@ const { product, showFeatured = false, rank } = Astro.props;
             </div>
 
             {
-                product.stock === 0 && (
+                stockDisponible === 0 && (
                     <div class={styles.noStockOverlay}>
                         <span>Sin Stock</span>
                     </div>

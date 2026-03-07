@@ -25,6 +25,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     const productId = product.id;
     const productName = product.nombre;
     const productPrice = product.precioConDescuento || product.precioActual || 0;
+    const stockDisponible = Math.max(0, product.stock - (product.stockComprometido || 0));
 
     useEffect(() => {
         setMounted(true);
@@ -43,7 +44,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     // Importante: No renderizar nada en el servidor o si no está abierto
     if (!mounted || (!isOpen && !isVisible)) return null;
 
-    const handleIncrement = () => setQuantity(prev => Math.min(product.stock, prev + 1));
+    const handleIncrement = () => setQuantity(prev => Math.min(stockDisponible, prev + 1));
     const handleDecrement = () => setQuantity(prev => Math.max(1, prev - 1));
 
     const subtotal = (productPrice * quantity).toFixed(2);
@@ -106,7 +107,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
                         <button
                             className={styles.controlBtn}
                             onClick={handleIncrement}
-                            disabled={quantity >= product.stock}
+                            disabled={quantity >= stockDisponible}
                             aria-label="Aumentar cantidad"
                         >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">

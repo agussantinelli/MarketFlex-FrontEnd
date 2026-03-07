@@ -18,6 +18,10 @@ if (!product) {
 }
 
 const hasDiscount = product.precioConDescuento !== null;
+const stockDisponible = Math.max(
+    0,
+    product.stock - (product.stockComprometido || 0),
+);
 ---
 
 <Layout title={`${product.nombre} | MarketFlex`}>
@@ -134,10 +138,10 @@ const hasDiscount = product.precioConDescuento !== null;
 
                 <div class={styles.stockStatus}>
                     {
-                        product.stock > 0 ? (
+                        stockDisponible > 0 ? (
                             <span class={styles.inStock}>
                                 <Icon name="lucide:check-circle" size={18} />
-                                Stock disponible ({product.stock} unidades)
+                                Stock disponible ({stockDisponible} unidades)
                             </span>
                         ) : (
                             <span class={styles.outOfStock}>
@@ -154,7 +158,7 @@ const hasDiscount = product.precioConDescuento !== null;
                             class={styles.quantityBtn}
                             id="decrement-qty"
                             aria-label="Disminuir cantidad"
-                            disabled={product.stock === 0}
+                            disabled={stockDisponible === 0}
                         >
                             <Icon name="lucide:minus" size={18} />
                         </button>
@@ -165,7 +169,7 @@ const hasDiscount = product.precioConDescuento !== null;
                             class={styles.quantityBtn}
                             id="increment-qty"
                             aria-label="Aumentar cantidad"
-                            disabled={product.stock === 0}
+                            disabled={stockDisponible === 0}
                         >
                             <Icon name="lucide:plus" size={18} />
                         </button>
@@ -174,7 +178,7 @@ const hasDiscount = product.precioConDescuento !== null;
                     <button
                         class={styles.addToCart}
                         id="add-to-cart-btn"
-                        disabled={product.stock === 0}
+                        disabled={stockDisponible === 0}
                     >
                         <Icon name="lucide:shopping-cart" size={20} />
                         Agregar al carrito
@@ -254,6 +258,10 @@ const hasDiscount = product.precioConDescuento !== null;
         ? JSON.parse(productData)
         : null;
 
+    const stockDisponible = product
+        ? Math.max(0, product.stock - (product.stockComprometido || 0))
+        : 0;
+
     const addBtn = document.getElementById("add-to-cart-btn");
     const quantityDisplay = document.getElementById("quantity-display");
     const incrementBtn = document.getElementById("increment-qty");
@@ -268,12 +276,12 @@ const hasDiscount = product.precioConDescuento !== null;
         }
         if (incrementBtn && product) {
             (incrementBtn as HTMLButtonElement).disabled =
-                quantity >= product.stock;
+                quantity >= stockDisponible;
         }
     }
 
     incrementBtn?.addEventListener("click", () => {
-        if (product && quantity < product.stock) {
+        if (product && quantity < stockDisponible) {
             quantity++;
             updateDisplay();
         }
