@@ -273,5 +273,19 @@ export const ManagementService = {
                 message: errorData?.message || 'Error al eliminar el mensaje de soporte'
             };
         }
+    },
+    async updateProductStatus(id: string, estado: 'ACTIVO' | 'INACTIVO' | 'BORRADO'): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.patch(`management/products/${id}/status`, {
+                json: { estado }
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar el estado del producto'
+            };
+        }
     }
 };
