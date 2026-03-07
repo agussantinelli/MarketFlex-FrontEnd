@@ -16,6 +16,19 @@ const BrandsListView: React.FC = () => {
     const [newName, setNewName] = useState('');
     const [modalLoading, setModalLoading] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
+
+    useEffect(() => {
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+            } catch (e) {
+                console.error("Error parsing role", e);
+            }
+        }
+    }, []);
 
     const loadBrands = async () => {
         try {
@@ -190,7 +203,7 @@ const BrandsListView: React.FC = () => {
                                         >
                                             <LuPencil size={18} />
                                         </button>
-                                        {(brand.productCount === undefined || brand.productCount === 0) && (
+                                        {role === 'admin' && (brand.productCount === undefined || brand.productCount === 0) && (
                                             <button
                                                 className={`${styles.actionBtn} ${styles.deleteBtn}`}
                                                 onClick={() => handleDeleteClick(brand)}
