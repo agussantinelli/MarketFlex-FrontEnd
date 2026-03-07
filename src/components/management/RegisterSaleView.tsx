@@ -194,14 +194,38 @@ const RegisterSaleView: React.FC = () => {
                                                                     p.promocionActiva.nombre}
                                                         </span>
                                                     )}
-                                                    {p.descuentoActivo && !p.promocionActiva && (
-                                                        <span style={{ background: 'var(--neon-green)', color: 'black', fontSize: '0.65rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '4px' }}>
+                                                    {p.descuentoActivo && (
+                                                        <span style={{
+                                                            background: 'rgba(0, 255, 136, 0.15)',
+                                                            color: 'var(--neon-green)',
+                                                            fontSize: '0.65rem',
+                                                            fontWeight: '700',
+                                                            padding: '2px 8px',
+                                                            borderRadius: '6px',
+                                                            border: '1px solid rgba(0, 255, 136, 0.3)',
+                                                            display: 'inline-flex',
+                                                            alignItems: 'center',
+                                                            gap: '4px',
+                                                            boxShadow: '0 0 10px rgba(0, 255, 136, 0.1)'
+                                                        }}>
+                                                            <LuTag size={10} />
                                                             {p.descuentoActivo.porcentaje ? `-${p.descuentoActivo.porcentaje}%` : `-$${p.descuentoActivo.montoFijo}`}
                                                         </span>
                                                     )}
                                                 </div>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span className={styles.productPrice}>${parseFloat(p.precioActual || p.precio).toLocaleString()}</span>
+                                                    {p.descuentoActivo ? (
+                                                        <>
+                                                            <span className={styles.productPrice} style={{ color: 'var(--neon-green)' }}>
+                                                                ${parseFloat(p.precioConDescuento || p.precioActual || p.precio).toLocaleString()}
+                                                            </span>
+                                                            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'line-through', opacity: 0.6 }}>
+                                                                ${parseFloat(p.precioActual || p.precio).toLocaleString()}
+                                                            </span>
+                                                        </>
+                                                    ) : (
+                                                        <span className={styles.productPrice}>${parseFloat(p.precioActual || p.precio).toLocaleString()}</span>
+                                                    )}
                                                     {p.stock <= 0 ? (
                                                         <span style={{ color: 'var(--error-red)', fontSize: '0.75rem', fontWeight: 600, background: 'rgba(239, 68, 68, 0.1)', padding: '2px 6px', borderRadius: '4px' }}>
                                                             Sin Stock
@@ -248,7 +272,9 @@ const RegisterSaleView: React.FC = () => {
                                             </div>
                                             <div className={styles.productInfo}>
                                                 <span className={styles.productName}>{p.nombre}</span>
-                                                <span className={styles.productPrice}>${p.precio.toLocaleString()} × {p.cantidad}</span>
+                                                <span className={styles.productPrice}>
+                                                    ${(p.precioConDescuento || p.precio).toLocaleString()} × {p.cantidad}
+                                                </span>
                                             </div>
                                             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                                                 <div style={{ display: 'flex', gap: '4px' }}>
@@ -595,11 +621,13 @@ const RegisterSaleView: React.FC = () => {
                                     </div>
                                     <div className={styles.productInfo}>
                                         <span className={styles.productName} style={{ fontSize: '0.85rem' }}>{p.nombre}</span>
-                                        <span className={styles.productPrice} style={{ fontSize: '0.75rem', opacity: 0.6 }}>${p.precio.toLocaleString()} c/u</span>
+                                        <span className={styles.productPrice} style={{ fontSize: '0.75rem', opacity: 0.6 }}>
+                                            ${(p.precioConDescuento || p.precio).toLocaleString()} c/u
+                                        </span>
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
                                         <div style={{ color: 'var(--neon-green)', fontWeight: 700, fontSize: '0.9rem' }}>
-                                            ${(p.precio * p.cantidad).toLocaleString()}
+                                            ${((p.precioConDescuento || p.precio) * p.cantidad).toLocaleString()}
                                         </div>
                                         <div style={{ fontSize: '0.75rem', opacity: 0.5 }}>Cant: {p.cantidad}</div>
                                     </div>
