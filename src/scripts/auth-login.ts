@@ -19,8 +19,10 @@ const handleFacebookCodeLogin = async (code: string, redirectUri: string) => {
         localStorage.setItem("marketflex_user", JSON.stringify(result.user));
 
         const userName = result.user.nombre || "Usuario";
-        const redirectUrl = result.user.rol === "admin" ? "/management/dashboard" : "/";
-        if (result.user.rol === "admin") {
+        const redirectUrl = result.user.rol === "admin" || result.user.rol === "seller"
+            ? "/management/dashboard"
+            : "/";
+        if (result.user.rol === "admin" || result.user.rol === "seller") {
             localStorage.setItem("marketflex_management:isManagementMode", "true");
         }
         window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}`;
@@ -44,8 +46,10 @@ const handleGoogleLogin = async (credentialResponse: any) => {
 
         const userName = result.user.nombre || "Usuario";
         const newParam = result.isNewUser ? "&new=true" : "";
-        const redirectUrl = result.user.rol === "admin" ? "/management/dashboard" : "/";
-        if (result.user.rol === "admin") {
+        const redirectUrl = result.user.rol === "admin" || result.user.rol === "seller"
+            ? "/management/dashboard"
+            : "/";
+        if (result.user.rol === "admin" || result.user.rol === "seller") {
             localStorage.setItem("marketflex_management:isManagementMode", "true");
         }
         window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
@@ -167,8 +171,10 @@ export function initLogin() {
                 localStorage.setItem("marketflex_refresh_token", response.refreshToken);
                 localStorage.setItem("marketflex_user", JSON.stringify(response.user));
 
-                const redirectUrl = response.user.rol === "admin" ? "/management/dashboard" : "/";
-                if (response.user.rol === "admin") {
+                const redirectUrl = response.user.rol === "admin" || response.user.rol === "seller"
+                    ? "/management/dashboard"
+                    : "/";
+                if (response.user.rol === "admin" || response.user.rol === "seller") {
                     localStorage.setItem("marketflex_management:isManagementMode", "true");
                 }
                 window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(response.user.nombre || "Usuario")}`;

@@ -21,14 +21,14 @@ const { title, parentTitle, parentUrl } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Panel de Gestión MarketFlex" />
+        <meta name="description" content="Panel de Control MarketFlex" />
         <link
             rel="icon"
             type="image/svg+xml"
             href="/logo-marketflex-circle.png"
         />
         <meta name="generator" content={Astro.generator} />
-        <title>{title} | MarketFlex Management</title>
+        <title>{title} | MarketFlex</title>
         <ViewTransitions />
         <script is:inline>
             window.showManagementLoader = () => {
@@ -40,6 +40,10 @@ const { title, parentTitle, parentUrl } = Astro.props;
                 const overlay = document.getElementById("nav-loading-overlay");
                 if (overlay) overlay.classList.remove("active");
             };
+
+            // Aliases for compatibility
+            window.showSellerLoader = window.showManagementLoader;
+            window.hideSellerLoader = window.hideManagementLoader;
 
             // Start loader on transition
             document.addEventListener("astro:before-preparation", () => {
@@ -53,7 +57,6 @@ const { title, parentTitle, parentUrl } = Astro.props;
                         "nav-loading-overlay",
                     );
                     if (overlay && overlay.classList.contains("active")) {
-                        console.warn("Loader fallback triggered");
                         window.hideManagementLoader();
                     }
                 }, 15000);
@@ -68,7 +71,7 @@ const { title, parentTitle, parentUrl } = Astro.props;
             }
             .management-main {
                 flex: 1;
-                margin-left: 260px; /* Width of the sidebar */
+                margin-left: 260px;
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
@@ -78,18 +81,8 @@ const { title, parentTitle, parentUrl } = Astro.props;
                 flex: 1;
                 padding: 2rem;
                 overflow-y: auto;
-                overflow-x: hidden; /* Evitar scroll horizontal global */
+                overflow-x: hidden;
                 min-width: 0;
-            }
-
-            @media (max-width: 1440px) {
-                .management-main {
-                    margin-left: 260px; /* Mantener fijo hasta 1024 */
-                }
-            }
-
-            @media (max-width: 1366px) {
-                /* Ajuste sutil para laptops si fuera necesario, por ahora 260 esta ok */
             }
 
             @media (max-width: 1024px) {
@@ -99,19 +92,6 @@ const { title, parentTitle, parentUrl } = Astro.props;
                 .management-content {
                     padding: 1.5rem;
                 }
-            }
-
-            @media (max-width: 768px) {
-                .management-content {
-                    padding: 1rem;
-                }
-            }
-
-            /* Neon Variables for Management context */
-            :root {
-                --neon-green: #00ff88;
-                --light-green: #34d399;
-                --deep-black: #0f172a;
             }
 
             .nav-loading-overlay {
@@ -136,7 +116,7 @@ const { title, parentTitle, parentUrl } = Astro.props;
     <body>
         <div class="management-container">
             <div id="nav-loading-overlay" class="nav-loading-overlay">
-                <LoadingSpinner fullPage message="Cargando sección..." />
+                <LoadingSpinner fullPage message="Cargando..." />
             </div>
             <ManagementSidebar client:load />
             <div class="management-main">
@@ -151,50 +131,36 @@ const { title, parentTitle, parentUrl } = Astro.props;
             </div>
         </div>
 
-        <!-- Sileo Root for notifications -->
         <span id="sileo-root"></span>
 
         <script>
-            const checkManagementAccess = () => {
+            const checkAccess = () => {
                 const userStr = localStorage.getItem("marketflex_user");
+                const path = window.location.pathname;
+
                 if (!userStr) {
-                    window.location.href =
-                        "/login?redirect=/management/dashboard";
+                    window.location.href = `/login?redirect=${path}`;
                     return;
                 }
 
                 try {
                     const user = JSON.parse(userStr);
-                    if (user.rol !== "admin") {
+
+                    // Allow both admin and seller for management/seller routes
+                    if (user.rol !== "admin" && user.rol !== "seller") {
                         window.location.href = "/";
                         return;
                     }
 
-                    const isManagementModeStr = localStorage.getItem(
-                        "marketflex_management:isManagementMode",
-                    );
-                    if (isManagementModeStr === "false") {
-                        window.location.href = "/";
-                        return;
-                    }
-
-                    if (localStorage.getItem("marketflex_management:")) {
-                        localStorage.removeItem("marketflex_management:");
-                    }
+                    // Admin specific additional check if needed, but for now we trust the roles
                 } catch (e) {
                     window.location.href = "/login";
                 }
             };
 
-            checkManagementAccess();
-
-            // Support for View Transitions
-            document.addEventListener(
-                "astro:after-swap",
-                checkManagementAccess,
-            );
+            checkAccess();
+            document.addEventListener("astro:after-swap", checkAccess);
         </script>
         <Notifications client:only="react" />
     </body>
 </html>
-
