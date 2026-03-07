@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { AdminService } from './admin.service';
+import { ManagementService } from './management\.service';
 import { api } from '../lib/api';
 
 vi.mock('../lib/api', () => ({
@@ -8,7 +8,7 @@ vi.mock('../lib/api', () => ({
     }
 }));
 
-describe('AdminService', () => {
+describe('ManagementService', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
@@ -29,9 +29,9 @@ describe('AdminService', () => {
                 json: vi.fn().mockResolvedValue({ data: mockStats })
             });
 
-            const result = await AdminService.getStats();
+            const result = await ManagementService.getStats();
             expect(result).toEqual(mockStats);
-            expect(api.get).toHaveBeenCalledWith('admin/stats?period=month');
+            expect(api.get).toHaveBeenCalledWith('management/stats?period=month');
         });
 
         it('should return null on failure', async () => {
@@ -39,7 +39,7 @@ describe('AdminService', () => {
                 json: vi.fn().mockRejectedValue(new Error('Fetch error'))
             });
 
-            const result = await AdminService.getStats();
+            const result = await ManagementService.getStats();
             expect(result).toBeNull();
         });
     });
@@ -51,9 +51,9 @@ describe('AdminService', () => {
                 json: vi.fn().mockResolvedValue({ data: mockPurchases })
             });
 
-            const result = await AdminService.getAllPurchases();
+            const result = await ManagementService.getAllPurchases();
             expect(result).toEqual(mockPurchases);
-            expect(api.get).toHaveBeenCalledWith('admin/purchases');
+            expect(api.get).toHaveBeenCalledWith('management/purchases');
         });
 
         it('should return empty array on failure', async () => {
@@ -61,7 +61,7 @@ describe('AdminService', () => {
                 json: vi.fn().mockRejectedValue(new Error('Fetch error'))
             });
 
-            const result = await AdminService.getAllPurchases();
+            const result = await ManagementService.getAllPurchases();
             expect(result).toEqual([]);
         });
     });
@@ -73,10 +73,10 @@ describe('AdminService', () => {
                 json: vi.fn().mockResolvedValue({ status: 'success', data: mockData })
             });
 
-            const result = await AdminService.createProduct({ nombre: 'Test Prod' });
+            const result = await ManagementService.createProduct({ nombre: 'Test Prod' });
             expect(result.status).toBe('success');
             expect(result.data).toEqual(mockData);
-            expect(api.post).toHaveBeenCalledWith('admin/products', { json: { nombre: 'Test Prod' } });
+            expect(api.post).toHaveBeenCalledWith('management/products', { json: { nombre: 'Test Prod' } });
         });
 
         it('should handle API errors', async () => {
@@ -86,7 +86,7 @@ describe('AdminService', () => {
                 })
             });
 
-            const result = await AdminService.createProduct({});
+            const result = await ManagementService.createProduct({});
             expect(result.status).toBe('error');
             expect(result.message).toBe('Validation failed');
         });
@@ -99,10 +99,10 @@ describe('AdminService', () => {
                 json: vi.fn().mockResolvedValue({ status: 'success', data: mockTags })
             });
 
-            const result = await AdminService.generateTags('Test', 'Desc');
+            const result = await ManagementService.generateTags('Test', 'Desc');
             expect(result.status).toBe('success');
             expect(result.data).toEqual(mockTags);
-            expect(api.post).toHaveBeenCalledWith('admin/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' }, timeout: 60000 });
+            expect(api.post).toHaveBeenCalledWith('management/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' }, timeout: 60000 });
         });
 
         it('should handle API errors', async () => {
@@ -112,9 +112,10 @@ describe('AdminService', () => {
                 })
             });
 
-            const result = await AdminService.generateTags('Test', 'Desc');
+            const result = await ManagementService.generateTags('Test', 'Desc');
             expect(result.status).toBe('error');
             expect(result.message).toBe('AI error');
         });
     });
 });
+

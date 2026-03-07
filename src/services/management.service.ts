@@ -1,20 +1,20 @@
 import { api } from '../lib/api';
-import type { AdminStats, AdminPurchase, AdminProduct, PaginatedResponse } from '../types/admin.types';
+import type { ManagementStats, ManagementPurchase, ManagementProduct, PaginatedResponse } from '../types/management.types';
 
-export const AdminService = {
-    async getStats(period: 'today' | 'week' | 'month' | 'historical' = 'month'): Promise<AdminStats | null> {
+export const ManagementService = {
+    async getStats(period: 'today' | 'week' | 'month' | 'historical' = 'month'): Promise<ManagementStats | null> {
         try {
-            const result = await api.get(`admin/stats?period=${period}`).json<{ data: AdminStats }>();
+            const result = await api.get(`management/stats?period=${period}`).json<{ data: ManagementStats }>();
             return result.data;
         } catch (error) {
-            console.error('Error fetching admin stats:', error);
+            console.error('Error fetching management stats:', error);
             return null;
         }
     },
 
-    async getAllPurchases(): Promise<AdminPurchase[]> {
+    async getAllPurchases(): Promise<ManagementPurchase[]> {
         try {
-            const result = await api.get('admin/purchases').json<{ data: AdminPurchase[] }>();
+            const result = await api.get('management/purchases').json<{ data: ManagementPurchase[] }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching all purchases:', error);
@@ -22,9 +22,9 @@ export const AdminService = {
         }
     },
 
-    async getAnalytics(): Promise<import('../types/admin.types').AnalyticsData | null> {
+    async getAnalytics(): Promise<import('../types/management.types').AnalyticsData | null> {
         try {
-            const result = await api.get('admin/analytics').json<{ status: string; data: import('../types/admin.types').AnalyticsData }>();
+            const result = await api.get('management/analytics').json<{ status: string; data: import('../types/management.types').AnalyticsData }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching analytics:', error);
@@ -32,21 +32,21 @@ export const AdminService = {
         }
     },
 
-    async getProducts(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<AdminProduct> | null> {
+    async getProducts(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<ManagementProduct> | null> {
         try {
             const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
             const sortParam = sort ? `&sort=${sort}` : '';
-            const result = await api.get(`admin/products?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<AdminProduct>>();
+            const result = await api.get(`management/products?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<ManagementProduct>>();
             return result;
         } catch (error) {
-            console.error('Error fetching admin products:', error);
+            console.error('Error fetching management products:', error);
             return null;
         }
     },
 
     async toggleFeature(productId: string, esDestacado: boolean): Promise<{ status: string; message: string } | null> {
         try {
-            const result = await api.patch(`admin/products/${productId}/feature`, {
+            const result = await api.patch(`management/products/${productId}/feature`, {
                 json: { esDestacado }
             }).json<{ status: string; message: string }>();
             return result;
@@ -60,7 +60,7 @@ export const AdminService = {
     },
     async createProduct(data: any): Promise<{ status: string; data?: any; message?: string }> {
         try {
-            const result = await api.post('admin/products', {
+            const result = await api.post('management/products', {
                 json: data
             }).json<{ status: string; data: any }>();
             return result;
@@ -74,7 +74,7 @@ export const AdminService = {
     },
     async updateProduct(id: string, data: any): Promise<{ status: string; message?: string }> {
         try {
-            const result = await api.put(`admin/products/${id}`, {
+            const result = await api.put(`management/products/${id}`, {
                 json: data
             }).json<{ status: string; message: string }>();
             return result;
@@ -86,9 +86,9 @@ export const AdminService = {
             };
         }
     },
-    async getAdminProduct(id: string): Promise<{ status: string; data?: any; message?: string }> {
+    async getManagementProduct(id: string): Promise<{ status: string; data?: any; message?: string }> {
         try {
-            const result = await api.get(`admin/products/${id}`).json<{ status: string; data: any }>();
+            const result = await api.get(`management/products/${id}`).json<{ status: string; data: any }>();
             return result;
         } catch (error: any) {
             const errorData = await error.response?.json().catch(() => null);
@@ -97,7 +97,7 @@ export const AdminService = {
     },
     async generateTags(nombre: string, descripcion: string): Promise<{ status: string; data?: string[]; message?: string }> {
         try {
-            const result = await api.post('admin/generate-tags', {
+            const result = await api.post('management/generate-tags', {
                 json: { nombre, descripcion },
                 timeout: 60000 // override 10s default timeout
             }).json<{ status: string; data: string[] }>();
@@ -110,22 +110,22 @@ export const AdminService = {
             };
         }
     },
-    async getUsers(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<import('../types/admin.types').AdminUser> | null> {
+    async getUsers(page: number = 1, limit: number = 10, search?: string, sort?: string): Promise<PaginatedResponse<import('../types/management.types').ManagementUser> | null> {
         try {
             const searchParam = search ? `&q=${encodeURIComponent(search)}` : '';
             const sortParam = sort ? `&sort=${sort}` : '';
-            const result = await api.get(`admin/users?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<import('../types/admin.types').AdminUser>>();
+            const result = await api.get(`management/users?page=${page}&limit=${limit}${searchParam}${sortParam}`).json<PaginatedResponse<import('../types/management.types').ManagementUser>>();
             return result;
         } catch (error) {
-            console.error('Error fetching admin users:', error);
+            console.error('Error fetching management users:', error);
             return null;
         }
     },
-    async createUser(data: any): Promise<{ status: string; data?: import('../types/admin.types').AdminUser; message?: string }> {
+    async createUser(data: any): Promise<{ status: string; data?: import('../types/management.types').ManagementUser; message?: string }> {
         try {
-            const result = await api.post('admin/users', {
+            const result = await api.post('management/users', {
                 json: data
-            }).json<{ status: string; data: import('../types/admin.types').AdminUser }>();
+            }).json<{ status: string; data: import('../types/management.types').ManagementUser }>();
             return result;
         } catch (error: any) {
             const errorData = await error.response?.json().catch(() => null);
@@ -135,9 +135,9 @@ export const AdminService = {
             };
         }
     },
-    async getUserById(id: string): Promise<{ status: string; data?: import('../types/admin.types').AdminUser & any; message?: string }> {
+    async getUserById(id: string): Promise<{ status: string; data?: import('../types/management.types').ManagementUser & any; message?: string }> {
         try {
-            const result = await api.get(`admin/users/${id}`).json<{ status: string; data: any }>();
+            const result = await api.get(`management/users/${id}`).json<{ status: string; data: any }>();
             return result;
         } catch (error: any) {
             const errorData = await error.response?.json().catch(() => null);
@@ -149,7 +149,7 @@ export const AdminService = {
     },
     async updateUser(id: string, data: any): Promise<{ status: string; message?: string }> {
         try {
-            const result = await api.patch(`admin/users/${id}`, {
+            const result = await api.patch(`management/users/${id}`, {
                 json: data
             }).json<{ status: string; message: string }>();
             return result;
@@ -161,9 +161,9 @@ export const AdminService = {
             };
         }
     },
-    async getUserPurchases(id: string): Promise<AdminPurchase[]> {
+    async getUserPurchases(id: string): Promise<ManagementPurchase[]> {
         try {
-            const result = await api.get(`admin/users/${id}/purchases`).json<{ data: AdminPurchase[] }>();
+            const result = await api.get(`management/users/${id}/purchases`).json<{ data: ManagementPurchase[] }>();
             return result.data;
         } catch (error) {
             console.error('Error fetching user purchases:', error);
@@ -172,7 +172,7 @@ export const AdminService = {
     },
     async deleteUser(id: string): Promise<{ status: string; message: string }> {
         try {
-            const result = await api.delete(`admin/users/${id}`).json<{ status: string; message: string }>();
+            const result = await api.delete(`management/users/${id}`).json<{ status: string; message: string }>();
             return result;
         } catch (error: any) {
             const errorData = await error.response?.json().catch(() => null);
@@ -184,16 +184,16 @@ export const AdminService = {
     },
     async searchProducts(query: string): Promise<any[]> {
         try {
-            const result = await api.get(`admin/products?q=${encodeURIComponent(query)}&limit=5`).json<PaginatedResponse<AdminProduct>>();
+            const result = await api.get(`management/products?q=${encodeURIComponent(query)}&limit=5`).json<PaginatedResponse<ManagementProduct>>();
             return result.data;
         } catch (error) {
             console.error('Error searching products:', error);
             return [];
         }
     },
-    async getPurchaseById(id: string): Promise<AdminPurchase | null> {
+    async getPurchaseById(id: string): Promise<ManagementPurchase | null> {
         try {
-            const result = await api.get(`admin/purchases`).json<{ data: AdminPurchase[] }>();
+            const result = await api.get(`management/purchases`).json<{ data: ManagementPurchase[] }>();
             return result.data.find(p => p.id === id) || null;
         } catch (error) {
             console.error('Error fetching purchase:', error);
@@ -202,7 +202,7 @@ export const AdminService = {
     },
     async updatePurchase(id: string, data: { estado?: string; metodoPago?: string; tipoEntrega?: string; envio?: any }): Promise<{ status: string; message?: string }> {
         try {
-            const result = await api.patch(`admin/purchases/${id}`, {
+            const result = await api.patch(`management/purchases/${id}`, {
                 json: data
             }).json<{ status: string; message: string }>();
             return result;
