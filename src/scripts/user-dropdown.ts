@@ -6,7 +6,6 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
     // Role based elements
     const managementLinks = document.querySelectorAll(".management-only");
-    const sellerLinks = document.querySelectorAll(".seller-only");
     const customerLinks = document.querySelectorAll(".customer-only");
 
     // Explicit Management Navigation Buttons
@@ -75,15 +74,12 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
             // Role Based Visibility - Base State
             if (user.rol === "admin") {
                 managementLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
-                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
             } else if (user.rol === "seller") {
                 managementLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
-                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex")); // Let sellers see their purchases too
             } else {
                 managementLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
-                sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
             }
         }
@@ -93,11 +89,13 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
             const userStr = localStorage.getItem("marketflex_user");
             const user = userStr ? JSON.parse(userStr) : null;
             const isAdmin = user && user.rol === "admin";
+            const isSeller = user && user.rol === "seller";
 
-            if (isAdmin) {
-                const isManagementRoute = window.location.pathname.startsWith("/management");
+            if (isAdmin || isSeller) {
+                const basePath = "/management";
+                const isPanelRoute = window.location.pathname.startsWith(basePath);
 
-                if (isManagementRoute) {
+                if (isPanelRoute) {
                     clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
                     goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                     goClientBtns.forEach(btn => {
@@ -109,11 +107,13 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                     goManagementBtns.forEach(btn => {
                         (btn as HTMLElement).style.display = 'flex';
                         (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
+                        const label = btn.querySelector('.btn-label');
+                        if (label) label.textContent = isAdmin ? 'Panel Gestión' : 'Panel Vendedor';
                     });
                     goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 }
             } else {
-                // Not an admin, ensure neither button is shown
+                // Not admin nor seller, ensure neither button is shown
                 goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
             }
@@ -127,8 +127,10 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
         const navigateToManagement = (e: Event) => {
             e.preventDefault();
             e.stopPropagation();
+            const path = "/management/dashboard";
+
             localStorage.setItem("marketflex_management:isManagementMode", "true");
-            setTimeout(() => { window.location.href = "/management/dashboard"; }, 50);
+            setTimeout(() => { window.location.href = path; }, 50);
         };
 
         const navigateToClient = (e: Event) => {

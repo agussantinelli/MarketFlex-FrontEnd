@@ -39,6 +39,8 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mi Perfil
         </a>
 
+        <div class={styles.dropdownDivider}></div>
+
         <!-- Client Purchases Link (Hidden in Admin Mode via JS) -->
         <a
             id="client-purchases-link"
@@ -49,30 +51,19 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mis Compras
         </a>
 
-        <!-- Seller Panel Link (New) -->
-        <a
-            id="seller-panel-link"
-            href="/seller/dashboard"
-            class={`${styles.dropdownItem} seller-only`}
-            style="display: none;"
-        >
-            <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
-            Panel Vendedor
-        </a>
-
         <div
             class={`${styles.dropdownDivider} management-only`}
             style="display: none;"
         >
         </div>
 
-        <!-- Admin Mode Button (Visible to admins when in client mode) -->
+        <!-- Admin Mode Button (Visible to admins/sellers when in client mode) -->
         <button
             class={`${styles.dropdownItem} ${styles.viewToggleBtn} management-only go-management-btn`}
             style="display: none;"
         >
             <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
-            <span>Cambiar al Panel Administrador</span>
+            <span class="btn-label">Cambiar al Panel Gestión</span>
         </button>
 
         <button
