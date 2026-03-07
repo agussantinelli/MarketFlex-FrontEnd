@@ -44,7 +44,7 @@ const RemoveDiscountModal: React.FC<RemoveDiscountModalProps> = ({ isOpen, onClo
                     </button>
                 </div>
 
-                <form className={styles.modalForm} onSubmit={handleSubmit}>
+                <form role="form" className={styles.modalForm} onSubmit={handleSubmit}>
                     <p style={{ color: 'var(--text-color)', fontSize: '0.95rem', lineHeight: '1.5' }}>
                         ¿Estás seguro que deseas quitar el descuento actual de este producto? El precio volverá a su valor original inmediatamente.
                     </p>
