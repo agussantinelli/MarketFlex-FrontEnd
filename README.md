@@ -454,13 +454,12 @@
 ├── src/                                            # Núcleo del frontend de la aplicación (Arquitectura Astro + React).
 │   ├── components/                                 # Biblioteca de componentes modulares.
 │   │   ├── management/                             # Componentes exclusivos del panel de gestión (React + CSS Modules).
-│   │   │   ├── ManagementAuthInputs.test.tsx       # Test de inputs de autenticación de gestión.
-│   │   │   ├── ManagementAuthInputs.tsx            # Campos reutilizables de login de gestión.
-│   │   │   ├── ManagementHeader.astro              # Barra de navegación de gestión.
-│   │   │   ├── ManagementSidebar.test.tsx          # Test del menú lateral dinámico.
-│   │   │   ├── ManagementSidebar.tsx               # Menú lateral dinámico con estados de navegación.
+│   │   │   ├── AffectedProductsModal.test.tsx      # Test del modal de productos afectados.
+│   │   │   ├── AffectedProductsModal.tsx           # Modal para visualizar productos impactados por cambios.
 │   │   │   ├── AnalyticsView.test.tsx              # Test del dashboard de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Dashboard interactivo con Recharts.
+│   │   │   ├── ApplyDiscountModal.test.tsx         # Test del modal de aplicación de descuentos.
+│   │   │   ├── ApplyDiscountModal.tsx              # Modal para aplicar descuentos a productos.
 │   │   │   ├── BrandsListView.test.tsx             # Test de gestión de marcas.
 │   │   │   ├── BrandsListView.tsx                  # Gestión de marcas y editoriales.
 │   │   │   ├── CategoriesListView.test.tsx         # Test de gestión de categorías.
@@ -469,22 +468,30 @@
 │   │   │   ├── CharacteristicsListView.tsx         # Gestión de atributos dinámicos.
 │   │   │   ├── ClaimsListView.test.tsx             # Test de monitorización de reclamos.
 │   │   │   ├── ClaimsListView.tsx                  # Monitorización de reclamos post-venta.
+│   │   │   ├── CreateProductView.test.tsx          # Test del wizard de creación de productos.
+│   │   │   ├── CreateProductView.tsx               # Wizard multi-paso para el alta de productos.
 │   │   │   ├── CreateUserView.test.tsx             # Test del formulario de alta de usuarios.
 │   │   │   ├── CreateUserView.tsx                  # Formulario multi-paso de creación de usuarios.
 │   │   │   ├── DashboardView.test.tsx              # Test del panel principal de métricas.
 │   │   │   ├── DashboardView.tsx                   # Vista principal de estados y métricas.
 │   │   │   ├── DataTable.test.tsx                  # Test del componente de tabla universal.
 │   │   │   ├── DataTable.tsx                       # Componente core: Tabla universal con filtros y ordenamiento.
+│   │   │   ├── EditProductView.test.tsx            # Test del formulario de edición de productos.
+│   │   │   ├── EditProductView.tsx                 # Formulario para editar productos existentes.
 │   │   │   ├── EditSaleView.test.tsx               # Test del wizard de edición de ventas.
 │   │   │   ├── EditSaleView.tsx                    # Wizard multi-paso para editar estado y pago de ventas.
 │   │   │   ├── ProductsListView.test.tsx           # Test de gestión del catálogo de productos.
 │   │   │   ├── ProductsListView.tsx                # Gestión integral del catálogo.
+│   │   │   ├── ManagementProductDetailView.test.tsx # Test del detalle de producto en gestión.
+│   │   │   ├── ManagementProductDetailView.tsx      # Vista de detalle técnico para administración.
 │   │   │   ├── PromotionForm.test.tsx              # Test del formulario dinámico de campañas.
 │   │   │   ├── PromotionForm.tsx                   # Formulario dinámico para creación de ofertas NxM.
 │   │   │   ├── PromotionsListView.test.tsx         # Test de galería de campañas activas.
 │   │   │   ├── PromotionsListView.tsx              # Galería de campañas activas.
 │   │   │   ├── RegisterSaleView.test.tsx           # Test del formulario de registro manual de ventas.
 │   │   │   ├── RegisterSaleView.tsx                # Formulario de alta manual de ventas presenciales.
+│   │   │   ├── RemoveDiscountModal.test.tsx        # Test del modal de remoción de descuentos.
+│   │   │   ├── RemoveDiscountModal.tsx             # Modal para quitar descuentos activos.
 │   │   │   ├── SaleDetailModal.test.tsx            # Test del modal de detalle de venta.
 │   │   │   ├── SaleDetailModal.tsx                 # Modal con desglose completo de transacción.
 │   │   │   ├── SalesListView.test.tsx              # Test del historial de ventas.
@@ -493,6 +500,8 @@
 │   │   │   ├── StatTable.tsx                       # Tablas de resumen para métricas rápidas.
 │   │   │   ├── SubcategoriesListView.test.tsx      # Test de jerarquías secundarias.
 │   │   │   ├── SubcategoriesListView.tsx           # Gestión de jerarquías secundarias y productos vinculados.
+│   │   │   ├── UpdatePriceModal.test.tsx           # Test del modal de actualización de precios.
+│   │   │   ├── UpdatePriceModal.tsx                # Modal para cambios rápidos de precio.
 │   │   │   ├── SupportListView.test.tsx            # Test del centro de respuesta a consultas.
 │   │   │   ├── SupportListView.tsx                 # Centro de respuesta interactivo a consultas de clientes.
 │   │   │   ├── UserEditView.test.tsx               # Test del formulario de edición de usuario.
@@ -571,11 +580,35 @@
 │   │   │   └── support.astro                       # Centro de atención al cliente.
 │   │   ├── auth/                                   # Login, Registro y Recuperación.
 │   │   └── shop/                                   # Navegación del catálogo público.
-│   ├── scripts/                                    # Lógica client-side para componentes Astro.
-│   │   ├── auth-login.ts                           # Manejo de sumisión de formularios de identidad.
-│   │   ├── carousel.ts                             # Motor de interacción de carruseles neón.
-│   │   ├── filter-modal.ts                         # Lógica de filtrado dinámico en tiempo real.
-│   │   └── navbar.ts                               # Efectos y navegación responsiva.
+│   ├── scripts/                                    # Lógica interactiva cliente (Islands logic).
+│   │   ├── auth-login.test.ts                      # Test de validación de credenciales.
+│   │   ├── auth-login.ts                           # Lógica de login y manejo de tokens.
+│   │   ├── auth-register.test.ts                   # Test de validación de registro.
+│   │   ├── auth-register.ts                        # Lógica de creación de cuentas y Captcha.
+│   │   ├── carousel.test.ts                        # Test de mecánica del slider.
+│   │   ├── carousel.ts                             # Animaciones del carrusel neón.
+│   │   ├── checkout-failure.test.ts                # Test de flujo de error.
+│   │   ├── checkout-failure.ts                     # Lógica visual tras falla de pago.
+│   │   ├── checkout-success.test.ts                # Test de flujo de éxito.
+│   │   ├── checkout-success.ts                     # Lógica de limpieza y confeti post-compra.
+│   │   ├── contact.test.ts                         # Test de validación de formulario.
+│   │   ├── contact.ts                              # Lógica de envío de tickets de soporte.
+│   │   ├── filter-modal.test.ts                    # Test de apertura/cierre de modal.
+│   │   ├── filter-modal.ts                         # Lógica interactiva de filtros avanzados.
+│   │   ├── navbar.test.ts                          # Test de búsqueda y menús fijos.
+│   │   ├── navbar.ts                               # Navegación y búsqueda predictiva CLIENT-SIDE.
+│   │   ├── order-detail.test.ts                    # Test de visualización de ítems.
+│   │   ├── order-detail.ts                         # Lógica interactiva de detalle de orden.
+│   │   ├── orders-list.test.ts                     # Test de paginación de órdenes.
+│   │   ├── orders-list.ts                          # Inyectado dinámico del historial de compras.
+│   │   ├── profile.test.ts                         # Test de edición de perfil.
+│   │   ├── profile.ts                              # Lógica de gestión de datos de cuenta.
+│   │   ├── promotion-hero.test.ts                  # Test de animación del hero.
+│   │   ├── promotion-hero.ts                       # Control de diapositivas de la sección hero.
+│   │   ├── search-filters.test.ts                  # Test de sincronización de filtros.
+│   │   ├── search-filters.ts                       # Coordinación de estados UI de búsqueda.
+│   │   ├── user-dropdown.test.ts                   # Tests del componente menú de opciones de usuario.
+│   │   └── user-dropdown.ts                        # Lógica interactiva del menú de opciones y vistas de rol.
 │   ├── services/                                   # Capa de abstracción de datos (Llamadas a API).
 │   │   ├── management.service.test.ts              # Test de obtención de estadísticas y compras.
 │   │   ├── management.service.ts                   # Consumo de métricas y reportes.
@@ -751,7 +784,6 @@
 │   │   ├── product.service.ts                      # Gestión de productos, filtros y búsqueda.
 │   │   ├── promotion.service.test.ts               # Test de campañas activas.
 │   │   ├── promotion.service.ts                    # Obtención de banners y descuentos.
-│   │   ├── promotions.service.ts                   # Servicio CRUD de promociones para gestión.
 │   │   ├── purchase.service.test.ts                # Test unitario de órdenes.
 │   │   ├── purchase.service.ts                     # Gestión de transacciones y estados.
 │   │   ├── subcategory.service.test.ts             # Test de subcategorías específicas.
