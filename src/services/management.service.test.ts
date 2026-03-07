@@ -4,7 +4,8 @@ import { api } from '../lib/api';
 
 vi.mock('../lib/api', () => ({
     api: {
-        get: vi.fn()
+        get: vi.fn(),
+        post: vi.fn()
     }
 }));
 
@@ -69,7 +70,7 @@ describe('ManagementService', () => {
     describe('createProduct', () => {
         it('should return success and data', async () => {
             const mockData = { id: 'new-id', nombre: 'Test Prod' };
-            (api.post as any) = vi.fn().mockReturnValue({
+            (api.post as any).mockReturnValue({
                 json: vi.fn().mockResolvedValue({ status: 'success', data: mockData })
             });
 
@@ -80,7 +81,7 @@ describe('ManagementService', () => {
         });
 
         it('should handle API errors', async () => {
-            (api.post as any) = vi.fn().mockReturnValue({
+            (api.post as any).mockReturnValue({
                 json: vi.fn().mockRejectedValue({
                     response: { json: vi.fn().mockResolvedValue({ message: 'Validation failed' }) }
                 })
@@ -95,18 +96,21 @@ describe('ManagementService', () => {
     describe('generateTags', () => {
         it('should return success and tags', async () => {
             const mockTags = ['tag1', 'tag2'];
-            (api.post as any) = vi.fn().mockReturnValue({
+            (api.post as any).mockReturnValue({
                 json: vi.fn().mockResolvedValue({ status: 'success', data: mockTags })
             });
 
-            const result = await ManagementService.generateTags('Test', 'Desc');
+            const result = await ManagementService.generateTags('Test', 'Desc', []);
             expect(result.status).toBe('success');
             expect(result.data).toEqual(mockTags);
-            expect(api.post).toHaveBeenCalledWith('management/generate-tags', { json: { nombre: 'Test', descripcion: 'Desc' }, timeout: 60000 });
+            expect(api.post).toHaveBeenCalledWith('management/generate-tags', {
+                json: { nombre: 'Test', descripcion: 'Desc', existingTags: [] },
+                timeout: 60000
+            });
         });
 
         it('should handle API errors', async () => {
-            (api.post as any) = vi.fn().mockReturnValue({
+            (api.post as any).mockReturnValue({
                 json: vi.fn().mockRejectedValue({
                     response: { json: vi.fn().mockResolvedValue({ message: 'AI error' }) }
                 })

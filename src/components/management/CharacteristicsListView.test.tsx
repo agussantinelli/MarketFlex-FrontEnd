@@ -26,6 +26,9 @@ describe('CharacteristicsListView Component', () => {
         (window as any).showManagementLoader = vi.fn();
         (window as any).hideManagementLoader = vi.fn();
         (window as any).triggerSileo = vi.fn();
+
+        // Mock role as admin
+        localStorage.setItem('marketflex_user', JSON.stringify({ rol: 'admin' }));
     });
 
     it('fetches and renders characteristics on mount', async () => {

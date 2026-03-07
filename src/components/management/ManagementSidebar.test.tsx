@@ -23,7 +23,8 @@ describe('ManagementSidebar Component', () => {
 
     it('should render the administration logo and title', () => {
         render(<ManagementSidebar />);
-        expect(screen.getByText('Administración')).toBeInTheDocument();
+        // "Gestión" appears both in the logo text and as a section title
+        expect(screen.getAllByText('Gestión').length).toBeGreaterThanOrEqual(1);
         expect(screen.getByAltText('MarketFlex Logo')).toBeInTheDocument();
     });
 

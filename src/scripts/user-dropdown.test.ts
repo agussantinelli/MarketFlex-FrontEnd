@@ -14,7 +14,7 @@ describe('userDropdown', () => {
             <button class="logout-trigger-btn"></button>
             <div class="management-only"></div>
             <div class="customer-only"></div>
-            <button class="go-admin-btn"></button>
+            <button class="go-management-btn"></button>
             <button class="go-client-btn"></button>
             <a class="client-purchases-link"></a>
             <button class="dropdown-trigger"></button>
@@ -157,8 +157,8 @@ describe('userDropdown', () => {
     it('should set admin mode to true and redirect to /management/dashboard when "Cambiar al Panel Administrador" is clicked', () => {
         initUserDropdown(modalStyles);
 
-        const goAdminBtn = document.querySelector('.go-admin-btn') as HTMLElement;
-        goAdminBtn.click();
+        const goManagementBtn = document.querySelector('.go-management-btn') as HTMLElement;
+        goManagementBtn.click();
 
         expect(localStorage.getItem('marketflex_management:isManagementMode')).toBe('true');
 

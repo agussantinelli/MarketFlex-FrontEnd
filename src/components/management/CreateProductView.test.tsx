@@ -73,7 +73,7 @@ describe('CreateProductView', () => {
         fireEvent.click(aiBtn);
 
         await waitFor(() => {
-            expect(ManagementService.generateTags).toHaveBeenCalledWith('Test', 'Desc');
+            expect(ManagementService.generateTags).toHaveBeenCalledWith('Test', 'Desc', []);
         });
     });
 });
