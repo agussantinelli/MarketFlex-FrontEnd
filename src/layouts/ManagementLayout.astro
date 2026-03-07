@@ -152,7 +152,18 @@ const { title, parentTitle, parentUrl } = Astro.props;
                         return;
                     }
 
-                    // Admin specific additional check if needed, but for now we trust the roles
+                    // Admin only routes protection
+                    const adminOnlyPaths = [
+                        "/management/users",
+                        "/management/analytics",
+                    ];
+                    if (
+                        user.rol === "seller" &&
+                        adminOnlyPaths.some((p) => path.startsWith(p))
+                    ) {
+                        window.location.href = "/management/dashboard";
+                        return;
+                    }
                 } catch (e) {
                     window.location.href = "/login";
                 }

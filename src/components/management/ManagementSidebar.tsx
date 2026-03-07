@@ -48,7 +48,7 @@ const ManagementSidebar = () => {
         { href: '/management/dashboard', icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
         { href: '/management/analytics', icon: BarChart3, label: 'Analíticas', section: 'Principal', adminOnly: true },
 
-        { href: '/management/users', icon: Users, label: 'Usuarios', section: 'Gestión' },
+        { href: '/management/users', icon: Users, label: 'Usuarios', section: 'Gestión', adminOnly: true },
         { href: '/management/sales', icon: ShoppingCart, label: 'Ventas', section: 'Gestión' },
         { href: '/management/promotions', icon: TicketPercent, label: 'Promociones', section: 'Gestión' },
         { href: '/management/support', icon: MessageSquare, label: 'Mensajes', section: 'Gestión' },
