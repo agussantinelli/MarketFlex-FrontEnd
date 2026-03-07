@@ -21,7 +21,7 @@ export type TopSale = {
     fecha: string;
 };
 
-export type AdminStats = {
+export type ManagementStats = {
     totalRevenue: number;
     totalSales: number;
     totalProductsSold: number;
@@ -60,7 +60,7 @@ export type AdminStats = {
     lowStockProducts: TopProduct[];
 };
 
-export type AdminPurchase = {
+export type ManagementPurchase = {
     id: string;
     fechaHora: string;
     total: number;
@@ -123,7 +123,7 @@ export type AnalyticsData = {
     }>;
 };
 
-export interface AdminProduct {
+export interface ManagementProduct {
     id: string;
     nombre: string;
     descripcion: string | null;
@@ -152,7 +152,7 @@ export interface PaginatedResponse<T> {
     };
 }
 
-export interface AdminUser {
+export interface ManagementUser {
     id: string;
     nombre: string;
     apellido: string;
@@ -163,9 +163,9 @@ export interface AdminUser {
     creadoEn: string;
 }
 
-export interface AdminUsersResponse {
+export interface ManagementUsersResponse {
     status: string;
-    data: AdminUser[];
+    data: ManagementUser[];
     pagination: {
         total: number;
         page: number;
