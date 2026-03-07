@@ -19,9 +19,9 @@ const handleFacebookCodeLogin = async (code: string, redirectUri: string) => {
         localStorage.setItem("marketflex_user", JSON.stringify(result.user));
 
         const userName = result.user.nombre || "Usuario";
-        const redirectUrl = result.user.rol === "admin" ? "/admin/dashboard" : "/";
+        const redirectUrl = result.user.rol === "admin" ? "/management/dashboard" : "/";
         if (result.user.rol === "admin") {
-            localStorage.setItem("marketflex_admin:isAdminMode", "true");
+            localStorage.setItem("marketflex_management:isManagementMode", "true");
         }
         window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}`;
     } catch (error: any) {
@@ -44,9 +44,9 @@ const handleGoogleLogin = async (credentialResponse: any) => {
 
         const userName = result.user.nombre || "Usuario";
         const newParam = result.isNewUser ? "&new=true" : "";
-        const redirectUrl = result.user.rol === "admin" ? "/admin/dashboard" : "/";
+        const redirectUrl = result.user.rol === "admin" ? "/management/dashboard" : "/";
         if (result.user.rol === "admin") {
-            localStorage.setItem("marketflex_admin:isAdminMode", "true");
+            localStorage.setItem("marketflex_management:isManagementMode", "true");
         }
         window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(userName)}${newParam}`;
     } catch (error: any) {
@@ -167,9 +167,9 @@ export function initLogin() {
                 localStorage.setItem("marketflex_refresh_token", response.refreshToken);
                 localStorage.setItem("marketflex_user", JSON.stringify(response.user));
 
-                const redirectUrl = response.user.rol === "admin" ? "/admin/dashboard" : "/";
+                const redirectUrl = response.user.rol === "admin" ? "/management/dashboard" : "/";
                 if (response.user.rol === "admin") {
-                    localStorage.setItem("marketflex_admin:isAdminMode", "true");
+                    localStorage.setItem("marketflex_management:isManagementMode", "true");
                 }
                 window.location.href = `${redirectUrl}?login_success=true&user=${encodeURIComponent(response.user.nombre || "Usuario")}`;
             } catch (error: any) {
@@ -236,3 +236,4 @@ export function initLogin() {
         if (google?.accounts?.id) google.accounts.id.prompt();
     });
 }
+

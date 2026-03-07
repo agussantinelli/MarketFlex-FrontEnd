@@ -5,12 +5,12 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
     const logoutBtns = document.querySelectorAll(".logout-trigger-btn");
 
     // Role based elements
-    const adminLinks = document.querySelectorAll(".admin-only");
+    const managementLinks = document.querySelectorAll(".management-only");
     const sellerLinks = document.querySelectorAll(".seller-only");
     const customerLinks = document.querySelectorAll(".customer-only");
 
-    // Explicit Admin Navigation Buttons
-    const goAdminBtns = document.querySelectorAll(".go-admin-btn");
+    // Explicit Management Navigation Buttons
+    const goManagementBtns = document.querySelectorAll(".go-management-btn");
     const goClientBtns = document.querySelectorAll(".go-client-btn");
 
     const clientPurchasesLinks = document.querySelectorAll(".client-purchases-link");
@@ -74,39 +74,39 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
             // Role Based Visibility - Base State
             if (user.rol === "admin") {
-                adminLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
+                managementLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
                 sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
             } else if (user.rol === "seller") {
-                adminLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
+                managementLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex")); // Let sellers see their purchases too
             } else {
-                adminLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
+                managementLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 sellerLinks.forEach((el) => ((el as HTMLElement).style.display = "none"));
                 customerLinks.forEach((el) => ((el as HTMLElement).style.display = "flex"));
             }
         }
 
-        // Admin Navigation Logic - strictly path-based (must run after Role based visibility)
-        if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
+        // Management Navigation Logic - strictly path-based (must run after Role based visibility)
+        if (goManagementBtns.length > 0 || goClientBtns.length > 0) {
             const userStr = localStorage.getItem("marketflex_user");
             const user = userStr ? JSON.parse(userStr) : null;
             const isAdmin = user && user.rol === "admin";
 
             if (isAdmin) {
-                const isAdminRoute = window.location.pathname.startsWith("/admin");
+                const isManagementRoute = window.location.pathname.startsWith("/management");
 
-                if (isAdminRoute) {
+                if (isManagementRoute) {
                     clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
-                    goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+                    goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                     goClientBtns.forEach(btn => {
                         (btn as HTMLElement).style.display = 'flex';
                         (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
                     });
                 } else {
                     clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
-                    goAdminBtns.forEach(btn => {
+                    goManagementBtns.forEach(btn => {
                         (btn as HTMLElement).style.display = 'flex';
                         (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
                     });
@@ -114,7 +114,7 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                 }
             } else {
                 // Not an admin, ensure neither button is shown
-                goAdminBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
+                goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
             }
         }
@@ -123,25 +123,25 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
     updateAuthUI();
 
     // Navigation Click Handling
-    if (goAdminBtns.length > 0 || goClientBtns.length > 0) {
-        const navigateToAdmin = (e: Event) => {
+    if (goManagementBtns.length > 0 || goClientBtns.length > 0) {
+        const navigateToManagement = (e: Event) => {
             e.preventDefault();
             e.stopPropagation();
-            localStorage.setItem("marketflex_admin:isAdminMode", "true");
-            setTimeout(() => { window.location.href = "/admin/dashboard"; }, 50);
+            localStorage.setItem("marketflex_management:isManagementMode", "true");
+            setTimeout(() => { window.location.href = "/management/dashboard"; }, 50);
         };
 
         const navigateToClient = (e: Event) => {
             e.preventDefault();
             e.stopPropagation();
-            localStorage.setItem("marketflex_admin:isAdminMode", "false");
+            localStorage.setItem("marketflex_management:isManagementMode", "false");
             setTimeout(() => { window.location.href = "/"; }, 50);
         };
 
-        goAdminBtns.forEach(btn => {
+        goManagementBtns.forEach(btn => {
             if (btn.hasAttribute("data-nav-init")) return;
             btn.setAttribute("data-nav-init", "true");
-            btn.addEventListener("click", navigateToAdmin);
+            btn.addEventListener("click", navigateToManagement);
         });
 
         goClientBtns.forEach(btn => {
@@ -192,3 +192,4 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
         }
     }
 }
+

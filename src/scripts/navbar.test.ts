@@ -32,7 +32,7 @@ describe('navbar.ts', () => {
                 <input class="search-input" />
                 <button class="search-clear-btn"></button>
             </form>
-            <div class="admin-only"></div>
+            <div class="management-only"></div>
             <div class="customer-only"></div>
         `;
 
@@ -137,3 +137,4 @@ describe('navbar.ts', () => {
         expect(clearBtn.classList.contains('visible')).toBe(false);
     });
 });
+

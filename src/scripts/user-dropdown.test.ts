@@ -12,7 +12,7 @@ describe('userDropdown', () => {
         document.body.innerHTML = `
             <span class="user-name-display"></span>
             <button class="logout-trigger-btn"></button>
-            <div class="admin-only"></div>
+            <div class="management-only"></div>
             <div class="customer-only"></div>
             <button class="go-admin-btn"></button>
             <button class="go-client-btn"></button>
@@ -74,7 +74,7 @@ describe('userDropdown', () => {
         initUserDropdown(modalStyles);
 
         const userName = document.querySelector('.user-name-display');
-        const adminOnly = document.querySelector('.admin-only') as HTMLElement;
+        const adminOnly = document.querySelector('.management-only') as HTMLElement;
         const customerOnly = document.querySelector('.customer-only') as HTMLElement;
 
         expect(userName?.textContent).toBe('Admin User');
@@ -91,11 +91,11 @@ describe('userDropdown', () => {
         initUserDropdown(modalStyles);
 
         const clientPurchasesLinks = document.querySelector('.client-purchases-link') as HTMLElement;
-        const goAdminBtn = document.querySelector('.go-admin-btn') as HTMLElement;
+        const goManagementBtn = document.querySelector('.go-management-btn') as HTMLElement;
         const goClientBtn = document.querySelector('.go-client-btn') as HTMLElement;
 
         expect(clientPurchasesLinks.style.display).toBe('flex');
-        expect(goAdminBtn.style.display).toBe('flex');
+        expect(goManagementBtn.style.display).toBe('flex');
         expect(goClientBtn.style.display).toBe('none');
     });
 
@@ -148,21 +148,22 @@ describe('userDropdown', () => {
         const goClientBtn = document.querySelector('.go-client-btn') as HTMLElement;
         goClientBtn.click();
 
-        expect(localStorage.getItem('marketflex_admin:isAdminMode')).toBe('false');
+        expect(localStorage.getItem('marketflex_management:isManagementMode')).toBe('false');
 
         vi.advanceTimersByTime(50);
         expect(window.location.href).toBe('/');
     });
 
-    it('should set admin mode to true and redirect to /admin/dashboard when "Cambiar al Panel Administrador" is clicked', () => {
+    it('should set admin mode to true and redirect to /management/dashboard when "Cambiar al Panel Administrador" is clicked', () => {
         initUserDropdown(modalStyles);
 
         const goAdminBtn = document.querySelector('.go-admin-btn') as HTMLElement;
         goAdminBtn.click();
 
-        expect(localStorage.getItem('marketflex_admin:isAdminMode')).toBe('true');
+        expect(localStorage.getItem('marketflex_management:isManagementMode')).toBe('true');
 
         vi.advanceTimersByTime(50);
-        expect(window.location.href).toBe('/admin/dashboard');
+        expect(window.location.href).toBe('/management/dashboard');
     });
 });
+
