@@ -41,7 +41,7 @@ export async function initOrdersList() {
                     <div class="${styles.orderInfo}">
                         <div class="${styles.orderTitleRow}">
                             <h3>Orden #${order.id.slice(0, 8).toUpperCase()}</h3>
-                            <span class="${styles.statusBadge} ${styles[order.estado.toLowerCase()]}">${order.estado}</span>
+                            <span class="${styles.statusBadge} ${styles[(order.estado || '').toLowerCase()]}">${order.estado || 'Procesando'}</span>
                         </div>
                         <p class="${styles.orderDate}">${formattedDate} • ${formattedTime}</p>
                     </div>
