@@ -73,7 +73,7 @@ const ManagementSidebar = () => {
             {/* Mobile Overlay */}
             {isOpen && <div className={styles.overlay} onClick={closeSidebar} />}
 
-            <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+            <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''} ${!isSeller ? styles.isAdmin : ''}`}>
                 <div className={styles.logoContainer}>
                     <a href="/management/dashboard" className={styles.logoLink}>
                         <img src="/logo-marketflex-letters.png" alt="MarketFlex Logo" className={styles.logoImg} />

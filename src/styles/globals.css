@@ -23,6 +23,10 @@
 
     /* Textura de Iconos (Market & Tech) */
     --bg-texture: url("/background/principal-background.png");
+
+    /* Colores Premium Admin */
+    --admin-gold: #ffd700;
+    --admin-gold-glow: rgba(255, 215, 0, 0.3);
 }
 
 /* Reset y Base */

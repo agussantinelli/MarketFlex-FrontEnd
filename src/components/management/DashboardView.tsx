@@ -201,7 +201,7 @@ const DashboardView: React.FC = () => {
     });
 
     return (
-        <div className={styles.dashboardContainer}>
+        <div className={`${styles.dashboardContainer} ${!isSeller ? styles.isAdmin : ''}`}>
             <header className={styles.dashboardHeader}>
                 <div>
                     <h1>{isSeller ? 'Panel de Vendedor' : 'Panel de Gestión'}</h1>

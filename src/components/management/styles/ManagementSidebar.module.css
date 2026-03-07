@@ -14,6 +14,24 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.sidebar.isAdmin {
+    border-right: 1px solid var(--admin-gold);
+    box-shadow: 4px 0 15px var(--admin-gold-glow);
+}
+
+.sidebar.isAdmin .navSectionTitle {
+    color: var(--admin-gold);
+}
+
+.sidebar.isAdmin .navItem.active {
+    background-color: var(--admin-gold);
+    color: var(--green-900);
+}
+
+.sidebar.isAdmin .logoText {
+    color: var(--admin-gold);
+}
+
 .logoContainer {
     padding: 1.5rem;
     border-bottom: 1px solid var(--green-800);
