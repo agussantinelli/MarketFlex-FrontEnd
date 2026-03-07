@@ -356,12 +356,12 @@
 
 <hr>
 
-<h2>👁️ Sistema de Vistas Binarias (Administrador)</h2>
-<p>Para simplificar y optimizar la experiencia de gestión técnica, MarketFlex implementa un sistema robusto de <b>Vistas Binarias</b> gestionado vía <code>localStorage</code> (<code>marketflex_admin:isAdminMode</code>) encapsulado en el menú de usuario. El comportamiento para las cuentas con el rol <code>admin</code> es el siguiente:</p>
+<h2>👁️ Sistema de Vistas Binarias (Gestión)</h2>
+<p>Para simplificar y optimizar la experiencia de gestión técnica, MarketFlex implementa un sistema robusto de <b>Vistas Binarias</b> gestionado vía <code>localStorage</code> (<code>marketflex_management:isManagementMode</code>) encapsulado en el menú de usuario. El comportamiento para las cuentas con el rol <code>admin</code> es el siguiente:</p>
 <ul>
-    <li><b>Landing por Defecto (Panel de Administración):</b> Todo inicio de sesión de administrador activa el modo admin por defecto y redirige inmediata y automáticamente a <code>/admin/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas de forma fluida.</li>
-    <li><b>Vista Cliente:</b> Estando en el panel, el menú desplegable del perfil superior expone un botón dedicado llamado <b>"Cambiar a Vista Cliente"</b>. Al accionarlo, el estado administrativo se pausa temporalmente (<code>isAdminMode="false"</code>), redirigiendo al usuario a la ruta raíz (<code>/</code>). Esto permite navegar y auditar la tienda (productos, carritos, promociones) exactamente como un usuario estándar.</li>
-    <li><b>Retorno al Panel de Administración:</b> Mientras se audita la "Vista Cliente", el menú inteligente reestructura sus opciones: expone el botón <b>"Cambiar al Panel Administrador"</b> y las rutas típicas de cliente. Al accionarlo, se restaura el entorno administrativo devolviendo al staff a sus métricas con un clic y cerrando el ciclo.</li>
+    <li><b>Landing por Defecto (Panel de Gestión):</b> Todo inicio de sesión de administrador activa el modo gestión por defecto y redirige inmediata y automáticamente a <code>/management/dashboard</code>. El administrador aterriza en su área de trabajo orientada a métricas de forma fluida.</li>
+    <li><b>Vista Cliente:</b> Estando en el panel, el menú desplegable del perfil superior expone un botón dedicado llamado <b>"Cambiar a Vista Cliente"</b>. Al accionarlo, el estado administrativo se pausa temporalmente (<code>isManagementMode="false"</code>), redirigiendo al usuario a la ruta raíz (<code>/</code>). Esto permite navegar y auditar la tienda (productos, carritos, promociones) exactamente como un usuario estándar.</li>
+    <li><b>Retorno al Panel de Gestión:</b> Mientras se audita la "Vista Cliente", el menú inteligente reestructura sus opciones: expone el botón <b>"Cambiar al Panel Gestión"</b> y las rutas típicas de cliente. Al accionarlo, se restaura el entorno administrativo devolviendo al staff a sus métricas con un clic y cerrando el ciclo.</li>
 </ul>
 
 <hr>
@@ -453,12 +453,12 @@
 │   └── ...                                         # Isotipos y recursos gráficos adicionales.
 ├── src/                                            # Núcleo del frontend de la aplicación (Arquitectura Astro + React).
 │   ├── components/                                 # Biblioteca de componentes modulares.
-│   │   ├── admin/                                  # Componentes exclusivos del panel administrativo (React + CSS Modules).
-│   │   │   ├── AdminAuthInputs.test.tsx            # Test de inputs de autenticación administrativa.
-│   │   │   ├── AdminAuthInputs.tsx                 # Campos reutilizables de login admin.
-│   │   │   ├── AdminHeader.astro                   # Barra de navegación administrativa.
-│   │   │   ├── AdminSidebar.test.tsx               # Test del menú lateral dinámico.
-│   │   │   ├── AdminSidebar.tsx                    # Menú lateral dinámico con estados de navegación.
+│   │   ├── management/                                 # Componentes exclusivos del panel de gestión (React + CSS Modules).
+│   │   │   ├── ManagementAuthInputs.test.tsx            # Test de inputs de autenticación de gestión.
+│   │   │   ├── ManagementAuthInputs.tsx                 # Campos reutilizables de login de gestión.
+│   │   │   ├── ManagementHeader.astro                   # Barra de navegación de gestión.
+│   │   │   ├── ManagementSidebar.test.tsx               # Test del menú lateral dinámico.
+│   │   │   ├── ManagementSidebar.tsx                    # Menú lateral dinámico con estados de navegación.
 │   │   │   ├── AnalyticsView.test.tsx              # Test del dashboard de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Dashboard interactivo con Recharts.
 │   │   │   ├── BrandsListView.test.tsx             # Test de gestión de marcas.
@@ -501,7 +501,7 @@
 │   │   │   ├── UserPurchasesModal.tsx              # Modal con órdenes asociadas a un usuario.
 │   │   │   ├── UsersListView.test.tsx              # Test de administración de usuarios.
 │   │   │   ├── UsersListView.tsx                   # Administración de cuentas y roles de usuario.
-│   │   │   └── styles/                             # Estilos encapsulados para el panel admin.
+│   │   │   └── styles/                             # Estilos encapsulados para el panel de gestión.
 │   │   ├── auth/                                   # UI de flujos de identidad y seguridad.
 │   │   │   ├── AuthInputs.astro                    # Inputs base de formularios (Email, Password).
 │   │   │   ├── Captcha.astro                       # Componente visual para reCAPTCHA v3.
@@ -554,19 +554,19 @@
 │   │   └── shared/                                 # Componentes compartidos por todo el sistema.
 │   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Estructuras base y envolventes (Master Pages).
-│   │   ├── AdminLayout.astro                       # Layout optimizado para administración interna.
+│   │   ├── ManagementLayout.astro                       # Layout optimizado para gestión interna.
 │   │   ├── Layout.astro                            # Layout principal (Head, SEO, Tipografía).
 │   │   └── styles/                                 # Estilos compartidos de estructura.
 │   ├── lib/                                        # Cliente de API y utilidades de bajo nivel.
 │   │   ├── api.ts                                  # Wrapper de Ky con manejo de Auth y Auto-Refresh.
 │   │   └── url.ts                                  # Utilidades de procesamiento de activos y multimedia.
 │   ├── pages/                                      # Enrutamiento basado en archivos (SSR/Hybrid).
-│   │   ├── admin/                                  # Rutas del panel privado.
+│   │   ├── management/                                  # Rutas del panel privado.
 │   │   │   ├── categories/                         # Jerarquía de gestión de categorías.
 │   │   │   │   └── [id]/                           # Contexto de categoría específica.
 │   │   │   │       └── subcategories.astro         # Vista de gestión de subcategorías vinculadas.
 │   │   │   ├── analytics.astro                     # Reportes avanzados de negocio.
-│   │   │   ├── dashboard.astro                     # Inicio administrativo.
+│   │   │   ├── dashboard.astro                     # Inicio de gestión.
 │   │   │   ├── promotions.astro                    # Panel de ofertas.
 │   │   │   └── support.astro                       # Centro de atención al cliente.
 │   │   ├── auth/                                   # Login, Registro y Recuperación.
@@ -577,8 +577,8 @@
 │   │   ├── filter-modal.ts                         # Lógica de filtrado dinámico en tiempo real.
 │   │   └── navbar.ts                               # Efectos y navegación responsiva.
 │   ├── services/                                   # Capa de abstracción de datos (Llamadas a API).
-│   │   ├── admin.service.test.ts                   # Test de obtención de estadísticas y compras.
-│   │   ├── admin.service.ts                        # Consumo de métricas y reportes.
+│   │   ├── management.service.test.ts              # Test de obtención de estadísticas y compras.
+│   │   ├── management.service.ts                   # Consumo de métricas y reportes.
 │   │   ├── auth.service.test.ts                    # Test de autenticación global.
 │   │   ├── auth.service.ts                         # Gestión de sesiones y tokens.
 │   │   ├── brand.service.test.ts                   # Test de listado de marcas.
@@ -608,17 +608,17 @@
 │   │   ├── user.service.test.ts                    # Test de datos de perfil de usuario.
 │   │   └── user.service.ts                         # Obtención y actualización de perfiles.
 │   ├── store/                                      # Estado global (Nanostores para persistencia).
-│   │   ├── cart.ts                                 # Gestión reactiva del carrito entre islas.
+│   │   ├── managementStore.ts                      # Gestión reactiva de la vista de gestión entre islas.
 │   │   └── auth.ts                                 # Estado persistente de autenticación.
 │   ├── styles/                                     # Diseño sistémico y tokens visuales.
 │   │   ├── globals.css                             # Reseteo y variables de tema (Neón/Glass).
 │   │   └── main.css                                # Estilos base de componentes HTML.
-│   └── types/                                      # Tipado estricto compartido por el sistema.
-│       ├── admin.types.ts                          # Interfaces de analíticas y reportes.
-│       ├── product.types.ts                        # Esquemas de modelos de productos.
-│       └── promotion.types.ts                      # Tipado de reglas de negocio para ofertas.
+│   ├── types/                                      # Tipado estricto compartido por el sistema.
+│   │   ├── management.types.ts                     # Interfaces de analíticas y reportes.
+│   │   ├── product.types.ts                        # Esquemas de modelos de productos.
+│   │   └── promotion.types.ts                      # Tipado de reglas de negocio para ofertas.
 │   ├── layouts/                                    # Wrapper y estructuras base.
-│   │   ├── AdminLayout.astro                       # Esqueleto de visualización para páginas /admin.
+│   │   ├── ManagementLayout.astro                  # Esqueleto de visualización para páginas /management.
 │   │   ├── Footer.astro                            # Pie de página responsivo y legal.
 │   │   ├── Layout.astro                            # Estructura HTML5 inicial (SEO & Tipografía).
 │   │   ├── Navbar.astro                            # Navegación jerárquica con buscador unificado.
@@ -634,7 +634,7 @@
 │   │   └── url.ts                                  # Utilidad centralizada para el manejo de URLs de imágenes.
 │   ├── pages/                                      # Sistema de rutas basado en archivos (SSR).
 │   │   ├── about.astro                             # Página de información institucional.
-│   │   ├── admin/                                  # Panel privado de monitoreo de negocio.
+│   │   ├── management/                             # Panel privado de monitoreo de negocio.
 │   │   │   ├── analytics.astro                     # Dashboard de analíticas avanzadas.
 │   │   │   ├── brands.astro                        # Gestión de editoriales registradas.
 │   │   │   ├── categories.astro                    # Gestión jerárquica de categorías (CRUD).
@@ -660,7 +660,7 @@
 │   │   │   ├── users/                              # Gestión del catálogo de usuarios.
 │   │   │   │   ├── [id].astro                      # Edición de datos de usuario.
 │   │   │   │   └── new.astro                       # Alta administrativa de usuario.
-│   │   │   └── styles/                             # Estética del panel administrativo.
+│   │   │   └── styles/                             # Estética del panel de gestión.
 │   │   │       └── dashboard.module.css            # Diseño premium del dashboard.
 │   │   ├── api/                                    # Puntos de conexión internos del servidor.
 │   │   ├── cart.astro                              # Vista completa del carrito de compras.
@@ -733,8 +733,8 @@
 │   │   ├── user-dropdown.test.ts                   # Tests del componente menú de opciones de usuario.
 │   │   └── user-dropdown.ts                        # Lógica interactiva del menú de opciones y vistas de rol.
 │   ├── services/                                   # Abstracción de llamadas a la API (Business Logic).
-│   │   ├── admin.service.test.ts                   # Test de obtención de estadísticas.
-│   │   ├── admin.service.ts                        # Integración con endpoints administrativos.
+│   │   ├── management.service.test.ts              # Test de obtención de estadísticas.
+│   │   ├── management.service.ts                   # Integración con endpoints de gestión.
 │   │   ├── auth.service.test.ts                    # Test unitario de autenticación global.
 │   │   ├── auth.service.ts                         # Gestión central de login/logout/tokens.
 │   │   ├── brand.service.test.ts                   # Test de listado de marcas.
@@ -751,7 +751,7 @@
 │   │   ├── product.service.ts                      # Gestión de productos, filtros y búsqueda.
 │   │   ├── promotion.service.test.ts               # Test de campañas activas.
 │   │   ├── promotion.service.ts                    # Obtención de banners y descuentos.
-│   │   ├── promotions.service.ts                   # Servicio CRUD de promociones para admin.
+│   │   ├── promotions.service.ts                   # Servicio CRUD de promociones para gestión.
 │   │   ├── purchase.service.test.ts                # Test unitario de órdenes.
 │   │   ├── purchase.service.ts                     # Gestión de transacciones y estados.
 │   │   ├── subcategory.service.test.ts             # Test de subcategorías específicas.
@@ -761,8 +761,8 @@
 │   │   ├── user.service.test.ts                    # Test unitario de data de perfil.
 │   │   └── user.service.ts                         # Obtención y actualización de perfiles.
 │   ├── store/                                      # Gestión de estado reactivo global (Nanostores).
-│   │   ├── adminStore.test.ts                      # Tests unitarios del estado de entorno de administración.
-│   │   ├── adminStore.ts                           # Estado de persistencia nativo para vista binaria.
+│   │   ├── managementStore.test.ts                 # Tests unitarios del estado de entorno de gestión.
+│   │   ├── managementStore.ts                      # Estado de persistencia nativo para vista binaria.
 │   │   ├── cartStore.test.ts                       # Test de persistencia y sumatorias.
 │   │   ├── cartStore.ts                            # Estado atomizado del carrito de compras.
 │   │   ├── checkoutStore.test.ts                   # Test de validación de pago.
@@ -773,7 +773,7 @@
 │   │   ├── globals.css                             # Tokens neón, tipografía y resets globales.
 │   │   └── main.css                                # Reglas base y utilidades de estilo.
 │   ├── types/                                      # Definiciones estrictas de TypeScript (Domain).
-│   │   ├── admin.types.ts                          # Tipos de métricas y dashboard admin.
+│   │   ├── management.types.ts                     # Tipos de métricas y dashboard de gestión.
 │   │   ├── auth.types.ts                           # Tipos de sesión, JWT e inputs auth.
 │   │   ├── brand.types.ts                          # Esquema de marcas y logotipos.
 │   │   ├── cart.types.ts                           # Estructura de ítems y estado del carrito.
@@ -784,7 +784,7 @@
 │   │   ├── claims.types.ts                         # Estructura de reclamos e incidencias.
 │   │   ├── product.types.ts                        # Atributos de producto y variantes.
 │   │   ├── promotion.types.ts                      # Esquema de banners y tipos de rebaja.
-│   │   ├── promotions.types.ts                     # Tipos para el módulo de promociones admin.
+│   │   ├── promotions.types.ts                     # Tipos para el módulo de promociones de gestión.
 │   │   ├── purchase.types.ts                       # Definición de órdenes y transacciones.
 │   │   ├── subcategory.types.ts                    # Interfaces de clústeres secundarios.
 │   │   ├── support.types.ts                        # Estructura de tickets de contacto.
