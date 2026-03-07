@@ -316,6 +316,10 @@ const stockDisponible = Math.max(
 
             // @ts-ignore
             window.triggerSileo("success", message);
+
+            // Reset quantity back to 1 after adding to cart
+            quantity = 1;
+            updateDisplay();
         }
     }
 
