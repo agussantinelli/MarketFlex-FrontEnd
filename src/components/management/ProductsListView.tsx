@@ -7,6 +7,7 @@ import type { ManagementProduct } from '../../types/management\.types';
 import { LuImage, LuStar, LuEyeOff, LuRotateCcw } from 'react-icons/lu';
 import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
+import tableStyles from './styles/DataTable.module.css';
 
 const ProductsListView: React.FC = () => {
     const [products, setProducts] = useState<ManagementProduct[]>([]);
@@ -296,18 +297,20 @@ const ProductsListView: React.FC = () => {
                     <>
                         {p.estado === 'ACTIVO' && (
                             <button
+                                className={tableStyles.viewBtn}
                                 onClick={(e) => { e.stopPropagation(); handleToggleStatus(p, 'INACTIVO'); }}
                                 title="Desactivar"
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '4px', display: 'flex', alignItems: 'center' }}
+                                style={{ color: '#94a3b8' }}
                             >
                                 <LuEyeOff size={18} />
                             </button>
                         )}
                         {p.estado === 'INACTIVO' && (
                             <button
+                                className={tableStyles.viewBtn}
                                 onClick={(e) => { e.stopPropagation(); handleToggleStatus(p, 'ACTIVO'); }}
                                 title="Reactivar"
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--neon-green)', padding: '4px', display: 'flex', alignItems: 'center' }}
+                                style={{ color: 'var(--neon-green)' }}
                             >
                                 <LuRotateCcw size={18} />
                             </button>
