@@ -39,8 +39,6 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mi Perfil
         </a>
 
-        <div class={styles.dropdownDivider}></div>
-
         <!-- Client Purchases Link (Hidden in Admin Mode via JS) -->
         <a
             id="client-purchases-link"
@@ -51,15 +49,16 @@ import styles from "../../layouts/styles/Navbar.module.css";
             Mis Compras
         </a>
 
+        <!-- Management Divider (Only if admin/seller) -->
         <div
-            class={`${styles.dropdownDivider} management-only`}
+            class={`${styles.dropdownDivider} management-only-divider`}
             style="display: none;"
         >
         </div>
 
-        <!-- Admin Mode Button (Visible to admins/sellers when in client mode) -->
+        <!-- Management Navigation (Panel toggle buttons) -->
         <button
-            class={`${styles.dropdownItem} ${styles.viewToggleBtn} management-only go-management-btn`}
+            class={`${styles.dropdownItem} ${styles.viewToggleBtn} management-logic-btn go-management-btn`}
             style="display: none;"
         >
             <Icon name="lucide:layout-dashboard" class={styles.itemIcon} />
@@ -67,7 +66,7 @@ import styles from "../../layouts/styles/Navbar.module.css";
         </button>
 
         <button
-            class={`${styles.dropdownItem} ${styles.viewToggleBtn} management-only go-client-btn`}
+            class={`${styles.dropdownItem} ${styles.viewToggleBtn} management-logic-btn go-client-btn`}
             style="display: none;"
         >
             <Icon name="lucide:store" class={styles.itemIcon} />

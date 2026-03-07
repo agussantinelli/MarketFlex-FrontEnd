@@ -8,9 +8,10 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
     const managementLinks = document.querySelectorAll(".management-only");
     const customerLinks = document.querySelectorAll(".customer-only");
 
-    // Explicit Management Navigation Buttons
+    // Explicit Management Navigation Buttons & Dividers
     const goManagementBtns = document.querySelectorAll(".go-management-btn");
     const goClientBtns = document.querySelectorAll(".go-client-btn");
+    const managementDividers = document.querySelectorAll(".management-only-divider");
 
     const clientPurchasesLinks = document.querySelectorAll(".client-purchases-link");
 
@@ -97,6 +98,7 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
 
                 if (isPanelRoute) {
                     clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'none');
+                    managementDividers.forEach(div => (div as HTMLElement).style.display = 'flex');
                     goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                     goClientBtns.forEach(btn => {
                         (btn as HTMLElement).style.display = 'flex';
@@ -104,6 +106,7 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                     });
                 } else {
                     clientPurchasesLinks.forEach(link => (link as HTMLElement).style.display = 'flex');
+                    managementDividers.forEach(div => (div as HTMLElement).style.display = 'flex');
                     goManagementBtns.forEach(btn => {
                         (btn as HTMLElement).style.display = 'flex';
                         (btn as HTMLElement).style.setProperty('display', 'flex', 'important');
@@ -113,7 +116,8 @@ export function initUserDropdown(modalStyles?: Record<string, string>) {
                     goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 }
             } else {
-                // Not admin nor seller, ensure neither button is shown
+                // Not admin nor seller, ensure neither button nor divider is shown
+                managementDividers.forEach(div => (div as HTMLElement).style.display = 'none');
                 goManagementBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
                 goClientBtns.forEach(btn => (btn as HTMLElement).style.display = 'none');
             }
