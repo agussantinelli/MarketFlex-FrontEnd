@@ -274,6 +274,20 @@ export const ManagementService = {
             };
         }
     },
+    async updateProductPrice(id: string, price: number): Promise<{ status: string; message: string }> {
+        try {
+            const result = await api.put(`management/products/${id}`, {
+                json: { precioActual: price }
+            }).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al actualizar el precio del producto'
+            };
+        }
+    },
     async updateProductStatus(id: string, estado: 'ACTIVO' | 'INACTIVO' | 'BORRADO'): Promise<{ status: string; message: string }> {
         try {
             const result = await api.patch(`management/products/${id}/status`, {
@@ -285,6 +299,32 @@ export const ManagementService = {
             return {
                 status: 'error',
                 message: errorData?.message || 'Error al actualizar el estado del producto'
+            };
+        }
+    },
+    async applyDirectDiscount(id: string, data: { nombre: string, tipo: 'PORCENTAJE' | 'MONTO_FIJO', valor: number, fechaInicio: string, fechaFin: string }): Promise<{ status: string; data?: any; message?: string }> {
+        try {
+            const result = await api.post(`management/products/${id}/discount`, {
+                json: data
+            }).json<{ status: string; data: any }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al aplicar el descuento'
+            };
+        }
+    },
+    async removeDirectDiscount(id: string, discountId: string): Promise<{ status: string; message?: string }> {
+        try {
+            const result = await api.delete(`management/products/${id}/discount/${discountId}`).json<{ status: string; message: string }>();
+            return result;
+        } catch (error: any) {
+            const errorData = await error.response?.json().catch(() => null);
+            return {
+                status: 'error',
+                message: errorData?.message || 'Error al remover el descuento'
             };
         }
     }
