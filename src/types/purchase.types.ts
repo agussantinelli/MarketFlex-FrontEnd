@@ -36,6 +36,14 @@ export type Purchase = {
     promociones?: AppliedPromotion[];
     tipoEntrega: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL';
     razonPendiente?: 'ENVIO_DOMICILIO' | 'RETIRO_LOCAL' | 'ENVIO_AL_CORREO';
+    reclamos: {
+        nroReclamo: number;
+        motivo: string;
+        descripcion: string;
+        respuesta: string | null;
+        estado: string;
+        fecha: string | null;
+    }[];
 };
 
 export type CreatePurchaseRequest = {
