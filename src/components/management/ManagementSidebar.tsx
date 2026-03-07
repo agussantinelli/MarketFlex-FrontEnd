@@ -43,10 +43,9 @@ const ManagementSidebar = () => {
     const closeSidebar = () => setIsOpen(false);
 
     const isSeller = role === 'seller';
-    const basePath = isSeller ? '/seller' : '/management';
 
     const allNavItems = [
-        { href: `${basePath}/dashboard`, icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
+        { href: '/management/dashboard', icon: LayoutDashboard, label: 'Dashboard', section: 'Principal' },
         { href: '/management/analytics', icon: BarChart3, label: 'Analíticas', section: 'Principal', adminOnly: true },
 
         { href: '/management/users', icon: Users, label: 'Usuarios', section: 'Gestión' },
@@ -76,7 +75,7 @@ const ManagementSidebar = () => {
 
             <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
                 <div className={styles.logoContainer}>
-                    <a href={`${basePath}/dashboard`} className={styles.logoLink}>
+                    <a href="/management/dashboard" className={styles.logoLink}>
                         <img src="/logo-marketflex-letters.png" alt="MarketFlex Logo" className={styles.logoImg} />
                         <span className={styles.logoText}>{isSeller ? 'Vendedor' : 'Gestión'}</span>
                     </a>
