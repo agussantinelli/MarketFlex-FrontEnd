@@ -33,7 +33,7 @@ describe('RemoveDiscountModal Component', () => {
     it('renderiza el mensaje de confirmación correctamente', () => {
         render(<RemoveDiscountModal {...defaultProps} />);
         expect(screen.getByText(/¿Estás seguro que deseas quitar el descuento actual/i)).toBeDefined();
-        expect(screen.getByText('Quitar Descuento')).toBeDefined();
+        expect(screen.getByRole('button', { name: /Quitar Descuento/i })).toBeDefined();
     });
 
     it('llama al servicio y cierra el modal al confirmar con éxito', async () => {
@@ -41,7 +41,8 @@ describe('RemoveDiscountModal Component', () => {
 
         render(<RemoveDiscountModal {...defaultProps} />);
 
-        fireEvent.click(screen.getByText('Quitar Descuento'));
+        const form = screen.getByRole('form');
+        fireEvent.submit(form);
 
         await waitFor(() => {
             expect(ManagementService.removeDirectDiscount).toHaveBeenCalledWith('prod-123', 'disc-456');
@@ -58,7 +59,8 @@ describe('RemoveDiscountModal Component', () => {
 
         render(<RemoveDiscountModal {...defaultProps} />);
 
-        fireEvent.click(screen.getByText('Quitar Descuento'));
+        const form = screen.getByRole('form');
+        fireEvent.submit(form);
 
         await waitFor(() => {
             expect(screen.getByText('Error de conexión')).toBeDefined();
