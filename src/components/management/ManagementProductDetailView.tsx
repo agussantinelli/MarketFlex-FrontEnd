@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ManagementService } from '../../services/management\.service';
-import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil, LuDollarSign, LuTag as LuDiscount } from 'react-icons/lu';
+import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil, LuDollarSign, LuTag as LuDiscount, LuTrash2 } from 'react-icons/lu';
 import UpdatePriceModal from './UpdatePriceModal';
 import ApplyDiscountModal from './ApplyDiscountModal';
+import RemoveDiscountModal from './RemoveDiscountModal';
 import styles from './styles/ManagementProductDetailView.module.css';
 
 interface Props {
@@ -23,6 +24,7 @@ export default function ManagementProductDetailView({ productId }: Props) {
     const [error, setError] = useState<string | null>(null);
     const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
     const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
+    const [isRemoveDiscountModalOpen, setIsRemoveDiscountModalOpen] = useState(false);
 
     const loadProduct = () => {
         setLoading(true);
@@ -145,13 +147,23 @@ export default function ManagementProductDetailView({ productId }: Props) {
                             >
                                 <LuDollarSign size={14} /> Actualizar Precio
                             </button>
-                            <button
-                                onClick={() => setIsDiscountModalOpen(true)}
-                                className={styles.badge}
-                                style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
-                            >
-                                <LuDiscount size={14} /> Aplicar Descuento
-                            </button>
+                            {p.descuentoActivo ? (
+                                <button
+                                    onClick={() => setIsRemoveDiscountModalOpen(true)}
+                                    className={styles.badge}
+                                    style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
+                                >
+                                    <LuTrash2 size={14} /> Quitar Descuento
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => setIsDiscountModalOpen(true)}
+                                    className={styles.badge}
+                                    style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
+                                >
+                                    <LuDiscount size={14} /> Aplicar Descuento
+                                </button>
+                            )}
                         </div>
 
                         <div className={styles.divider} />
@@ -303,6 +315,18 @@ export default function ManagementProductDetailView({ productId }: Props) {
                     loadProduct();
                 }}
             />
+            {product?.descuentoActivo && (
+                <RemoveDiscountModal
+                    isOpen={isRemoveDiscountModalOpen}
+                    onClose={() => setIsRemoveDiscountModalOpen(false)}
+                    productId={productId}
+                    discountId={product.descuentoActivo.id}
+                    onSuccess={() => {
+                        setIsRemoveDiscountModalOpen(false);
+                        loadProduct();
+                    }}
+                />
+            )}
         </div>
     );
 }
