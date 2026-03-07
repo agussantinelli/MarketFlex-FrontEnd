@@ -1,7 +1,7 @@
 ---
 import "../styles/globals.css";
 import SellerSidebar from "../components/seller/SellerSidebar";
-import AdminHeader from "../components/admin/AdminHeader.astro";
+import ManagementHeader from "../components/management/ManagementHeader.astro";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import Notifications from "../components/common/Notifications";
 import { ViewTransitions } from "astro:transitions";
@@ -114,7 +114,7 @@ const { title, parentTitle, parentUrl } = Astro.props;
             </div>
             <SellerSidebar client:load />
             <div class="seller-main">
-                <AdminHeader
+                <ManagementHeader
                     title={title}
                     parentTitle={parentTitle}
                     parentUrl={parentUrl}
@@ -152,3 +152,4 @@ const { title, parentTitle, parentUrl } = Astro.props;
         <Notifications client:only="react" />
     </body>
 </html>
+

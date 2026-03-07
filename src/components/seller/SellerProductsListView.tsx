@@ -1,6 +1,6 @@
 import React from 'react';
-import DataTable from '../admin/DataTable';
-import styles from '../admin/styles/ProductsListView.module.css';
+import DataTable from '../management/DataTable';
+import styles from '../management/styles/ProductsListView.module.css';
 import { LuPackage, LuPlus } from 'react-icons/lu';
 
 const SellerProductsListView: React.FC = () => {

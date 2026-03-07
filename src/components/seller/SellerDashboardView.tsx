@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LuDollarSign, LuShoppingCart, LuPackage, LuTrendingUp, LuInfo } from 'react-icons/lu';
-import styles from '../admin/styles/dashboard.module.css';
+import styles from '../management/styles/dashboard.module.css';
 
 const SellerDashboardView: React.FC = () => {
     const [infoModal, setInfoModal] = useState<{ title: string, text: string } | null>(null);

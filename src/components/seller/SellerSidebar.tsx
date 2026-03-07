@@ -16,9 +16,9 @@ const SellerSidebar = () => {
         setCurrentPath(window.location.pathname);
 
         const handleToggle = () => setIsOpen(prev => !prev);
-        window.addEventListener('toggle-admin-sidebar', handleToggle);
+        window.addEventListener('toggle-management-sidebar', handleToggle);
 
-        return () => window.removeEventListener('toggle-admin-sidebar', handleToggle);
+        return () => window.removeEventListener('toggle-management-sidebar', handleToggle);
     }, []);
 
     const closeSidebar = () => setIsOpen(false);
@@ -73,3 +73,4 @@ const SellerSidebar = () => {
 };
 
 export default SellerSidebar;
+
