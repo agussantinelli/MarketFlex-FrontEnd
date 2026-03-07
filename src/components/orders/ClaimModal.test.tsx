@@ -17,7 +17,8 @@ describe('ClaimModal Component', () => {
         isOpen: true,
         onClose: mockOnClose,
         onSuccess: mockOnSuccess,
-        purchaseId: 'purchase-123'
+        purchaseId: 'purchase-123',
+        purchaseDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() // 4 days ago
     };
 
     beforeEach(() => {
@@ -116,5 +117,14 @@ describe('ClaimModal Component', () => {
         render(<ClaimModal {...defaultProps} />);
         fireEvent.click(screen.getByText('Cancelar'));
         expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it('bloquea el envío y muestra advertencia si no pasaron 72 horas', () => {
+        const recentDate = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(); // 1 day ago
+        render(<ClaimModal {...defaultProps} purchaseDate={recentDate} />);
+
+        expect(screen.getByText(/Deben pasar al menos 72 horas desde la compra/i)).toBeDefined();
+        const submitBtn = screen.getByRole('button', { name: /Enviar Reclamo/i }) as HTMLButtonElement;
+        expect(submitBtn.disabled).toBe(true);
     });
 });

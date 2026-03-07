@@ -3,9 +3,10 @@ import ClaimModal from './ClaimModal';
 
 interface Props {
     purchaseId: string;
+    purchaseDate: string;
 }
 
-export default function ClaimModalWrapper({ purchaseId }: Props) {
+export default function ClaimModalWrapper({ purchaseId, purchaseDate }: Props) {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -19,6 +20,7 @@ export default function ClaimModalWrapper({ purchaseId }: Props) {
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
             purchaseId={purchaseId}
+            purchaseDate={purchaseDate}
             onSuccess={() => {
                 // Optionally refresh order detail or show another message
             }}

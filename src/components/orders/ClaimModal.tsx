@@ -7,13 +7,20 @@ interface Props {
     isOpen: boolean;
     onClose: () => void;
     purchaseId: string;
+    purchaseDate: string;
     onSuccess: () => void;
 }
 
-export default function ClaimModal({ isOpen, onClose, purchaseId, onSuccess }: Props) {
+export default function ClaimModal({ isOpen, onClose, purchaseId, purchaseDate, onSuccess }: Props) {
     const [motivo, setMotivo] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const purchaseDateObj = new Date(purchaseDate);
+    const now = new Date();
+    const hoursDiff = (now.getTime() - purchaseDateObj.getTime()) / (1000 * 60 * 60);
+    const isTimeRestricted = hoursDiff < 72;
+    const remainingHours = Math.ceil(72 - hoursDiff);
 
     if (!isOpen) return null;
 
@@ -64,6 +71,21 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, onSuccess }: P
                         Lamentamos que tengas inconvenientes con tu compra. Contanos qué pasó para poder ayudarte.
                     </p>
 
+                    {isTimeRestricted && (
+                        <div className={styles.warningBox} style={{
+                            backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                            borderLeft: '4px solid #ffc107',
+                            padding: '12px',
+                            marginBottom: '20px',
+                            fontSize: '0.9rem',
+                            color: '#ffc107',
+                            borderRadius: '4px'
+                        }}>
+                            <strong>¡Atención!</strong> Deben pasar al menos 72 horas desde la compra para realizar un reclamo.
+                            Faltan aproximadamente {remainingHours} horas.
+                        </div>
+                    )}
+
                     <div className={styles.formGroup}>
                         <label htmlFor="motivo">Motivo del Reclamo</label>
                         <input
@@ -92,7 +114,12 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, onSuccess }: P
                         <button type="button" onClick={onClose} className={styles.cancelButton} disabled={loading}>
                             Cancelar
                         </button>
-                        <button type="submit" className={styles.confirmButton} disabled={loading}>
+                        <button
+                            type="submit"
+                            className={styles.confirmButton}
+                            disabled={loading || isTimeRestricted}
+                            title={isTimeRestricted ? `Faltan ${remainingHours} horas para poder reclamar` : ''}
+                        >
                             {loading ? 'Enviando...' : 'Enviar Reclamo'}
                         </button>
                     </div>

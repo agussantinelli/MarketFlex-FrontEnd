@@ -37,24 +37,47 @@ export async function initOrderDetail() {
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
 
-        // Update Status Badge
         const statusBadge = document.getElementById('order-status-badge');
         if (statusBadge) {
+            const reactContainer = document.querySelector('[data-purchase-id]');
+            if (reactContainer) {
+                reactContainer.setAttribute('data-purchase-date', order.fechaHora);
+            }
+
             statusBadge.textContent = order.estado;
             statusBadge.className = `${styles.statusBadge} ${(styles as any)[order.estado.toLowerCase()]}`;
 
-            // Inject Claim Button if not already present
-            if (!document.getElementById('claim-button-injected') && order.estado !== 'CANCELADO' && order.estado !== 'BORRADO') {
+            // Inject Claim Button or View Claims Button
+            const existingClaimBtn = document.getElementById('claim-button-injected');
+            if (existingClaimBtn) existingClaimBtn.remove(); // Remove to re-render based on state
+
+            if (order.estado !== 'CANCELADO' && order.estado !== 'BORRADO') {
+                const hasClaims = order.reclamos && order.reclamos.length > 0;
                 const btn = document.createElement('button');
                 btn.id = 'claim-button-injected';
-                btn.className = (styles as any).btnClaim || ''; // I'll need to define this in CSS
-                btn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    Realizar Reclamo
-                `;
-                btn.onclick = () => window.dispatchEvent(new CustomEvent('open-claim-modal'));
+                btn.className = (styles as any).btnClaim || '';
+
+                if (hasClaims) {
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        Ver reclamos pendientes
+                    `;
+                    btn.onclick = () => window.dispatchEvent(new CustomEvent('open-view-claims-modal'));
+                } else {
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Realizar Reclamo
+                    `;
+                    btn.onclick = () => window.dispatchEvent(new CustomEvent('open-claim-modal'));
+                }
 
                 statusBadge.parentNode?.appendChild(btn);
+
+                // Ensure data for React wrappers is set
+                const container = document.querySelector('[data-purchase-id]');
+                if (container) {
+                    container.setAttribute('data-claims', JSON.stringify(order.reclamos || []));
+                }
             }
         }
 
