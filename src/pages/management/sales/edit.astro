@@ -1,0 +1,15 @@
+---
+import ManagementLayout from "../../../layouts/ManagementLayout.astro";
+import EditSaleView from "../../../components/management/EditSaleView";
+
+const title = "Editar Venta";
+---
+
+<ManagementLayout
+    title={title}
+    parentTitle="Gestión de Ventas"
+    parentUrl="/management/sales"
+>
+    <EditSaleView client:load />
+</ManagementLayout>
+

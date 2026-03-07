@@ -1,0 +1,9 @@
+---
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import DashboardView from "../../components/management/DashboardView.tsx";
+---
+
+<ManagementLayout title="Dashboard">
+    <DashboardView client:only="react" />
+</ManagementLayout>
+

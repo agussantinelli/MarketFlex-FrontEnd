@@ -1,0 +1,9 @@
+---
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import AnalyticsView from "../../components/management/AnalyticsView.tsx";
+---
+
+<ManagementLayout title="Analíticas">
+    <AnalyticsView client:only="react" />
+</ManagementLayout>
+

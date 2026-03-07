@@ -1,20 +1,20 @@
 ---
-import AdminLayout from "../../../../layouts/AdminLayout.astro";
-import SubcategoriesListView from "../../../../components/admin/SubcategoriesListView";
+import ManagementLayout from "../../../../layouts/ManagementLayout.astro";
+import SubcategoriesListView from "../../../../components/management/SubcategoriesListView";
 import ConfirmationModal from "../../../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../../../components/common/styles/ConfirmationModal.module.css";
 
 const { id } = Astro.params;
 
 if (!id) {
-    return Astro.redirect("/admin/categories");
+    return Astro.redirect("/management/categories");
 }
 ---
 
-<AdminLayout
+<ManagementLayout
     title="Gestión de Subcategorías"
     parentTitle="Categorías"
-    parentUrl="/admin/categories"
+    parentUrl="/management/categories"
 >
     <SubcategoriesListView client:only="react" categoriaId={id} />
 
@@ -26,7 +26,7 @@ if (!id) {
         cancelText="Cancelar"
         type="danger"
     />
-</AdminLayout>
+</ManagementLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
     window.showDeleteSubcategoryModal = (onConfirm) => {

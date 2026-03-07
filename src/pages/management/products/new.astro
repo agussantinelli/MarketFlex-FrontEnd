@@ -1,17 +1,18 @@
 ---
-import AdminLayout from "../../../layouts/AdminLayout.astro";
+import ManagementLayout from "../../../layouts/ManagementLayout.astro";
 import PageCard from "../../../components/common/PageCard.astro";
-import CreateProductView from "../../../components/admin/CreateProductView.tsx";
+import CreateProductView from "../../../components/management/CreateProductView.tsx";
 ---
 
-<AdminLayout
+<ManagementLayout
     title="Nuevo Producto"
     parentTitle="Gestión de Productos"
-    parentUrl="/admin/products"
+    parentUrl="/management/products"
 >
     <div style="padding: 2rem 0;">
         <PageCard maxWidth="1000px" variant="dark">
             <CreateProductView client:only="react" />
         </PageCard>
     </div>
-</AdminLayout>
+</ManagementLayout>
+

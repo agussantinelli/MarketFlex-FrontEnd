@@ -1,32 +1,30 @@
 ---
-import AdminLayout from "../../layouts/AdminLayout.astro";
-import CharacteristicsListView from "../../components/admin/CharacteristicsListView";
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import BrandsListView from "../../components/management/BrandsListView.tsx";
 import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Características">
-    <CharacteristicsListView client:only="react" />
+<ManagementLayout title="Gestión de Marcas">
+    <BrandsListView client:only="react" />
 
     <ConfirmationModal
-        id="delete-characteristic-modal"
-        title="Borrar Característica"
-        message="¿Estás seguro de que deseas borrar esta característica? Solo se podrá borrar si no tiene productos asociados."
+        id="delete-brand-modal"
+        title="Borrar Marca"
+        message="¿Estás seguro de que deseas borrar esta marca? Solo se podrá borrar si no tiene productos asociados."
         confirmText="Borrar"
         cancelText="Cancelar"
         type="danger"
     />
-</AdminLayout>
+</ManagementLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
-    window.showDeleteCharacteristicModal = (onConfirm) => {
-        const modal = document.getElementById("delete-characteristic-modal");
+    window.showDeleteBrandModal = (onConfirm) => {
+        const modal = document.getElementById("delete-brand-modal");
         const confirmBtn = document.getElementById(
-            "delete-characteristic-modal-confirm",
+            "delete-brand-modal-confirm",
         );
-        const cancelBtn = document.getElementById(
-            "delete-characteristic-modal-cancel",
-        );
+        const cancelBtn = document.getElementById("delete-brand-modal-cancel");
 
         if (!modal || !confirmBtn || !cancelBtn) return;
 
@@ -52,3 +50,4 @@ import modalStyles from "../../components/common/styles/ConfirmationModal.module
         cancelBtn.addEventListener("click", handleCancel);
     };
 </script>
+

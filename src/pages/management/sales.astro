@@ -1,13 +1,13 @@
 ---
-import AdminLayout from "../../layouts/AdminLayout.astro";
-import SalesListView from "../../components/admin/SalesListView";
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import SalesListView from "../../components/management/SalesListView";
 import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 
 const title = "Gestión de Ventas";
 ---
 
-<AdminLayout title={title}>
+<ManagementLayout title={title}>
     <SalesListView client:visible />
 
     <ConfirmationModal
@@ -36,7 +36,7 @@ const title = "Gestión de Ventas";
         cancelText="Cancelar"
         type="danger"
     />
-</AdminLayout>
+</ManagementLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
     const setupModal = (modalId, globalName) => {
@@ -74,3 +74,4 @@ const title = "Gestión de Ventas";
     setupModal("complete-sale-modal", "showCompleteSaleModal");
     setupModal("cancel-sale-modal", "showCancelSaleModal");
 </script>
+

@@ -1,0 +1,13 @@
+---
+import ManagementLayout from "../../../layouts/ManagementLayout.astro";
+import CreateUserView from "../../../components/management/CreateUserView.tsx";
+---
+
+<ManagementLayout
+    title="Nuevo Usuario"
+    parentTitle="Gestión de Usuarios"
+    parentUrl="/management/users"
+>
+    <CreateUserView client:only="react" />
+</ManagementLayout>
+

@@ -1,0 +1,18 @@
+---
+import ManagementLayout from "../../../../layouts/ManagementLayout.astro";
+import EditProductView from "../../../../components/management/EditProductView";
+
+const { id } = Astro.params;
+
+if (!id) {
+    return Astro.redirect("/management/products");
+}
+---
+
+<ManagementLayout
+    title="Editar Producto"
+    parentTitle="Gestión de Productos"
+    parentUrl="/management/products"
+>
+    <EditProductView productId={id} client:load />
+</ManagementLayout>

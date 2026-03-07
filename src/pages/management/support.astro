@@ -1,31 +1,31 @@
 ---
-import AdminLayout from "../../layouts/AdminLayout.astro";
-import ProductsListView from "../../components/admin/ProductsListView.tsx";
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import SupportListView from "../../components/management/SupportListView";
 import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Productos">
-    <ProductsListView client:only="react" />
+<ManagementLayout title="Soporte">
+    <SupportListView client:only="react" />
 
     <ConfirmationModal
-        id="delete-product-modal"
-        title="Borrar Producto"
-        message="¿Estás seguro de que deseas borrar este producto? Pasará a estado BORRADO y se ocultará del catálogo."
+        id="delete-support-modal"
+        title="Borrar Consulta de Soporte"
+        message="¿Estás seguro de que deseas borrar esta consulta? No se podrá recuperar una vez borrada."
         confirmText="Borrar"
         cancelText="Cancelar"
         type="danger"
     />
-</AdminLayout>
+</ManagementLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
-    window.showDeleteProductModal = (onConfirm) => {
-        const modal = document.getElementById("delete-product-modal");
+    window.showDeleteSupportModal = (onConfirm) => {
+        const modal = document.getElementById("delete-support-modal");
         const confirmBtn = document.getElementById(
-            "delete-product-modal-confirm",
+            "delete-support-modal-confirm",
         );
         const cancelBtn = document.getElementById(
-            "delete-product-modal-cancel",
+            "delete-support-modal-cancel",
         );
 
         if (!modal || !confirmBtn || !cancelBtn) return;
@@ -52,3 +52,4 @@ import modalStyles from "../../components/common/styles/ConfirmationModal.module
         cancelBtn.addEventListener("click", handleCancel);
     };
 </script>
+

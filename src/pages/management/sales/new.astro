@@ -1,0 +1,15 @@
+---
+import ManagementLayout from "../../../layouts/ManagementLayout.astro";
+import RegisterSaleView from "../../../components/management/RegisterSaleView";
+
+const title = "Registrar Venta";
+---
+
+<ManagementLayout
+    title={title}
+    parentTitle="Gestión de Ventas"
+    parentUrl="/management/sales"
+>
+    <RegisterSaleView client:load />
+</ManagementLayout>
+

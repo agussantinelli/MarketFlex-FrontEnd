@@ -1,0 +1,14 @@
+---
+import ManagementLayout from "../../../layouts/ManagementLayout.astro";
+import ManagementProductDetailView from "../../../components/management/ManagementProductDetailView.tsx";
+
+const { id } = Astro.params;
+---
+
+<ManagementLayout
+    title="Detalle de Producto"
+    parentTitle="Gestión de Productos"
+    parentUrl="/management/products"
+>
+    <ManagementProductDetailView client:only="react" productId={id as string} />
+</ManagementLayout>

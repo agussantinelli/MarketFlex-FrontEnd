@@ -1,30 +1,32 @@
 ---
-import AdminLayout from "../../layouts/AdminLayout.astro";
-import BrandsListView from "../../components/admin/BrandsListView.tsx";
+import ManagementLayout from "../../layouts/ManagementLayout.astro";
+import ProductsListView from "../../components/management/ProductsListView.tsx";
 import ConfirmationModal from "../../components/common/ConfirmationModal.astro";
 import modalStyles from "../../components/common/styles/ConfirmationModal.module.css";
 ---
 
-<AdminLayout title="Gestión de Marcas">
-    <BrandsListView client:only="react" />
+<ManagementLayout title="Gestión de Productos">
+    <ProductsListView client:only="react" />
 
     <ConfirmationModal
-        id="delete-brand-modal"
-        title="Borrar Marca"
-        message="¿Estás seguro de que deseas borrar esta marca? Solo se podrá borrar si no tiene productos asociados."
+        id="delete-product-modal"
+        title="Borrar Producto"
+        message="¿Estás seguro de que deseas borrar este producto? Pasará a estado BORRADO y se ocultará del catálogo."
         confirmText="Borrar"
         cancelText="Cancelar"
         type="danger"
     />
-</AdminLayout>
+</ManagementLayout>
 
 <script is:inline define:vars={{ modalStyles }}>
-    window.showDeleteBrandModal = (onConfirm) => {
-        const modal = document.getElementById("delete-brand-modal");
+    window.showDeleteProductModal = (onConfirm) => {
+        const modal = document.getElementById("delete-product-modal");
         const confirmBtn = document.getElementById(
-            "delete-brand-modal-confirm",
+            "delete-product-modal-confirm",
         );
-        const cancelBtn = document.getElementById("delete-brand-modal-cancel");
+        const cancelBtn = document.getElementById(
+            "delete-product-modal-cancel",
+        );
 
         if (!modal || !confirmBtn || !cancelBtn) return;
 
@@ -50,3 +52,4 @@ import modalStyles from "../../components/common/styles/ConfirmationModal.module
         cancelBtn.addEventListener("click", handleCancel);
     };
 </script>
+
