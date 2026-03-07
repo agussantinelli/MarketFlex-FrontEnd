@@ -41,7 +41,21 @@ export async function initOrderDetail() {
         const statusBadge = document.getElementById('order-status-badge');
         if (statusBadge) {
             statusBadge.textContent = order.estado;
-            statusBadge.className = `${styles.statusBadge} ${styles[order.estado.toLowerCase()]}`;
+            statusBadge.className = `${styles.statusBadge} ${(styles as any)[order.estado.toLowerCase()]}`;
+
+            // Inject Claim Button if not already present
+            if (!document.getElementById('claim-button-injected') && order.estado !== 'CANCELADO' && order.estado !== 'BORRADO') {
+                const btn = document.createElement('button');
+                btn.id = 'claim-button-injected';
+                btn.className = (styles as any).btnClaim || ''; // I'll need to define this in CSS
+                btn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Realizar Reclamo
+                `;
+                btn.onclick = () => window.dispatchEvent(new CustomEvent('open-claim-modal'));
+
+                statusBadge.parentNode?.appendChild(btn);
+            }
         }
 
         // Handle Pending Reason Info
@@ -61,7 +75,7 @@ export async function initOrderDetail() {
                         </div>
                         <div class="${styles.statusInfoContent}">
                             <h4>Información de Seguimiento</h4>
-                            <p>${reasons[order.razonPendiente] || 'Tu pedido está siendo procesado.'}</p>
+                            <p>${reasons[order.razonPendiente!] || 'Tu pedido está siendo procesado.'}</p>
                         </div>
                     </div>
                 `;
