@@ -16,6 +16,19 @@ const SalesListView = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sort, setSort] = useState('newest');
     const [selectedSale, setSelectedSale] = useState<ManagementPurchase | null>(null);
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
+
+    useEffect(() => {
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+            } catch (e) {
+                console.error("Error parsing role in sales list", e);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         const fetchSales = async () => {
@@ -151,15 +164,17 @@ const SalesListView = () => {
                     >
                         <LuEye size={18} />
                     </button>
-                    <a
-                        className={styles.actionBtn}
-                        title="Editar"
-                        href={`/management/sales/edit?id=${sale.id}`}
-                        style={{ textDecoration: 'none' }}
-                    >
-                        <LuPencil size={18} />
-                    </a>
-                    {sale.estado.toUpperCase() === 'CANCELADO' || sale.estado.toUpperCase() === 'COMPLETADO' ? (
+                    {role === 'admin' && (
+                        <a
+                            className={styles.actionBtn}
+                            title="Editar"
+                            href={`/management/sales/edit?id=${sale.id}`}
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <LuPencil size={18} />
+                        </a>
+                    )}
+                    {role === 'admin' && (sale.estado.toUpperCase() === 'CANCELADO' || sale.estado.toUpperCase() === 'COMPLETADO') ? (
                         <button
                             className={`${styles.actionBtn} ${styles.actionDelete}`}
                             title="Borrar"
@@ -256,11 +271,13 @@ const SalesListView = () => {
                 <div className={styles.titleSection}>
                     <div className={dashboardStyles.dashboardHeader}>
                         <h1>Listado de Ventas</h1>
-                        <a href="/management/sales/new" className={dashboardStyles.createButton} style={{ textDecoration: 'none' }}>
-                            <LuPlus /> Registrar Venta
-                        </a>
+                        {role === 'admin' && (
+                            <a href="/management/sales/new" className={dashboardStyles.createButton} style={{ textDecoration: 'none' }}>
+                                <LuPlus /> Registrar Venta
+                            </a>
+                        )}
                     </div>
-                    <p>Gestiona y visualiza todas las transacciones del sistema</p>
+                    <p>{role === 'seller' ? 'Gestiona y visualiza tus ventas' : 'Gestiona y visualiza todas las transacciones del sistema'}</p>
                 </div>
             </header>
 

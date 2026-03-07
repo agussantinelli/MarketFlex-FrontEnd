@@ -17,7 +17,20 @@ const ProductsListView: React.FC = () => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [featuredCount, setFeaturedCount] = useState(0);
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
     const limit = 10;
+
+    useEffect(() => {
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+            } catch (e) {
+                console.error("Error parsing role in products list", e);
+            }
+        }
+    }, []);
 
     const fetchFeaturedCount = async () => {
         try {
@@ -210,24 +223,24 @@ const ProductsListView: React.FC = () => {
 
                 return (
                     <button
-                        onClick={() => canToggle && handleToggleFeatured(p)}
-                        disabled={!canToggle}
+                        onClick={() => role === 'admin' && canToggle && handleToggleFeatured(p)}
+                        disabled={role !== 'admin' || !canToggle}
                         style={{
                             background: 'none',
                             border: 'none',
-                            cursor: canToggle ? 'pointer' : 'not-allowed',
+                            cursor: (role === 'admin' && canToggle) ? 'pointer' : 'not-allowed',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             padding: '4px',
                             margin: '0 auto',
                             transition: 'transform 0.2s ease',
-                            color: p.esDestacado ? 'var(--neon-blue)' : (canToggle ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)'),
-                            opacity: canToggle ? 1 : 0.5
+                            color: p.esDestacado ? 'var(--neon-blue)' : (role === 'admin' && canToggle ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)'),
+                            opacity: (role === 'admin' && canToggle) ? 1 : 0.5
                         }}
-                        onMouseEnter={(e) => canToggle && (e.currentTarget.style.transform = 'scale(1.2)')}
-                        onMouseLeave={(e) => canToggle && (e.currentTarget.style.transform = 'scale(1)')}
-                        title={p.esDestacado ? "Quitar de destacados" : (isLimitReached ? "Límite de 4 alcanzado" : "Marcar como destacado")}
+                        onMouseEnter={(e) => role === 'admin' && canToggle && (e.currentTarget.style.transform = 'scale(1.2)')}
+                        onMouseLeave={(e) => role === 'admin' && canToggle && (e.currentTarget.style.transform = 'scale(1)')}
+                        title={role !== 'admin' ? "Solo administradores pueden destacar" : (p.esDestacado ? "Quitar de destacados" : (isLimitReached ? "Límite de 4 alcanzado" : "Marcar como destacado"))}
                     >
                         <LuStar
                             fill={p.esDestacado ? 'var(--neon-blue)' : 'transparent'}
@@ -279,8 +292,8 @@ const ProductsListView: React.FC = () => {
         <div className={styles.container}>
             <header className={styles.header}>
                 <div className={styles.titleSection}>
-                    <h1>Gestión de Productos</h1>
-                    <p>Administra el catálogo completo, stock y destacados</p>
+                    <h1>{role === 'seller' ? 'Mis Productos' : 'Gestión de Productos'}</h1>
+                    <p>{role === 'seller' ? 'Administra tus productos y stock' : 'Administra el catálogo completo, stock y destacados'}</p>
                 </div>
             </header>
 
@@ -292,10 +305,10 @@ const ProductsListView: React.FC = () => {
                 onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                isDeleteEnabled={(p) => p.estado === 'INACTIVO'}
+                isDeleteEnabled={(p) => role === 'admin' && p.estado === 'INACTIVO'}
                 renderActions={(p) => (
                     <>
-                        {p.estado === 'ACTIVO' && (
+                        {role === 'admin' && p.estado === 'ACTIVO' && (
                             <button
                                 className={tableStyles.viewBtn}
                                 onClick={(e) => { e.stopPropagation(); handleToggleStatus(p, 'INACTIVO'); }}
