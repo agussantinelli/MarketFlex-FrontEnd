@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
@@ -13,13 +13,14 @@
 }
 
 .modalContent {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
     width: 90%;
     max-width: 500px;
     padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -29,7 +30,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding-bottom: 1rem;
 }
 
@@ -37,12 +38,13 @@
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
+    color: #f1f5f9;
 }
 
 .closeButton {
     background: transparent;
     border: none;
-    color: var(--text-muted);
+    color: #94a3b8;
     cursor: pointer;
     padding: 0.5rem;
     display: flex;
@@ -53,8 +55,8 @@
 }
 
 .closeButton:hover {
-    background: var(--bg-hover);
-    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: #f1f5f9;
 }
 
 .modalForm {
@@ -72,16 +74,16 @@
 .formGroup label {
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--text-color);
+    color: #94a3b8;
 }
 
 .formGroup input,
 .formGroup select {
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-lighter);
-    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.6);
+    color: #f1f5f9;
     font-size: 0.95rem;
     font-family: inherit;
     transition: border-color 0.2s;
@@ -90,7 +92,8 @@
 .formGroup input:focus,
 .formGroup select:focus {
     outline: none;
-    border-color: var(--neon-blue);
+    border-color: #60a5fa;
+    /* neon blue */
 }
 
 .formRow {
@@ -121,25 +124,24 @@
 
 .cancelButton {
     background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
 }
 
 .cancelButton:hover {
-    background: var(--bg-hover);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .confirmButton {
-    background: var(--neon-blue);
+    background: #3b82f6;
     color: white;
     border: none;
-    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .confirmButton:hover {
-    background: #4ade80;
-    /* neon green */
-    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+    background: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .confirmButton:disabled,
