@@ -4,7 +4,7 @@ import type { Column } from './DataTable';
 import { ManagementService } from '../../services/management\.service';
 import { getFeaturedProducts } from '../../services/product.service';
 import type { ManagementProduct } from '../../types/management\.types';
-import { LuImage, LuStar } from 'react-icons/lu';
+import { LuImage, LuStar, LuEyeOff, LuRotateCcw } from 'react-icons/lu';
 import { getImageUrl } from '../../lib/url';
 import styles from './styles/SalesListView.module.css';
 
@@ -84,6 +84,45 @@ const ProductsListView: React.FC = () => {
             if ((window as any).triggerSileo) {
                 (window as any).triggerSileo('error', result?.message || 'Error al actualizar destacados');
             }
+        }
+    };
+
+    const handleToggleStatus = async (product: ManagementProduct, newStatus: 'ACTIVO' | 'INACTIVO' | 'BORRADO') => {
+        const confirmMessage = newStatus === 'BORRADO'
+            ? '¿Estás seguro de que deseas eliminar permanentemente este producto?'
+            : `¿Deseas cambiar el estado del producto a ${newStatus}?`;
+
+        if (!window.confirm(confirmMessage)) return;
+
+        if ((window as any).showManagementLoader) (window as any).showManagementLoader();
+        try {
+            const result = await ManagementService.updateProductStatus(product.id, newStatus);
+
+            if (result?.status === 'success') {
+                if (newStatus === 'BORRADO') {
+                    setProducts(prev => prev.filter(p => p.id !== product.id));
+                    setTotal(prev => prev - 1);
+                } else {
+                    setProducts(prev => prev.map(p =>
+                        p.id === product.id ? { ...p, estado: newStatus } : p
+                    ));
+                }
+
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('success', result.message || 'Estado actualizado correctamente.');
+                }
+            } else {
+                if ((window as any).triggerSileo) {
+                    (window as any).triggerSileo('error', result?.message || 'Error al actualizar el estado');
+                }
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            if ((window as any).triggerSileo) {
+                (window as any).triggerSileo('error', 'Error de conexión');
+            }
+        } finally {
+            if ((window as any).hideManagementLoader) (window as any).hideManagementLoader();
         }
     };
 
@@ -252,6 +291,29 @@ const ProductsListView: React.FC = () => {
                 onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                isDeleteEnabled={(p) => p.estado === 'INACTIVO'}
+                renderActions={(p) => (
+                    <>
+                        {p.estado === 'ACTIVO' && (
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleToggleStatus(p, 'INACTIVO'); }}
+                                title="Desactivar"
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '4px', display: 'flex', alignItems: 'center' }}
+                            >
+                                <LuEyeOff size={18} />
+                            </button>
+                        )}
+                        {p.estado === 'INACTIVO' && (
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleToggleStatus(p, 'ACTIVO'); }}
+                                title="Reactivar"
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--neon-green)', padding: '4px', display: 'flex', alignItems: 'center' }}
+                            >
+                                <LuRotateCcw size={18} />
+                            </button>
+                        )}
+                    </>
+                )}
                 onAdd={handleAdd}
                 searchTerm={searchTerm}
                 onSearch={(term) => {

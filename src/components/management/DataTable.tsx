@@ -28,6 +28,7 @@ interface DataTableProps<T> {
     onDelete?: (item: T) => void;
     isDeleteEnabled?: (item: T) => boolean;
     onAdd?: () => void;
+    renderActions?: (item: T) => React.ReactNode;
     pagination?: Pagination;
     searchPlaceholder?: string;
     onSearch?: (term: string) => void;
@@ -49,7 +50,8 @@ function DataTable<T extends { id: string | number }>({
     searchPlaceholder = 'Buscar...',
     onSearch,
     searchTerm = '',
-    customFilters
+    customFilters,
+    renderActions
 }: DataTableProps<T>) {
 
     const totalPages = pagination ? Math.ceil(pagination.total / pagination.limit) : 0;
@@ -141,9 +143,10 @@ function DataTable<T extends { id: string | number }>({
                                                 : (item[col.accessor] as React.ReactNode)}
                                         </td>
                                     ))}
-                                    {(onView || onEdit || onDelete) && (
+                                    {(onView || onEdit || onDelete || renderActions) && (
                                         <td className={styles.actionsCell}>
                                             <div className={styles.actionsWrapper}>
+                                                {renderActions && renderActions(item)}
                                                 {onView && (
                                                     <button
                                                         className={styles.viewBtn}
