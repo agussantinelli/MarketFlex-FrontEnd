@@ -72,56 +72,54 @@ export default function ApplyDiscountModal({ isOpen, onClose, productId, onSucce
                 </div>
                 <form onSubmit={handleSubmit} className={styles.modalForm}>
                     <div className={styles.formGroup}>
-                        <label>Nombre de la Oferta</label>
+                        <label htmlFor="offerName">Nombre de la Oferta</label>
                         <input
+                            id="offerName"
                             type="text"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                             placeholder="Ej: Hot Sale 2026"
                             maxLength={100}
-                            required
                         />
                     </div>
 
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>
-                            <label>Tipo</label>
-                            <select value={tipo} onChange={(e) => setTipo(e.target.value as any)} required>
+                            <label htmlFor="discountType">Tipo</label>
+                            <select id="discountType" value={tipo} onChange={(e) => setTipo(e.target.value as any)}>
                                 <option value="PORCENTAJE">Porcentaje (%)</option>
                                 <option value="MONTO_FIJO">Monto Fijo ($)</option>
                             </select>
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Valor</label>
+                            <label htmlFor="discountValue">Valor</label>
                             <input
+                                id="discountValue"
                                 type="number"
                                 step={tipo === 'PORCENTAJE' ? '1' : '0.01'}
-                                min="0"
-                                max={tipo === 'PORCENTAJE' ? '100' : undefined}
                                 value={valor}
                                 onChange={(e) => setValor(e.target.value)}
-                                required
                             />
                         </div>
                     </div>
 
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>
-                            <label>Fecha de Inicio</label>
+                            <label htmlFor="startDate">Fecha de Inicio</label>
                             <input
+                                id="startDate"
                                 type="datetime-local"
                                 value={fechaInicio}
                                 onChange={(e) => setFechaInicio(e.target.value)}
-                                required
                             />
                         </div>
                         <div className={styles.formGroup}>
-                            <label>Fecha de Fin</label>
+                            <label htmlFor="endDate">Fecha de Fin</label>
                             <input
+                                id="endDate"
                                 type="datetime-local"
                                 value={fechaFin}
                                 onChange={(e) => setFechaFin(e.target.value)}
-                                required
                             />
                         </div>
                     </div>

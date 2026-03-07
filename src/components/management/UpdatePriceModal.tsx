@@ -52,16 +52,15 @@ export default function UpdatePriceModal({ isOpen, onClose, productId, currentPr
                         <LuX size={20} />
                     </button>
                 </div>
-                <form onSubmit={handleSubmit} className={styles.modalForm}>
+                <form role="form" onSubmit={handleSubmit} className={styles.modalForm}>
                     <div className={styles.formGroup}>
-                        <label>Nuevo Precio (ARS)</label>
+                        <label htmlFor="newPrice">Nuevo Precio (ARS)</label>
                         <input
+                            id="newPrice"
                             type="number"
                             step="0.01"
-                            min="0"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
-                            required
                         />
                     </div>
                     <div className={styles.modalActions}>
