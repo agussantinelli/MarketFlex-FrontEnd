@@ -333,7 +333,7 @@ const CreateProductView: React.FC = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <label style={{ color: 'var(--green-cream)', fontWeight: '600' }}>Tags (Etiquetas)</label>
-                            <button type="button" onClick={handleGenerateTags} disabled={generatingTags || !nombre || !descripcion} style={{ padding: '0.3rem 0.8rem', background: 'rgba(0, 255, 136, 0.1)', color: 'var(--neon-green)', border: '1px solid rgba(0, 255, 136, 0.3)', borderRadius: '8px', cursor: (generatingTags || !nombre || !descripcion) ? 'not-allowed' : 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s', opacity: (generatingTags || !nombre || !descripcion) ? 0.5 : 1 }}>
+                            <button type="button" onClick={handleGenerateTags} disabled={generatingTags} style={{ padding: '0.3rem 0.8rem', background: 'rgba(0, 255, 136, 0.1)', color: 'var(--neon-green)', border: '1px solid rgba(0, 255, 136, 0.3)', borderRadius: '8px', cursor: generatingTags ? 'not-allowed' : 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.4rem', transition: 'all 0.2s', opacity: generatingTags ? 0.5 : 1 }}>
                                 <LuSparkles size={16} /> {generatingTags ? 'Generando...' : 'IA Tags'}
                             </button>
                         </div>
