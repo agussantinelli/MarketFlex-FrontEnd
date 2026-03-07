@@ -17,10 +17,12 @@ export const addItem = (product: Product, quantity: number) => {
     const currentQtyInCart = existingItem?.quantity || 0;
     const newTotalQty = currentQtyInCart + quantity;
 
-    if (newTotalQty > product.stock) {
+    const stockDisponible = Math.max(0, product.stock - (product.stockComprometido || 0));
+
+    if (newTotalQty > stockDisponible) {
         return {
             success: false,
-            message: `No hay suficiente stock. Ya tenés ${currentQtyInCart} unidad(es) en el carrito y el máximo disponible es ${product.stock}.`
+            message: `No hay suficiente stock. Ya tenés ${currentQtyInCart} unidad(es) en el carrito y el máximo disponible es ${stockDisponible}.`
         };
     }
 
@@ -52,11 +54,14 @@ export const updateQuantity = (productId: string, quantity: number) => {
     const currentCart = cart.get();
     const item = currentCart.items.find(i => i.id === productId);
 
-    if (item && quantity > item.stock) {
-        return {
-            success: false,
-            message: `No podés agregar más de ${item.stock} unidades de este producto.`
-        };
+    if (item) {
+        const stockDisponible = Math.max(0, item.stock - (item.stockComprometido || 0));
+        if (quantity > stockDisponible) {
+            return {
+                success: false,
+                message: `No podés agregar más de ${stockDisponible} unidades de este producto.`
+            };
+        }
     }
 
     const newItems = currentCart.items.map(item =>
