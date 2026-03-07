@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ManagementService } from '../../services/management\.service';
-import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil } from 'react-icons/lu';
+import { LuArrowLeft, LuPackage, LuTag, LuStar, LuTruck, LuClock, LuPercent, LuZap, LuPencil, LuDollarSign, LuTag as LuDiscount, LuTrash2 } from 'react-icons/lu';
+import UpdatePriceModal from './UpdatePriceModal';
+import ApplyDiscountModal from './ApplyDiscountModal';
 import styles from './styles/ManagementProductDetailView.module.css';
 
 interface Props {
@@ -19,8 +21,11 @@ export default function ManagementProductDetailView({ productId }: Props) {
     const [product, setProduct] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+    const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
 
-    useEffect(() => {
+    const loadProduct = () => {
+        setLoading(true);
         ManagementService.getManagementProduct(productId).then((res: { status: string; data?: any; message?: string }) => {
             if (res.status === 'success' && res.data) {
                 setProduct(res.data);
@@ -29,6 +34,10 @@ export default function ManagementProductDetailView({ productId }: Props) {
             }
             setLoading(false);
         });
+    };
+
+    useEffect(() => {
+        loadProduct();
     }, [productId]);
 
     if (loading) return null;
@@ -127,6 +136,24 @@ export default function ManagementProductDetailView({ productId }: Props) {
                                 <span className={styles.priceValueDiscount}>{formatCurrency(p.precioConDescuento)}</span>
                             </div>
                         )}
+
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+                            <button
+                                onClick={() => setIsPriceModalOpen(true)}
+                                className={styles.badge}
+                                style={{ background: 'rgba(96,165,250,0.1)', color: '#60a5fa', border: '1px solid rgba(96,165,250,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
+                            >
+                                <LuDollarSign size={14} /> Actualizar Precio
+                            </button>
+                            <button
+                                onClick={() => setIsDiscountModalOpen(true)}
+                                className={styles.badge}
+                                style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.8rem' }}
+                            >
+                                <LuDiscount size={14} /> Aplicar Descuento
+                            </button>
+                        </div>
+
                         <div className={styles.divider} />
                         <h4 className={styles.subCardTitle}>Historial de precios</h4>
                         <div className={styles.priceHistory}>
@@ -255,6 +282,27 @@ export default function ManagementProductDetailView({ productId }: Props) {
                     </div>
                 </div>
             </div>
+
+            <UpdatePriceModal
+                isOpen={isPriceModalOpen}
+                onClose={() => setIsPriceModalOpen(false)}
+                productId={productId}
+                currentPrice={product?.precioActual || 0}
+                onSuccess={() => {
+                    setIsPriceModalOpen(false);
+                    loadProduct();
+                }}
+            />
+
+            <ApplyDiscountModal
+                isOpen={isDiscountModalOpen}
+                onClose={() => setIsDiscountModalOpen(false)}
+                productId={productId}
+                onSuccess={() => {
+                    setIsDiscountModalOpen(false);
+                    loadProduct();
+                }}
+            />
         </div>
     );
 }
