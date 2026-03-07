@@ -453,12 +453,12 @@
 │   └── ...                                         # Isotipos y recursos gráficos adicionales.
 ├── src/                                            # Núcleo del frontend de la aplicación (Arquitectura Astro + React).
 │   ├── components/                                 # Biblioteca de componentes modulares.
-│   │   ├── management/                                 # Componentes exclusivos del panel de gestión (React + CSS Modules).
-│   │   │   ├── ManagementAuthInputs.test.tsx            # Test de inputs de autenticación de gestión.
-│   │   │   ├── ManagementAuthInputs.tsx                 # Campos reutilizables de login de gestión.
-│   │   │   ├── ManagementHeader.astro                   # Barra de navegación de gestión.
-│   │   │   ├── ManagementSidebar.test.tsx               # Test del menú lateral dinámico.
-│   │   │   ├── ManagementSidebar.tsx                    # Menú lateral dinámico con estados de navegación.
+│   │   ├── management/                             # Componentes exclusivos del panel de gestión (React + CSS Modules).
+│   │   │   ├── ManagementAuthInputs.test.tsx       # Test de inputs de autenticación de gestión.
+│   │   │   ├── ManagementAuthInputs.tsx            # Campos reutilizables de login de gestión.
+│   │   │   ├── ManagementHeader.astro              # Barra de navegación de gestión.
+│   │   │   ├── ManagementSidebar.test.tsx          # Test del menú lateral dinámico.
+│   │   │   ├── ManagementSidebar.tsx               # Menú lateral dinámico con estados de navegación.
 │   │   │   ├── AnalyticsView.test.tsx              # Test del dashboard de analíticas.
 │   │   │   ├── AnalyticsView.tsx                   # Dashboard interactivo con Recharts.
 │   │   │   ├── BrandsListView.test.tsx             # Test de gestión de marcas.
@@ -554,14 +554,14 @@
 │   │   └── shared/                                 # Componentes compartidos por todo el sistema.
 │   │       └── UserDropdown.astro                  # Menú desplegable interactivo de usuario.
 │   ├── layouts/                                    # Estructuras base y envolventes (Master Pages).
-│   │   ├── ManagementLayout.astro                       # Layout optimizado para gestión interna.
+│   │   ├── ManagementLayout.astro                  # Layout optimizado para gestión interna.
 │   │   ├── Layout.astro                            # Layout principal (Head, SEO, Tipografía).
 │   │   └── styles/                                 # Estilos compartidos de estructura.
 │   ├── lib/                                        # Cliente de API y utilidades de bajo nivel.
 │   │   ├── api.ts                                  # Wrapper de Ky con manejo de Auth y Auto-Refresh.
 │   │   └── url.ts                                  # Utilidades de procesamiento de activos y multimedia.
 │   ├── pages/                                      # Enrutamiento basado en archivos (SSR/Hybrid).
-│   │   ├── management/                                  # Rutas del panel privado.
+│   │   ├── management/                             # Rutas del panel privado.
 │   │   │   ├── categories/                         # Jerarquía de gestión de categorías.
 │   │   │   │   └── [id]/                           # Contexto de categoría específica.
 │   │   │   │       └── subcategories.astro         # Vista de gestión de subcategorías vinculadas.
@@ -791,18 +791,18 @@
 │   │   └── user.types.ts                           # Perfil, roles y atributos de usuario.
 │   ├── env.d.ts                                    # Tipado estricto para variables de entorno.
 │   └── middleware.ts                               # Middleware global de autenticación e interceptores Astro.
-├── public/                                     # Recursos estáticos (imágenes, fuentes, iconos).
-├── tests/                                      # Suite de pruebas E2E y configuración Playwright.
-├── utils/                                      # Scripts de apoyo e infraestructura local.
-├── astro.config.mjs                            # Configuración del framework Astro y adaptadores.
-├── playwright.config.ts                        # Configuración de tests E2E con Playwright.
-├── package.json                                # Scripts, metadata y dependencias (pnpm).
-├── pnpm-lock.yaml                              # Bloqueo de versiones de dependencias.
-├── tsconfig.json                               # Configuración estricta de TypeScript.
-├── vitest.config.mts                           # Configuración de Vitest para pruebas unitarias.
-├── .env                                        # Variables de entorno locales (Privado).
-├── LICENSE                                     # Licencia y propiedad intelectual.
-└── README.md                                   # Documentación principal del frontend.
+├── public/                                         # Recursos estáticos (imágenes, fuentes, iconos).
+├── tests/                                          # Suite de pruebas E2E y configuración Playwright.
+├── utils/                                          # Scripts de apoyo e infraestructura local.
+├── astro.config.mjs                                # Configuración del framework Astro y adaptadores.
+├── playwright.config.ts                            # Configuración de tests E2E con Playwright.
+├── package.json                                    # Scripts, metadata y dependencias (pnpm).
+├── pnpm-lock.yaml                                  # Bloqueo de versiones de dependencias.
+├── tsconfig.json                                   # Configuración estricta de TypeScript.
+├── vitest.config.mts                               # Configuración de Vitest para pruebas unitarias.
+├── .env                                            # Variables de entorno locales (Privado).
+├── LICENSE                                         # Licencia y propiedad intelectual.
+└── README.md                                       # Documentación principal del frontend.
 </code></pre>
 
 <hr>
