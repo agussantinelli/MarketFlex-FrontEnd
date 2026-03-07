@@ -78,7 +78,7 @@
     gap: 0.75rem;
     padding: 0.75rem 1rem;
     border-radius: 8px;
-    color: hsl(0, 0%, 80%);
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -87,7 +87,7 @@
 
 .navItem:hover:not(.disabled) {
     background-color: var(--green-800);
-    color: var(--foreground);
+    color: #ffffff;
 }
 
 .navItem.active {
@@ -100,7 +100,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .navItem.disabled {

@@ -198,8 +198,8 @@
     right: 0.75rem;
     background: transparent;
     border: none;
-    color: var(--green-cream);
-    opacity: 0.3;
+    color: #fff;
+    opacity: 0.5;
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -271,8 +271,8 @@
 
 .modalIcon {
     font-size: 2rem;
-    color: var(--neon-green);
-    opacity: 0.8;
+    color: #fff;
+    opacity: 1;
 }
 
 .modalHeader h2 {
@@ -381,8 +381,8 @@
 
 .statIcon {
     font-size: 1.6rem;
-    color: var(--deep-black);
-    /* Iconos oscuros sobre fondos claros/brillantes */
+    color: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .statInfo {
@@ -432,6 +432,7 @@
 
 .statTrend svg {
     font-size: 1.1rem;
+    color: #ffffff;
 }
 
 .positive {
