@@ -95,10 +95,10 @@ export const ManagementService = {
             return { status: 'error', message: errorData?.message || 'Error al obtener el producto' };
         }
     },
-    async generateTags(nombre: string, descripcion: string): Promise<{ status: string; data?: string[]; message?: string }> {
+    async generateTags(nombre: string, descripcion: string, existingTags: string[] = []): Promise<{ status: string; data?: string[]; message?: string }> {
         try {
             const result = await api.post('management/generate-tags', {
-                json: { nombre, descripcion },
+                json: { nombre, descripcion, existingTags },
                 timeout: 60000 // override 10s default timeout
             }).json<{ status: string; data: string[] }>();
             return result;
