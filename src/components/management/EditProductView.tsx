@@ -137,7 +137,7 @@ const EditProductView: React.FC<EditProductViewProps> = ({ productId }) => {
 
         setGeneratingTags(true);
         try {
-            const result = await ManagementService.generateTags(nombre, descripcion);
+            const result = await ManagementService.generateTags(nombre, descripcion, tags);
             if (result.status === 'success' && result.data) {
                 const newTags = result.data.filter(t => !tags.includes(t));
                 if (newTags.length > 0) {
