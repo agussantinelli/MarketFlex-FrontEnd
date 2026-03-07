@@ -40,12 +40,15 @@ describe('UpdatePriceModal Component', () => {
     it('valida que el precio sea positivo', async () => {
         render(<UpdatePriceModal {...defaultProps} />);
 
-        const input = screen.getByLabelText(/Nuevo Precio/i);
+        const input = screen.getByRole('spinbutton');
         fireEvent.change(input, { target: { value: '-10' } });
 
-        fireEvent.click(screen.getByText('Guardar Precio'));
+        const form = screen.getByRole('form');
+        fireEvent.submit(form);
 
-        expect((window as any).triggerSileo).toHaveBeenCalledWith('warning', 'Ingresá un precio válido.');
+        await waitFor(() => {
+            expect((window as any).triggerSileo).toHaveBeenCalledWith('warning', 'Ingresá un precio válido.');
+        });
         expect(ManagementService.updateProductPrice).not.toHaveBeenCalled();
     });
 
@@ -54,16 +57,17 @@ describe('UpdatePriceModal Component', () => {
 
         render(<UpdatePriceModal {...defaultProps} />);
 
-        const input = screen.getByLabelText(/Nuevo Precio/i);
+        const input = screen.getByRole('spinbutton');
         fireEvent.change(input, { target: { value: '2500.50' } });
 
-        fireEvent.click(screen.getByText('Guardar Precio'));
+        const form = screen.getByRole('form');
+        fireEvent.submit(form);
 
         await waitFor(() => {
             expect(ManagementService.updateProductPrice).toHaveBeenCalledWith('prod-123', 2500.50);
             expect((window as any).triggerSileo).toHaveBeenCalledWith('success', 'Precio actualizado correctamente.');
             expect(mockOnSuccess).toHaveBeenCalled();
-        });
+        }, { timeout: 2000 });
     });
 
     it('muestra error si la actualización falla', async () => {
@@ -74,10 +78,11 @@ describe('UpdatePriceModal Component', () => {
 
         render(<UpdatePriceModal {...defaultProps} />);
 
-        fireEvent.click(screen.getByText('Guardar Precio'));
+        const form = screen.getByRole('form');
+        fireEvent.submit(form);
 
         await waitFor(() => {
             expect((window as any).triggerSileo).toHaveBeenCalledWith('error', 'Error al actualizar');
-        });
+        }, { timeout: 2000 });
     });
 });

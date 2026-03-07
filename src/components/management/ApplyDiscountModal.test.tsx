@@ -44,7 +44,9 @@ describe('ApplyDiscountModal Component', () => {
         const submitBtn = screen.getByText('Aplicar Descuento');
         fireEvent.click(submitBtn);
 
-        expect((window as any).triggerSileo).toHaveBeenCalledWith('warning', expect.any(String));
+        await waitFor(() => {
+            expect((window as any).triggerSileo).toHaveBeenCalledWith('warning', expect.any(String));
+        });
         expect(ManagementService.applyDirectDiscount).not.toHaveBeenCalled();
     });
 
