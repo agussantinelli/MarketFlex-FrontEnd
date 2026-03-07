@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import type { Promotion } from '../../types/promotion.types';
 import { promotionService } from '../../services/promotion.service';
 import PromotionForm from './PromotionForm';
-import { LuPlus, LuPencil, LuTrash2, LuClock, LuCalendar, LuTag, LuStar, LuInbox, LuX } from 'react-icons/lu';
+import AffectedProductsModal from './AffectedProductsModal';
+import { LuPlus, LuPencil, LuTrash2, LuClock, LuCalendar, LuTag, LuStar, LuInbox, LuX, LuBox } from 'react-icons/lu';
 import styles from './styles/SalesListView.module.css';
 import { getImageUrl } from '../../lib/url';
 
@@ -14,6 +15,26 @@ const PromotionsListView: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPromotion, setSelectedPromotion] = useState<Promotion | undefined>(undefined);
     const [formLoading, setFormLoading] = useState(false);
+
+    // Role state
+    const [role, setRole] = useState<'admin' | 'seller' | null>(null);
+
+    // Affected Products Modal state
+    const [showAffectedProducts, setShowAffectedProducts] = useState(false);
+    const [affectedPromoId, setAffectedPromoId] = useState<string | null>(null);
+    const [affectedPromoName, setAffectedPromoName] = useState<string>('');
+
+    useEffect(() => {
+        const userStr = localStorage.getItem('marketflex_user');
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                setRole(user.rol);
+            } catch (e) {
+                console.error("Error parsing role in promotions list", e);
+            }
+        }
+    }, []);
 
     const fetchPromotions = useCallback(async () => {
         setLoading(true);
@@ -141,9 +162,11 @@ const PromotionsListView: React.FC = () => {
                     <div className={styles.titleSection}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <h1>Promociones</h1>
-                            <button className={styles.actionBtn} onClick={handleCreate} title="Nueva Promoción" style={{ padding: '0.75rem 1.5rem', gap: '8px', fontSize: '0.9rem', fontWeight: '700' }}>
-                                <LuPlus size={20} /> Nueva Promoción
-                            </button>
+                            {role === 'admin' && (
+                                <button className={styles.actionBtn} onClick={handleCreate} title="Nueva Promoción" style={{ padding: '0.75rem 1.5rem', gap: '8px', fontSize: '0.9rem', fontWeight: '700' }}>
+                                    <LuPlus size={20} /> Nueva Promoción
+                                </button>
+                            )}
                         </div>
                         <p>Gestioná las ofertas y beneficios del marketplace</p>
                     </div>
@@ -163,26 +186,28 @@ const PromotionsListView: React.FC = () => {
                 <div className={styles.titleSection}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <h1>Promociones</h1>
-                        <button
-                            className={styles.actionBtn}
-                            onClick={handleCreate}
-                            style={{
-                                background: 'var(--primary)',
-                                color: 'var(--background)',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '12px',
-                                fontWeight: '800',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                border: 'none',
-                                cursor: 'pointer',
-                                boxShadow: '0 0 20px rgba(0, 163, 136, 0.3)',
-                                fontSize: '0.9rem'
-                            }}
-                        >
-                            <LuPlus size={18} /> Crear Nueva
-                        </button>
+                        {role === 'admin' && (
+                            <button
+                                className={styles.actionBtn}
+                                onClick={handleCreate}
+                                style={{
+                                    background: 'var(--primary)',
+                                    color: 'var(--background)',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '12px',
+                                    fontWeight: '800',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 0 20px rgba(0, 163, 136, 0.3)',
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                <LuPlus size={18} /> Crear Nueva
+                            </button>
+                        )}
                     </div>
                     <p>Gestioná las ofertas y beneficios del marketplace</p>
                 </div>
@@ -387,7 +412,11 @@ const PromotionsListView: React.FC = () => {
 
                                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                                     <button
-                                        onClick={() => handleEdit(promo)}
+                                        onClick={() => {
+                                            setAffectedPromoId(promo.id);
+                                            setAffectedPromoName(promo.nombre);
+                                            setShowAffectedProducts(true);
+                                        }}
                                         style={{
                                             background: 'rgba(255, 255, 255, 0.05)',
                                             border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -407,33 +436,62 @@ const PromotionsListView: React.FC = () => {
                                             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                                             e.currentTarget.style.color = '#cbd5e1';
                                         }}
-                                        title="Editar"
+                                        title="Ver Productos Afectados"
                                     >
-                                        <LuPencil size={18} />
+                                        <LuBox size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(promo)}
-                                        style={{
-                                            background: 'rgba(255, 100, 100, 0.05)',
-                                            border: '1px solid rgba(255, 100, 100, 0.1)',
-                                            color: '#f87171',
-                                            padding: '0.6rem',
-                                            borderRadius: '10px',
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.background = 'rgba(255, 100, 100, 0.1)';
-                                            e.currentTarget.style.borderColor = '#f87171';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.background = 'rgba(255, 100, 100, 0.05)';
-                                            e.currentTarget.style.borderColor = 'rgba(255, 100, 100, 0.1)';
-                                        }}
-                                        title="Eliminar"
-                                    >
-                                        <LuTrash2 size={18} />
-                                    </button>
+                                    {role === 'admin' && (
+                                        <>
+                                            <button
+                                                onClick={() => handleEdit(promo)}
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.05)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                    color: '#cbd5e1',
+                                                    padding: '0.6rem',
+                                                    borderRadius: '10px',
+                                                    cursor: 'pointer',
+                                                    transition: 'all 0.2s'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(0, 163, 136, 0.1)';
+                                                    e.currentTarget.style.borderColor = 'var(--primary)';
+                                                    e.currentTarget.style.color = 'var(--primary)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                                                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                                    e.currentTarget.style.color = '#cbd5e1';
+                                                }}
+                                                title="Editar"
+                                            >
+                                                <LuPencil size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(promo)}
+                                                style={{
+                                                    background: 'rgba(255, 100, 100, 0.05)',
+                                                    border: '1px solid rgba(255, 100, 100, 0.1)',
+                                                    color: '#f87171',
+                                                    padding: '0.6rem',
+                                                    borderRadius: '10px',
+                                                    cursor: 'pointer',
+                                                    transition: 'all 0.2s'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(255, 100, 100, 0.1)';
+                                                    e.currentTarget.style.borderColor = '#f87171';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.background = 'rgba(255, 100, 100, 0.05)';
+                                                    e.currentTarget.style.borderColor = 'rgba(255, 100, 100, 0.1)';
+                                                }}
+                                                title="Eliminar"
+                                            >
+                                                <LuTrash2 size={18} />
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -504,6 +562,14 @@ const PromotionsListView: React.FC = () => {
                         />
                     </div>
                 </div>
+            )}
+
+            {showAffectedProducts && affectedPromoId && (
+                <AffectedProductsModal
+                    promotionId={affectedPromoId}
+                    promotionName={affectedPromoName}
+                    onClose={() => setShowAffectedProducts(false)}
+                />
             )}
         </div>
     );
