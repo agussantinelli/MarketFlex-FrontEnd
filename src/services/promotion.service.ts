@@ -48,6 +48,10 @@ export const promotionService = {
     },
 
     toggleStatus: async (id: string): Promise<SinglePromotionResponse> => {
-        return await api.patch(`promotions/${id}/status`).json<SinglePromotionResponse>();
+        return await api.patch(`management/promotions/${id}/status`).json<SinglePromotionResponse>();
+    },
+
+    getAffectedProducts: async (id: string): Promise<any> => { // Assuming 'any' for now, or define a specific type for affected products
+        return await api.get(`management/promotions/${id}/products`).json<any>();
     }
 };
