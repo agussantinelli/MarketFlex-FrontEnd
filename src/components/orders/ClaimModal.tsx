@@ -12,7 +12,7 @@ interface Props {
     onSuccess: () => void;
 }
 
-export default function ClaimModal({ isOpen, onClose, purchaseId, claims = [], onSuccess }: Props) {
+export default function ClaimModal({ isOpen, onClose, purchaseId, purchaseDate, claims = [], onSuccess }: Props) {
     const [motivo, setMotivo] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [loading, setLoading] = useState(false);
@@ -27,17 +27,19 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, claims = [], o
         }, null as Date | null);
     };
 
-    const lastDate = getLatestClaimDate();
+    const latestClaimDate = getLatestClaimDate();
+    const isFromPurchase = !latestClaimDate;
+    const lastDate = latestClaimDate || new Date(purchaseDate);
     const now = new Date();
 
     // Absolute UTC-to-UTC comparison
     const nowMs = now.getTime();
-    const lastClaimMs = lastDate ? lastDate.getTime() : 0;
-    const diffMs = nowMs - lastClaimMs;
+    const lastDateMs = lastDate ? lastDate.getTime() : 0;
+    const diffMs = nowMs - lastDateMs;
     const hoursDiff = diffMs / (1000 * 60 * 60);
 
-    // Restriction applies if there are claims (72h between claims)
-    const isTimeRestricted = lastDate && !isNaN(lastClaimMs) && hoursDiff < 72;
+    // Restriction applies if there are claims (72h between claims) OR since purchase
+    const isTimeRestricted = lastDate && !isNaN(lastDateMs) && hoursDiff < 72;
     const remainingHours = lastDate ? Math.max(0, Math.ceil(72 - hoursDiff)) : 0;
 
     if (!isOpen) return null;
@@ -99,7 +101,7 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, claims = [], o
                             color: '#ffc107',
                             borderRadius: '4px'
                         }}>
-                            <strong>¡Atención!</strong> Deben pasar al menos 72 horas desde tu último reclamo para realizar uno nuevo.
+                            <strong>¡Atención!</strong> Deben pasar al menos 72 horas desde {isFromPurchase ? 'la compra' : 'tu último reclamo'} para realizar uno nuevo.
                             Faltan aproximadamente {remainingHours} horas.
                         </div>
                     )}
@@ -136,7 +138,7 @@ export default function ClaimModal({ isOpen, onClose, purchaseId, claims = [], o
                             type="submit"
                             className={styles.confirmButton}
                             disabled={loading || isTimeRestricted}
-                            title={isTimeRestricted ? `Faltan ${remainingHours} horas para poder reclamar` : ''}
+                            title={isTimeRestricted ? `Faltan ${remainingHours} horas para poder iniciar un reclamo` : ''}
                         >
                             {loading ? 'Enviando...' : 'Enviar Reclamo'}
                         </button>
