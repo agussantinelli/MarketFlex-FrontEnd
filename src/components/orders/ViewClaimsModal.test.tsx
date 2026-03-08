@@ -40,7 +40,7 @@ describe('ViewClaimsModal Component', () => {
     it('muestra nota sobre las 72hs si la compra es reciente', () => {
         const recentDate = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(); // 1 day ago
         render(<ViewClaimsModal {...defaultProps} purchaseDate={recentDate} />);
-        expect(screen.getByText(/Deben pasar 72hs desde la compra para iniciar nuevos reclamos/i)).toBeDefined();
+        expect(screen.getByText(/Deben pasar 72hs desde tu último reclamo para iniciar uno nuevo/i)).toBeDefined();
     });
 
     it('llama a onClose al hacer clic en cerrar', () => {
